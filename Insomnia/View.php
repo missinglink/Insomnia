@@ -14,7 +14,7 @@ class View
     public function render( $name )
     {
         \ob_start();
-        include( $this->_viewPath . \DIRECTORY_SEPARATOR . $name . '.phtml' );
+        include( $this->_viewPath . \DIRECTORY_SEPARATOR . $name . '.zzz' );
         \ob_end_flush();
     }
 }
