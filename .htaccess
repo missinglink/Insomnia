@@ -1,0 +1,34 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+Options -Indexes
+
+FileETag MTime Size
+
+# 1 Week
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf)$">
+    Header set Cache-Control "max-age=604800"
+</FilesMatch>
+
+# 1 Week
+<FilesMatch "\.(js|css|pdf|txt)$">
+    Header set Cache-Control "max-age=604800"
+</FilesMatch>
+
+# 10 Minutes
+<FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=600"
+</FilesMatch>
+
+# NONE
+<FilesMatch "\.(pl|php|cgi|spl)$">
+    Header unset Cache-Control
+    Header unset Expires
+    Header unset Last-Modified
+    FileETag None
+    Header unset Pragma
+</FilesMatch>
