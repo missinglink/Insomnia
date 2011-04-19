@@ -40,9 +40,4 @@ class RegexRoute extends Data
 
         return false;
     }
-
-    public function appendTo( $router )
-    {
-        $router[] = $this;
-    }
 }

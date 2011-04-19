@@ -1,6 +1,6 @@
 <?php
 
-namespace Simple;
+namespace Insomnia;
 //use Doctrine\Common\Collections\ArrayCollection;
 //  
 //use Doctrine\Common\ClassLoader,

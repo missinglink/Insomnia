@@ -5,10 +5,14 @@ namespace Insomnia;
 class Application
 {
     private $router;
-    private $exceptionHandler = 'Error';
+    private $exceptionHandler = 'Insomnia\Error';
+    public static $config;
 
     public function __construct()
     {
+        self::$config = new \ArrayObject;
+        self::$config[ 'path' ] = array();
+        
         $this->showErrors();
         $this->setRouter( new Router );
     }
@@ -41,3 +45,11 @@ class Application
         $this->router = $router;
     }    
 }
+
+//class Config extends Data
+//{
+//    public function __construct()
+//    {
+//        $this['paths'] = array();
+//    }
+//}

@@ -10,13 +10,13 @@ class RestRouter extends Router
         $route->setAction( 'GET',    'read' )
               ->setAction( 'HEAD',   'read' )
               ->setAction( 'PUT',    'update' )
-              ->setAction( 'DELETE', 'delete' )
-              ->appendTo( $this );
+              ->setAction( 'DELETE', 'delete' );
+        $this[] = $route;
 
         $route = new RegexRoute( '_^/?v1/([a-z]+).?$_', array( 'controller' ) );
         $route->setAction( 'POST',  'create' )
-              ->setAction( 'GET',   'index' )
-              ->appendTo( $this );
+              ->setAction( 'GET',   'index' );
+        $this[] = $route;
     }
 
     public function preDispatch( Request $request, RegexRoute $route )
