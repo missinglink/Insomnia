@@ -1,0 +1,39 @@
+pre
+{
+    border:solid 1px #dedede;
+    background-color:#efefef;
+    padding:10px;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    line-height: 32px;
+    margin-bottom: 30px;
+}
+
+h4 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+
+h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 15px;
+}
+
+.error {
+    color: red;
+}

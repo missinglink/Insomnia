@@ -1,2 +1,0 @@
-<h1><?= $this->message; ?></h1>
-<pre style="border:solid 1px #dedede; background-color:#efefef; padding:10px;"><?= $this->debug; ?></pre>
