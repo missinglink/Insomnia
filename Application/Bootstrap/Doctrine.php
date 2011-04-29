@@ -9,7 +9,7 @@ use \Doctrine\Common\ClassLoader,
     \Doctrine\Common\Cache\ArrayCache,
     \Doctrine\Common\Cache\ApcCache;
 
-class Doctrine
+class Doctrine extends EntityManager
 {
     public static $em;
 
@@ -35,8 +35,8 @@ class Doctrine
 
         // Caching Configuration (5)
         $cache = ( APPLICATION_ENV === 'development' )
-            ? new \Doctrine\Common\Cache\ArrayCache()
-            : new \Doctrine\Common\Cache\ApcCache();
+            ? new \Doctrine\Common\Cache\ArrayCache
+            : new \Doctrine\Common\Cache\ApcCache;
 
         $config->setMetadataCacheImpl( $cache );
         $config->setQueryCacheImpl( $cache );
@@ -55,6 +55,15 @@ class Doctrine
         );
 
         self::$em = EntityManager::create( $connectionOptions, $config );
+    }
+
+    /**
+     *
+     * @return EntityManager
+     */
+    public function getManager()
+    {
+        return self::$em;
     }
 
     public function console()

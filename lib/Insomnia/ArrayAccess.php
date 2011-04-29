@@ -11,12 +11,27 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
         if( $data instanceof \Insomnia\ArrayAccess )
             $data = $data->toArray();
         
-        $this->data = array_merge( $this->data, $data );
+        $this->data = \array_merge( $this->data, $data );
     }
 
     public function toArray()
     {
         return $this->data;
+    }
+
+    public function replace( $data )
+    {
+        $this->data = $data;
+    }
+
+    public function clear()
+    {
+        $this->data = array();
+    }
+
+    public function expand( $key )
+    {
+        $this->data = array( $key => $this->data );
     }
 
     public function getIterator()
@@ -47,6 +62,21 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function count()
     {
-        return count( $this->data );
+        return \count( $this->data );
+    }
+
+    public function get( $offset )
+    {
+        return isset( $this->data[ $offset ] ) ? $this->data[ $offset ] : null;
+    }
+
+    public function set( $offset, $value )
+    {
+        return $this->data[ $offset ] = $value;
+    }
+
+    public function prepend( $offset, $value )
+    {
+        $this->data = \array_merge( array( $offset => $value ), $this->data );
     }
 }

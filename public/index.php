@@ -3,8 +3,8 @@
 namespace Insomnia;
 
 use \Doctrine\Common\ClassLoader,
-    \Insomnia\Router\RestRouter,
-    \Insomnia\Router\ErrorRouter;
+    \Application\Router\ApplicationRouter,
+    \Application\Router\ErrorRouter;
 
 require_once '../lib/Doctrine/Common/ClassLoader.php';
 $classLoader = new ClassLoader( 'Doctrine', dirname( __FILE__ ) . '/../lib' );
@@ -18,15 +18,14 @@ $classLoader->register();
 error_reporting( E_ALL );
 ini_set( 'display_errors', 'On' );
 
-define('APPLICATION_ENV', "development");
+define( 'APPLICATION_ENV', 'development' );
 
 // -----------------------------------------
 
 new \Application\Bootstrap\Insomnia;
-new \Application\Bootstrap\Doctrine;
 
 try {
-    $insomnia = new RestRouter( new Request );
+    $insomnia = new ApplicationRouter( new Request );
     $insomnia->run();
 }
 

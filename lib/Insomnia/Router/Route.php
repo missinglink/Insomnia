@@ -55,8 +55,17 @@ class Route extends ArrayAccess
 
     public function getAction( $method )
     {
-        return isset( $this->actions[ $method ] )
-            ? $this->actions[ $method ]
-            : false;
+        if( isset( $this->actions[ $method ] ) )
+            return $this->actions[ $method ];
+
+        if( isset( $this->actions[ 'ANY' ] ) )
+            return $this->actions[ 'ANY' ];
+
+        return false;
+    }
+
+    public function getPattern()
+    {
+        return $this->pattern;
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
-namespace Insomnia\Router;
+namespace Application\Router;
 
-use \Insomnia\Request;
+use \Insomnia\Request,
+    \Insomnia\Router\Route,
+    \Insomnia\Router\RouterAbstract;
 
-class RestRouter extends RouterAbstract
+class ApplicationRouter extends RouterAbstract
 {
     public function __construct( Request $request )
     {
@@ -14,10 +16,20 @@ class RestRouter extends RouterAbstract
         $params[ 'version' ]    = 'v\d+';
         $params[ 'controller' ] = '[a-z]+';
         $params[ 'id' ]         = '\w+';
-
+        
         $route = new Route( '/' );
         $route->setDefault( 'controller', 'index' )
-              ->setAction( 'GET',    'index' );
+              ->setAction( 'POST',   'create' )
+              ->setAction( 'GET',    'index' )
+              ->setAction( 'ANY',    'index' );
+        $this[] = $route;
+
+        $route = new Route( '/:id' );
+        $route->setDefault( 'controller', 'index' )
+              ->setParams( $params )
+              ->setAction( 'GET',    'read' )
+              ->setAction( 'PUT',    'update' )
+              ->setAction( 'DELETE', 'delete' );
         $this[] = $route;
 
         $route = new Route( '/:version/:controller' );

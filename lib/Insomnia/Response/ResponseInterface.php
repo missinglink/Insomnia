@@ -1,6 +1,7 @@
 <?php
 
 namespace Insomnia\Response;
+
 use \Insomnia\Response;
 
 interface ResponseInterface

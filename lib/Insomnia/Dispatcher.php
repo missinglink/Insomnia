@@ -3,12 +3,17 @@
 namespace Insomnia;
 
 use \Doctrine\Common\ClassLoader,
-    \Insomnia\Router\Route;
+    \Insomnia\Router\Route,
+    \Insomnia\Controller\PluginInterface;
+
+class DispatcherControllerException extends \Exception {};
+class DispatcherMethodException extends \Exception {};
 
 class Dispatcher
 {
-    private $controllerNamespace = 'Application\Controller\\',
-            $controllerSuffix    = 'Controller';
+    private $controllerNamespace  = 'Application\Controller\\',
+            $controllerSuffix     = 'Controller',
+            $validateMethodSuffix = 'Validate';
 
     public function dispatch( Request $request, Route $route )
     {
@@ -16,7 +21,7 @@ class Dispatcher
         $class = $this->controllerNamespace . \ucfirst( $controllerName ) . $this->controllerSuffix;
 
         if( !ClassLoader::classExists( $class ) )
-            throw new DispatcherException( 'Controller not found: ' . $class );
+            throw new DispatcherControllerException( 'Controller not found: ' . $controllerName );
 
         $action = $route->getAction( $request->getMethod() );
         $controller = new $class();
@@ -26,14 +31,14 @@ class Dispatcher
             $request->merge( $route );
             
             $controller->setRequest( $request );
-            $response = $controller->{ $action }();
+            $controller->preDispatch( $controllerName, $action );
+            if( \method_exists( $controller, $action . $this->validateMethodSuffix ) ) $controller->{ $action . $this->validateMethodSuffix }();
+            $controller->{ $action }();
             $controller->preRender( $controllerName, $action );
-            $response->render();
+            $controller->getResponse()->render();
             exit;
         }
 
-        throw new DispatcherException( 'Unsupported Method' );
+        throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getPath() );
     }
 }
-
-class DispatcherException extends \Exception {};
