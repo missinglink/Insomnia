@@ -8,15 +8,17 @@ use \Insomnia\ArrayAccess,
 
 class ViewRenderer extends ArrayAccess implements ResponseInterface
 {
-    private $layoutPath,
-            $viewPath,
-            $layout     = 'index',
+    private $viewPath,
+            $layout     = 'layout',
             $view       = 'index',
-            $extension  = '.php';
+            $extension  = '.php',
+            $viewContent,
+            $stylesheets = array(),
+            $scripts = array();
 
-    public function setLayoutPath( $path )
+    public function __construct()
     {
-        $this->layoutPath = realpath( $path ) . \DIRECTORY_SEPARATOR;
+        $this->setViewPath( \Application\Bootstrap\Insomnia::getViewPath() );
     }
 
     public function setViewPath( $path )
@@ -36,18 +38,22 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function render( Response $response )
     {
-        $layoutFile = $this->layoutPath . $this->layout . $this->extension;
+        $layoutFile = $this->viewPath . $this->layout . $this->extension;
 
         if( !\file_exists( $layoutFile ) )
-            throw new ViewException( 'Layout File Not Found: ' . $this->layout . $this->extension );
+            throw new ViewException( 'Layout File Not Found: ' . $this->layout );
 
         $viewFile = $this->viewPath . $this->view . $this->extension;
 
         if( !\file_exists( $viewFile ) )
-            throw new ViewException( 'View File Not Found: ' . $this->view . $this->extension );
-
+            throw new ViewException( 'View File Not Found: ' . $this->view );
+        
         $this->merge( $response );
-        header( 'Content-Type: text/html' );
+        
+        \ob_start();
+        include( $viewFile );
+        $this->viewContent = \ob_get_clean();
+
         \ob_start();
         include( $layoutFile );
         \ob_end_flush();
@@ -55,11 +61,25 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function content()
     {
-        $viewFile = $this->viewPath . $this->view . $this->extension;
+        return $this->viewContent;
+    }
 
-        \ob_start();
-        include( $viewFile );
-        \ob_end_flush();
+    public function css( $sheet = null )
+    {
+        if( is_string( $sheet ) )
+            $this->stylesheets[ $sheet ] = $sheet;
+
+        else foreach( $this->stylesheets as $sheet )
+            echo '<link rel="stylesheet" href="'.$sheet.'" type="text/css" />' . PHP_EOL;
+    }
+
+    public function javascript( $script = null )
+    {
+        if( is_string( $script ) )
+            $this->scripts[ $script ] = $script;
+        
+        else foreach( $this->scripts as $script )
+            echo '<script src="'.$script.'" type="text/javascript"></script>' . PHP_EOL;
     }
 }
 

@@ -1,8 +1,13 @@
-pre
+fieldset
 {
-    border:solid 1px #dedede;
-    background-color:#efefef;
+    border:solid 1px #ddd;
     padding:10px;
+    margin-bottom: 20px;
+}
+
+fieldset legend
+{
+    padding: 0 10px;
 }
 
 h1, h2, h3, h4, h5, h6

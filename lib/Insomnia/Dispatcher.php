@@ -11,34 +11,50 @@ class DispatcherMethodException extends \Exception {};
 
 class Dispatcher
 {
-    private $controllerNamespace  = 'Application\Controller\\',
-            $controllerSuffix     = 'Controller',
-            $validateMethodSuffix = 'Validate';
+    public static $controllerNamespace = '',
+                  $actionClassSuffix   = 'Action';
+    
+    private $controllerName,
+            $actionName;
 
     public function dispatch( Request $request, Route $route )
     {
-        $controllerName = strtolower( $route[ 'controller' ] );
-        $class = $this->controllerNamespace . \ucfirst( $controllerName ) . $this->controllerSuffix;
+        $this->actionName = $route->getAction( $request->getMethod() );
+        if( !$this->actionName ) throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getPath() );
+
+        $this->actionName       = \strtolower( $this->actionName );
+        $this->controllerName   = \strtolower( $route[ 'controller' ] );
+
+        $this->run( $request, $route );
+    }
+
+    private function run( Request $request, Route $route )
+    {
+        $class = self::$controllerNamespace .
+                 \ucfirst( $this->controllerName ) . '\\' .
+                 \ucfirst( $this->actionName ) .
+                 self::$actionClassSuffix;
 
         if( !ClassLoader::classExists( $class ) )
-            throw new DispatcherControllerException( 'Controller not found: ' . $controllerName );
+            throw new DispatcherControllerException( 'Controller not found: ' . $this->controllerName );
 
-        $action = $route->getAction( $request->getMethod() );
         $controller = new $class();
+        $request->merge( $route );
+        
+        $controller->setRequest( $request );
+        
+        if( \method_exists( $controller, 'validate' ) )
+            $controller->validate();
 
-        if( \method_exists( $controller, $action ) )
-        {
-            $request->merge( $route );
-            
-            $controller->setRequest( $request );
-            $controller->preDispatch( $controllerName, $action );
-            if( \method_exists( $controller, $action . $this->validateMethodSuffix ) ) $controller->{ $action . $this->validateMethodSuffix }();
-            $controller->{ $action }();
-            $controller->preRender( $controllerName, $action );
-            $controller->getResponse()->render();
-            exit;
-        }
+        if( \method_exists( $controller, 'action' ) )
+            $controller->action();
 
-        throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getPath() );
+        $controller->getResponse()->prepare( $this->controllerName, $this->actionName, $request );
+
+        if( \method_exists( $controller, 'render' ) )
+            $controller->render();
+
+        $controller->getResponse()->render();
+        exit;
     }
 }

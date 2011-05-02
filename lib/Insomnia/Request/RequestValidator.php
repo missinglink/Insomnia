@@ -8,7 +8,8 @@ class ValidatorException extends \Exception {}
 
 class RequestValidator
 {
-    private $request;
+    private $request,
+            $params = array();
 
     public function __construct( Request $request )
     {
@@ -20,12 +21,26 @@ class RequestValidator
         if( !isset( $this->request[ $key ] ) )
             throw new ValidatorException( $key . ' (required)' );
         
-        $validator->validate( $this->request[ $key ], $key );
+        $this->optional( $key, $validator );
+        
     }
 
     public function optional( $key, $validator )
     {
         if( isset( $this->request[ $key ] ) )
+        {
             $validator->validate( $this->request[ $key ], $key );
+            $this->params[ $key ] = $this->request[ $key ];
+        }
+    }
+    
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    public function getParam( $key )
+    {
+        return isset( $this->params[ $key ] ) ? $this->params[ $key ] : null;
     }
 }

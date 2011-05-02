@@ -18,7 +18,7 @@ $classLoader->register();
 error_reporting( E_ALL );
 ini_set( 'display_errors', 'On' );
 
-define( 'APPLICATION_ENV', 'development' );
+define( 'APPLICATION_ENV', 'production' );
 
 // -----------------------------------------
 

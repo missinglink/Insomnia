@@ -16,20 +16,10 @@ class ApplicationRouter extends RouterAbstract
         $params[ 'version' ]    = 'v\d+';
         $params[ 'controller' ] = '[a-z]+';
         $params[ 'id' ]         = '\w+';
-        
-        $route = new Route( '/' );
-        $route->setDefault( 'controller', 'index' )
-              ->setAction( 'POST',   'create' )
-              ->setAction( 'GET',    'index' )
-              ->setAction( 'ANY',    'index' );
-        $this[] = $route;
 
-        $route = new Route( '/:id' );
-        $route->setDefault( 'controller', 'index' )
-              ->setParams( $params )
-              ->setAction( 'GET',    'read' )
-              ->setAction( 'PUT',    'update' )
-              ->setAction( 'DELETE', 'delete' );
+        $route = new Route( '/ping.*' );
+        $route->setDefault( 'controller', 'status' )
+              ->setAction( 'ANY',    'status' );
         $this[] = $route;
 
         $route = new Route( '/:version/:controller' );

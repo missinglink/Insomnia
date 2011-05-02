@@ -29,9 +29,14 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->data = array();
     }
 
-    public function expand( $key )
+    public function expand( $key = null )
     {
         $this->data = array( $key => $this->data );
+    }
+
+    public function push( $value )
+    {
+        $this->data[] = $value;
     }
 
     public function getIterator()

@@ -6,10 +6,14 @@ use \Insomnia\ArrayAccess;
 
 class Request extends ArrayAccess
 {
+    private $headers,
+            $body;
+
     public function __construct()
     {
         $this->merge( $_REQUEST );
         $this->merge( \parse_url( $_SERVER['REQUEST_URI'] ) );
+        $this->parseBody();
     }
 
     public function getUri()
@@ -64,21 +68,26 @@ class Request extends ArrayAccess
             $this->addHeaders( apache_request_headers() );
     }
 
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
     public function getHeader( $header )
     {
         switch( $header )
         {
-            case 'Accept':          return $_SERVER['HTTP_ACCEPT'];
-            case 'Accept-Charset':  return $_SERVER['HTTP_ACCEPT_CHARSET'];
-            case 'Accept-Encoding': return $_SERVER['HTTP_ACCEPT_ENCODING'];
-            case 'Accept-Language': return $_SERVER['HTTP_ACCEPT_LANGUAGE'];
-            case 'Referer':         return $_SERVER['HTTP_REFERER'];
-            case 'User-Agent':      return $_SERVER['HTTP_USER_AGENT'];
+            case 'Accept':          return @$_SERVER['HTTP_ACCEPT'];
+            case 'Accept-Charset':  return @$_SERVER['HTTP_ACCEPT_CHARSET'];
+            case 'Accept-Encoding': return @$_SERVER['HTTP_ACCEPT_ENCODING'];
+            case 'Accept-Language': return @$_SERVER['HTTP_ACCEPT_LANGUAGE'];
+            case 'Referer':         return @$_SERVER['HTTP_REFERER'];
+            case 'User-Agent':      return @$_SERVER['HTTP_USER_AGENT'];
         }
 
-        if( !is_array( $this[ 'headers' ] ) || empty( $this[ 'headers' ] ) ) $this->parseHeaders();
-        return isset( $this[ 'headers' ][ $header ] )
-            ? $this[ 'headers' ][ $header ]
+        if( !is_array( $this->headers ) || empty( $this->headers ) ) $this->parseHeaders();
+        return isset( $this->headers[ $header ] )
+            ? $this->headers[ $header ]
             : null;
     }
 
@@ -98,7 +107,29 @@ class Request extends ArrayAccess
                 $k = \preg_replace( '/[_-](.+)/e', '"-".ucfirst("$1")', $k );
             }
 
-            $this->data[ 'headers' ][ $k ] = $v;
+            $this->headers[ $k ] = $v;
         }
+    }
+
+    public function parseBody()
+    {
+        if( in_array( $this->getMethod(), array( 'POST', 'PUT' ) ) )
+        {
+            switch( $this->getHeader( 'Content-Type' ) )
+            {
+                default :
+                    $this->body = \trim( \file_get_contents( 'php://input' ) );
+                    if( \strlen( $this->body ) > 0 )
+                    {
+                        \parse_str( $this->body, $params );
+                        $this->merge( $params );
+                    }
+            }
+        }
+    }
+
+    public function getBody()
+    {
+        return $this->body;
     }
 }

@@ -7,13 +7,8 @@ use \Insomnia\Response\ResponseInterface,
 
 class ArrayRenderer implements ResponseInterface
 {
-    private $strip = array();
-
     public function render( Response $response )
     {
-        header( 'Content-Type: text/html' );
-        echo '<html><body><pre>';
         print_r( $response->toArray() );
-        echo '</pre></body></html>';
     }
 }

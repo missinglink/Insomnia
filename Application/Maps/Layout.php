@@ -2,31 +2,15 @@
 
 namespace Application\Maps;
 
-use \Insomnia\Response;
+use \Insomnia\Response\Map;
 
-class Layout implements \Insomnia\Response\Map
+class Layout implements Map
 {
-    public static $request, $response;
-
     public static function render( $request, $response )
     {
-        self::$request  = $request;
-        self::$response = $response;
-        
-        self::$response->expand( 'data' );
-        self::prependHeader();
-    }
+        $response->expand( 'data' );
 
-    private static function prependHeader( )
-    {
-        $header = array();
-        $header[ 'Code' ]           = (int) substr( self::$response->getCode(), 0, 3 );
-        $header[ 'Content-Type' ]   = self::$response->getContentType();
-        $header[ 'Character-Set' ]  = self::$response->getCharacterSet();
-
-        if( self::$request[ 'version' ] )
-            $header[ 'Version' ]    = self::$request[ 'version' ];
-
-        self::$response->prepend( 'meta', $header );
+        $header = new Header;
+        $header->render( $request, $response );
     }
 }

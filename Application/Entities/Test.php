@@ -37,4 +37,9 @@ class Test
         $a[ 'name' ]    = $this->getName();
         return $a;
     }
+
+    public function fromArray( $array )
+    {
+        if( array_key_exists( 'name', $array ) ) $this->setName( $array[ 'name' ] );
+    }
 }

@@ -2,47 +2,18 @@
 
 namespace Application\Controller;
 
-use \Application\Bootstrap\Doctrine,
-    \Insomnia\Session,
-    \Insomnia\Request\Validator,
-    \Insomnia\Response\Format\ViewRenderer,
-    \Insomnia\Controller\NotFoundException,
-    \Insomnia\Controller\ControllerAbstract;
+use \Insomnia\Controller\Action;
 
-class ClientController extends ControllerAbstract
+class ClientController extends Action
 {
     public function __construct()
     {
         parent::__construct();
-        
-        $renderer = new ViewRenderer;
-        $renderer->setLayoutPath( dirname( __DIR__ ) . '/Layout' );
-        $renderer->setViewPath  ( dirname( __DIR__ ) . '/View' );
-        $renderer->useView( 'client/index' );
-        
-        $this->response->setRenderer( $renderer );
+        $this->response->setContentType( 'text/html' );
     }
 
-    public function create()
+    public function action()
     {
-    }
-
-    public function index()
-    {        
-        //$doctrine = new Doctrine;
-        //$results = $doctrine->getManager()->getRepository( 'Application\Entities\Test' )->findAll();
-    }
-
-    public function read()
-    {
-        $this->response->getRenderer()->useView( 'client/index' );
-    }
-
-    public function update()
-    {
-    }
-
-    public function delete()
-    {
+        $this->response[ 'controllers' ] = array( '/v1/test', '/ping' );
     }
 }
