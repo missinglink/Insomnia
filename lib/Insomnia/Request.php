@@ -80,17 +80,9 @@ class Request extends ArrayAccess
 
     public function getHeader( $header )
     {
-        switch( $header )
-        {
-            case 'Accept':          return @$_SERVER['HTTP_ACCEPT'];
-            case 'Accept-Charset':  return @$_SERVER['HTTP_ACCEPT_CHARSET'];
-            case 'Accept-Encoding': return @$_SERVER['HTTP_ACCEPT_ENCODING'];
-            case 'Accept-Language': return @$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-            case 'Referer':         return @$_SERVER['HTTP_REFERER'];
-            case 'User-Agent':      return @$_SERVER['HTTP_USER_AGENT'];
-        }
-
-        if( !is_array( $this->headers ) || empty( $this->headers ) ) $this->parseHeaders();
+        if( !is_array( $this->headers ) || empty( $this->headers ) )
+            $this->parseHeaders();
+        
         return isset( $this->headers[ $header ] )
             ? $this->headers[ $header ]
             : null;
