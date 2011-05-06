@@ -6,8 +6,8 @@ use \Insomnia\ArrayAccess;
 
 class Request extends ArrayAccess
 {
-    private $headers,
-            $body;
+    private $headers = array(),
+            $body = null;
 
     public function __construct()
     {
@@ -72,6 +72,11 @@ class Request extends ArrayAccess
     {
         return $this->headers;
     }
+    
+    public function getContentType()
+    {
+        return reset( explode( ';', $this->getHeader( 'Content-Type' ) ) );
+    }
 
     public function getHeader( $header )
     {
@@ -115,15 +120,22 @@ class Request extends ArrayAccess
     {
         if( in_array( $this->getMethod(), array( 'POST', 'PUT' ) ) )
         {
-            switch( $this->getHeader( 'Content-Type' ) )
+            $this->body = \trim( \file_get_contents( 'php://input' ) );
+            
+            if( \strlen( $this->body ) > 0 )
             {
-                default :
-                    $this->body = \trim( \file_get_contents( 'php://input' ) );
-                    if( \strlen( $this->body ) > 0 )
-                    {
+                switch( $this->getContentType() )
+                {
+                    case 'application/json' :
+                        $json = \json_decode( $this->body, true );
+                        if( !\is_null( $json ) ) $this->merge( $json );
+                        break;
+
+                    case 'application/x-www-form-urlencoded' :
+                    default :
                         \parse_str( $this->body, $params );
                         $this->merge( $params );
-                    }
+                }
             }
         }
     }
