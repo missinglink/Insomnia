@@ -75,7 +75,8 @@ class Request extends ArrayAccess
     
     public function getContentType()
     {
-        return reset( explode( ';', $this->getHeader( 'Content-Type' ) ) );
+        $contentType = explode( ';', $this->getHeader( 'Content-Type' ) );
+        return reset( $contentType );
     }
 
     public function getHeader( $header )

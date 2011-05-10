@@ -96,7 +96,7 @@
                 type: $('#nav #method').val(),
                 url:  $('#nav #path').val() + $('#nav #query').val(),
                 //data: 'moo=cow&foo=bar',
-                data: '<?= json_encode( array( 'name' => array( 'john' ), 'location' => 'London' ) ); ?>',
+                data: '<?= json_encode( array( 'name' => 'john', 'location' => 'London' ) ); ?>',
                 beforeSend: function(xhr){
                     xhr.setRequestHeader( 'Accept', $('#nav #content-type').val() );
                     xhr.setRequestHeader( 'Content-Type', 'application/json' );

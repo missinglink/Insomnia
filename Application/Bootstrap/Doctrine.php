@@ -12,6 +12,12 @@ use \Doctrine\Common\ClassLoader,
 class Doctrine extends EntityManager
 {
     public static $em;
+    
+    const DATABASE  = 'test';
+    const HOST      = 'localhost';
+    const USER      = 'php';
+    const PASS      = '3889y23b4jh2bhjh5vjv2jh3vjhv5j23tg545';
+    const CHARSET   = 'UTF8';
 
     public function __construct()
     {
@@ -43,15 +49,13 @@ class Doctrine extends EntityManager
 
         // Database connection information
         $connectionOptions = array(
-            'dbname' => 'test',
-            'user' => 'root',
-            'password' => '1fish2fishredfishbluefish',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
-            'CHARSET' => 'UTF8',
-            'driverOptions' => array(
-                'CHARSET' => 'UTF8'
-            )
+            'dbname'        => self::DATABASE,
+            'user'          => self::USER,
+            'password'      => self::PASS,
+            'host'          => self::HOST,
+            'driver'        => 'pdo_mysql',
+            'CHARSET'       => self::CHARSET,
+            'driverOptions' => array( 'CHARSET'=> self::CHARSET )
         );
 
         self::$em = EntityManager::create( $connectionOptions, $config );

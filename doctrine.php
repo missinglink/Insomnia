@@ -13,7 +13,7 @@ $classLoader->register();
 
 // -----------------------------------------
 
-$classLoader = new \Doctrine\Common\ClassLoader( 'Symfony', dirname( __FILE__ ) . '/lib/Doctrine' );
+$classLoader = new \Doctrine\Common\ClassLoader( 'Symfony', dirname( __FILE__ ) . '/lib' );
 $classLoader->register();
 
 // -----------------------------------------
