@@ -40,10 +40,9 @@ class Response extends ArrayAccess
 
         \header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' ' . $this->code );
         \header( 'Content-type: ' . $this->mime . '; charset=\'' . $this->charset .'\'' );
-	\header( 'Connection: close' );
-        \flush();
-
+        \header( 'Connection: close' );
         $this->renderer->render( $this );
+        \flush();
     }
 
     public function getRenderer()

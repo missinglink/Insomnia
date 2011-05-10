@@ -11,7 +11,7 @@ class Request extends ArrayAccess
 
     public function __construct()
     {
-        $this->merge( $_REQUEST );
+        $this->merge( \array_filter( $_REQUEST ) );
         $this->merge( \parse_url( $_SERVER['REQUEST_URI'] ) );
         $this->parseBody();
     }
@@ -60,14 +60,6 @@ class Request extends ArrayAccess
         isset( $this[ 'fragment' ] ) ? $this[ 'fragment' ] : null;
     }
 
-    private function parseHeaders()
-    {
-        $this->addHeaders( $_SERVER, 'HTTP_' );
-        $this->addHeaders( $_SERVER, 'REQUEST_' );
-        if( function_exists( 'apache_request_headers' ) )
-            $this->addHeaders( apache_request_headers() );
-    }
-
     public function getHeaders()
     {
         return $this->headers;
@@ -87,6 +79,19 @@ class Request extends ArrayAccess
         return isset( $this->headers[ $header ] )
             ? $this->headers[ $header ]
             : null;
+    }
+    
+    public function getBody()
+    {
+        return $this->body;
+    }
+    
+    private function parseHeaders()
+    {
+        $this->addHeaders( $_SERVER, 'HTTP_' );
+        $this->addHeaders( $_SERVER, 'REQUEST_' );
+        if( function_exists( 'apache_request_headers' ) )
+            $this->addHeaders( apache_request_headers() );
     }
 
     private function addHeaders( $headers, $match = false, $normalize = true )
@@ -109,32 +114,28 @@ class Request extends ArrayAccess
         }
     }
 
-    public function parseBody()
+    private function parseBody()
     {
-        if( in_array( $this->getMethod(), array( 'POST', 'PUT' ) ) )
+        switch( $this->getMethod() )
         {
-            $this->body = \trim( \file_get_contents( 'php://input' ) );
-            
-            if( \strlen( $this->body ) > 0 )
-            {
-                switch( $this->getContentType() )
+            case 'PUT': case 'POST':
+                $this->body = \trim( \file_get_contents( 'php://input' ) );
+
+                if( \strlen( $this->body ) )
                 {
-                    case 'application/json' :
-                        $json = \json_decode( $this->body, true );
-                        if( !\is_null( $json ) ) $this->merge( $json );
-                        break;
+                    switch( $this->getContentType() )
+                    {
+                        case 'application/json' :
+                            $json = \json_decode( $this->body, true );
+                            if( null !== $json ) $this->merge( $json );
+                            break;
 
-                    case 'application/x-www-form-urlencoded' :
-                    default :
-                        \parse_str( $this->body, $params );
-                        $this->merge( $params );
+                        case 'application/x-www-form-urlencoded' :
+                        default :
+                            \parse_str( $this->body, $params );
+                            $this->merge( \array_filter( $params ) );
+                    }
                 }
-            }
         }
-    }
-
-    public function getBody()
-    {
-        return $this->body;
     }
 }

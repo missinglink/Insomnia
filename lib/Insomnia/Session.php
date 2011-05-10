@@ -27,7 +27,7 @@ class Session extends SessionAbstract
     {
         self::$authentication->authenticate( $request );
         
-        if( \is_null( \Insomnia\Session::get( 'id' ) ) )
+        if( null === \Insomnia\Session::get( 'id' ) )
             throw new SessionException( 'Authentication Failed' );
     }
 
