@@ -38,7 +38,7 @@ class Request extends ArrayAccess
 
     public function getCname()
     {
-        if( substr_count( $_SERVER['HTTP_HOST'], '.' ) > 1 )
+        if( \substr_count( $_SERVER['HTTP_HOST'], '.' ) > 1 )
             return \substr( $_SERVER['HTTP_HOST'], 0, \strpos( $_SERVER['HTTP_HOST'], '.' ) );
     }
 
@@ -68,7 +68,7 @@ class Request extends ArrayAccess
     public function getContentType()
     {
         $contentType = explode( ';', $this->getHeader( 'Content-Type' ) );
-        return reset( $contentType );
+        return \reset( $contentType );
     }
 
     public function getHeader( $header )
@@ -90,8 +90,8 @@ class Request extends ArrayAccess
     {
         $this->addHeaders( $_SERVER, 'HTTP_' );
         $this->addHeaders( $_SERVER, 'REQUEST_' );
-        if( function_exists( 'apache_request_headers' ) )
-            $this->addHeaders( apache_request_headers() );
+        if( \function_exists( 'apache_request_headers' ) )
+            $this->addHeaders( \apache_request_headers() );
     }
 
     private function addHeaders( $headers, $match = false, $normalize = true )
@@ -106,7 +106,7 @@ class Request extends ArrayAccess
 
             if( true === $normalize )
             {
-                $k = \ucfirst( \strtolower( $k ) );
+                $k = \ucfirst( \strtolower( $k ) );               
                 $k = \preg_replace( '/[_-](.+)/e', '"-".ucfirst("$1")', $k );
             }
 

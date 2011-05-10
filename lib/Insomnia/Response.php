@@ -89,28 +89,28 @@ class Response extends ArrayAccess
 
     public function selectRenderer( $controller, $action )
     {
-        if( strrpos( $this->mime, '/json' ) )
+        if( \strrpos( $this->mime, '/json' ) )
             $this->setRenderer( new JsonRenderer );
 
-        elseif( strrpos( $this->mime, '/xml' ) )
+        elseif( \strrpos( $this->mime, '/xml' ) )
             $this->setRenderer( new XmlRenderer );
 
-        elseif( strrpos( $this->mime, '/x-yaml' ) ||
-                strrpos( $this->mime, '/yaml' ) )
+        elseif( \strrpos( $this->mime, '/x-yaml' ) ||
+                \strrpos( $this->mime, '/yaml' ) )
             $this->setRenderer( new YamlRenderer );
 
-        elseif( strrpos( $this->mime, '/html' ) ||
-                strrpos( $this->mime, '/xhtml' ) )
+        elseif( \strrpos( $this->mime, '/html' ) ||
+                \strrpos( $this->mime, '/xhtml' ) )
         {
             $renderer = new ViewRenderer;
             $renderer->useView( $controller . '/' . $action );
             $this->setRenderer( $renderer );
         }
 
-        elseif( strrpos( $this->mime, '/plain' ) )
+        elseif( \strrpos( $this->mime, '/plain' ) )
             $this->setRenderer( new ArrayRenderer );
 
-        elseif( strrpos( $this->mime, '/ini' ) )
+        elseif( \strrpos( $this->mime, '/ini' ) )
             $this->setRenderer( new IniRenderer );
     }
 
