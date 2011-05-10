@@ -40,6 +40,7 @@ class Response extends ArrayAccess
 
         \header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' ' . $this->code );
         \header( 'Content-type: ' . $this->mime . '; charset=\'' . $this->charset .'\'' );
+	\header( 'Connection: close' );
         \flush();
 
         $this->renderer->render( $this );
@@ -57,9 +58,10 @@ class Response extends ArrayAccess
 
     public function selectContentType( $request )
     {
-        foreach( explode( ',', $request->getHeader( 'Accept' ) ) as $format )
+        foreach( \explode( ',', $request->getHeader( 'Accept' ) ) as $format )
         {
-            switch( reset( explode( ';', $format ) ) )
+            $split = \explode( ';', $format );
+            switch( \reset( $split ) )
             {
                 case 'application/json':
                     return $this->setContentType( 'application/json' );

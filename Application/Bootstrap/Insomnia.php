@@ -18,6 +18,9 @@ class Insomnia
         $classLoader = new ClassLoader( 'Symfony', '../lib' );
         $classLoader->register();
 
+        \error_reporting( \APPLICATION_ENV === 'development' ? \E_ALL | \E_STRICT : 0 );
+        \ini_set( 'display_errors', \APPLICATION_ENV === 'development' ? 'On' : 'Off' );
+
         \date_default_timezone_set( 'GMT' );
 
         Dispatcher::$controllerNamespace = 'Application\Controller\\';

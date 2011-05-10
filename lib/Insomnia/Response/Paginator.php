@@ -11,7 +11,7 @@ class Paginator extends PaginationAdapter
     private $pageSize = 100,
             $currentPage = 1;
     
-    public function getItems()
+    public function getItems($offset = null, $itemCountPerPage = null)
     {
         return parent::getItems( ( $this->currentPage -1 ) * $this->pageSize, $this->pageSize );
     }
