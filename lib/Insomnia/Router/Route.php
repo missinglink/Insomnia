@@ -31,7 +31,7 @@ class Route
 
     private function createNamedPatterns()
     {
-        if( \is_numeric( \strpos( $this->pattern, ':' ) ) )
+        if( false !== \strpos( $this->pattern, ':', 1 ) )
             foreach( $this->params as $key => $match )
                 $this->pattern = \str_replace( ":$key", "(?P<$key>$match)", $this->pattern );
     }
