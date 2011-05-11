@@ -21,7 +21,7 @@ class Response extends ArrayAccess
 
     public function __construct()
     {
-        if( $_SERVER['REQUEST_METHOD'] == 'POST' )
+        if( $_SERVER['REQUEST_METHOD'] === 'POST' )
             $this->code = Code::HTTP_CREATED;
     }
 
