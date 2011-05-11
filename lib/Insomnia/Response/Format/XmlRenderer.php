@@ -34,15 +34,17 @@ class XmlRenderer implements ResponseInterface
     {
         foreach( $item as $key => $item )
         {
-            if( is_array( $item ) )
+            if( \is_array( $item ) )
             {
-                $this->writer->startElement( is_numeric( $key ) ? 'item' : $key );
+                $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
                 $this->writeXML( $item );
                 $this->writer->endElement();
                 continue;
             }
 
-            $this->writer->writeElement( $key, $item );
+            $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
+            $this->writer->writeCData( $item );
+            $this->writer->endElement();
         }
     }
   
