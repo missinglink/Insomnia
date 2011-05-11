@@ -28,12 +28,12 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function render( Response $response )
     {
-        $layoutFile = \Insomnia\Registry::get( 'layout_path' ) . $this->layout . $this->extension;
+        $layoutFile = Registry::get( 'layout_path' ) . $this->layout . $this->extension;
 
         if( !\file_exists( $layoutFile ) )
             throw new ViewException( 'Layout File Not Found: ' . $this->layout );
 
-        $viewFile = \Insomnia\Registry::get( 'view_path' ) . $this->view . $this->extension;
+        $viewFile = Registry::get( 'view_path' ) . $this->view . $this->extension;
 
         if( !\file_exists( $viewFile ) )
             throw new ViewException( 'View File Not Found: ' . $this->view );

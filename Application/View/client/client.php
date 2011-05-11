@@ -1,26 +1,51 @@
+<?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
 <? $this->javascript( '/js/jquery-1.4.3.min.js' ); ?>
 <? $this->javascript( '/prettify/prettify.js' ); ?>
 <? $this->css( '/prettify/prettify.css' ); ?>
 
+<?
+    $requestFormats = array(
+        'key/value'    => 'application/x-www-form-urlencoded',
+        'json'          => 'application/json'
+    );
+?>
+
 <form id="nav" action="" method="GET">
-    <select id="path" name="path">
-        <? foreach( $this['controllers'] as $path ): ?>
-        <option><?= $path; ?></option>
-        <? endforeach; ?>
-    </select>
-    <input id="query" name="query" value="" />
-    <select id="method" name="method">
-        <? foreach( array( 'GET', 'POST', 'PUT', 'DELETE' ) as $method ): ?>
-        <option><?= $method; ?></option>
-        <? endforeach; ?>
-    </select>
-    <select id="content-type" name="content-type">
-        <? foreach( array( 'application/json', 'application/xml', 'text/yaml', 'text/ini', 'text/html', 'text/plain' ) as $contentType ): ?>
-        <option><?= $contentType; ?></option>
-        <? endforeach; ?>
-    </select>
-    <input type="submit" value="Submit" />
+    <table>
+        <tr>
+            <td width="100">
+                <label for="request-content-type">Request</label>
+            </td>
+            <td>
+                <input id="request-body" name="request-body" value='name=John Smith' style="width: 300px;" />
+                <select id="request-content-type" name="request-content-type">
+                    <? foreach( $requestFormats as $label => $contentType ): ?>
+                    <option value="<?= $contentType; ?>"><?= $label; ?></option>
+                    <? endforeach; ?>
+                </select>
+                <select id="method" name="method">
+                    <? foreach( array( 'GET', 'POST', 'PUT', 'DELETE' ) as $method ): ?>
+                    <option<? if( $request['method'] === $method ) echo ' selected="selected"' ;?>><?= $method; ?></option>
+                    <? endforeach; ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="content-type">Response</label>
+            </td>
+            <td>
+                <select id="content-type" name="content-type">
+                    <? foreach( array( 'application/json', 'application/xml', 'text/yaml', 'text/ini', 'text/html', 'text/plain' ) as $contentType ): ?>
+                    <option><?= $contentType; ?></option>
+                    <? endforeach; ?>
+                </select>
+                <input type="submit" value="Submit" style="display:none;" />
+            </td>
+        </tr>
+    </table>
+
 </form>
 
 <script type="text/javascript">
@@ -48,6 +73,11 @@
     }
 
     $(document).ready(function() {
+
+        $('#nav #method').change( function(){ $('#nav').submit(); } );
+        $('#nav #request-body').change( function(){ $('#nav').submit(); } );
+        $('#nav #content-type').change( function(){ $('#nav').submit(); } );
+        $('#nav #request-content-type').change( function(){ $('#nav').submit(); } );
 
         function getResponse( xhr )
         {
@@ -94,14 +124,11 @@
         {
             $.ajax({
                 type: $('#nav #method').val(),
-                url:  $('#nav #path').val() + $('#nav #query').val(),
-                //data: 'moo=cow&foo=bar',
-                data: '<?= json_encode( array( 'name' => 'john', 'location' => 'London' ) ); ?>',
+                url:  '<?= $request[ 'path' ] === '/client' ? '/ping' : \str_replace( '/client', '', $request[ 'path' ] ); ?>',
+                data: $('#nav #request-body').val(),
                 beforeSend: function(xhr){
                     xhr.setRequestHeader( 'Accept', $('#nav #content-type').val() );
-                    xhr.setRequestHeader( 'Content-Type', 'application/json' );
-                    //xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-                    //xhr.setRequestHeader( 'Content-Type', 'multipart/form-data' );
+                    xhr.setRequestHeader( 'Content-Type', $('#nav #request-content-type').val() );
                 },
                 success: function( data, textStatus, xhr ){ getResponse( xhr ); },
                 error: function( xhr, textStatus, errorThrown ){ getResponse( xhr ); },

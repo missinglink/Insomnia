@@ -19,6 +19,11 @@ class ApplicationRouter
               ->setAction( 'ANY',    'status' )
               ->match();
 
+        $route = new Route( '/client.*' );
+        $route->setDefault( 'controller', 'client' )
+              ->setAction( 'ANY',    'client' )
+              ->match();
+
         $route = new Route( '/:version/:controller' );
         $route->setParams( $params )
               ->setAction( 'POST',   'create' )
