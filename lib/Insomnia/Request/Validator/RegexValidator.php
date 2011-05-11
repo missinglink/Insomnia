@@ -7,7 +7,7 @@ use \Insomnia\Request,
 
 class RegexValidator
 {
-    private $pattern;
+    protected $pattern;
 
     public function __construct( $pattern )
     {
