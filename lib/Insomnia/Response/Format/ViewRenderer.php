@@ -52,7 +52,7 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function css( $sheet = null )
     {
-        if( is_string( $sheet ) )
+        if( \is_string( $sheet ) )
             $this->stylesheets[ $sheet ] = $sheet;
 
         else foreach( $this->stylesheets as $sheet )
@@ -61,7 +61,7 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function javascript( $script = null )
     {
-        if( is_string( $script ) )
+        if( \is_string( $script ) )
             $this->scripts[ $script ] = $script;
         
         else foreach( $this->scripts as $script )
