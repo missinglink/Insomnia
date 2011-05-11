@@ -2,9 +2,8 @@
 
 namespace Insomnia\Controller;
 
-use \Insomnia\Response,
-    \Insomnia\Request\RequestValidator,
-    \Insomnia\Registry;
+use \Insomnia\Response;
+use \Insomnia\Request\RequestValidator;
 
 abstract class Action
 {
