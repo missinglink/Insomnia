@@ -13,6 +13,6 @@ class ErrorRouter extends RouterAbstract
         $route->setDefault( 'controller', 'errors' )
               ->setDefault( 'exception', $e )
               ->setAction( 'ANY',    'error' );
-        $this[] = $route;
+        $this->match( $route );
     }
 }
