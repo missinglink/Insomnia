@@ -11,7 +11,7 @@ class RegexValidator
 
     public function __construct( $pattern )
     {
-        $this->pattern = '_'.$pattern.'_';
+        $this->pattern = '%'.$pattern.'%';
     }
     
     public function validate( $string, $key )

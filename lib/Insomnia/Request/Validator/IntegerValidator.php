@@ -11,7 +11,7 @@ class IntegerValidator
 
     public function __construct( $min = 1, $max = null )
     {
-        $chars = ( $min > 1 && is_numeric( $max ) ) ? '{'.$min.','.$max.'}' : '';
+        $chars = ( null !== $max && $min > 1 ) ? '{'.$min.','.$max.'}' : '';
         $this->pattern = '^(\d+)'.$chars.'$';
     }
     
