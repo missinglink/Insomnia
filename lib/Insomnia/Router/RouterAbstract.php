@@ -2,11 +2,10 @@
 
 namespace Insomnia\Router;
 
-use \Insomnia\ArrayAccess,
-    \Insomnia\Dispatcher,
+use \Insomnia\Dispatcher,
     \Insomnia\Request;
 
-class RouterAbstract extends ArrayAccess
+class RouterAbstract
 {
     protected $dispatcher,
               $request;
@@ -22,12 +21,10 @@ class RouterAbstract extends ArrayAccess
         $this->dispatcher = $dispatcher;
     }
 
-    public function offsetSet( $offset, $route )
+    public function match( $route )
     {
         if( $route->match( $this->request->getPath() ) )
             $this->dispatcher->dispatch( $this->request, $route );
-
-        parent::offsetSet( $offset, $route );
     }
 
     public function run()

@@ -20,13 +20,13 @@ class ApplicationRouter extends RouterAbstract
         $route = new Route( '/ping.*' );
         $route->setDefault( 'controller', 'status' )
               ->setAction( 'ANY',    'status' );
-        $this[] = $route;
+        $this->match( $route );
 
         $route = new Route( '/:version/:controller' );
         $route->setParams( $params )
               ->setAction( 'POST',   'create' )
               ->setAction( 'GET',    'index' );
-        $this[] = $route;
+        $this->match( $route );
 
         $route = new Route( '/:version/:controller/:id' );
         $route->setParams( $params )
@@ -34,6 +34,6 @@ class ApplicationRouter extends RouterAbstract
               ->setAction( 'HEAD',   'read' )
               ->setAction( 'PUT',    'update' )
               ->setAction( 'DELETE', 'delete' );
-        $this[] = $route;
+        $this->match( $route );
     }
 }
