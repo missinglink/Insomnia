@@ -15,6 +15,6 @@ class TestController extends Action
     
     public function render()
     {
-        Layout::render( $this->request, $this->response );
+        Layout::render( $this->response );
     }
 }

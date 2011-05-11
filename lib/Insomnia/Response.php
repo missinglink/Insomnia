@@ -10,7 +10,8 @@ use \Insomnia\ArrayAccess,
     \Insomnia\Response\Format\YamlRenderer,
     \Insomnia\Response\Format\IniRenderer,
     \Insomnia\Response\Code,
-    \Insomnia\Response\ResponseException;
+    \Insomnia\Response\ResponseException,
+    \Insomnia\Registry;
 
 class Response extends ArrayAccess
 {
@@ -25,9 +26,9 @@ class Response extends ArrayAccess
             $this->code = Code::HTTP_CREATED;
     }
 
-    public function prepare( $controller, $action, $request )
+    public function prepare( $controller, $action )
     {
-        if( !isset( $this->mime ) )     $this->selectContentType( $request );
+        if( !isset( $this->mime ) )     $this->selectContentType();
         if( !isset( $this->renderer ) ) $this->selectRenderer( $controller, $action );
 
         if( empty( $this->data ) && !( $this->renderer instanceof ViewRenderer ) )
@@ -54,9 +55,9 @@ class Response extends ArrayAccess
         $this->renderer = $renderer;
     }
 
-    public function selectContentType( $request )
+    public function selectContentType()
     {
-        foreach( \explode( ',', $request->getHeader( 'Accept' ) ) as $format )
+        foreach( \explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
         {
             $split = \explode( ';', $format );
             switch( \reset( $split ) )

@@ -2,11 +2,12 @@
 
 namespace Insomnia\Router;
 
-use \Insomnia\ArrayAccess;
+use \Insomnia\Registry;
 
-class Route extends ArrayAccess
+class Route
 {
-    private $pattern = '',
+    private $matches = array(),
+            $pattern = '',
             $params = array(),
             $actions = array(),
             $defaults = array();
@@ -16,23 +17,25 @@ class Route extends ArrayAccess
         if( \is_string( $pattern ) ) $this->pattern = $pattern;
     }
 
-    public function match( $uri )
+    public function match()
     {
         $this->createNamedPatterns();
-        if( !\preg_match( "_^$this->pattern\$_", $uri, $matches ) ) return false;
-
-        $matches = array_merge( $this->defaults, $matches );
-        $params  = array_merge( $this->params, $this->defaults );
         
-        $this->data = \array_merge( array_intersect_key( $matches, $params ), $this->data );
-        return true;
+        if( !\preg_match( "_^$this->pattern\$_", Registry::get( 'request' )->getPath(), $matches ) )
+            return false;
+
+        $this->matches = \array_intersect_key(
+                \array_merge( $this->defaults, $matches ),
+                \array_merge( $this->params, $this->defaults ) );
+        
+        Registry::get( 'dispatcher' )->dispatch( $this );
     }
 
     private function createNamedPatterns()
     {
-        if( is_numeric( \strpos( $this->pattern, ':' ) ) )
+        if( \is_numeric( \strpos( $this->pattern, ':' ) ) )
             foreach( $this->params as $key => $match )
-                $this->pattern = str_replace( ":$key", "(?P<$key>$match)", $this->pattern );
+                $this->pattern = \str_replace( ":$key", "(?P<$key>$match)", $this->pattern );
     }
 
     public function setDefault( $key, $value )
@@ -67,5 +70,10 @@ class Route extends ArrayAccess
     public function getPattern()
     {
         return $this->pattern;
+    }
+
+    public function getMatches()
+    {
+        return $this->matches;
     }
 }

@@ -3,13 +3,15 @@
 namespace Application\Controller\Errors;
 
 use \Application\Controller\ErrorsController,
-    \Insomnia\Response\Code;
+    \Insomnia\Response\Code,
+    \Insomnia\Registry;
 
 class ErrorAction extends ErrorsController
 {
     public function action()
     {
-        $exception = $this->request[ 'exception' ];
+        $request = Registry::get( 'request' );
+        $exception = $request[ 'exception' ];
         //$this->response[ 'type2' ] = get_class( $exception );
 
         switch( get_class( $exception ) )

@@ -3,7 +3,9 @@
 namespace Application\Bootstrap;
 
 use \Doctrine\Common\ClassLoader,
-    \Insomnia\Dispatcher;
+    \Insomnia\Request,
+    \Insomnia\Dispatcher,
+    \Insomnia\Registry;
 
 class Insomnia
 {
@@ -23,21 +25,15 @@ class Insomnia
 
         \date_default_timezone_set( 'GMT' );
 
-        Dispatcher::$controllerNamespace = 'Application\Controller\\';
-        
         \ini_set( 'session.auto_start',       0 ); // Turn off sessions by default
         \ini_set( 'session.use_cookies',      0 ); // Turn off cookies by default
         \ini_set( 'session.use_only_cookies', 0 ); // Turn off cookies by default
         \ini_set( 'session.use_trans_sid',    0 ); // Turn off sid by default
-    }
 
-    public static function getLayoutPath()
-    {
-        return dirname( __DIR__ ) . '/View';
-    }
-
-    public static function getViewPath()
-    {
-        return dirname( __DIR__ ) . '/View';
+        \Insomnia\Registry::set( 'request',                 new Request );
+        \Insomnia\Registry::set( 'dispatcher',              new Dispatcher );
+        \Insomnia\Registry::set( 'controller_namespace',    'Application\Controller\\' );
+        \Insomnia\Registry::set( 'view_path',               realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
+        \Insomnia\Registry::set( 'layout_path',             realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
     }
 }

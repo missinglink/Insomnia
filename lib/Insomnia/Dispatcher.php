@@ -4,33 +4,36 @@ namespace Insomnia;
 
 use \Doctrine\Common\ClassLoader,
     \Insomnia\Router\Route,
-    \Insomnia\Controller\PluginInterface;
+    \Insomnia\Controller\PluginInterface,
+    \Insomnia\Registry;
 
 class DispatcherControllerException extends \Exception {};
 class DispatcherMethodException extends \Exception {};
 
 class Dispatcher
 {
-    public static $controllerNamespace = '',
-                  $actionClassSuffix   = 'Action';
+    public static $actionClassSuffix   = 'Action';
     
     private $controllerName,
             $actionName;
 
-    public function dispatch( Request $request, Route $route )
+    public function dispatch( Route $route )
     {
+        $request = Registry::get( 'request' );
+        $macthes = $route->getMatches();
+
         $this->actionName = $route->getAction( $request->getMethod() );
         if( !$this->actionName ) throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getPath() );
 
         $this->actionName       = \strtolower( $this->actionName );
-        $this->controllerName   = \strtolower( $route[ 'controller' ] );
+        $this->controllerName   = \strtolower( $macthes[ 'controller' ] );
 
-        $this->run( $request, $route );
+        $this->run( $route );
     }
 
-    private function run( Request $request, Route $route )
+    private function run( Route $route )
     {
-        $class = self::$controllerNamespace .
+        $class = \Insomnia\Registry::get( 'controller_namespace' ) .
                  \ucfirst( $this->controllerName ) . '\\' .
                  \ucfirst( $this->actionName ) .
                  self::$actionClassSuffix;
@@ -39,9 +42,7 @@ class Dispatcher
             throw new DispatcherControllerException( 'Controller not found: ' . $this->controllerName );
 
         $controller = new $class();
-        $request->merge( $route );
-        
-        $controller->setRequest( $request );
+        Registry::get( 'request' )->merge( $route->getMatches() );
         
         if( \method_exists( $controller, 'validate' ) )
             $controller->validate();
@@ -49,7 +50,7 @@ class Dispatcher
         if( \method_exists( $controller, 'action' ) )
             $controller->action();
 
-        $controller->getResponse()->prepare( $this->controllerName, $this->actionName, $request );
+        $controller->getResponse()->prepare( $this->controllerName, $this->actionName );
 
         if( \method_exists( $controller, 'render' ) )
             $controller->render();

@@ -2,16 +2,13 @@
 
 namespace Application\Router;
 
-use \Insomnia\Request,
-    \Insomnia\Router\Route,
-    \Insomnia\Router\RouterAbstract;
+use \Insomnia\Router\Route,
+    \Insomnia\Router\RouterException;
 
-class ApplicationRouter extends RouterAbstract
+class ApplicationRouter
 {
-    public function __construct( Request $request )
+    public function __construct()
     {
-        parent::__construct( $request );
-
         $params = array();
         $params[ 'version' ]    = 'v\d+';
         $params[ 'controller' ] = '[a-z]+';
@@ -19,21 +16,23 @@ class ApplicationRouter extends RouterAbstract
 
         $route = new Route( '/ping.*' );
         $route->setDefault( 'controller', 'status' )
-              ->setAction( 'ANY',    'status' );
-        $this->match( $route );
+              ->setAction( 'ANY',    'status' )
+              ->match();
 
         $route = new Route( '/:version/:controller' );
         $route->setParams( $params )
               ->setAction( 'POST',   'create' )
-              ->setAction( 'GET',    'index' );
-        $this->match( $route );
+              ->setAction( 'GET',    'index' )
+              ->match();
 
         $route = new Route( '/:version/:controller/:id' );
         $route->setParams( $params )
               ->setAction( 'GET',    'read' )
               ->setAction( 'HEAD',   'read' )
               ->setAction( 'PUT',    'update' )
-              ->setAction( 'DELETE', 'delete' );
-        $this->match( $route );
+              ->setAction( 'DELETE', 'delete' )
+              ->match();
+
+        throw new RouterException( 'Failed to Match any Routes' );
     }
 }

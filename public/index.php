@@ -21,13 +21,13 @@ define( 'APPLICATION_ENV', 'development' );
 
 new \Application\Bootstrap\Insomnia;
 
-try {
-    $insomnia = new ApplicationRouter( new Request );
+try {    
+    $insomnia = new ApplicationRouter;
     $insomnia->run();
 }
 
 catch( \Exception $e )
 {
-    $error = new ErrorRouter( new Request );
+    $error = new ErrorRouter;
     $error->setException( $e );
 }

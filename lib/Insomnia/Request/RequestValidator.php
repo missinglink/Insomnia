@@ -2,18 +2,18 @@
 
 namespace Insomnia\Request;
 
-use \Insomnia\Request;
+use \Insomnia\Registry;
 
 class ValidatorException extends \Exception {}
 
 class RequestValidator
 {
-    private $request,
-            $params = array();
+    private $params = array(),
+            $request;
 
-    public function __construct( Request $request )
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = Registry::get( 'request' );
     }
 
     public function required( $key, $validator )

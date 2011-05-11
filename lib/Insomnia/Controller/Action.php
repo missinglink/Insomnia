@@ -2,35 +2,24 @@
 
 namespace Insomnia\Controller;
 
-use \Insomnia\Request,
-    \Insomnia\Response,
-    \Insomnia\Request\RequestValidator;
+use \Insomnia\Response,
+    \Insomnia\Request\RequestValidator,
+    \Insomnia\Registry;
 
 abstract class Action
 {
-    protected $request,
-              $response,
+    protected $response,
               $validator;
 
     public function __construct()
     {
+        $this->setValidator( new RequestValidator );
         $this->setResponse( new Response );
     }
 
     public function validate(){}
     public function action(){}
     public function render(){}
-    
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    public function setRequest( Request $request )
-    {
-        $this->request = $request;
-        $this->setValidator( new RequestValidator( $this->request ) );
-    }
 
     public function getResponse()
     {

@@ -6,11 +6,11 @@ use \Insomnia\Response\Map;
 
 class Layout implements Map
 {
-    public static function render( $request, $response )
+    public static function render( $response )
     {
         $response->expand( 'data' );
 
         $header = new Header;
-        $header->render( $request, $response );
+        $header->render( $response );
     }
 }

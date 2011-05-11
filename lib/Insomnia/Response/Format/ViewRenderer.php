@@ -4,27 +4,17 @@ namespace Insomnia\Response\Format;
 
 use \Insomnia\ArrayAccess,
     \Insomnia\Response\ResponseInterface,
-    \Insomnia\Response;
+    \Insomnia\Response,
+    \Insomnia\Registry;
 
 class ViewRenderer extends ArrayAccess implements ResponseInterface
 {
-    private $viewPath,
-            $layout     = 'layout',
+    private $layout     = 'layout',
             $view       = 'index',
             $extension  = '.php',
             $viewContent,
             $stylesheets = array(),
             $scripts = array();
-
-    public function __construct()
-    {
-        $this->setViewPath( \Application\Bootstrap\Insomnia::getViewPath() );
-    }
-
-    public function setViewPath( $path )
-    {
-        $this->viewPath = realpath( $path ) . \DIRECTORY_SEPARATOR;
-    }
 
     public function useLayout( $layout )
     {
@@ -38,12 +28,12 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function render( Response $response )
     {
-        $layoutFile = $this->viewPath . $this->layout . $this->extension;
+        $layoutFile = \Insomnia\Registry::get( 'layout_path' ) . $this->layout . $this->extension;
 
         if( !\file_exists( $layoutFile ) )
             throw new ViewException( 'Layout File Not Found: ' . $this->layout );
 
-        $viewFile = $this->viewPath . $this->view . $this->extension;
+        $viewFile = \Insomnia\Registry::get( 'view_path' ) . $this->view . $this->extension;
 
         if( !\file_exists( $viewFile ) )
             throw new ViewException( 'View File Not Found: ' . $this->view );
