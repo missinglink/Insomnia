@@ -43,6 +43,7 @@ class Response extends ArrayAccess
         \header( 'Content-Type: ' . $this->mime . '; charset=\'' . $this->charset .'\'' );
         $this->renderer->render( $this );
         \flush();
+        exit;
     }
 
     public function getRenderer()

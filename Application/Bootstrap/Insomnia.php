@@ -33,6 +33,7 @@ class Insomnia
         \Insomnia\Registry::set( 'request',                 new Request );
         \Insomnia\Registry::set( 'dispatcher',              new Dispatcher );
         \Insomnia\Registry::set( 'controller_namespace',    'Application\Controller\\' );
+        \Insomnia\Registry::set( 'action_suffix',           'Action' );
         \Insomnia\Registry::set( 'view_path',               realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
         \Insomnia\Registry::set( 'layout_path',             realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
     }
