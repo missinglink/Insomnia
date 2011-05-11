@@ -21,9 +21,9 @@ define( 'APPLICATION_ENV', 'development' );
 
 new \Application\Bootstrap\Insomnia;
 
-try {    
-    $insomnia = new ApplicationRouter;
-    $insomnia->run();
+try
+{
+    new ApplicationRouter;
 }
 
 catch( \Exception $e )
