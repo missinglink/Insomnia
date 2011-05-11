@@ -37,11 +37,11 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
         $this->merge( $response );
         
         \ob_start();
-        include( $viewFile );
+        require $viewFile;
         $this->viewContent = \ob_get_clean();
 
         \ob_start();
-        include( $layoutFile );
+        require $layoutFile;
         \ob_end_flush();
     }
 
