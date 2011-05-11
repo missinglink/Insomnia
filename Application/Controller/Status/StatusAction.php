@@ -2,19 +2,17 @@
 
 namespace Application\Controller\Status;
 
-use \Application\Controller\StatusController,
+use \Insomnia\Controller\Action,
     \Insomnia\Registry;
 
-class StatusAction extends StatusController
+class StatusAction extends Action
 {
     public function action()
     {
-        $backtrace = array();
-        $cleanPath = \realpath( $_SERVER[ 'DOCUMENT_ROOT' ] . '/../' ) . '/';
+        $request = Registry::get( 'request' );
+        
         foreach( \array_reverse( \debug_backtrace( false ) ) as $k => $trace )
             $backtrace[] = ($k+1) . '. ' . $trace[ 'class' ] . '::' . $trace[ 'function' ] . '()';
-
-        $request = Registry::get( 'request' );
         
         $request->getHeader( 'Force Load Headers' );
         $this->response->merge( array(
