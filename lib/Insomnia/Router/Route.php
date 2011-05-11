@@ -24,9 +24,7 @@ class Route
         if( !\preg_match( "_^$this->pattern\$_", Registry::get( 'request' )->getPath(), $matches ) )
             return false;
 
-        $this->matches = \array_intersect_key(
-                \array_merge( $this->defaults, $matches ),
-                \array_merge( $this->params, $this->defaults ) );
+        $this->matches = \array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
         
         Registry::get( 'dispatcher' )->dispatch( $this );
     }

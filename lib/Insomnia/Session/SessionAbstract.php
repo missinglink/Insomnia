@@ -6,7 +6,7 @@ class SessionAbstract implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     public function merge( $data )
     {
-        $_SESSION = \array_merge( $_SESSION, $data );
+        $_SESSION = $data + $_SESSION;
     }
 
     public function toArray()

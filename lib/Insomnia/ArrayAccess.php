@@ -11,7 +11,7 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
         if( $data instanceof \Insomnia\ArrayAccess )
             $data = $data->toArray();
         
-        $this->data = \array_merge( $this->data, $data );
+        $this->data = $data + $this->data;
     }
 
     public function toArray()
@@ -82,6 +82,6 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function prepend( $offset, $value )
     {
-        $this->data = \array_merge( array( $offset => $value ), $this->data );
+        $this->data = array( $offset => $value ) + $this->data;
     }
 }
