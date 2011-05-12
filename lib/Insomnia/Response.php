@@ -133,12 +133,11 @@ class Response extends ArrayAccess
                 $this->setRenderer( new IniRenderer );
                 break;
 
-            default :
-                if( $controller === 'errors' )
-                {
-                    $this->setContentType( self::$defaultContentType );
-                    $this->selectRenderer( $controller, $action );
-                }
+            default: if( $controller === 'errors' )
+            {
+                $this->setContentType( self::$defaultContentType );
+                $this->selectRenderer( $controller, $action );
+            }
         }
     }
 
