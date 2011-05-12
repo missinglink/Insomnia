@@ -58,6 +58,17 @@ class Response extends ArrayAccess
 
     public function selectContentType()
     {
+        switch( Registry::get( 'request' )->getFileExtension() )
+        {
+            case ''     : break;
+            case '.json': return $this->setContentType( 'application/json' );
+            case '.xml' : return $this->setContentType( 'application/xml' );
+            case '.html': return $this->setContentType( 'text/html' );
+            case '.yaml': return $this->setContentType( 'application/x-yaml' );
+            case '.txt' : return $this->setContentType( 'text/plain' );
+            case '.ini' : return $this->setContentType( 'text/ini' );
+        }
+
         foreach( \explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
         {
             $split = \explode( ';', $format );
@@ -85,7 +96,8 @@ class Response extends ArrayAccess
                     return $this->setContentType( 'text/ini' );
             }
         }
-        return $this->setContentType( 'application/json' );
+
+        $this->setContentType( 'application/json' );
     }
 
     public function selectRenderer( $controller, $action )

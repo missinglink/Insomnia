@@ -14,7 +14,7 @@ class Route
     
     public function __construct( $pattern )
     {
-        if( \is_string( $pattern ) ) $this->pattern = $pattern;
+        if( \is_string( $pattern ) ) $this->pattern = $pattern . '(\.(json|xml|html|yaml|txt|ini))?';
     }
 
     public function match()

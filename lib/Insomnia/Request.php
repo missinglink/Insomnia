@@ -42,6 +42,12 @@ class Request extends ArrayAccess
             return \substr( $_SERVER['HTTP_HOST'], 0, \strpos( $_SERVER['HTTP_HOST'], '.' ) );
     }
 
+    public function getFileExtension()
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+        return ( false !== \strrpos( $uri, '.', \strpos( $uri, '/' ) ) ) ? \strrchr( $uri, '.' ) : '';
+    }
+
     public function getPath()
     {
         if( empty( $this ) ) $this->parseUrl();
