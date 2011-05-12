@@ -22,22 +22,23 @@ class Doctrine extends EntityManager
     public function __construct()
     {
         // Autoloader (1)
-        $classLoader = new ClassLoader( 'Entities', __DIR__ . '../' );
+        $classLoader = new ClassLoader( 'Entities', \ROOT . 'Application' );
         $classLoader->register();
-        $classLoader = new ClassLoader( 'Proxies', __DIR__ . '../' );
+        $classLoader = new ClassLoader( 'Proxies', \ROOT . 'Application' );
+        $classLoader->register();
+        $classLoader = new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' );
         $classLoader->register();
 
         // configuration (2)
         $config = new Configuration;
 
         // Proxies (3)
-        $config->setProxyDir( __DIR__ . '../Proxies' );
+        $config->setProxyDir( \ROOT . 'Application/Proxies' );
         $config->setProxyNamespace( 'Proxies' );
         $config->setAutoGenerateProxyClasses( APPLICATION_ENV === 'development' );
 
         // Driver (4)
-        $driverImpl = $config->newDefaultAnnotationDriver( array( __DIR__. '/../Entities' ) );
-        $config->setMetadataDriverImpl($driverImpl);
+        $config->setMetadataDriverImpl( $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) ) );
 
         // Caching Configuration (5)
         $cache = ( APPLICATION_ENV === 'development' )

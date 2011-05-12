@@ -3,20 +3,14 @@
 namespace Application\Bootstrap;
 
 use \Doctrine\Common\ClassLoader;
-
 use \Insomnia\Request;
 use \Insomnia\Dispatcher;
 use \Insomnia\Registry;
-
-use \Application\Router\ApplicationRouter;
-use \Application\Router\ErrorRouter;
 
 class Insomnia
 {
     public function __construct()
     {
-        \define( 'APPLICATION_ENV', 'development' );
-
         if( \APPLICATION_ENV === 'development' )
         {
             \error_reporting( \E_ALL | \E_STRICT );
@@ -29,30 +23,12 @@ class Insomnia
         \ini_set( 'session.use_only_cookies',   0 ); // Turn off cookies by default
         \ini_set( 'session.use_trans_sid',      0 ); // Turn off sid by default
 
-        $classLoader = new ClassLoader( 'Insomnia', '../lib' );
-        $classLoader->register();
-
-        $classLoader = new ClassLoader( 'DoctrineExtensions', '../lib' );
-        $classLoader->register();
-
-        $classLoader = new ClassLoader( 'Symfony', '../lib' );
-        $classLoader->register();
-
         Registry::set( 'request',               new Request );
         Registry::set( 'dispatcher',            new Dispatcher );
         Registry::set( 'controller_namespace',  'Application\Controller\\' );
         Registry::set( 'action_suffix',         'Action' );
-        Registry::set( 'view_path',             \realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
-        Registry::set( 'layout_path',           \realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
+        Registry::set( 'view_path',             'Application/View' );
+        Registry::set( 'layout_path',           'Application/View' );
         Registry::set( 'view_extension',        '.php' );
-
-        try{
-            new ApplicationRouter;
-        }
-
-        catch( \Exception $e )
-        {
-            new ErrorRouter( $e );
-        }
     }
 }
