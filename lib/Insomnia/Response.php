@@ -15,6 +15,8 @@ use \Insomnia\ArrayAccess,
 
 class Response extends ArrayAccess
 {
+    public static $defaultContentType = 'application/json';
+
     private $renderer,
             $code       = Code::HTTP_OK,
             $mime       = null,
@@ -98,34 +100,46 @@ class Response extends ArrayAccess
             }
         }
 
-        $this->setContentType( 'application/json' );
+        $this->setContentType( self::$defaultContentType );
     }
 
     public function selectRenderer( $controller, $action )
     {
-        if( \strrpos( $this->mime, '/json' ) )
-            $this->setRenderer( new JsonRenderer );
-
-        elseif( \strrpos( $this->mime, '/xml' ) )
-            $this->setRenderer( new XmlRenderer );
-
-        elseif( \strrpos( $this->mime, '/x-yaml' ) ||
-                \strrpos( $this->mime, '/yaml' ) )
-            $this->setRenderer( new YamlRenderer );
-
-        elseif( \strrpos( $this->mime, '/html' ) ||
-                \strrpos( $this->mime, '/xhtml' ) )
+        switch( \substr( $this->mime, \strrpos( $this->mime, '/' )+1 ) )
         {
-            $renderer = new ViewRenderer;
-            $renderer->useView( $controller . '/' . $action );
-            $this->setRenderer( $renderer );
+            case 'json':
+                $this->setRenderer( new JsonRenderer );
+                break;
+
+            case 'xml':
+                $this->setRenderer( new XmlRenderer );
+                break;
+
+            case 'x-yaml': case 'yaml':
+                $this->setRenderer( new YamlRenderer );
+                break;
+
+            case 'xhtml': case 'html':
+                $renderer = new ViewRenderer;
+                $renderer->useView( $controller . '/' . $action );
+                $this->setRenderer( $renderer );
+                break;
+
+            case 'plain':
+                $this->setRenderer( new ArrayRenderer );
+                break;
+
+            case 'ini':
+                $this->setRenderer( new IniRenderer );
+                break;
+
+            default :
+                if( $controller === 'errors' )
+                {
+                    $this->setContentType( self::$defaultContentType );
+                    $this->selectRenderer( $controller, $action );
+                }
         }
-
-        elseif( \strrpos( $this->mime, '/plain' ) )
-            $this->setRenderer( new ArrayRenderer );
-
-        elseif( \strrpos( $this->mime, '/ini' ) )
-            $this->setRenderer( new IniRenderer );
     }
 
     public function getCode()
