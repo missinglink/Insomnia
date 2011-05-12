@@ -9,11 +9,11 @@ use \Insomnia\ArrayAccess,
 
 class ViewRenderer extends ArrayAccess implements ResponseInterface
 {
-    private $layout     = 'layout',
-            $view       = 'index',
-            $viewContent,
-            $stylesheets = array(),
-            $scripts = array();
+    private $layout         = 'layout',
+            $view           = 'index',
+            $viewContent    = '',
+            $stylesheets    = array(),
+            $scripts        = array();
 
     public function useLayout( $layout )
     {
