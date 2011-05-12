@@ -7,7 +7,7 @@ use \Insomnia\Router\Route,
         
 class ErrorRouter
 {
-    public function setException( \Exception $e )
+    public function __construct( \Exception $e )
     {
         $route = new Route( '/.*' );
         $route->setDefault( 'controller', 'errors' )
