@@ -2,15 +2,21 @@
 
 namespace Application\Bootstrap;
 
-use \Doctrine\Common\ClassLoader,
-    \Insomnia\Request,
-    \Insomnia\Dispatcher,
-    \Insomnia\Registry;
+use \Doctrine\Common\ClassLoader;
+
+use \Insomnia\Request;
+use \Insomnia\Dispatcher;
+use \Insomnia\Registry;
+
+use \Application\Router\ApplicationRouter;
+use \Application\Router\ErrorRouter;
 
 class Insomnia
 {
     public function __construct()
     {
+        \define( 'APPLICATION_ENV', 'development' );
+
         if( \APPLICATION_ENV === 'development' )
         {
             \error_reporting( \E_ALL | \E_STRICT );
@@ -39,5 +45,14 @@ class Insomnia
         Registry::set( 'view_path',             \realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
         Registry::set( 'layout_path',           \realpath( dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' ) . \DIRECTORY_SEPARATOR );
         Registry::set( 'view_extension',        '.php' );
+
+        try{
+            new ApplicationRouter;
+        }
+
+        catch( \Exception $e )
+        {
+            new ErrorRouter( $e );
+        }
     }
 }
