@@ -2,9 +2,10 @@
 
 namespace Insomnia;
 
-use \Doctrine\Common\ClassLoader,
-    \Application\Router\ApplicationRouter,
-    \Application\Router\ErrorRouter;
+use \Doctrine\Common\ClassLoader;
+use \Application\Bootstrap\Insomnia;
+use \Application\Router\ApplicationRouter;
+use \Application\Router\ErrorRouter;
 
 require_once '../lib/Doctrine/Common/ClassLoader.php';
 $classLoader = new ClassLoader( 'Doctrine', dirname( __FILE__ ) . '/../lib' );
@@ -19,15 +20,13 @@ define( 'APPLICATION_ENV', 'development' );
 
 // -----------------------------------------
 
-new \Application\Bootstrap\Insomnia;
-
 try
 {
+    new Insomnia;
     new ApplicationRouter;
 }
 
 catch( \Exception $e )
 {
-    $error = new ErrorRouter;
-    $error->setException( $e );
+    new ErrorRouter( $e );
 }
