@@ -17,7 +17,7 @@ class Response extends ArrayAccess
 {
     private $renderer,
             $code       = Code::HTTP_OK,
-            $mime,
+            $mime       = null,
             $charset    = 'utf8';
 
     public function __construct()
@@ -37,7 +37,8 @@ class Response extends ArrayAccess
 
     public function render()
     {
-        if( !\method_exists( $this->renderer, 'render' ) ) throw new ResponseException( 'Invalid Response Format' );
+        if( !\is_object( $this->renderer ) || !\method_exists( $this->renderer, 'render' ) )
+            throw new ResponseException( 'Invalid Response Format' );
 
         \header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' ' . $this->code );
         \header( 'Content-Type: ' . $this->mime . '; charset=\'' . $this->charset .'\'' );
