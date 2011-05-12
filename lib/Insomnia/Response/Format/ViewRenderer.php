@@ -11,7 +11,6 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 {
     private $layout     = 'layout',
             $view       = 'index',
-            $extension  = '.php',
             $viewContent,
             $stylesheets = array(),
             $scripts = array();
@@ -28,10 +27,10 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
 
     public function render( Response $response )
     {
-        if( !\file_exists( $layoutFile = Registry::get( 'layout_path' ) . $this->layout . $this->extension ) )
+        if( !\file_exists( $layoutFile = Registry::get( 'layout_path' ) . $this->layout . Registry::get( 'view_extension' ) ) )
             throw new ViewException( 'Layout File Not Found: ' . $this->layout );
 
-        if( !\file_exists( $viewFile = Registry::get( 'view_path' ) . $this->view . $this->extension ) )
+        if( !\file_exists( $viewFile = Registry::get( 'view_path' ) . $this->view . Registry::get( 'view_extension' ) ) )
             throw new ViewException( 'View File Not Found: ' . $this->view );
         
         $this->merge( $response );
