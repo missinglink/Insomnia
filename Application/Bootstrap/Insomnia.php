@@ -17,7 +17,6 @@ class Insomnia
             \ini_set( 'display_errors', 'On' );
         }
 
-        \date_default_timezone_set( 'GMT' );
         \ini_set( 'session.auto_start',         0 ); // Turn off sessions by default
         \ini_set( 'session.use_cookies',        0 ); // Turn off cookies by default
         \ini_set( 'session.use_only_cookies',   0 ); // Turn off cookies by default
