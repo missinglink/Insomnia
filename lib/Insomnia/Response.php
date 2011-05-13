@@ -17,9 +17,9 @@ class Response extends ArrayAccess
 {
     public static $defaultContentType = 'application/json';
 
-    private $renderer,
-            $code       = Code::HTTP_OK,
+    private $code       = Code::HTTP_OK,
             $mime       = null,
+            $renderer   = null,
             $charset    = 'utf8';
 
     public function __construct()
