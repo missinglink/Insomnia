@@ -9,6 +9,6 @@ class ArrayRenderer implements ResponseInterface
 {
     public function render( Response $response )
     {
-        print_r( $response->toArray() );
+        \print_r( $response->toArray() );
     }
 }

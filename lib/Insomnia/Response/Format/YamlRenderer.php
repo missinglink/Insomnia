@@ -5,6 +5,7 @@ namespace Insomnia\Response\Format;
 use \Doctrine\Common\ClassLoader;
 use \Insomnia\Response\ResponseInterface;
 use \Insomnia\Response;
+use \Symfony\Component\Yaml\Dumper;
 
 class YamlRenderer implements ResponseInterface
 {
@@ -13,7 +14,7 @@ class YamlRenderer implements ResponseInterface
         $classLoader = new ClassLoader( 'Symfony', \ROOT . 'lib' );
         $classLoader->register();
 
-        $yamlDumper = new \Symfony\Component\Yaml\Dumper;
+        $yamlDumper = new Dumper;
         echo $yamlDumper->dump( $response->toArray(), 2, 0 );
     }
 }

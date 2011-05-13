@@ -20,13 +20,13 @@ class IniRenderer implements ResponseInterface
     {
         foreach( $data as $key => $val )
         {
-            $key = is_numeric( $key ) ? 'item' : $key;
-            if( is_array( $val ) )
+            $key = \is_numeric( $key ) ? 'item' : $key;
+            if( \is_array( $val ) )
             {
-                echo PHP_EOL . str_repeat( $this->indent, $indent ) . "[$key]\r\n";
+                echo PHP_EOL . \str_repeat( $this->indent, $indent ) . "[$key]\r\n";
                 $this->createIni( $val, $indent + 1 );
             }
-            else echo str_repeat( $this->indent, $indent ) . "$key = " . ( is_numeric( $val ) ? $val : '"'.$val.'"' ) . "\r\n";
+            else echo \str_repeat( $this->indent, $indent ) . "$key = " . ( \is_numeric( $val ) ? $val : '"'.$val.'"' ) . "\r\n";
         }
     }
 }
