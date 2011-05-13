@@ -40,6 +40,6 @@ class Test
 
     public function fromArray( $array )
     {
-        if( array_key_exists( 'name', $array ) ) $this->setName( $array[ 'name' ] );
+        if( isset( $array['name'] ) ) $this->setName( $array[ 'name' ] );
     }
 }

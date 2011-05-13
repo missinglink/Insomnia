@@ -38,31 +38,30 @@ class Request extends ArrayAccess
 
     public function getCname()
     {
-        if( \substr_count( $_SERVER['HTTP_HOST'], '.' ) > 1 )
-            return \substr( $_SERVER['HTTP_HOST'], 0, \strpos( $_SERVER['HTTP_HOST'], '.' ) );
+        return \substr_count( $_SERVER['HTTP_HOST'], '.' ) > 1
+            ? \strstr( $_SERVER['HTTP_HOST'], '.', true ) : '';
     }
 
+    /**
+     * @return string|false
+     */
     public function getFileExtension()
     {
-        $uri = $_SERVER['REQUEST_URI'];
-        return ( false !== \strrpos( $uri, '.', \strpos( $uri, '/' ) ) ) ? \strrchr( $uri, '.' ) : '';
+        return \strrchr( \strrchr( $_SERVER['REQUEST_URI'], '/' ), '.' );
     }
 
     public function getPath()
     {
-        if( empty( $this ) ) $this->parseUrl();
         return isset( $this[ 'path' ] ) ? $this[ 'path' ] : null;
     }
 
     public function getQuery()
     {
-        if( empty( $this ) ) $this->parseUrl();
         return isset( $this[ 'query' ] ) ? $this[ 'query' ] : null;
     }
 
     public function getFragment()
     {
-        if( empty( $this ) ) $this->parseUrl();
         isset( $this[ 'fragment' ] ) ? $this[ 'fragment' ] : null;
     }
 
@@ -73,13 +72,12 @@ class Request extends ArrayAccess
     
     public function getContentType()
     {
-        $contentType = explode( ';', $this->getHeader( 'Content-Type' ) );
-        return \reset( $contentType );
+        return \strstr( $this->getHeader( 'Content-Type' ) . ';', ';', true );
     }
 
     public function getHeader( $header )
     {
-        if( !is_array( $this->headers ) || empty( $this->headers ) )
+        if( empty( $this->headers ) )
             $this->parseHeaders();
         
         return isset( $this->headers[ $header ] )
@@ -96,25 +94,22 @@ class Request extends ArrayAccess
     {
         $this->addHeaders( $_SERVER, 'HTTP_' );
         $this->addHeaders( $_SERVER, 'REQUEST_' );
-        if( \function_exists( 'apache_request_headers' ) )
-            $this->addHeaders( \apache_request_headers() );
     }
 
-    private function addHeaders( $headers, $match = false, $normalize = true )
+    private function addHeaders( $headers, $match = false )
     {
+        $matchLength = \is_string( $match ) ? \strlen( $match ) : false;
+
         foreach( $headers as $k => $v )
         {
-            if( \is_string( $match ) )
+            if( false !== $matchLength )
             {
-                if( \substr( $k, 0, \strlen( $match ) ) !== $match ) continue;
-                else $k = \str_replace( $match, '', $k );
+                if( \strncmp( $k, $match, $matchLength ) ) continue;
+                else $k = \substr( $k, $matchLength );
             }
 
-            if( true === $normalize )
-            {
-                $k = \ucfirst( \strtolower( $k ) );               
-                $k = \preg_replace( '/[_-](.+)/e', '"-".ucfirst("$1")', $k );
-            }
+            /* Format Key */
+            $k = \strtr( \ucwords( \strtolower( \strtr( $k, '_', ' ' ) ) ), ' ', '-' );
 
             $this->headers[ $k ] = $v;
         }
@@ -124,6 +119,7 @@ class Request extends ArrayAccess
     {
         switch( $this->getMethod() )
         {
+            case 'GET': break;
             case 'PUT': case 'POST':
                 $this->body = \trim( \file_get_contents( 'php://input' ) );
 

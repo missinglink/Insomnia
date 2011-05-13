@@ -24,7 +24,7 @@ class Response extends ArrayAccess
 
     public function __construct()
     {
-        if( $_SERVER['REQUEST_METHOD'] === 'POST' )
+        if( Registry::get( 'request' )->getMethod() === 'POST' )
             $this->code = Code::HTTP_CREATED;
     }
 
@@ -63,7 +63,7 @@ class Response extends ArrayAccess
     {
         switch( Registry::get( 'request' )->getFileExtension() )
         {
-            case ''     : break;
+            case false  : break;
             case '.json': return $this->setContentType( 'application/json' );
             case '.xml' : return $this->setContentType( 'application/xml' );
             case '.html': return $this->setContentType( 'text/html' );
@@ -74,8 +74,7 @@ class Response extends ArrayAccess
 
         foreach( \explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
         {
-            $split = \explode( ';', $format );
-            switch( \reset( $split ) )
+            switch( \strstr( $format . ';', ';', true ) )
             {
                 case 'application/json':
                     return $this->setContentType( 'application/json' );
@@ -105,31 +104,31 @@ class Response extends ArrayAccess
 
     public function selectRenderer( $controller, $action )
     {
-        switch( \substr( $this->mime, \strrpos( $this->mime, '/' )+1 ) )
+        switch( \strstr( $this->mime, '/' ) )
         {
-            case 'json':
+            case '/json':
                 $this->setRenderer( new JsonRenderer );
                 break;
 
-            case 'xml':
+            case '/xml':
                 $this->setRenderer( new XmlRenderer );
                 break;
 
-            case 'x-yaml': case 'yaml':
+            case '/x-yaml': case '/yaml':
                 $this->setRenderer( new YamlRenderer );
                 break;
 
-            case 'xhtml': case 'html':
+            case '/xhtml': case '/html':
                 $renderer = new ViewRenderer;
                 $renderer->useView( $controller . '/' . $action );
                 $this->setRenderer( $renderer );
                 break;
 
-            case 'plain':
+            case '/plain':
                 $this->setRenderer( new ArrayRenderer );
                 break;
 
-            case 'ini':
+            case '/ini':
                 $this->setRenderer( new IniRenderer );
                 break;
 
