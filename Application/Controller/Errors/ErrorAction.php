@@ -41,7 +41,7 @@ class ErrorAction extends ErrorsController
                 $this->response->setCode( Code::HTTP_BAD_REQUEST );
                 $this->response[ 'error' ] = Code::HTTP_BAD_REQUEST;
                 $this->response[ 'title' ] = 'Missing or Invalid Request Parameter';
-                $this->response[ 'parameter' ] = $exception->getMessage();
+                $this->response[ 'parameter' ] = \APPLICATION_ENV === 'development' ? $exception->getMessage() : $exception->getMessage();
                 $this->response[ 'body' ] = 'The request could not be understood by the server due to malformed syntax';
                 break;
 
@@ -49,15 +49,16 @@ class ErrorAction extends ErrorsController
                 $this->response->setCode( Code::HTTP_NOT_ACCEPTABLE );
                 $this->response[ 'error' ] = Code::HTTP_NOT_ACCEPTABLE;
                 $this->response[ 'title' ] = 'Invalid Response Format';
-                $this->response[ 'parameter' ] = $exception->getMessage();
+                $this->response[ 'parameter' ] = \APPLICATION_ENV === 'development' ? $exception->getMessage() : $exception->getMessage();
                 $this->response[ 'body' ] = 'Could not create a response with content characteristics acceptable according to the accept headers sent in the request';
                 break;
 
+            case 'ReflectionException':
             default:
                 $this->response->setCode( Code::HTTP_INTERNAL_SERVER_ERROR );
                 $this->response[ 'error' ] = 'General Error';
-                $this->response[ 'title' ] = $exception->getMessage();
-                $this->response[ 'body' ] = 'A system error has occurred';
+                $this->response[ 'title' ] = \APPLICATION_ENV === 'development' ? $exception->getMessage() : 'Oops! an error has occurred';
+                $this->response[ 'body' ] = 'A unrecoverable system error has occurred';
                 break;
         }
     }

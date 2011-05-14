@@ -8,7 +8,10 @@ use \Doctrine\Common\ClassLoader,
     \Insomnia\Registry;
 
 class Dispatcher
-{    
+{
+    /* @var STRICT_CHECKING boolean Check if class is semantically valid */
+    const STRICT_CHECKING = true;
+
     public function dispatch( Route $route )
     {
         $request        = Registry::get( 'request' );
@@ -28,13 +31,16 @@ class Dispatcher
         if( !ClassLoader::classExists( $class ) )
             throw new DispatcherControllerException( 'Failed to dispatch request' );
 
+        if( self::STRICT_CHECKING )
+            new \ReflectionClass( $class );
+        
         Registry::get( 'request' )->mergeParams( $matches );
 
         $action = new $class;
-        $action->validate();
-        $action->action();
+        if( !self::STRICT_CHECKING || \method_exists( $action, 'validate' ) ) $action->validate();
+        if( !self::STRICT_CHECKING || \method_exists( $action, 'action' ) ) $action->action();
         $action->getResponse()->prepare( $controllerName, $actionName );
-        $action->render();
+        if( !self::STRICT_CHECKING || \method_exists( $action, 'render' ) ) $action->render();
         $action->getResponse()->render();
     }
 }
