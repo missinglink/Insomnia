@@ -15,7 +15,7 @@ class Dispatcher
         $actionName     = $route->getAction( $request->getMethod() );
 
         if( false === $actionName )
-            throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getPath() );
+            throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getParam( 'path' ) );
 
         $matches        = $route->getMatches();
         $controllerName = \strtolower( $matches[ 'controller' ] );
@@ -28,7 +28,7 @@ class Dispatcher
         if( !ClassLoader::classExists( $class ) )
             throw new DispatcherControllerException( 'Failed to dispatch request' );
 
-        Registry::get( 'request' )->merge( $matches );
+        Registry::get( 'request' )->mergeParams( $matches );
 
         $action = new $class;
         $action->validate();

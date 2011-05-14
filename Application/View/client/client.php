@@ -26,7 +26,7 @@
                 </select>
                 <select id="method" name="method">
                     <? foreach( array( 'GET', 'POST', 'PUT', 'DELETE' ) as $method ): ?>
-                    <option<? if( $request['method'] === $method ) echo ' selected="selected"' ;?>><?= $method; ?></option>
+                    <option<? if( $request->getMethod() === $method ) echo ' selected="selected"' ;?>><?= $method; ?></option>
                     <? endforeach; ?>
                 </select>
             </td>
@@ -124,7 +124,7 @@
         {
             $.ajax({
                 type: $('#nav #method').val(),
-                url:  '<?= $request[ 'path' ] === '/client' ? '/ping' : \str_replace( '/client', '', $request[ 'path' ] ); ?>',
+                url:  '<?= $request->getParam( 'path' ) === '/client' ? '/ping' : \str_replace( '/client', '', $request->getParam( 'path' ) ); ?>',
                 data: $('#nav #request-body').val(),
                 beforeSend: function(xhr){
                     xhr.setRequestHeader( 'Accept', $('#nav #content-type').val() );

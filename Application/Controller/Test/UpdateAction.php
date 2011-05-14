@@ -20,7 +20,7 @@ class UpdateAction extends TestController
     public function action()
     {
         $doctrine = new Doctrine;
-        $result = $doctrine->getManager()->find( 'Application\Entities\Test', $this->request['id'] );
+        $result = $doctrine->getManager()->find( 'Application\Entities\Test', $this->validator->getParam( 'id' ) );
         if( !$result ) throw new NotFoundException( 'Entity Not Found' );
 
         $result->fromArray( $this->validator->getParams() );

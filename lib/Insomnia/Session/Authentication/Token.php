@@ -18,9 +18,11 @@ class Token extends AuthenticationAbstract
 
     public function authenticate( \Insomnia\Request $request )
     {
+        $token = $request->getParam( 'token' );
+        
         // Request Params
-        if( \strlen( $request[ 'token' ] ) === $this->length )
-            Session::useId( $request[ 'token' ] );
+        if( null !== $token && \strlen( $token ) === $this->length )
+            Session::useId( $token );
 
         // Request Header
         else if( \preg_match( '_^Token (?P<token>.{128})$_', $request->getHeader( 'Authorization' ), $match ) )

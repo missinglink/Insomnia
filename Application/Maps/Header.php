@@ -13,9 +13,10 @@ class Header implements Map
         $header[ 'Code' ]               = (int) \substr( $response->getCode(), 0, 3 );
         $header[ 'Content-Type' ]       = $response->getContentType() . '; charset=' . $response->getCharacterSet();
 
+        /* @var $request \Insomnia\Request */
         $request = Registry::get( 'request' );
-        if( isset( $request[ 'version' ] ) )
-            $header[ 'Version' ] = $request[ 'version' ];
+        if( $request->hasParam( 'version' ) )
+            $header[ 'Version' ] = $request->getParam( 'version' );
 
         $response->prepend( 'meta', $header );
     }

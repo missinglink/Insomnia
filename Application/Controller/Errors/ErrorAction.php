@@ -10,9 +10,7 @@ class ErrorAction extends ErrorsController
 {
     public function action()
     {
-        $request = Registry::get( 'request' );
-        $exception = $request[ 'exception' ];
-        //$this->response[ 'type2' ] = get_class( $exception );
+        $exception = Registry::get( 'request' )->getParam( 'exception' );
 
         switch( get_class( $exception ) )
         {

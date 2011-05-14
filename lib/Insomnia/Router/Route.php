@@ -21,7 +21,7 @@ class Route
     {
         $this->createNamedPatterns();
         
-        if( !\preg_match( "_^$this->pattern\$_", Registry::get( 'request' )->getPath(), $matches ) )
+        if( !\preg_match( "_^$this->pattern\$_", Registry::get( 'request' )->getParam( 'path' ), $matches ) )
             return false;
 
         $this->matches = \array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );

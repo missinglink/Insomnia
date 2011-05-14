@@ -2,142 +2,204 @@
 
 namespace Insomnia;
 
-use \Insomnia\ArrayAccess;
+use \Insomnia\Pattern\Subject;
+use \Insomnia\Request\ParamParser,
+    \Insomnia\Request\HeaderParser,
+    \Insomnia\Request\BodyParser,
+    \Insomnia\Request\MethodOverride;
 
-class Request extends ArrayAccess
+/**
+ * HTTP request object
+ *
+ * Extensible by class extension or by attaching custom observers
+ */
+class Request extends Subject
 {
-    private $headers = array(),
-            $body = null;
+    private $params     = array();
+    private $headers    = array();
+    private $method     = 'GET';
+    private $body       = '';
 
+    /**
+     * Create a new request object
+     */
     public function __construct()
     {
-        $this->merge( \array_filter( $_REQUEST ) );
-        $this->merge( \parse_url( $_SERVER['REQUEST_URI'] ) );
-        $this->parseBody();
+        $this->attach( new ParamParser );
+        $this->attach( new HeaderParser );
+        $this->attach( new BodyParser );
+        $this->attach( new MethodOverride );
+        $this->notify();
     }
 
-    public function getUri()
-    {
-        return \strtolower( $_SERVER['REQUEST_URI'] );
-    }
-
+    /**
+     * Get HTTP request method
+     *
+     * @return string HTTP method
+     */
     public function getMethod()
     {
-        return \strtoupper( $_SERVER['REQUEST_METHOD'] );
+        return $this->method;
     }
 
+    /**
+     * Set HTTP request method
+     *
+     * @param string $method HTTP method
+     */
+    public function setMethod( $method )
+    {
+        switch( $method = \strtoupper( $method ) )
+        {
+            case 'GET': case 'PUT': case 'POST': case 'DELETE':
+            case 'HEAD': case 'STATUS': case 'TRACE':
+                $this->method = $method;
+        }
+    }
+
+    /**
+     * Get HTTP scheme
+     *
+    * @return string Either 'http' or 'https'
+     */
     public function getScheme()
     {
         return isset( $_SERVER['HTTPS'] ) ? 'https' : 'http';
     }
 
-    public function getHost()
-    {
-        return \strtolower( $_SERVER['HTTP_HOST'] );
-    }
-
+    /**
+     * Get subdomain
+     *
+     * @return string Subdomain
+     */
     public function getCname()
     {
-        return \substr_count( $_SERVER['HTTP_HOST'], '.' ) > 1
-            ? \strstr( $_SERVER['HTTP_HOST'], '.', true ) : '';
+        return \strstr( $this->getHeader( 'Host' ) . '.', '.', true );
     }
 
     /**
-     * @return string|false
+     * Get URI file extension if applicable
+     *
+     * @return string|false File extension
      */
     public function getFileExtension()
     {
-        return \strrchr( \strrchr( $_SERVER['REQUEST_URI'], '/' ), '.' );
+        \preg_match( '%^.*/[^/]+?(?<extension>\.[^[/]+)$%', $this->getParam( 'path' ), $matches );
+        return \array_key_exists( 'extension', $matches ) ? $matches[ 'extension' ] : false;
     }
 
-    public function getPath()
-    {
-        return isset( $this[ 'path' ] ) ? $this[ 'path' ] : null;
-    }
-
-    public function getQuery()
-    {
-        return isset( $this[ 'query' ] ) ? $this[ 'query' ] : null;
-    }
-
-    public function getFragment()
-    {
-        isset( $this[ 'fragment' ] ) ? $this[ 'fragment' ] : null;
-    }
-
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-    
+    /**
+     * Get HTTP content type
+     *
+     * @return string Content type
+     */
     public function getContentType()
     {
         return \strstr( $this->getHeader( 'Content-Type' ) . ';', ';', true );
     }
 
-    public function getHeader( $header )
+    /**
+     * Get an HTTP request header
+     *
+     * @param string $key HTTP header key
+     * @return string|null HTTP header value
+     */
+    public function getHeader( $key )
     {
-        if( empty( $this->headers ) )
-            $this->parseHeaders();
-        
-        return isset( $this->headers[ $header ] )
-            ? $this->headers[ $header ]
-            : null;
+        return isset( $this->headers[ $key ] ) ? $this->headers[ $key ] : null;
     }
-    
+
+    /**
+     * Get all HTTP request headers
+     * 
+     * @return array List of HTTP headers
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Set an HTTP request header
+     *
+     * @param string $key HTTP header key
+     * @param string $value HTTP header value
+     */
+    public function setHeader( $key, $value )
+    {
+        $this->headers[ $key ] = $value;
+    }
+
+    /**
+     * Get the raw HTTP request body
+     *
+     * @return string Raw HTTP request body
+     */
     public function getBody()
     {
         return $this->body;
     }
-    
-    private function parseHeaders()
+
+    /**
+     * Set the raw HTTP request body
+     *
+     * @param string $body Raw HTTP request body
+     */
+    public function setBody( $body )
     {
-        $this->addHeaders( $_SERVER, 'HTTP_' );
-        $this->addHeaders( $_SERVER, 'REQUEST_' );
+        if( \is_string( $body ) ) $this->body = $body;
     }
 
-    private function addHeaders( $headers, $match = false )
+    /**
+     * Get a request parameter
+     *
+     * @param string $key Parameter key
+     * @return mixed Parameter value
+     */
+    public function getParam( $key )
     {
-        $matchLength = \is_string( $match ) ? \strlen( $match ) : false;
-
-        foreach( $headers as $k => $v )
-        {
-            if( false !== $matchLength )
-            {
-                if( \strncmp( $k, $match, $matchLength ) ) continue;
-                else $k = \substr( $k, $matchLength );
-            }
-
-            /* Format Key */
-            $k = \strtr( \ucwords( \strtolower( \strtr( $k, '_', ' ' ) ) ), ' ', '-' );
-
-            $this->headers[ $k ] = $v;
-        }
+        return isset( $this->params[ $key ] ) ? $this->params[ $key ] : null;
     }
 
-    private function parseBody()
+    /**
+     * Set a request parameter
+     *
+     * @param string $key Parameter key
+     * @param mixed $value Parameter value
+     */
+    public function setParam( $key, $value )
     {
-        switch( $this->getMethod() )
-        {
-            case 'GET': break;
-            case 'PUT': case 'POST':
-                $this->body = \trim( \file_get_contents( 'php://input' ) );
+        $this->params[ $key ] = $value;
+    }
 
-                if( \strlen( $this->body ) )
-                {
-                    switch( $this->getContentType() )
-                    {
-                        case 'application/json' :
-                            $json = \json_decode( $this->body, true );
-                            if( null !== $json ) $this->merge( $json );
-                            break;
+    /**
+     * Check if a request parameter has been set
+     *
+     * @param string $key Parameter key
+     * @return boolean Boolean
+     */
+    public function hasParam( $key )
+    {
+        return isset( $this->params[ $key ] );
+    }
 
-                        case 'application/x-www-form-urlencoded' :
-                        default :
-                            \parse_str( $this->body, $params );
-                            $this->merge( \array_filter( $params ) );
-                    }
-                }
-        }
+    /**
+     * Merge an array into request parameters
+     *
+     * @param array $params Parameters
+     */
+    public function mergeParams( $params )
+    {
+        if( \is_array( $params ) ) $this->params = $params + $this->params;
+    }
+
+    /**
+     * Retrieve all request parameters as an array
+     *
+     * @return array Parameters
+     */
+    public function toArray()
+    {
+        return $this->params;
     }
 }

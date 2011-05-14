@@ -8,17 +8,11 @@ class ValidatorException extends \Exception {}
 
 class RequestValidator
 {
-    private $params = array(),
-            $request;
-
-    public function __construct()
-    {
-        $this->request = Registry::get( 'request' );
-    }
+    private $params = array();
 
     public function required( $key, $validator )
     {
-        if( !isset( $this->request[ $key ] ) )
+        if( !Registry::get( 'request' )->hasParam( $key ) )
             throw new ValidatorException( $key . ' (required)' );
         
         $this->optional( $key, $validator );
@@ -27,10 +21,12 @@ class RequestValidator
 
     public function optional( $key, $validator )
     {
-        if( isset( $this->request[ $key ] ) )
+        $request = Registry::get( 'request' );
+        
+        if( $request->hasParam( $key ) )
         {
-            $validator->validate( $this->request[ $key ], $key );
-            $this->params[ $key ] = $this->request[ $key ];
+            $validator->validate( $request->getParam( $key ), $key );
+            $this->params[ $key ] = $request->getParam( $key );
         }
     }
     

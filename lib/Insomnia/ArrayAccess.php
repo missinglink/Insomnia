@@ -80,6 +80,11 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
         return $this->data[ $offset ] = $value;
     }
 
+    public function has( $offset )
+    {
+        return isset( $this->data[ $offset ] );
+    }
+
     public function prepend( $offset, $value )
     {
         $this->data = array( $offset => $value ) + $this->data;
