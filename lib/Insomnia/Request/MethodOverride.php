@@ -13,9 +13,8 @@ class MethodOverride extends Observer
     public function update( \SplSubject $request )
     {
         /* Override Via Param */
-        if( $request->hasParam( self::PARAM ) )
+        if( null !== ( $method = $request->getParam( self::PARAM ) ) )
         {
-            $method = $request->getParam( self::PARAM );
             $request->setMethod( $method );
             $request->setHeader( self::HEADER, $method );
         }
