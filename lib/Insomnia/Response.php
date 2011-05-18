@@ -29,7 +29,7 @@ class Response extends ArrayAccess implements \SplSubject
         //$this->attach( new SetCorsHeaders );
         $this->notify();
 
-        if( !\is_object( $this->renderer ) || !\method_exists( $this->renderer, 'render' ) )
+        if( !\method_exists( $this->renderer, 'render' ) )
             throw new ResponseException( 'Invalid Response Format' );
 
         $this->runModifiers();
