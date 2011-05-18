@@ -9,15 +9,13 @@ class Header implements Modifier
 {
     public function render( $response )
     {
-        $header = array();
-        $header[ 'Code' ]               = (int) \substr( $response->getCode(), 0, 3 );
-        $header[ 'Content-Type' ]       = $response->getContentType() . '; charset=' . $response->getCharacterSet();
+        $headers = array();
+        foreach( \headers_list() as $header )
+            $headers[ \strstr( $header, ':', true ) ] = \substr( \strstr( $header, ':' ), 2 );
 
-        /* @var $request \Insomnia\Request */
-        $request = Registry::get( 'request' );
-        if( $request->hasParam( 'version' ) )
-            $header[ 'Version' ] = $request->getParam( 'version' );
+        \ksort( $headers );
+        $headers = array( 'Code' => (int) \substr( $response->getCode(), 0, 3 ) ) + $headers;
 
-        $response->prepend( 'meta', $header );
+        $response->prepend( 'meta', $headers );
     }
 }

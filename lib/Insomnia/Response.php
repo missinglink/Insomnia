@@ -9,6 +9,7 @@ use \Insomnia\Response\Plugin\ContentTypeSelector,
     \Insomnia\Response\Plugin\RendererSelector,
     \Insomnia\Response\Plugin\ResponseCodeSelector,
     \Insomnia\Response\Plugin\SetCacheHeaders,
+    \Insomnia\Response\Plugin\SetVersionHeaders,
     \Insomnia\Response\Plugin\SetCorsHeaders;
 
 class Response extends ArrayAccess implements \SplSubject
@@ -26,16 +27,17 @@ class Response extends ArrayAccess implements \SplSubject
         $this->attach( new RendererSelector );
         $this->attach( new ResponseCodeSelector );
         $this->attach( new SetCacheHeaders );
+        $this->attach( new SetVersionHeaders );
         //$this->attach( new SetCorsHeaders );
         $this->notify();
 
         if( !\method_exists( $this->renderer, 'render' ) )
             throw new ResponseException( 'Invalid Response Format' );
 
-        $this->runModifiers();
-
         \header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' ' . $this->getCode() );
         \header( 'Content-Type: ' . $this->getContentType() . '; charset=\'' . $this->getCharacterSet() .'\'' );
+
+        $this->runModifiers();
         $this->renderer->render( $this );
         \flush();
         exit;
