@@ -8,7 +8,6 @@ use \Insomnia\ArrayAccess,
 use \Insomnia\Response\Plugin\ContentTypeSelector,
     \Insomnia\Response\Plugin\RendererSelector,
     \Insomnia\Response\Plugin\ResponseCodeSelector,
-    \Insomnia\Response\Plugin\JsonpHandler,
     \Insomnia\Response\Plugin\SetCacheHeaders,
     \Insomnia\Response\Plugin\SetCorsHeaders;
 
@@ -27,7 +26,7 @@ class Response extends ArrayAccess implements \SplSubject
         $this->attach( new RendererSelector );
         $this->attach( new ResponseCodeSelector );
         $this->attach( new SetCacheHeaders );
-        $this->attach( new SetCorsHeaders );
+        //$this->attach( new SetCorsHeaders );
         $this->notify();
 
         if( !\is_object( $this->renderer ) || !\method_exists( $this->renderer, 'render' ) )
