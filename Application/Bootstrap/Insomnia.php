@@ -29,5 +29,7 @@ class Insomnia
         Registry::set( 'view_path',             'Application/View' );
         Registry::set( 'layout_path',           'Application/View' );
         Registry::set( 'view_extension',        '.php' );
+        Registry::set( 'default_content_type',  'application/json' );
+        Registry::set( 'jsonp_callback_param',  '_jsonp' );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia\Response\Format;
+namespace Insomnia\Response\Renderer;
 
 use \Insomnia\ArrayAccess,
     \Insomnia\Response\ResponseInterface,

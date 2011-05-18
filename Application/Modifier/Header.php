@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\Maps;
+namespace Application\Modifier;
 
-use \Insomnia\Response\Map,
+use \Insomnia\Response\Modifier,
     \Insomnia\Registry;
 
-class Header implements Map
+class Header implements Modifier
 {
-    public static function render( $response )
+    public function render( $response )
     {
         $header = array();
         $header[ 'Code' ]               = (int) \substr( $response->getCode(), 0, 3 );

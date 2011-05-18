@@ -3,10 +3,10 @@
 namespace Insomnia;
 
 use \Insomnia\Pattern\Subject;
-use \Insomnia\Request\ParamParser,
-    \Insomnia\Request\HeaderParser,
-    \Insomnia\Request\BodyParser,
-    \Insomnia\Request\MethodOverride;
+use \Insomnia\Request\Plugin\ParamParser,
+    \Insomnia\Request\Plugin\HeaderParser,
+    \Insomnia\Request\Plugin\BodyParser,
+    \Insomnia\Request\Plugin\MethodOverride;
 
 /**
  * HTTP request object

@@ -1,14 +1,14 @@
 <?php
 
-namespace Insomnia\Response\Format;
+namespace Insomnia\Response\Renderer;
 
 use \Insomnia\Response\ResponseInterface,
     \Insomnia\Response;
 
-class JsonRenderer implements ResponseInterface
+class ArrayRenderer implements ResponseInterface
 {
     public function render( Response $response )
     {
-        echo \json_encode( $response->toArray() );
+        \print_r( $response->toArray() );
     }
 }

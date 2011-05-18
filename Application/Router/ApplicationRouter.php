@@ -14,6 +14,11 @@ class ApplicationRouter
         $params[ 'controller' ] = '[a-z]+';
         $params[ 'id' ]         = '\w+';
 
+        $route = new Route( '/tree' );
+        $route->setDefault( 'controller', 'tree' )
+              ->setAction( 'ANY',    'tree' )
+              ->match();
+
         $route = new Route( '/ping.*' );
         $route->setDefault( 'controller', 'status' )
               ->setAction( 'ANY',    'status' )

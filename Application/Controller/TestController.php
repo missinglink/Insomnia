@@ -3,7 +3,7 @@
 namespace Application\Controller;
 
 use \Insomnia\Controller\Action,
-    \Application\Maps\Layout;
+    \Application\Modifier\Layout;
 
 class TestController extends Action
 {
@@ -15,6 +15,6 @@ class TestController extends Action
     
     public function render()
     {
-        Layout::render( $this->response );
+        $this->getResponse()->addModifier( new Layout );
     }
 }

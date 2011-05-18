@@ -12,6 +12,9 @@ class Dispatcher
     /* @var STRICT_CHECKING boolean Check if class is semantically valid */
     const STRICT_CHECKING = true;
 
+    private $controller,
+            $action;
+
     public function dispatch( Route $route )
     {
         $request        = Registry::get( 'request' );
@@ -33,15 +36,37 @@ class Dispatcher
 
         if( self::STRICT_CHECKING )
             new \ReflectionClass( $class );
+
+        $this->setController( $controllerName );
+        $this->setAction( $actionName );
         
         Registry::get( 'request' )->mergeParams( $matches );
 
         $action = new $class;
         if( !self::STRICT_CHECKING || \method_exists( $action, 'validate' ) ) $action->validate();
         if( !self::STRICT_CHECKING || \method_exists( $action, 'action' ) ) $action->action();
-        $action->getResponse()->prepare( $controllerName, $actionName );
         if( !self::STRICT_CHECKING || \method_exists( $action, 'render' ) ) $action->render();
         $action->getResponse()->render();
+    }
+
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    public function setController( $controller )
+    {
+        $this->controller = $controller;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function setAction( $action )
+    {
+        $this->action = $action;
     }
 }
 

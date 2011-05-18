@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia\Response\Format;
+namespace Insomnia\Response\Renderer;
 
 use \Doctrine\Common\ClassLoader;
 use \Insomnia\Response\ResponseInterface;
