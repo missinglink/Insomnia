@@ -12,6 +12,6 @@ class SetVersionHeaders extends Observer
     {
         /* @var $request \Insomnia\Request */
         if( Registry::get( 'request' )->hasParam( 'version' ) )
-            \header( 'X-Version : ' . Registry::get( 'request' )->getParam( 'version' ) );
+            \header( 'X-Version: ' . Registry::get( 'request' )->getParam( 'version' ) );
     }
 }
