@@ -46,8 +46,8 @@ class ErrorAction extends ErrorsController
                 break;
 
             case 'Insomnia\Response\ResponseException':
-                $this->response->setCode( Code::HTTP_NOT_ACCEPTABLE );
-                $this->response[ 'error' ] = Code::HTTP_NOT_ACCEPTABLE;
+                $this->response->setCode( Code::HTTP_UNSUPPORTED_MEDIA_TYPE );
+                $this->response[ 'error' ] = Code::HTTP_UNSUPPORTED_MEDIA_TYPE;
                 $this->response[ 'title' ] = 'Invalid Response Format';
                 $this->response[ 'parameter' ] = \APPLICATION_ENV === 'development' ? $exception->getMessage() : $exception->getMessage();
                 $this->response[ 'body' ] = 'Could not create a response with content characteristics acceptable according to the accept headers sent in the request';

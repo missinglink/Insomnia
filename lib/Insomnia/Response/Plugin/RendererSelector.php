@@ -14,7 +14,7 @@ use \Insomnia\Response\Renderer\XmlRenderer,
 
 class RendererSelector extends Observer
 {
-    /* @var $request \Insomnia\Response */
+    /* @var $response \Insomnia\Response */
     public function update( \SplSubject $response )
     {
         if( null === $response->getRenderer() )

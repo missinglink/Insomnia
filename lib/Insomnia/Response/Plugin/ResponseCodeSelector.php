@@ -9,7 +9,7 @@ use \Insomnia\Response\Renderer\ViewRenderer;
 
 class ResponseCodeSelector extends Observer
 {
-    /* @var $request \Insomnia\Response */
+    /* @var $response \Insomnia\Response */
     public function update( \SplSubject $response )
     {
         if( null === $response->getCode() )

@@ -8,7 +8,9 @@ use \Insomnia\ArrayAccess,
 use \Insomnia\Response\Plugin\ContentTypeSelector,
     \Insomnia\Response\Plugin\RendererSelector,
     \Insomnia\Response\Plugin\ResponseCodeSelector,
-    \Insomnia\Response\Plugin\JsonpHandler;
+    \Insomnia\Response\Plugin\JsonpHandler,
+    \Insomnia\Response\Plugin\SetCacheHeaders,
+    \Insomnia\Response\Plugin\SetCorsHeaders;
 
 class Response extends ArrayAccess implements \SplSubject
 {
@@ -16,6 +18,7 @@ class Response extends ArrayAccess implements \SplSubject
             $mime       = null,
             $renderer   = null,
             $modifiers  = array(),
+            $ttl        = 0,
             $charset    = 'utf8';
 
     public function render()
@@ -23,6 +26,8 @@ class Response extends ArrayAccess implements \SplSubject
         $this->attach( new ContentTypeSelector );
         $this->attach( new RendererSelector );
         $this->attach( new ResponseCodeSelector );
+        $this->attach( new SetCacheHeaders );
+        $this->attach( new SetCorsHeaders );
         $this->notify();
 
         if( !\is_object( $this->renderer ) || !\method_exists( $this->renderer, 'render' ) )
@@ -55,6 +60,16 @@ class Response extends ArrayAccess implements \SplSubject
     public function setCode( $code )
     {
         $this->code = $code;
+    }
+
+    public function getTimeToLive()
+    {
+        return $this->ttl;
+    }
+
+    public function setTimeToLive( $ttl = 0 )
+    {
+        $this->ttl = $ttl;
     }
 
     public function getContentType()
