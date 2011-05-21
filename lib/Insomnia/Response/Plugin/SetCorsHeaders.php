@@ -13,5 +13,8 @@ class SetCorsHeaders extends Observer
         \header( 'Access-Control-Allow-Origin: *' );
         \header( 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, TRACE, STATUS, OPTIONS' );
         \header( 'Access-Control-Allow-Headers: X-Requested-With' );
+
+        if( ( $ttl = $response->getTimeToLive() ) > 0 )
+            \header( 'Access-Control-Max-Age: ' . $ttl );
     }
 }
