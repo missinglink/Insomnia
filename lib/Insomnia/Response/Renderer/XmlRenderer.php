@@ -9,7 +9,7 @@ class XmlRenderer implements ResponseInterface
 {
     private $writer,
             $indent = '   ';
-    
+
     public function render( Response $response )
     {
         $this->writer = new \XMLWriter;
@@ -24,7 +24,7 @@ class XmlRenderer implements ResponseInterface
         $this->writer->writeAttribute( 'version', '1.0' );
 
         $this->writeXML( $response->toArray() );
-        
+
         $this->writer->endElement();
         $this->writer->endDocument();
         $this->writer->flush();
@@ -42,10 +42,13 @@ class XmlRenderer implements ResponseInterface
                 continue;
             }
 
-            $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
-            $this->writer->writeCData( $item );
-            $this->writer->endElement();
+            if( \is_string( $item ) )
+            {
+                $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
+                $this->writer->writeCData( $item );
+                $this->writer->endElement();
+            }
         }
     }
-  
+
 }
