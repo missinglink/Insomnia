@@ -4,17 +4,13 @@ namespace Insomnia;
 
 use \Doctrine\Common\ClassLoader;
 
-require_once 'lib/Doctrine/Common/ClassLoader.php';
-$classLoader = new ClassLoader( 'Doctrine', dirname( __FILE__ ) . '/lib' );
-$classLoader->register();
+\define( 'ROOT', \dirname( __FILE__ ) . \DIRECTORY_SEPARATOR );
 
-$classLoader = new ClassLoader( 'Application', dirname( __FILE__ ) );
-$classLoader->register();
-
-// -----------------------------------------
-
-$classLoader = new \Doctrine\Common\ClassLoader( 'Symfony', dirname( __FILE__ ) . '/lib' );
-$classLoader->register();
+require_once \ROOT.'/lib/Doctrine/Common/ClassLoader.php';
+\spl_autoload_register( array( new ClassLoader( 'Doctrine', \ROOT . 'lib' ), 'loadClass' ) );
+\spl_autoload_register( array( new ClassLoader( 'Insomnia', \ROOT . 'lib' ), 'loadClass' ) );
+\spl_autoload_register( array( new ClassLoader( 'Application', \ROOT ), 'loadClass' ) );
+\spl_autoload_register( array( new ClassLoader( 'Symfony',  \ROOT . 'lib' ), 'loadClass' )  );
 
 // -----------------------------------------
 
