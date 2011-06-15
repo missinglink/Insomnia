@@ -4,8 +4,14 @@ namespace Insomnia;
 
 use \Doctrine\Common\ClassLoader;
 use \Application\Bootstrap\Insomnia;
-use \Application\Router\ApplicationRouter;
-use \Application\Router\ErrorRouter;
+
+use \Insomnia\Controller\Action;
+use \Insomnia\Annotation\Parser\Route as RouteParser;
+use \Insomnia\Annotation\Parser\Validation as ValidationParser;
+use \Insomnia\Router\AnnotationReader;
+use \Insomnia\Router\RouteStack;
+use \Insomnia\Registry;
+
 
 \define( 'ROOT', \dirname( \dirname( __FILE__ ) ) . \DIRECTORY_SEPARATOR );
 
@@ -19,10 +25,24 @@ require_once \ROOT.'/lib/Doctrine/Common/ClassLoader.php';
 try
 {
     new Insomnia;
-    new ApplicationRouter;
+    
+    $router = Registry::get( 'router' );
+    $router->addClass( 'Application\Controller\ClientController' );
+    $router->addClass( 'Application\Controller\TestController' );
+    $router->addClass( 'Application\Controller\StatusController' );
+    $router->addClass( 'Application\Controller\DocumentationController' );   
+    $router->dispatch();
+    
+    throw new \Insomnia\Router\RouterException( 'Failed to Match any Routes' );
 }
 
 catch( \Exception $e )
-{
-    new ErrorRouter( $e );
+{   
+    \Insomnia\Registry::get( 'request' )->setParam( 'exception', $e );
+
+    $errorAction = new \Application\Controller\Errors\ErrorAction;
+    $errorAction->action();
+    $errorAction->getResponse()->render();
+    
+    throw new \Insomnia\Router\RouterException( 'Failed to Match Error Route' );
 }
