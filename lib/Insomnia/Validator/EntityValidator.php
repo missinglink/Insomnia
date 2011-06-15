@@ -1,16 +1,21 @@
 <?php
 
-namespace Insomnia\Request;
+namespace Insomnia\Validator;
 
-use \Insomnia\Registry;
 use \Insomnia\Request\ValidatorException;
 
-class RequestValidator
+class EntityValidator
 {
+    private $entity;
     private $stack      = array();
     private $params     = array();
     private $errors     = array();
 
+    public function __construct( $entity )
+    {
+        $this->entity = $entity;
+    }
+    
     public function required( $key, $validator )
     {
         $this->stack[ 'r_' . $key ] = $validator;
@@ -23,28 +28,22 @@ class RequestValidator
     
     public function validate()
     {
-        /* @var $request \Insomnia\Request */
-        $request = Registry::get( 'request' );
-        
+        $entityClass = new \ReflectionClass( $this->entity );
+                    
         foreach( $this->stack as $key => $validator )
         {
             $optional = ( \substr( $key, 0, 2 ) === 'o_' );
             $key      = \substr( $key, 2 );
             
-            if( $request->hasParam( $key ) )
-            {
-                try {
-                    $validator->validate( $request->getParam( $key ), $key );
-                    $this->params[ $key ] = $request->getParam( $key );
-                }
-                catch( ValidatorException $e )
-                {
-                    $this->errors[ $key ] = $e->getMessage();
-                }
+            try{
+                $property = $entityClass->getProperty( $key );
+                $property->setAccessible( true );
+                $validator->validate( $property->getValue( $this->entity ), $key );
             }
             
-            else if( !$optional ) {
-                $this->errors[ $key ] = 'null';
+            catch( ValidatorException $e )
+            {
+                $this->errors[ $key ] = $e->getMessage();
             }
         }
         

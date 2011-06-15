@@ -34,7 +34,7 @@ class ViewRenderer extends ArrayAccess implements ResponseInterface
             throw new ViewException( 'View File Not Found: ' . $this->view );
         
         $this->merge( $response );
-        
+
         \ob_start();
         require $viewFile;
         $this->viewContent = \ob_get_clean();

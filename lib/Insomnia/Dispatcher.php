@@ -5,50 +5,59 @@ namespace Insomnia;
 use \Doctrine\Common\ClassLoader,
     \Insomnia\Router\Route,
     \Insomnia\Controller\PluginInterface,
-    \Insomnia\Registry;
+    \Insomnia\Registry,
+    Insomnia\Validator\DatabaseException;
 
 class Dispatcher
 {
     /* @var STRICT_CHECKING boolean Check if class is semantically valid */
     const STRICT_CHECKING = true;
 
-    private $controller,
-            $action;
-
+    private $controller;
+    private $route;
+    
     public function dispatch( Route $route )
     {
-        $request        = Registry::get( 'request' );
-        $actionName     = $route->getAction( $request->getMethod() );
+        /* @var $request \Insomnia\Request */
+        $request = Registry::get( 'request' );
+        
+        /* @var $reflectionMethod \ReflectionMethod */
+        $reflectionMethod = $route->getReflectionMethod();
 
-        if( false === $actionName )
+        if( false === $reflectionMethod )
             throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getParam( 'path' ) );
-
-        $matches        = $route->getMatches();
-        $controllerName = \strtolower( $matches[ 'controller' ] );
-        $actionName     = \strtolower( $actionName );
-
-        $class = \Insomnia\Registry::get( 'controller_namespace' ) .
-                 \ucfirst( $controllerName ) . '\\' . \ucfirst( $actionName ) .
-                 \Insomnia\Registry::get( 'action_suffix' );
+        
+        $class = $reflectionMethod->getDeclaringClass()->getName();
 
         if( !ClassLoader::classExists( $class ) )
             throw new DispatcherControllerException( 'Failed to dispatch request' );
 
         if( self::STRICT_CHECKING )
             new \ReflectionClass( $class );
-
-        $this->setController( $controllerName );
-        $this->setAction( $actionName );
         
-        Registry::get( 'request' )->mergeParams( $matches );
-
-        $action = new $class;
-        if( !self::STRICT_CHECKING || \method_exists( $action, 'validate' ) ) $action->validate();
-        if( !self::STRICT_CHECKING || \method_exists( $action, 'action' ) ) $action->action();
-        if( !self::STRICT_CHECKING || \method_exists( $action, 'render' ) ) $action->render();
-        $action->getResponse()->render();
+        Registry::get( 'request' )->mergeParams( $route->getMatches() );
+        
+        $this->setRoute( $route );
+        $this->instantiate( $class );
+        $this->controller->{$reflectionMethod->getName()}();
+        
+        $this->controller->getResponse()->render();
     }
+    
+    private function instantiate( $class )
+    {
+        try {
+            $this->setController( new $class );
+        }
+        catch( \Exception $e )
+        {
+            if( $e instanceof \PDOException )
+                throw new DatabaseException( 'Database error', null, $e );
 
+            else throw $e;
+        }
+    }
+    
     public function getController()
     {
         return $this->controller;
@@ -58,15 +67,15 @@ class Dispatcher
     {
         $this->controller = $controller;
     }
-
-    public function getAction()
+    
+    public function getRoute()
     {
-        return $this->action;
+        return $this->route;
     }
 
-    public function setAction( $action )
+    public function setRoute( $route )
     {
-        $this->action = $action;
+        $this->route = $route;
     }
 }
 

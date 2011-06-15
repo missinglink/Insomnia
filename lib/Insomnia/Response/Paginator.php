@@ -10,6 +10,14 @@ class Paginator extends PaginationAdapter
 {
     private $pageSize = 100,
             $currentPage = 1;
+
+    public function __construct( $query, $ns = 'pgid' )
+    {
+        if( \method_exists( $query, 'getQuery' ) )
+            $query = $query->getQuery();
+
+        parent::__construct( $query, $ns );
+    }
     
     public function getItems($offset = null, $itemCountPerPage = null)
     {
