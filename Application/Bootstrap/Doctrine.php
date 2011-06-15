@@ -28,6 +28,8 @@ class Doctrine extends EntityManager
         $classLoader->register();
         $classLoader = new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' );
         $classLoader->register();
+        $classLoader = new ClassLoader( 'Gedmo', \ROOT . 'lib' );
+        $classLoader->register();
 
         // configuration (2)
         $config = new Configuration;
@@ -58,8 +60,12 @@ class Doctrine extends EntityManager
             'CHARSET'       => self::CHARSET,
             'driverOptions' => array( 'CHARSET'=> self::CHARSET )
         );
+        
+        // Timestampable extension
+        $evm = new \Doctrine\Common\EventManager();
+        $evm->addEventSubscriber( new \Gedmo\Timestampable\TimestampableListener );
 
-        self::$em = EntityManager::create( $connectionOptions, $config );
+        self::$em = EntityManager::create( $connectionOptions, $config, $evm );
     }
 
     /**

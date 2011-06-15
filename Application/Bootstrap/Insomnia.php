@@ -6,6 +6,7 @@ use \Doctrine\Common\ClassLoader;
 use \Insomnia\Request;
 use \Insomnia\Dispatcher;
 use \Insomnia\Registry;
+use \Insomnia\Router;
 
 class Insomnia
 {
@@ -24,6 +25,7 @@ class Insomnia
 
         Registry::set( 'request',               new Request );
         Registry::set( 'dispatcher',            new Dispatcher );
+        Registry::set( 'router',                new Router );
         Registry::set( 'controller_namespace',  'Application\Controller\\' );
         Registry::set( 'action_suffix',         'Action' );
         Registry::set( 'view_path',             'Application/View' );

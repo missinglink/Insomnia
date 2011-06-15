@@ -3,14 +3,18 @@
 namespace Application\Modifier;
 
 use \Insomnia\Response\Modifier;
+use \Insomnia\Registry;
 
 class Layout implements Modifier
 {
     public function render( $response )
     {
-        $response->expand( 'data' );
+        $response->expand( 'response' );
 
-        $header = new Header;
-        $header->render( $response );
+        if( Registry::get( 'request' )->hasParam( '_meta' ) )
+        {                
+            $header = new Header;
+            $header->render( $response );
+        }
     }
 }

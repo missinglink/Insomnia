@@ -1,4 +1,5 @@
 <? $this->css( '/css/basic.css' ); ?>
+<? $this->css( '/css/layout.css' ); ?>
 <html>
     <head>
         <title><?= $this['title']; ?></title>
