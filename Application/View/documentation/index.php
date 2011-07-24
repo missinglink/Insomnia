@@ -1,72 +1,61 @@
 <style type="text/css">
-    fieldset {
-        font-family: Arial, Helvetica;
-        border: dotted 1px #9A9A9A;
-    }
-    
-    fieldset legend {
-        border: dotted 1px #9A9A9A;
-        padding: 5px 15px;
-    }
     
     p.pattern {
         display: block;
+        width: 300px;
+    }
+    
+    p.pattern span.method {
+        margin: 0;
         padding: 5px 15px;
         width: 300px;
-        background-color: #EFEFEF;
+        border: solid 1px #ccc;
     }
     
-    table.params {
-        border-collapse: collapse;
-        width: 330px;
-        border: solid 1px #EFEFEF;
-    }
-    
-    table.params tr td {
-        border: solid 1px #EFEFEF;
-        padding: 5px 10px;
-    }
-    
-    table.params tr td.name {
-        width: 120px;
-        background-color: #EFEFEF;
-        border-bottom-color: #fff;
-    }
-    
-    table.params tr td.type {
-        font-style: italic;
-        color: #222;
-        text-align: center;
-    }
-    
-    table.params tr td.optional {
-        text-align: center;
+    p.pattern span.pattern {
+        margin: 0;
+        padding: 5px 15px;
+        width: 300px;
+        border: solid 1px #ccc;
+        border-left: none;
     }
     
 </style>
 
-<?php foreach( $this as $categoryName => $category ): ?>
-    <fieldset>
-        <legend><?= $categoryName; ?></legend>
+<div style="margin:50px;">
+    <img src="/images/logo.jpg" style="display:block; float:left;" />
+    <div style="display:block; float:left; padding:5px 0px 0px 45px;">
+        <h1 class="error">Reference</h1>
+        <h4>Webservice Documentation</h4>
+        <p style="clear:both;">Current: <?= date( 'r' ); ?></p>
+    </div>
+    <?php foreach( $this as $categoryName => $category ): ?>
+        <hr />
+        <h4><?= $categoryName; ?></h4>
         <?php foreach( $category as $route ): ?>
-            <fieldset>
-                <legend><?= $route['title']; ?></legend>
-                <?php foreach( $route['methods'] as $method ): ?>
-                    <p class="pattern"><?= $method . ' ' . $route['pattern']; ?></p>
-                <?php endforeach; ?>    
-                <p><?= $route['description']; ?></p>
-                <?php if( !empty( $route['params'] ) ): ?>
-                    <table class="params">
-                        <?php foreach( $route['params'] as $param ): ?>
-                            <tr>
-                                <td class="name"><?= isset( $param['name'] ) ? $param['name'] : ''; ?></td>
-                                <td class="type"><?= isset( $param['type'] ) ? $param['type'] : ''; ?></td>
-                                <td class="optional"><?= isset( $param['optional'] ) && $param['optional'] == 'true' ? 'optional' : 'required'; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                <?php endif; ?>
-            </fieldset>
+        
+            <hr />
+            <p><?= $route['title']; ?></p>
+                
+            <?php foreach( $route['methods'] as $method ): ?>
+                <p class="pattern">
+                    <span class="method error"><?= $method; ?></span><span class="pattern"><?= $route['pattern']; ?></span>
+                </p>
+            <?php endforeach; ?>    
+            <?php if( !empty( $route['params'] ) ): ?>            
+                <table>
+                    <?php foreach( $route['params'] as $param ): ?>
+                        <tr>
+                            <td style="width:150px;" class="error"><?= isset( $param['name'] ) ? $param['name'] : ''; ?></td>
+                            <td class="type"><?= isset( $param['type'] ) ? $param['type'] : ''; ?></td>
+                            <td class="optional"><?= isset( $param['optional'] ) && $param['optional'] == 'true' ? 'optional' : 'required'; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+                
+            <p><?= $route['description']; ?></p>
+                
         <?php endforeach; ?>
-   </fieldset>
-<?php endforeach; ?>
+    <?php endforeach; ?>
+</div>
