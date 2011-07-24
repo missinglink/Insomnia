@@ -19,7 +19,8 @@ class Response extends ArrayAccess implements \SplSubject
             $renderer   = null,
             $modifiers  = array(),
             $ttl        = 0,
-            $charset    = 'utf8';
+            $charset    = 'utf8',
+            $view       = 'index';
 
     public function render()
     {
@@ -92,7 +93,17 @@ class Response extends ArrayAccess implements \SplSubject
     {
         $this->charset = $charset;
     }
+    
+    public function getView()
+    {
+        return $this->view;
+    }
 
+    public function setView( $view )
+    {
+        $this->view = $view;
+    }
+    
     public function addModifier( $map )
     {
         $this->modifiers[] = $map;
