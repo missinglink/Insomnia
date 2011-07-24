@@ -7,7 +7,6 @@
             <p style="clear:both;"><?= $this['body']; ?>.</p>
         <?php endif; ?>
     </div>
-    
     <?php if( isset( $this['errors'] ) ): ?>
         <hr />
         <table style="width:100%;">
@@ -62,10 +61,12 @@
            foreach( \array_reverse( \debug_backtrace() ) as $trace )
            {
                echo '<li><em>';
-               echo ( isset( $trace['class'] ) ? $trace['class'] . '::' : '' ) . $trace['function'] . '() ';
+               echo ( isset( $trace['class'] ) ? $trace['class'] . '::' : '' ) . $trace['function'] . '() in ';
                echo \basename( $trace['file'] ) . ':' . $trace['line'] . PHP_EOL;
                echo '</em></li>';
            };
         ?></ol>
     <?php endif; ?>
+    <hr />
+    <a href="/doc" style="text-decoration:none;">Web Service Reference</a>
 </div>
