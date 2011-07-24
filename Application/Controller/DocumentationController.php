@@ -21,7 +21,7 @@ class DocumentationController extends Action
     /**
      * List Endpoints
      * 
-     * @webservice:Route( "/documentation", name="documentation" )
+     * @webservice:Route( "/doc", name="documentation" )
      * @webservice:Method( "GET")
      * @webservice:View( "documentation/index" )
      * @webservice:Documentation( title="Documentation", description="List Endpoints", category="System" )
