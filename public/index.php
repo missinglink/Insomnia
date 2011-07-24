@@ -25,7 +25,7 @@ require_once \ROOT.'/lib/Doctrine/Common/ClassLoader.php';
 try
 {
     new Insomnia;
-    
+
     $router = Registry::get( 'router' );
     $router->addClass( 'Application\Controller\ClientController' );
     $router->addClass( 'Application\Controller\TestController' );
@@ -39,10 +39,5 @@ try
 catch( \Exception $e )
 {   
     \Insomnia\Registry::get( 'request' )->setParam( 'exception', $e );
-
-    $errorAction = new \Application\Controller\Errors\ErrorAction;
-    $errorAction->action();
-    $errorAction->getResponse()->render();
-    
-    throw new \Insomnia\Router\RouterException( 'Failed to Match Error Route' );
+    Registry::get( 'dispatcher' )->dispatch( '\Application\Controller\Errors\ErrorAction', 'action' );
 }
