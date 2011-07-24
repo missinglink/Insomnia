@@ -12,7 +12,7 @@ use \Application\Controller\ErrorsController,
  * @webservice:Resource
  * 
  */
-class ErrorAction
+class ErrorAction extends \Insomnia\Controller\Action
 {   
     /**
      * Map Errors to Output
@@ -24,7 +24,7 @@ class ErrorAction
      */
     public function action()
     {
-        $response = new \Insomnia\Response;
+        $response = $this->getResponse();
         
         /* @var $exception \Exception */
         $exception = Registry::get( 'request' )->getParam( 'exception' );
@@ -110,7 +110,5 @@ class ErrorAction
             $debug[ 'backtrace' ] = \debug_backtrace();
             $response[ 'debug' ] = $debug;
         }
-        
-        $response->render();
     }
 }
