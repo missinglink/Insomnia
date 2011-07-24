@@ -12,9 +12,6 @@ use \Insomnia\Response\Renderer\XmlRenderer,
     \Insomnia\Response\Renderer\YamlRenderer,
     \Insomnia\Response\Renderer\IniRenderer;
 
-use \Insomnia\Annotation\Parser\ViewParser;
-use \Insomnia\Router\AnnotationReader;
-
 class RendererSelector extends Observer
 {
     /* @var $response \Insomnia\Response */
@@ -38,22 +35,7 @@ class RendererSelector extends Observer
 
                 case '/xhtml': case '/html':
                     $renderer = new ViewRenderer;
-                    
-                    $backtraces = \debug_backtrace();
-                    \array_shift( $backtraces );
-                    for( $x=1; $x<\count($backtraces); $x++ )
-                    {
-                        $reader = new AnnotationReader( $backtraces[ $x ][ 'class' ] );
-                        $reflectionClass = new \ReflectionClass( $backtraces[ $x ][ 'class' ] );
-                        $reflectionMethod = $reflectionClass->getMethod( $backtraces[ $x ][ 'function' ] );
-                        $viewAnnotation = new ViewParser( $reader->getMethodAnnotations( $reflectionMethod ) );
-                        if( isset( $viewAnnotation['value'] ) )
-                        {
-                            $renderer->useView( $viewAnnotation['value'] );
-                            break;
-                        }
-                    }
-                    
+                    $renderer->useView( $response->getView() );
                     $response->setRenderer( $renderer );
                     break;
 
