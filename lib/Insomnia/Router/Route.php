@@ -32,7 +32,7 @@ class Route
 
         $this->matches = \array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
         
-        Registry::get( 'dispatcher' )->dispatch( $this );
+        Registry::get( 'dispatcher' )->dispatchRoute( $this );
     }
     
     public function getPattern()
