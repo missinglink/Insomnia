@@ -6,9 +6,8 @@ use \Insomnia\Session\SessionAbstract,
     \Insomnia\Session\AuthenticationAbstract,
     \Insomnia\Session\StorageAbstract,
     \Insomnia\Session\Storage\Apc as SessionStorage,
+    \Insomnia\Session\SessionException,
     \Insomnia\Session\Authentication\Token as SessionAuthentication;
-
-class SessionException extends \Exception {}
 
 class Session extends SessionAbstract
 {
