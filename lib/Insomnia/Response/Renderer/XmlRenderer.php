@@ -42,11 +42,12 @@ class XmlRenderer implements ResponseInterface
                 continue;
             }
 
-            if( \is_string( $item ) )
+            if( \is_scalar( $item ) || \is_null( $item ) )
             {
                 $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
                 $this->writer->writeCData( $item );
                 $this->writer->endElement();
+                continue;
             }
         }
     }
