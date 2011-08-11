@@ -22,7 +22,7 @@ class Route
         $this->params[ 'id' ]         = '\w+';
         
         $pattern = $this->createNamedPatterns();
-        $pattern .= '(\.(?:json|xml|html|yaml|txt|ini))?';
+        $pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form))?';
 
         if( !\preg_match( "_^$pattern\$_", Registry::get( 'request' )->getParam( 'path' ), $matches ) )
             return false;
@@ -32,7 +32,7 @@ class Route
 
         $this->matches = \array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
         
-        Registry::get( 'dispatcher' )->dispatchRoute( $this );
+        return true;
     }
     
     public function getPattern()

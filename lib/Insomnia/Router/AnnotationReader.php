@@ -8,7 +8,7 @@ class AnnotationReader
 {
     private $reader;
     private $reflector;
-    private $alias = array( 'webservice' => 'Insomnia\Annotation\\' );
+    private $alias = array( 'insomnia' => 'Insomnia\Annotation\\' );
     
     public function __construct( $className )
     {
