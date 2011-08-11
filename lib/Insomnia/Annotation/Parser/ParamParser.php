@@ -14,7 +14,11 @@ class ParamParser extends \Insomnia\ArrayAccess
             if( \get_class( $annotation ) == 'Insomnia\Annotation\Request' )
             {
                 foreach( $annotation['value'] as $param )
-                    $this[] = $param->toArray();
+                {
+                    $p = $param->toArray();
+                    $p[ 'required' ] = true;
+                    $this[] = $p;
+                }
             }
         }
     }
