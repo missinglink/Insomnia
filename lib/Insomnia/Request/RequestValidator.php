@@ -21,6 +21,25 @@ class RequestValidator
         $this->stack[ 'o_' . $key ] = $validator;
     }
     
+    public function getReference()
+    {
+        $ref = array();
+        
+        foreach( $this->stack as $key => $validator )
+        {
+            $optional = ( \substr( $key, 0, 2 ) === 'o_' );
+            $key      = \substr( $key, 2 );
+            $type     = \get_class( $validator );
+            
+            $this->errors[ $key ] = array(
+                'required' => !$optional,
+                'type'     => $type
+            );
+        }
+        
+        return $ref;
+    }
+    
     public function validate()
     {
         /* @var $request \Insomnia\Request */
