@@ -24,14 +24,24 @@ class Insomnia
         \ini_set( 'session.use_trans_sid',      0 ); // Turn off sid by default
 
         Registry::set( 'request',               new Request );
-        Registry::set( 'dispatcher',            new Dispatcher );
-        Registry::set( 'router',                new Router );
         Registry::set( 'controller_namespace',  'Application\Controller\\' );
+        Registry::set( 'error_endpoint',        '\Application\Controller\Errors\ErrorAction' );
         Registry::set( 'action_suffix',         'Action' );
         Registry::set( 'view_path',             'Application/View' );
         Registry::set( 'layout_path',           'Application/View' );
         Registry::set( 'view_extension',        '.php' );
         Registry::set( 'default_content_type',  'application/json' );
         Registry::set( 'jsonp_callback_param',  '_jsonp' );
+    }
+    
+    public function getRouter()
+    {
+        $router = new Router;
+        $router->addClass( 'Application\Controller\ClientController' );
+        $router->addClass( 'Application\Controller\TestController' );
+        $router->addClass( 'Application\Controller\StatusController' );
+        $router->addClass( 'Application\Controller\DocumentationController' );
+        $router->addClass( 'Application\Controller\UserController' );
+        return $router;
     }
 }

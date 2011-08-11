@@ -18,10 +18,11 @@ class Doctrine extends EntityManager
     const USER      = 'php';
     const PASS      = '3889y23b4jh2bhjh5vjv2jh3vjhv5j23tg545';
     const CHARSET   = 'UTF8';
+    const DRIVER    = 'pdo_mysql';
 
     public function __construct()
     {
-        // Autoloader (1)
+        // Autoloader
         $classLoader = new ClassLoader( 'Entities', \ROOT . 'Application' );
         $classLoader->register();
         $classLoader = new ClassLoader( 'Proxies', \ROOT . 'Application' );
@@ -30,42 +31,56 @@ class Doctrine extends EntityManager
         $classLoader->register();
         $classLoader = new ClassLoader( 'Gedmo', \ROOT . 'lib' );
         $classLoader->register();
-
-        // configuration (2)
+        
+        $conn = \Doctrine\DBAL\DriverManager::getConnection( $this->getConnectionOptions(), $this->getConfig(), $this->createEventManager() );
+        parent::__construct( $conn, $this->getConfig(), $conn->getEventManager() );
+        
+        self::$em = self::create( $this->getConnectionOptions(), $this->getConfig(), $this->createEventManager() );
+    }
+    
+    private function getConnectionOptions()
+    {
+        return array(
+            'dbname'        => self::DATABASE,
+            'user'          => self::USER,
+            'password'      => self::PASS,
+            'host'          => self::HOST,
+            'driver'        => self::DRIVER,
+            'CHARSET'       => self::CHARSET,
+            'driverOptions' => array( 'CHARSET'=> self::CHARSET )
+        );
+    }
+    
+    private function getConfig()
+    {
         $config = new Configuration;
 
-        // Proxies (3)
+        // Proxies
         $config->setProxyDir( \ROOT . 'Application/Proxies' );
         $config->setProxyNamespace( 'Proxies' );
         $config->setAutoGenerateProxyClasses( APPLICATION_ENV === 'development' );
 
-        // Driver (4)
+        // Driver
         $config->setMetadataDriverImpl( $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) ) );
 
-        // Caching Configuration (5)
+        // Caching
         $cache = ( APPLICATION_ENV === 'development' )
             ? new \Doctrine\Common\Cache\ArrayCache
             : new \Doctrine\Common\Cache\ApcCache;
 
         $config->setMetadataCacheImpl( $cache );
         $config->setQueryCacheImpl( $cache );
-
-        // Database connection information
-        $connectionOptions = array(
-            'dbname'        => self::DATABASE,
-            'user'          => self::USER,
-            'password'      => self::PASS,
-            'host'          => self::HOST,
-            'driver'        => 'pdo_mysql',
-            'CHARSET'       => self::CHARSET,
-            'driverOptions' => array( 'CHARSET'=> self::CHARSET )
-        );
         
+        return $config;
+    }
+    
+    private function createEventManager()
+    {
         // Timestampable extension
         $evm = new \Doctrine\Common\EventManager();
         $evm->addEventSubscriber( new \Gedmo\Timestampable\TimestampableListener );
-
-        self::$em = EntityManager::create( $connectionOptions, $config, $evm );
+        
+        return $evm;
     }
 
     /**
