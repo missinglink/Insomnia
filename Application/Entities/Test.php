@@ -6,13 +6,20 @@ namespace Application\Entities;
 class Test
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      */
     private $id;
     
-    /** @Column(length=50) */
-    private $name; // type defaults to string
+    /**
+     * @Column(type="string",length=50)
+     * 
+     * @insomnia:Property({
+     *      @insomnia:Validate( name="id", type="integer" ),
+     *      @insomnia:Validate( name="name", class="\Insomnia\Request\Validator\StringValidator", minlength="4", maxlength="10", optional="true" )
+     * })
+     */
+    private $name;
 
     public function getId() {
         return $this->id;
@@ -28,18 +35,5 @@ class Test
 
     public function setName($name) {
         $this->name = $name;
-    }
-
-    public function toArray()
-    {
-        $a = array();
-        $a[ 'id' ]      = $this->getId();
-        $a[ 'name' ]    = $this->getName();
-        return $a;
-    }
-
-    public function fromArray( $array )
-    {
-        if( isset( $array['name'] ) ) $this->setName( $array[ 'name' ] );
     }
 }

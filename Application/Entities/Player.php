@@ -97,21 +97,6 @@ class Player
     public function setUpdated($updated) {
         $this->updated = $updated;
     }
-
-    public function toArray()
-    {
-        $a = array();
-        $a[ 'id' ]      = $this->getId();
-        $a[ 'name' ]    = $this->getName();
-        return $a;
-    }
-
-    public function fromArray( $array )
-    {
-        if( isset( $array['name'] ) )       $this->setName( $array[ 'name' ] );
-        if( isset( $array['password'] ) )   $this->setPassword( $array[ 'password' ] );
-        if( isset( $array['email'] ) )      $this->setEmail( $array[ 'email' ] );
-    }
     
     public function validate()
     {
