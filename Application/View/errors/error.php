@@ -10,6 +10,10 @@
     <?php if( isset( $this['errors'] ) ): ?>
         <hr />
         <table style="width:100%;">
+            <thead>
+                <th class="error">Param</th>
+                <th class="error">Error</th>
+            </thead>
             <?php foreach( $this['errors'] as $id => $error ): ?>
                 <tr>
                     <th style="width:150px;" class="error"><?= $id; ?></th>
