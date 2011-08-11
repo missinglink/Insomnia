@@ -8,7 +8,7 @@ use \Insomnia\Controller\Action,
 /**
  * Webservice discovery
  * 
- * @webservice:Resource
+ * @insomnia:Resource
  * 
  */
 class StatusController extends Action
@@ -18,8 +18,8 @@ class StatusController extends Action
      * 
      * Get information about your request
      * 
-     * @webservice:Route("/ping.*", name="ping")
-     * @webservice:Method("GET PUT POST DELETE TRACE STATUS")
+     * @insomnia:Route("/ping.*", name="ping")
+     * @insomnia:Method("GET PUT POST DELETE TRACE STATUS")
      *
      */
     public function ping()
@@ -47,12 +47,13 @@ class StatusController extends Action
      * 
      * List all possible endpoints
      * 
-     * @webservice:Route("/discover", name="discover")
-     * @webservice:Method("GET")
+     * @insomnia:Route("/discover", name="discover")
+     * @insomnia:Method("GET")
      *
      */
     public function endpoints()
     {
-        $this->response->merge( array( 'routes' => Registry::get( 'router' )->getClasses() ));
+        $application = new \Application\Bootstrap\Insomnia;
+        $this->response->merge( array( 'routes' => $application->getRouter()->getClasses() ));
     }
 }

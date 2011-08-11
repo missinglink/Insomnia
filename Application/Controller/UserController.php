@@ -4,56 +4,55 @@ namespace Application\Controller;
 
 use \Insomnia\Controller\Action,
     \Application\Bootstrap\Doctrine,
-    \Application\Controller\TestController,
     \Insomnia\Request\RequestValidator,
     \Insomnia\Request\Validator\IntegerValidator,
     \Insomnia\Request\Validator\StringValidator,
     \Insomnia\Controller\NotFoundException,
     \Insomnia\Response\Paginator,
-    \Application\Queries\TestQuery;
+    \Application\Queries\UserQuery;
 
-use \Application\DataMapper\Test as DataMapper;
-
+use \Application\DataMapper\User as DataMapper;
 /**
- * Test Create Action
+ * User Create Action
  * 
  * @insomnia:Resource
  * @insomnia:Route( "/v1" )
  * 
  */
-class TestController extends Action
+class UserController extends Action
 {    
     /**
-     * Create a new Test entity
+     * Create a new User entity
      * 
-     * @insomnia:Route( "/test", name="test_create" )
+     * @insomnia:Route( "/user", name="user_create" )
      * @insomnia:Method( "PUT" )
-     * @insomnia:Documentation( category="Test" )
+     * @insomnia:Documentation( category="User" )
      * 
      * @insomnia:Request({
-     *      @insomnia:Param( name="name", type="string", minlength="4", maxlength="10" )
+     *      @insomnia:Param( name="name", type="string", minlength="4", maxlength="10" ),
+     *      @insomnia:Param( name="email", type="string", minlength="4", maxlength="255" )
      * })
      * 
      */
     public function create()
     {
-        $test = new \Application\Entities\Test;
-        $test->setName( $this->validator->getParam( 'name' ) );
+        $user = new \Application\Entities\User;
+        $dataMapper = new DataMapper( $user );
+        $dataMapper->import( $this->validator->getParams() );
 
         $doctrine = new Doctrine;
-        $doctrine->getManager()->persist( $test );
+        $doctrine->getManager()->persist( $user );
         $doctrine->getManager()->flush();
 
-        $dataMapper = new DataMapper( $test );
         $this->response->merge( $dataMapper->export() );
     }
     
     /**
-     * Delete a Test Entity
+     * Delete a User Entity
      * 
-     * @insomnia:Route( "/test/:id", name="test_delete" )
+     * @insomnia:Route( "/user/:id", name="user_delete" )
      * @insomnia:Method( "DELETE" )
-     * @insomnia:Documentation( category="Test" )
+     * @insomnia:Documentation( category="User" )
      *
      * @insomnia:Request({
      *      @insomnia:Param( name="id", type="integer" )
@@ -63,21 +62,21 @@ class TestController extends Action
     public function delete()
     {
         $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Entities\Test', $this->validator->getParam( 'id' ) );
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        $user = $doctrine->getManager()->find( 'Application\Entities\User', $this->validator->getParam( 'id' ) );
+        if( !$user ) throw new NotFoundException( 'Entity Not Found' );
 
-        $doctrine->getManager()->remove( $test );
+        $doctrine->getManager()->remove( $user );
         $doctrine->getManager()->flush();
 
         $this->response[ 'message' ] = 'Entity Deleted';
     }
     
     /**
-     * List Tests
+     * List Users
      * 
-     * @insomnia:Route( "/test", name="test_index" )
+     * @insomnia:Route( "/user", name="user_index" )
      * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Test" )
+     * @insomnia:Documentation( category="User" )
      * 
      * @insomnia:Request({
      *      @insomnia:Param( name="page", type="integer", optional="true" )
@@ -87,26 +86,26 @@ class TestController extends Action
     public function index()
     {
         $doctrine    = new Doctrine;
-        $query       = new TestQuery( $doctrine->getManager() );
+        $query       = new UserQuery( $doctrine->getManager() );
         $paginator   = new Paginator( $query->getQuery() );
         $paginator->setCurrentPage( $this->validator->getParam( 'page' ) );
         
-        $tests = $paginator->getItems();
-        if( !$tests ) throw new NotFoundException( 'Entity Not Found' );
+        $users = $paginator->getItems();
+        if( !$users ) throw new NotFoundException( 'Entity Not Found' );
 
-        foreach( $tests as $test )
+        foreach( $users as $user )
         {
-            $dataMapper = new DataMapper( $test );
+            $dataMapper = new DataMapper( $user );
             $this->response->push( $dataMapper->export() );
         }
     }
     
     /**
-     * View a Test
+     * View a User
      * 
-     * @insomnia:Route( "/test/:id", name="test_read" )
+     * @insomnia:Route( "/user/:id", name="user_read" )
      * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Test" )
+     * @insomnia:Documentation( category="User" )
      * 
      * @insomnia:Request({
      *      @insomnia:Param( name="id", type="integer" )
@@ -116,19 +115,19 @@ class TestController extends Action
     public function read()
     {
         $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Entities\Test', $this->validator->getParam( 'id' ) );
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        $user = $doctrine->getManager()->find( 'Application\Entities\User', $this->validator->getParam( 'id' ) );
+        if( !$user ) throw new NotFoundException( 'Entity Not Found' );
 
-        $dataMapper = new DataMapper( $test );
+        $dataMapper = new DataMapper( $user );
         $this->response->merge( $dataMapper->export() );
     }
     
     /**
-     * Update a Test
+     * Update a User
      * 
-     * @insomnia:Route( "/test/:id", name="test_update" )
+     * @insomnia:Route( "/user/:id", name="user_update" )
      * @insomnia:Method( "POST" )
-     * @insomnia:Documentation( category="Test" )
+     * @insomnia:Documentation( category="User" )
      *
      * @insomnia:Request({
      *      @insomnia:Param( name="id", type="integer" ),
@@ -139,12 +138,12 @@ class TestController extends Action
     public function update()
     {
         $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Entities\Test', $this->validator->getParam( 'id' ) );
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        $user = $doctrine->getManager()->find( 'Application\Entities\User', $this->validator->getParam( 'id' ) );
+        if( !$user ) throw new NotFoundException( 'Entity Not Found' );
 
-        $dataMapper = new DataMapper( $test );
+        $dataMapper = new DataMapper( $user );
         $dataMapper->import( $this->validator->getParams() );
-        $doctrine->getManager()->persist( $test );
+        $doctrine->getManager()->persist( $user );
         $doctrine->getManager()->flush();
 
         $this->response->merge( $dataMapper->export() );

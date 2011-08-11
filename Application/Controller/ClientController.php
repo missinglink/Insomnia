@@ -7,8 +7,8 @@ use \Insomnia\Controller\Action;
 /**
  * Client Controller
  * 
- * @webservice:Resource
- * @webservice:Route("/client.*")
+ * @insomnia:Resource
+ * @insomnia:Route("/client.*")
  * 
  */
 class ClientController extends Action
@@ -25,8 +25,8 @@ class ClientController extends Action
      * Something that spans
      * multiple lines.
      * 
-     * @webservice:Route("", name="client_index")
-     * @webservice:Method("GET")
+     * @insomnia:Route("", name="client_index")
+     * @insomnia:Method("GET")
      * 
      */
     public function action()

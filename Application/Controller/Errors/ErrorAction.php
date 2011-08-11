@@ -9,7 +9,7 @@ use \Application\Controller\ErrorsController,
 /**
  * Error Controller
  * 
- * @webservice:Resource
+ * @insomnia:Resource
  * 
  */
 class ErrorAction extends \Insomnia\Controller\Action
@@ -17,10 +17,10 @@ class ErrorAction extends \Insomnia\Controller\Action
     /**
      * Map Errors to Output
      * 
-     * @webservice:Route("/error", name="error")
-     * @webservice:Method("GET")
+     * @insomnia:Route("/error", name="error")
+     * @insomnia:Method("GET")
      *
-     * @webservice:View( "errors/error" )
+     * @insomnia:View( "errors/error" )
      */
     public function action()
     {
@@ -32,7 +32,7 @@ class ErrorAction extends \Insomnia\Controller\Action
         switch( \get_class( $exception ) )
         {
             case 'Insomnia\Router\RouterException':
-            case 'Insomnia\DispatcherControllerException':
+            case 'Insomnia\Router\DispatcherControllerException':
             case 'Insomnia\Controller\NotFoundException':
                 $response->setCode( Code::HTTP_NOT_FOUND );
                 $response[ 'status' ] = Code::HTTP_NOT_FOUND;
@@ -40,14 +40,14 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'body' ] = 'The requested resource could not be found but may be available again in the future';
                 break;
 
-            case 'Insomnia\DispatcherMethodException':
+            case 'Insomnia\Router\DispatcherMethodException':
                 $response->setCode( Code::HTTP_METHOD_NOT_ALLOWED );
                 $response[ 'status' ] = Code::HTTP_METHOD_NOT_ALLOWED;
                 $response[ 'title' ] = 'Unsupported Method';
                 $response[ 'body' ] = 'A request was made of a resource using a request method not supported by that resource';
                 break;
 
-            case 'Insomnia\SessionException':
+            case 'Insomnia\Session\SessionException':
                 $response->setCode( Code::HTTP_UNAUTHORIZED );
                 $response[ 'status' ] = Code::HTTP_UNAUTHORIZED;
                 $response[ 'title' ] = 'Authentication Failed';

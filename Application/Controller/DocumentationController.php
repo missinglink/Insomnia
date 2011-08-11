@@ -13,7 +13,7 @@ use \Insomnia\Registry;
 /**
  * WebService Documentation
  * 
- * @webservice:Resource
+ * @insomnia:Resource
  * 
  */
 class DocumentationController extends Action
@@ -21,14 +21,14 @@ class DocumentationController extends Action
     /**
      * List Endpoints
      * 
-     * @webservice:Route( "/doc", name="documentation" )
-     * @webservice:Method( "GET")
-     * @webservice:View( "documentation/index" )
-     * @webservice:Documentation( title="Documentation", description="List Endpoints", category="System" )
+     * @insomnia:Route( "/doc", name="documentation" )
+     * @insomnia:Method( "GET")
+     * @insomnia:View( "documentation/index" )
+     * @insomnia:Documentation( title="Documentation", description="List Endpoints", category="System" )
      * 
-     * @webservice:Request({
-     *      @webservice:Param( name="id", type="integer", optional="true" ),
-     *      @webservice:Param( name="page", type="integer", optional="true" )
+     * @insomnia:Request({
+     *      @insomnia:Param( name="id", type="integer", optional="true" ),
+     *      @insomnia:Param( name="page", type="integer", optional="true" )
      * })
      *
      */
@@ -38,7 +38,9 @@ class DocumentationController extends Action
         $validations = new \Insomnia\ArrayAccess;
         $doc = array();
         
-        foreach( Registry::get( 'router' )->getClasses() as $controllerClass )
+        $application = new \Application\Bootstrap\Insomnia;
+        
+        foreach( $application->getRouter()->getClasses() as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
             $routes = new RouteParser( $reader );
