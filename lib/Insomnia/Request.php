@@ -41,6 +41,17 @@ class Request extends Subject
     {
         return $this->method;
     }
+    
+    /**
+     * Get HTTP request URI
+     *
+     * @return string HTTP URI
+     */
+    public function getUri()
+    {
+        return $this->getScheme() . '://' . $this->getHeader( 'Host' ) . 
+               \str_ireplace( $this->getFileExtension(), '', $this->getParam( 'path' ) );
+    }
 
     /**
      * Set HTTP request method
