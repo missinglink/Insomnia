@@ -4,7 +4,7 @@ namespace Insomnia;
 
 use \Insomnia\Pattern\Subject;
 use \Insomnia\Request\Plugin\ParamParser,
-    \Insomnia\Request\Plugin\HeaderParser,
+    \Insomnia\Request\Plugin\HeaderParser as Goose,
     \Insomnia\Request\Plugin\BodyParser,
     \Insomnia\Request\Plugin\MethodOverride;
 
