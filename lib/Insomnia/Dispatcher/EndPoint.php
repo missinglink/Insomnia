@@ -6,9 +6,9 @@ use \Insomnia\Pattern\Subject,
     \Insomnia\Router\AnnotationReader,
     \Insomnia\Validator\DatabaseException;
 
-use \Insomnia\Dispatcher\Plugin\ViewAnnotationReader,
-    \Insomnia\Dispatcher\Plugin\ParamAnnotationValidator,
-    \Insomnia\Dispatcher\Plugin\DocumentationEndPoint;
+use \Insomnia\Controller\Action;
+
+use \Insomnia\Router\RouterException;
 
 class EndPoint extends Subject
 {
@@ -30,16 +30,18 @@ class EndPoint extends Subject
         // Instantiate controller
         $this->setController( new $class );
 
-        $this->attach( new DocumentationEndPoint );
-        $this->attach( new ViewAnnotationReader );
-        $this->attach( new ParamAnnotationValidator );
+        foreach( \Insomnia\Kernel::getInstance()->getDispatcherPlugins() as $plugin )
+        {
+            $plugin->update( $this );
+        }
+
         $this->notify();
     }
     
     public function dispatch()
     {
         try {
-            \call_user_func( array( $this->getController(), $this->getMethod() ) );
+            \call_user_func_array( array( $this->getController(), $this->getMethod() ), func_get_args() );
         }
         catch( \Exception $e )
         {
@@ -55,10 +57,15 @@ class EndPoint extends Subject
     
     private function reflect()
     {
-        $this->annotationReader  = new AnnotationReader;
-        $this->reflectionClass   = new \ReflectionClass( $this->getClass() );
-        $this->reflectionMethod  = $this->reflectionClass->getMethod( $this->getMethod() );
-        $this->methodAnnotations = $this->annotationReader->getMethodAnnotations( $this->reflectionMethod );
+        try {
+            $this->annotationReader  = new AnnotationReader( $this->getClass() );
+            $this->reflectionMethod  = $this->annotationReader->getReflector()->getMethod( $this->getMethod() );
+            $this->methodAnnotations = $this->annotationReader->getMethodAnnotations( $this->reflectionMethod );
+        }
+        catch( \Exception $e )
+        {
+            throw new RouterException( 'Invalid Endpoint Specified: ' . (string) $this->getClass(), null, $e );
+        }
     }
     
     public function getClass()
@@ -81,16 +88,19 @@ class EndPoint extends Subject
         $this->method = $method;
     }
     
+    /**
+     * @return \Insomnia\Controller\Action 
+     */
     public function getController()
     {
         return $this->controller;
     }
 
-    public function setController( $controller )
+    public function setController( Action $controller )
     {
         $this->controller = $controller;
     }
-    
+   
     public function getAnnotationReader()
     {
         return $this->annotationReader;

@@ -4,7 +4,7 @@ namespace Insomnia\Pattern;
 
 abstract class Subject implements \SplSubject
 {
-    protected $observers;
+    protected $observers = array();
 
     public function attach( \SplObserver $observer )
     {

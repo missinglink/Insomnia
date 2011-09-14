@@ -19,6 +19,7 @@ class AnnotationReader
             $reader->setAnnotationNamespaceAlias( $v, $k );
         
         $this->setReader( $reader );
+        
         $this->setReflector( new \ReflectionClass( $className ) );
     }
     
@@ -52,6 +53,9 @@ class AnnotationReader
         $this->reader = $reader;
     }
     
+    /**
+     * @return \ReflectionClass 
+     */
     public function getReflector()
     {
         return $this->reflector;

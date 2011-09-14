@@ -4,7 +4,7 @@ namespace Insomnia;
 
 use \Insomnia\Pattern\Subject;
 use \Insomnia\Request\Plugin\ParamParser,
-    \Insomnia\Request\Plugin\HeaderParser as Goose,
+    \Insomnia\Request\Plugin\HeaderParser,
     \Insomnia\Request\Plugin\BodyParser,
     \Insomnia\Request\Plugin\MethodOverride;
 
@@ -25,10 +25,11 @@ class Request extends Subject
      */
     public function __construct()
     {
-        $this->attach( new ParamParser );
-        $this->attach( new HeaderParser );
-        $this->attach( new BodyParser );
-        $this->attach( new MethodOverride );
+        foreach( \Insomnia\Kernel::getInstance()->getRequestPlugins() as $plugin )
+        {
+            $this->attach( $plugin );
+        }
+
         $this->notify();
     }
 

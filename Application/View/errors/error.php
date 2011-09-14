@@ -66,7 +66,10 @@
            {
                echo '<li><em>';
                echo ( isset( $trace['class'] ) ? $trace['class'] . '::' : '' ) . $trace['function'] . '() in ';
-               echo \basename( $trace['file'] ) . ':' . $trace['line'] . PHP_EOL;
+               
+               if( isset( $trace['file'] ) )
+                    echo \basename( $trace['file'] ) . ':' . $trace['line'] . PHP_EOL;
+               
                echo '</em></li>';
            };
         ?></ol>

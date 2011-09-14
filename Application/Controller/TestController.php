@@ -5,12 +5,13 @@ namespace Application\Controller;
 use \Insomnia\Controller\Action,
     \Application\Bootstrap\Doctrine,
     \Application\Controller\TestController,
-    \Insomnia\Request\RequestValidator,
     \Insomnia\Request\Validator\IntegerValidator,
     \Insomnia\Request\Validator\StringValidator,
     \Insomnia\Controller\NotFoundException,
     \Insomnia\Response\Paginator,
     \Application\Queries\TestQuery;
+
+use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
 
 use \Application\DataMapper\Test as DataMapper;
 

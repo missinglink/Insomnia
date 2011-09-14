@@ -3,15 +3,16 @@
 namespace Insomnia\Controller;
 
 use \Insomnia\Response;
-use \Insomnia\Request\RequestValidator;
 use \Insomnia\Registry;
+
+use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
 
 abstract class Action
 {
     /* @var $response \Insomnia\Response */
     protected $response;
 
-    /* @var $validator \Insomnia\Request\RequestValidator */
+    /* @var $validator \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator */
     protected $validator;
 
     public function __construct()
@@ -21,6 +22,9 @@ abstract class Action
         $this->setResponse( new Response );
     }
 
+    /**
+     * @return \Insomnia\Response 
+     */
     public function getResponse()
     {
         return $this->response;

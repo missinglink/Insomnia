@@ -68,12 +68,15 @@ class Route
         return $this;
     }
     
+    /**
+     * @return \ReflectionMethod
+     */
     public function getReflectionMethod()
     {
         return $this->reflectionMethod;
     }
 
-    public function setReflectionMethod( $reflectionMethod )
+    public function setReflectionMethod( \ReflectionMethod $reflectionMethod )
     {
         $this->reflectionMethod = $reflectionMethod;
     }

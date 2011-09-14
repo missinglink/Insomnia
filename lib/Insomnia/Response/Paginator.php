@@ -3,8 +3,7 @@
 namespace Insomnia\Response;
 
 use \DoctrineExtensions\Paginate\PaginationAdapter,
-    \Doctrine\ORM\Query,
-    \Insomnia\Request\RequestValidator;
+    \Doctrine\ORM\Query;
 
 class Paginator extends PaginationAdapter
 {

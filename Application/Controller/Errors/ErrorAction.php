@@ -21,13 +21,12 @@ class ErrorAction extends \Insomnia\Controller\Action
      * @insomnia:Method("GET")
      *
      * @insomnia:View( "errors/error" )
+     * 
+     * @param \Exception $exception 
      */
-    public function action()
+    public function action( \Exception $exception )
     {
         $response = $this->getResponse();
-        
-        /* @var $exception \Exception */
-        $exception = Registry::get( 'request' )->getParam( 'exception' );
         
         switch( \get_class( $exception ) )
         {
@@ -54,7 +53,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'body' ] = 'Authentication is possible but has failed or not yet been provided';
                 break;
 
-            case 'Insomnia\Request\ValidatorException':
+            case 'Insomnia\Kernel\Module\RequestValidator\Request\ValidatorException':
                 $response->setCode( Code::HTTP_BAD_REQUEST );
                 $response[ 'status' ] = Code::HTTP_BAD_REQUEST;
                 $response[ 'title' ] = 'Missing or Invalid Request Parameter';
@@ -78,7 +77,9 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'parameter' ] = $exception->getMessage();
                 break;
 
+            case 'Insomnia\Response\Renderer\ViewException':
             case 'ReflectionException':
+            case 'ErrorException':
             default:
                 $response->setCode( Code::HTTP_INTERNAL_SERVER_ERROR );
                 $response[ 'status' ] = Code::HTTP_INTERNAL_SERVER_ERROR;
@@ -108,6 +109,9 @@ class ErrorAction extends \Insomnia\Controller\Action
             }
             
             $debug[ 'backtrace' ] = \debug_backtrace();
+            
+            $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
+            
             $response[ 'debug' ] = $debug;
         }
     }

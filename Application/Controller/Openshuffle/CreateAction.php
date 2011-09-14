@@ -10,6 +10,8 @@ use \Application\Bootstrap\Doctrine,
     \Application\Entities\Player,
     \Application\Modifier\Layout;
 
+use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
+
 class CreateAction extends Action
 {
     private $requestValidator;
@@ -23,7 +25,7 @@ class CreateAction extends Action
     
     public function validate()
     {
-        $this->requestValidator = new \Insomnia\Request\RequestValidator;
+        $this->requestValidator = new RequestValidator;
         $this->requestValidator->required( 'name',     new StringValidator( 4, 255 ) );
         $this->requestValidator->required( 'password', new StringValidator( 4, 255 ) );
         $this->requestValidator->required( 'email',    new EmailValidator );

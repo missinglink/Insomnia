@@ -4,12 +4,13 @@ namespace Application\Controller;
 
 use \Insomnia\Controller\Action,
     \Application\Bootstrap\Doctrine,
-    \Insomnia\Request\RequestValidator,
     \Insomnia\Request\Validator\IntegerValidator,
     \Insomnia\Request\Validator\StringValidator,
     \Insomnia\Controller\NotFoundException,
     \Insomnia\Response\Paginator,
     \Application\Queries\UserQuery;
+
+use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
 
 use \Application\DataMapper\User as DataMapper;
 /**

@@ -25,9 +25,15 @@ class StatusController extends Action
     public function ping()
     {
         $request = Registry::get( 'request' );
+        $backtrace = array();
         
         foreach( \array_reverse( \debug_backtrace( false ) ) as $k => $trace )
-            $backtrace[] = ($k+1) . '. ' . $trace[ 'class' ] . '::' . $trace[ 'function' ] . '()';
+        {
+            if( isset( $trace[ 'class' ] ) && isset( $trace[ 'function' ] ) )
+            {
+                $backtrace[] = ($k+1) . '. ' . $trace[ 'class' ] . '::' . $trace[ 'function' ] . '()';
+            }
+        }
         
         $request->getHeader( 'Force Load Headers' );
         $this->response->merge( array(
