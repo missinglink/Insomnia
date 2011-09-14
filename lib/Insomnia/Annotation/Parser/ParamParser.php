@@ -2,10 +2,9 @@
 
 namespace Insomnia\Annotation\Parser;
 
-use Insomnia\Router\RouteStack;
-use Insomnia\Router\AnnotationReader;
+use \Insomnia\Pattern\ArrayAccess;
 
-class ParamParser extends \Insomnia\ArrayAccess
+class ParamParser extends ArrayAccess
 {
     public function __construct( array $methodAnnotations )
     {           

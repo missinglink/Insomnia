@@ -2,7 +2,9 @@
 
 namespace Insomnia\Annotation;
 
-class Method extends \Insomnia\ArrayAccess
+use \Insomnia\Pattern\ArrayAccess;
+
+class Method extends ArrayAccess
 {
     public function __construct( array $data )
     {        

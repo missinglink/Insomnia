@@ -9,6 +9,7 @@ use \Insomnia\Annotation\Parser\Documentation;
 use \Insomnia\Router\AnnotationReader;
 use \Insomnia\Router\RouteStack;
 use \Insomnia\Registry;
+use \Insomnia\Pattern\ArrayAccess;
 
 /**
  * WebService Documentation
@@ -34,8 +35,8 @@ class DocumentationController extends Action
      */
     public function index()
     {
-        $routes = new \Insomnia\ArrayAccess;
-        $validations = new \Insomnia\ArrayAccess;
+        $routes = new ArrayAccess;
+        $validations = new ArrayAccess;
         $doc = array();
         
         foreach( \Insomnia\Kernel::getInstance()->getEndPoints() as $controllerClass )

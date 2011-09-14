@@ -2,7 +2,7 @@
 
 namespace Insomnia\Kernel\Module\Mime\Response\Renderer;
 
-use \Insomnia\ArrayAccess,
+use \Insomnia\Pattern\ArrayAccess,
     \Insomnia\Response\ResponseInterface,
     \Insomnia\Response,
     \Insomnia\Registry;

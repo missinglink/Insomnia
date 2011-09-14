@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia;
+namespace Insomnia\Pattern;
 
 class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
 {
@@ -8,7 +8,7 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function merge( $data )
     {
-        if( $data instanceof \Insomnia\ArrayAccess )
+        if( $data instanceof self )
             $data = $data->toArray();
         
         $this->data = $data + $this->data;

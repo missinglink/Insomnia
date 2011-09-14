@@ -4,8 +4,9 @@ namespace Insomnia\Annotation\Parser;
 
 use Insomnia\Router\RouteStack;
 use Insomnia\Router\AnnotationReader;
+use \Insomnia\Pattern\ArrayAccess;
 
-class Route extends \Insomnia\ArrayAccess
+class Route extends ArrayAccess
 {    
     public function __construct( AnnotationReader $reader )
     {

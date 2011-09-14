@@ -2,7 +2,9 @@
 
 namespace Insomnia\Annotation;
 
-class Route extends \Insomnia\ArrayAccess
+use \Insomnia\Pattern\ArrayAccess;
+
+class Route extends ArrayAccess
 {
     public function __construct( array $data )
     {        

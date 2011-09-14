@@ -2,7 +2,7 @@
 
 namespace Insomnia;
 
-use \Insomnia\ArrayAccess,
+use \Insomnia\Pattern\ArrayAccess,
     \Insomnia\Response\ResponseException;
 
 class Response extends ArrayAccess implements \SplSubject

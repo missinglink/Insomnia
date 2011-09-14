@@ -2,4 +2,6 @@
 
 namespace Insomnia\Router;
 
-class RouteStack extends \Insomnia\ArrayAccess {}
+use \Insomnia\Pattern\ArrayAccess;
+
+class RouteStack extends ArrayAccess {}
