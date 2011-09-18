@@ -127,11 +127,13 @@
             <tr>
         </table>
     <?php endif; ?>
-        
-    <div id="codeView" style="display:none;">
-        <hr />
-        <?php renderFileView( $this['debug']['file'], $this['debug']['line'] ); ?>
-    </div>
+   
+    <?php if( isset( $this['debug'] ) ): ?>
+        <div id="codeView" style="display:none;">
+            <hr />
+            <?php renderFileView( $this['debug']['file'], $this['debug']['line'] ); ?>
+        </div>
+    <?php endif; ?>
         
     <?php if( isset( $this['debug']['backtrace'] ) ): ?>
             
@@ -182,8 +184,8 @@
            };
         ?></ol>
     <?php endif; ?>
-    <!--<?php if( isset( $this['debug']['routes'] ) ): ?>
-        <hr />
+    <?php if( isset( $this['debug']['routes'] ) ): ?>
+        <!--<hr />
         <strong>Controllers</strong>
         <ol style="width:100%; padding:0px;"><?php
            foreach( $this['debug']['routes'] as $route )
@@ -192,13 +194,14 @@
                echo $route;
                echo '</em></li>';
            };
-        ?></ol>
-    <?php endif; ?>-->
+        ?></ol>-->
+    <?php endif; ?>
     
     <hr />
     <a href="/doc" style="text-decoration:none;">Web Service Reference</a>
 </div>
 
+<?php if( isset( $this['debug'] ) ): ?>
 <? $this->javascript( '/js/jquery-1.4.3.min.js' ); ?>
 <script type="text/javascript">
     $("a#toggle").click(
@@ -254,3 +257,4 @@
         }
    );
 </script>
+<?php endif; ?>
