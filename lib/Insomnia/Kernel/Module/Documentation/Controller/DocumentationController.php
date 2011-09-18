@@ -24,7 +24,8 @@ class DocumentationController extends Action
      * 
      * @insomnia:Route( "/doc", name="documentation" )
      * @insomnia:Method( "GET" )
-     * @insomnia:View( "\Insomnia\Kernel\Module\Documentation" )
+     * @insomnia:View( "\Insomnia\Kernel\Module\Documentation\View\Index" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * @insomnia:Documentation( title="Documentation", description="List Endpoints", category="System" )
      * 
      * @insomnia:Request({

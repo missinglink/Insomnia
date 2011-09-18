@@ -20,12 +20,13 @@ class ErrorAction extends \Insomnia\Controller\Action
      * @insomnia:Route("/error", name="error")
      * @insomnia:Method("GET")
      *
-     * @insomnia:View( "errors/error" )
+     * @insomnia:View( "\Insomnia\Kernel\Module\ErrorHandler\View\Error" )
+     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      * @param \Exception $exception 
      */
     public function action( \Exception $exception )
-    {
+    {        
         $response = $this->getResponse();
         
         switch( \get_class( $exception ) )

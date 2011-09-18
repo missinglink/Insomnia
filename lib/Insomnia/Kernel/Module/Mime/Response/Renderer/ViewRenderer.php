@@ -2,93 +2,54 @@
 
 namespace Insomnia\Kernel\Module\Mime\Response\Renderer;
 
-use \Insomnia\Pattern\ArrayAccess,
-    \Insomnia\Response\ResponseInterface,
-    \Insomnia\Response,
-    \Insomnia\Registry;
+use \Insomnia\Response,
+    \Insomnia\Annotation\Parser\ViewParser,
+    \Insomnia\Annotation\Parser\LayoutParser;
 
-class ViewRenderer extends ArrayAccess implements ResponseInterface
+use \Insomnia\Response\ResponseInterface,
+    \Insomnia\Response\ResponseAbstract;
+
+use \Doctrine\Common\ClassLoader;
+
+class ViewRenderer extends ResponseAbstract implements ResponseInterface
 {
-    private $layout         = 'layout',
-            $view           = 'index',
-            $viewContent    = '',
-            $stylesheets    = array(),
-            $scripts        = array(),
-            $basePath       = '';
-
-    public function __construct()
+    public function render()
     {
-        $this->setViewBasePath( \ROOT . Registry::get( 'layout_path' ) . \DIRECTORY_SEPARATOR );
-    }
-    
-    public function useLayout( $layout )
-    {
-        $this->layout = $layout;
-    }
-
-//    public function useView( $view )
-//    {
-//        $this->view = $view;
-//    }
-
-    public function render( Response $response )
-    {
-        if( !\file_exists( $layoutFile = \ROOT . Registry::get( 'layout_path' ) . \DIRECTORY_SEPARATOR . $this->layout . Registry::get( 'view_extension' ) ) )
-            throw new ViewException( 'Layout File Not Found: ' . $this->layout );
+        /** @var $endpoint \Insomnia\Dispatcher\EndPoint */
+        $endpoint = $this->getResponse()->getEndPoint();
         
-//        try {
-            if( !\file_exists( $viewFile = $this->getViewBasePath() . $response->getView() . Registry::get( 'view_extension' ) ) )
-                throw new ViewException( 'View File Not Found: ' . $this->view );
-//        }
-//        catch( ViewException $e )
-//        {
-//            if( !\file_exists( $viewFile = $this->getViewBasePath() . 'errors/scaffold' . Registry::get( 'view_extension' ) ) )
-//                throw new ViewException( 'Scaffold View File Not Found: ' . $viewFile );
-//        }
+        // View Annotations
+        $viewAnnotation = new ViewParser( $endpoint->getMethodAnnotations() );
+        $viewClass = $viewAnnotation->get( 'value' );
         
-        $this->merge( $response );
-
-        \ob_start();
-        require $viewFile;
-        $this->viewContent = \ob_get_clean();
-
-        \ob_start();
-        require $layoutFile;
-        \ob_end_flush();
-    }
-
-    public function content()
-    {
-        return $this->viewContent;
-    }
-
-    public function css( $sheet = null )
-    {
-        if( \is_string( $sheet ) )
-            $this->stylesheets[ $sheet ] = $sheet;
-
-        else foreach( $this->stylesheets as $sheet )
-            echo '<link rel="stylesheet" href="'.$sheet.'" type="text/css" />' . PHP_EOL;
-    }
-
-    public function javascript( $script = null )
-    {
-        if( \is_string( $script ) )
-            $this->scripts[ $script ] = $script;
+        // Validate View
+        if( null == $viewClass || !ClassLoader::classExists( trim( $viewClass, '\\' ) ) )
+        {
+            throw new ViewException( 'View File Not Registered' );
+        }
         
-        else foreach( $this->scripts as $script )
-            echo '<script src="'.$script.'" type="text/javascript"></script>' . PHP_EOL;
-    }
-    
-    public function getViewBasePath()
-    {
-        return $this->basePath;
-    }
+        // Layout Annotations
+        $layoutAnnotation = new LayoutParser( $endpoint->getMethodAnnotations() );
+        $layoutClass = $layoutAnnotation->get( 'value' );
 
-    public function setViewBasePath( $basePath )
-    {
-        $this->basePath = $basePath;
+        // Instantiate View
+        $view = new $viewClass;
+        
+        // With Layout
+        if( null !== $layoutClass || ClassLoader::classExists( trim( $layoutClass, '\\' ) ) )
+        {
+            /** @var $layout \Insomnia\Pattern\Layout */
+            $layout = new $layoutClass;
+            $layout->setView( $view );
+            $view->setResponse( $this->getResponse() );
+            $layout->render();
+        }
+        
+        // View Only
+        else
+        {
+            $view->setResponse( $this->getResponse() );
+            $view->render();
+        }
     }
 }
-
-class ViewException extends \Exception {}

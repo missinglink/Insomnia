@@ -12,7 +12,23 @@ require_once \ROOT.'/lib/Doctrine/Common/ClassLoader.php';
 \spl_autoload_register( array( new ClassLoader( 'Doctrine', \ROOT . 'lib' ), 'loadClass' ) );
 \spl_autoload_register( array( new ClassLoader( 'Application', \ROOT ), 'loadClass' ) );
 
+//function moo()
+//{
+//    $error = error_get_last();
+//    if( NULL === $error ) return $message;
+//    else $e = $error[ 'type' ];
+//    return ( '---' );
+//}
+
+
+//ob_start( 'moo' );
+
 $bootstrap = new \Application\Bootstrap\Insomnia;
+
+
+//            $endPoint = new Dispatcher\EndPoint( '\Application\Controller\Errors\ErrorAction', 'action' );
+//            $endPoint->dispatch( new \Exception( 'a' ) );
+//            die;
 
 Kernel::getInstance()
     ->addEndpoint( 'Application\Controller\TestController' )
@@ -28,3 +44,4 @@ Kernel::getInstance()
     ->addModule( new \Insomnia\Kernel\Module\Compatability\Bootstrap )
     ->addModule( new \Insomnia\Kernel\Module\Cors\Bootstrap )
     ->run();
+//ob_end_flush();

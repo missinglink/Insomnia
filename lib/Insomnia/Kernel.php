@@ -13,13 +13,14 @@ class Kernel
     private $router;
     private $dispatcherPlugins = array();
     private $requestPlugins = array();
-    private $responsePlugins = array();
+    private $responsePlugins;
     private $modules = array();
     private $endPoints = array();
     
     public function __construct()
     {
         $this->setRouter( new Router );
+        $this->responsePlugins = new PQtest;
     }
     
     public function addDispatcherPlugin( $plugin )
@@ -46,16 +47,29 @@ class Kernel
         return $this->requestPlugins;
     }
 
-    public function addResponsePlugin( $plugin )
+    public function addResponsePlugin( $plugin, $level = 50 )
     {
-        return $this->responsePlugins[] = $plugin;
-        
+        $this->responsePlugins->insert( $plugin, -$level );
+  
         return $this;
     }
 
     public function getResponsePlugins()
-    {
-        return $this->responsePlugins;
+    { 
+        $return = array();
+        
+        if( 0 < $this->responsePlugins->count() )
+        {
+            $plugins = clone $this->responsePlugins;
+            
+            while( $plugins->valid() )
+            {
+                $return[] = $plugin = $plugins->current();
+                $plugins->next();
+            }
+        }
+        
+        return $return;
     }
 
     public function addModule( KernelModule $component )
@@ -92,15 +106,14 @@ class Kernel
         foreach( $this->getEndpoints() as $endPoint )
         {
             $this->getRouter()->addClass( $endPoint );
-        }
-        
-        Registry::set( 'request', new Request );
+        }    
         
         $this->getRouter()->dispatch();
         
         return $this;
     }
     
+    /** @return Router */
     public function getRouter()
     {
         return $this->router;
@@ -111,6 +124,7 @@ class Kernel
         $this->router = $router;
     }
 
+    /** @return \Insomnia\Kernel */
     public static function getInstance()
     {
         if( is_null( self::$_instance ) )
@@ -121,3 +135,12 @@ class Kernel
         return self::$_instance;
     }
 }
+
+class PQtest extends \SplPriorityQueue
+{
+    public function compare($priority1, $priority2)
+    {
+        if ($priority1 === $priority2) return 0;
+        return $priority1 < $priority2 ? -1 : 1;
+    }
+} 

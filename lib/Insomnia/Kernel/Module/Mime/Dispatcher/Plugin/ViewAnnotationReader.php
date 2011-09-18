@@ -1,5 +1,7 @@
 <?php
 
+// This may be deprecated
+
 namespace Insomnia\Kernel\Module\Mime\Dispatcher\Plugin;
 
 use \Insomnia\Pattern\Observer;

@@ -11,19 +11,23 @@ class Router
 {
     private $classes;
     
-    public function dispatch( $name = null )
+    public function dispatch()
     {
+        $request = new Request;
+        Registry::set( 'request', $request );
+
         $routes = new RouteStack;
         
         foreach( $this->classes as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
-            $routes->merge( new RouteParser( $reader ) );
+            $routes->merge( new RouteParser( $reader, $request ) );
         }
         
+        /** @var $route \Insomnia\Router\Route */
         foreach( $routes as $route )
         {
-            if( $route->match( $name ) )
+            if( $route->match( $request ) )
             {
                 // Attempt to dispatch the route
                 new RouteDispatcher( $route );

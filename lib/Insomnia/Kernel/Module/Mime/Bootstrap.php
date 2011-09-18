@@ -9,8 +9,8 @@ class Bootstrap extends KernelModule
 {
     public function bootstrap( Kernel $kernel )
     {
-        $kernel->addDispatcherPlugin( new Dispatcher\Plugin\ViewAnnotationReader );
-        $kernel->addResponsePlugin( new Response\Plugin\ContentTypeSelector );
-        $kernel->addResponsePlugin( new Response\Plugin\RendererSelector );
+        //$kernel->addDispatcherPlugin( new Dispatcher\Plugin\ViewAnnotationReader );
+        $kernel->addResponsePlugin( new Response\Plugin\ContentTypeSelector, 1 );
+        $kernel->addResponsePlugin( new Response\Plugin\RendererSelector , 2 );
     }
 }

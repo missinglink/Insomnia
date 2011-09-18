@@ -13,8 +13,8 @@ class Bootstrap extends KernelModule
         $kernel->addRequestPlugin( new Request\Plugin\HeaderParser );
         $kernel->addRequestPlugin( new Request\Plugin\BodyParser );
         
-        $kernel->addResponsePlugin( new Response\Plugin\HttpHeaders );
-        $kernel->addResponsePlugin( new Response\Plugin\CacheHeaders );
-        $kernel->addResponsePlugin( new Response\Plugin\ResponseCodeSelector );
+        $kernel->addResponsePlugin( new Response\Plugin\HttpHeaders, 999 );
+        $kernel->addResponsePlugin( new Response\Plugin\CacheHeaders, 998 );
+        $kernel->addResponsePlugin( new Response\Plugin\ResponseCodeSelector, 997 );
     }
 }

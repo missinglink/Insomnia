@@ -3,14 +3,15 @@
 namespace Insomnia\Kernel\Module\Mime\Response\Renderer;
 
 use \Insomnia\Response\ResponseInterface,
+    \Insomnia\Response\ResponseAbstract,
     \Insomnia\Response;
 
-class XmlRenderer implements ResponseInterface
+class XmlRenderer extends ResponseAbstract implements ResponseInterface
 {
     private $writer,
             $indent = '   ';
 
-    public function render( Response $response )
+    public function render()
     {
         $this->writer = new \XMLWriter;
 
@@ -23,7 +24,7 @@ class XmlRenderer implements ResponseInterface
         $this->writer->startElement( 'response' );
         $this->writer->writeAttribute( 'version', '1.0' );
 
-        $this->writeXML( $response->toArray() );
+        $this->writeXML( $this->getResponse()->toArray() );
 
         $this->writer->endElement();
         $this->writer->endDocument();

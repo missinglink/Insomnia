@@ -5,7 +5,8 @@ namespace Insomnia\Router;
 use \Doctrine\Common\ClassLoader,
     \Insomnia\Router\Route,
     \Insomnia\Dispatcher\EndPoint,
-    \Insomnia\Registry;
+    \Insomnia\Registry,
+    \Insomnia\Request;
 
 use \Insomnia\Router\DispatcherControllerException,
     \Insomnia\Router\DispatcherMethodException;
@@ -17,8 +18,7 @@ class RouteDispatcher
 
     public function __construct( Route $route )
     {
-        /* @var $request \Insomnia\Request */
-        $request = Registry::get( 'request' );
+        $request = $route->getRequest();
         
         /* @var $reflectionMethod \ReflectionMethod */
         $reflectionMethod = $route->getReflectionMethod();
@@ -34,7 +34,7 @@ class RouteDispatcher
         if( self::STRICT_CHECKING )
             new \ReflectionClass( $class );
         
-        Registry::get( 'request' )->mergeParams( $route->getMatches() );
+        $request->mergeParams( $route->getMatches() );
         
         $endpoint = new EndPoint( $class, $reflectionMethod->getName() );
         $endpoint->dispatch();

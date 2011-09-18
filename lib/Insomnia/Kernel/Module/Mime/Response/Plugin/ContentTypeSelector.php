@@ -10,7 +10,7 @@ class ContentTypeSelector extends Observer
     /* @var $response \Insomnia\Response */
     public function update( \SplSubject $response )
     {
-        if( null === $response->getContentType() )
+        if( '' === $response->getContentType() )
         {
             switch( Registry::get( 'request' )->getFileExtension() )
             {

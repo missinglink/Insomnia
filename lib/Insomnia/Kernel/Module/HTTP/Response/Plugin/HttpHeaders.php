@@ -11,7 +11,7 @@ class HttpHeaders extends Observer
     {
         $protocol = isset( $_SERVER[ 'SERVER_PROTOCOL' ] ) ? $_SERVER[ 'SERVER_PROTOCOL' ] : 'HTTP/1.1';
         
-        \header( $protocol . ' ' . $response->getCode() );
+        \header( $protocol . ' ' . $response->getCode() );        
         \header( 'Content-Type: ' . $response->getContentType() . '; charset=\'' . $response->getCharacterSet() .'\'' );
     }
 }

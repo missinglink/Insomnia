@@ -6,7 +6,9 @@ use \Insomnia\Response\ResponseInterface,
     \Insomnia\Response,
     \Insomnia\Registry;
 
-class JsonRenderer implements ResponseInterface
+use \Insomnia\Response\ResponseAbstract;
+
+class JsonRenderer extends ResponseAbstract implements ResponseInterface
 {
     private $requestKey;
     
@@ -15,17 +17,17 @@ class JsonRenderer implements ResponseInterface
         $this->setRequestKey( $callback );
     }
     
-    public function render( Response $response )
+    public function render()
     {
         $jsonpCallback = $this->getRequestKey();
         
         if( null !== $jsonpCallback && Registry::get( 'request' )->hasParam( $jsonpCallback ) )
         {
             echo Registry::get( 'request' )->getParam( $jsonpCallback );
-            echo '(' . \json_encode( $response->toArray() ) . ')';
+            echo '(' . \json_encode( $this->getResponse()->toArray() ) . ')';
         }
 
-        else echo \json_encode( $response->toArray() );
+        else echo \json_encode( $this->getResponse()->toArray() );
     }
     
     public function getRequestKey()

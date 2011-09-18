@@ -5,10 +5,12 @@ namespace Insomnia\Kernel\Module\Mime\Response\Renderer;
 use \Insomnia\Response\ResponseInterface,
     \Insomnia\Response;
 
-class ArrayRenderer implements ResponseInterface
+use \Insomnia\Response\ResponseAbstract;
+
+class ArrayRenderer extends ResponseAbstract implements ResponseInterface
 {
-    public function render( Response $response )
+    public function render()
     {
-        \print_r( $response->toArray() );
+        \print_r( $this->getResponse()->toArray() );
     }
 }

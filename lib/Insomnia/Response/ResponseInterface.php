@@ -6,5 +6,10 @@ use \Insomnia\Response;
 
 interface ResponseInterface
 {
-    public function render( Response $response );
+    public function render();
+    
+    /** @return \Insomnia\Response  */
+    public function getResponse();
+
+    public function setResponse( Response $response );
 }

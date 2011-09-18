@@ -5,14 +5,16 @@ namespace Insomnia\Kernel\Module\Mime\Response\Renderer;
 use \Insomnia\Response\ResponseInterface,
     \Insomnia\Response;
 
-class IniRenderer implements ResponseInterface
+use \Insomnia\Response\ResponseAbstract;
+
+class IniRenderer extends ResponseAbstract implements ResponseInterface
 {
     private $indent = '   ';
     
-    public function render( Response $response )
+    public function render()
     {
         \ob_start();
-        $this->createIni( $response->toArray() );
+        $this->createIni( $this->getResponse()->toArray() );
         echo \trim( \ob_get_clean() );
         echo PHP_EOL;
     }

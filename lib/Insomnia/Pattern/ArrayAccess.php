@@ -6,12 +6,13 @@ class ArrayAccess implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     protected $data = array();
 
-    public function merge( $data )
+    public function merge( $data = array() )
     {
-        if( $data instanceof self )
+        if( method_exists( $data, 'toArray' ) )
             $data = $data->toArray();
         
-        $this->data = $data + $this->data;
+        if( is_array( $data ) )
+            $this->data = $data + $this->data;
     }
 
     public function toArray()

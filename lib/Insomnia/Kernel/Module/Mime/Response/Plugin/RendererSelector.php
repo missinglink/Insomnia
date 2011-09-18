@@ -21,10 +21,6 @@ class RendererSelector extends Observer
         {
             switch( \strstr( $response->getContentType(), '/' ) )
             {
-                case '/json':
-                    $response->setRenderer( new JsonRenderer );
-                    break;
-
                 case '/xml':
                     $response->setRenderer( new XmlRenderer );
                     break;
@@ -44,12 +40,11 @@ class RendererSelector extends Observer
                 case '/ini':
                     $response->setRenderer( new IniRenderer );
                     break;
-
-                default: if( $this->controller === 'errors' && $response->getContentType() != Registry::get( 'default_content_type' ) )
-                {
-                    $response->setContentType( Registry::get( 'default_content_type' ) );
-                    $this->update();
-                }
+                
+                case '/json':
+                default:
+                    $response->setRenderer( new JsonRenderer );
+                    break;
             }
         }
     }

@@ -17,7 +17,7 @@ abstract class Action
 
     public function __construct()
     {
-        $validator = new RequestValidator;       
+        $validator = new RequestValidator;
         $this->setValidator( $validator );
         $this->setResponse( new Response );
     }

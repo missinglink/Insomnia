@@ -50,7 +50,7 @@ class EndPoint extends Subject
 
             else throw $e;
         }
-        
+
         if( \method_exists( $this->getController(), 'getResponse' ) )
             $this->getController()->getResponse()->render( $this );
     }
@@ -83,7 +83,7 @@ class EndPoint extends Subject
         return $this->method;
     }
 
-    private function setMethod( $method )
+    public function setMethod( $method )
     {
         $this->method = $method;
     }

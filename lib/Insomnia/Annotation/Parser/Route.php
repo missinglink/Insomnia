@@ -2,13 +2,14 @@
 
 namespace Insomnia\Annotation\Parser;
 
-use Insomnia\Router\RouteStack;
-use Insomnia\Router\AnnotationReader;
+use \Insomnia\Router\RouteStack;
+use \Insomnia\Router\AnnotationReader;
 use \Insomnia\Pattern\ArrayAccess;
+use \Insomnia\Request;
 
 class Route extends ArrayAccess
 {    
-    public function __construct( AnnotationReader $reader )
+    public function __construct( AnnotationReader $reader, Request $request )
     {
         $classAnnotations = $reader->getClassAnnotations();
         if( !isset( $classAnnotations[ 'Insomnia\Annotation\Resource' ] ) ) return;
@@ -18,13 +19,14 @@ class Route extends ArrayAccess
             $methodAnnotations = $reader->getMethodAnnotations( $method );
             if( !isset( $methodAnnotations[ 'Insomnia\Annotation\Route' ] ) ) continue;
             
-            $this->addRoute( $classAnnotations, $methodAnnotations, $method );
+            $this->addRoute( $classAnnotations, $methodAnnotations, $method, $request );
         }
     }
     
-    private function addRoute( $classAnnotations, $methodAnnotations, $method )
+    private function addRoute( $classAnnotations, $methodAnnotations, $method, $request )
     {
         $route = new \Insomnia\Router\Route;
+        $route->setRequest( $request );
         $route->setReflectionMethod( $method );
 
         $pattern = isset( $classAnnotations['Insomnia\Annotation\Route']['value'] )

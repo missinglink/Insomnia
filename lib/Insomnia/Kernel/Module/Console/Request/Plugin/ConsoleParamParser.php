@@ -19,7 +19,7 @@ class ConsoleParamParser extends Observer
                 $request->setMethod( $urlVars[ 0 ] );
             }
 
-            elseif( isset( $urlVars[ 1 ] ) )
+            if( isset( $urlVars[ 1 ] ) )
             {
                 $request->setParam( 'path', $urlVars[ 1 ] );
             }

@@ -15,7 +15,7 @@ class Bootstrap extends KernelModule
 
             $kernel->addRequestPlugin( new Request\Plugin\ConsoleParamParser );
 
-            $kernel->addResponsePlugin( new Response\Plugin\ConsoleOutput );
+            $kernel->addResponsePlugin( new Response\Plugin\ConsoleOutput, 1 );
         }
     }
 }

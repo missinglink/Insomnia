@@ -1,5 +1,7 @@
 <?php
 
+// @todo requires cleanup
+
 namespace Insomnia;
 
 use \Insomnia\Pattern\ArrayAccess,
@@ -10,27 +12,31 @@ use \Insomnia\Dispatcher\Endpoint;
 class Response extends ArrayAccess implements \SplSubject
 {
     private $code       = null,
-            $mime       = null,
+            $mime       = '',
             $renderer   = null,
             $modifiers  = array(),
             $ttl        = 0,
             $charset    = 'utf8',
-            $view       = 'index';
+            $endPoint   = null;
 
     public function render( Endpoint $endPoint )
-    {       
+    {
+        $this->setEndPoint( $endPoint );
+        
         foreach( \Insomnia\Kernel::getInstance()->getResponsePlugins() as $plugin )
         {
             $this->attach( $plugin );
         }
-        
-        $this->notify();
-        
-        if( !\method_exists( $this->renderer, 'render' ) )
-            throw new ResponseException( 'Invalid Response Format' );
 
+        $this->notify();
         $this->runModifiers();
-        $this->renderer->render( $this );
+        
+        if( !\method_exists( $this->getRenderer(), 'render' ) )
+            throw new ResponseException( 'Invalid Response Renderer' );
+        
+        $this->getRenderer()->setResponse( $this );
+        $this->getRenderer()->render();
+        
         \flush();
         exit;
     }
@@ -85,16 +91,17 @@ class Response extends ArrayAccess implements \SplSubject
         $this->charset = $charset;
     }
     
-    public function getView()
+    /** @return \Insomnia\Dispatcher\Endpoint */
+    public function getEndPoint()
     {
-        return $this->view;
+        return $this->endPoint;
     }
 
-    public function setView( $view )
+    public function setEndPoint( Endpoint $endPoint )
     {
-        $this->view = $view;
+        $this->endPoint = $endPoint;
     }
-    
+        
     public function addModifier( $map )
     {
         $this->modifiers[] = $map;
