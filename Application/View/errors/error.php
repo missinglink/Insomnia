@@ -21,30 +21,36 @@
     
     function renderFileView( $filePath, $line, $padding = 10 )
     {
-        if( !file_exists( $filePath ) || !is_readable( $filePath ) ) return '';
-        
-        $file = file_get_contents( $filePath );
-        $split = explode( PHP_EOL, $file );
-        
-        $range = array_slice( $split, $line -$padding -1, ( $padding * 2 ) +1, true );
-        
         echo renderFilePath( $filePath ) . ':' . $line;
-        echo '<pre style="padding: 1px; border:solid 1px black; overflow: hidden;"><code style="display:block; background-color: black; color: #aaa;">';
+        echo '<pre style="padding: 1px; border:solid 1px black; overflow: hidden;"><code style="display:block; background-color: black; color: #aaa; font-size: 14px; font-family:sans-serif;">';
         
-        foreach( $range as $key => $item )
+        if( !file_exists( $filePath ) || !is_readable( $filePath ) )
         {
-            $isErrorLine = ( ( $key +1 ) == $line );
-            
-            if( $isErrorLine ) echo '<span style="color:white;">';
-            echo str_pad( $key +1, 4, ' ', \STR_PAD_LEFT );
-            
-            echo "\t" . $item;
-            if( $isErrorLine ) echo '</span>';
-            
-            echo PHP_EOL;
+            echo ' Failed to load file.' . PHP_EOL;
         }
+        
+        else
+        {
+            $file = file_get_contents( $filePath );
+            $split = explode( PHP_EOL, $file );
+
+            $range = array_slice( $split, $line -$padding -1, ( $padding * 2 ) +1, true );
+
+            foreach( $range as $key => $item )
+            {
+                $isErrorLine = ( ( $key +1 ) == $line );
+
+                if( $isErrorLine ) echo '<span style="color:white;">';
+                echo str_pad( $key +1, 4, ' ', \STR_PAD_LEFT );
+
+                echo "\t" . $item;
+                if( $isErrorLine ) echo '</span>';
+
+                echo PHP_EOL;
+            }
+        }
+        
         echo '</code></pre>';
-//        print_r( $range );
     }
 ?>   
 <div style="margin:50px;">
