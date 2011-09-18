@@ -6,7 +6,7 @@ use \Insomnia\Dispatcher\EndPoint;
 
 class Hiccup
 {
-    public function exception( \Exception $e )
+    public function catchException( \Exception $e )
     {
         try
         {
@@ -17,6 +17,7 @@ class Hiccup
         {
             header( 'Content-type: text/plain' );
             echo 'Service is currently unavailable, Please try again later.';
+            die;
         } 
     }
     
@@ -27,11 +28,11 @@ class Hiccup
     
     public function registerExceptionHandler()
     {
-        @set_exception_handler( array( $this, 'exception' ) );
+        set_exception_handler( array( $this, 'catchException' ) );
     }
     
     public function registerErrorHandler()
     {
-        @set_error_handler( array( $this, 'error' ) );
+        set_error_handler( array( $this, 'error' ) );
     }
 }

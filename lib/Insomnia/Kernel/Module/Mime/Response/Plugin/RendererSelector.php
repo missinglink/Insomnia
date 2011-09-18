@@ -34,8 +34,7 @@ class RendererSelector extends Observer
                     break;
 
                 case '/xhtml': case '/html':
-                    $renderer = new ViewRenderer;
-                    $response->setRenderer( $renderer );
+                    $response->setRenderer( new ViewRenderer );
                     break;
 
                 case '/plain':
@@ -46,7 +45,7 @@ class RendererSelector extends Observer
                     $response->setRenderer( new IniRenderer );
                     break;
 
-                default: if( $this->controller === 'errors' )
+                default: if( $this->controller === 'errors' && $response->getContentType() != Registry::get( 'default_content_type' ) )
                 {
                     $response->setContentType( Registry::get( 'default_content_type' ) );
                     $this->update();

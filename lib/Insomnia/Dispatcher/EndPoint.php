@@ -52,7 +52,7 @@ class EndPoint extends Subject
         }
         
         if( \method_exists( $this->getController(), 'getResponse' ) )
-            $this->getController()->getResponse()->render();
+            $this->getController()->getResponse()->render( $this );
     }
     
     private function reflect()

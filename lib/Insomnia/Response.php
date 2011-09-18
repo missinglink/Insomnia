@@ -5,6 +5,8 @@ namespace Insomnia;
 use \Insomnia\Pattern\ArrayAccess,
     \Insomnia\Response\ResponseException;
 
+use \Insomnia\Dispatcher\Endpoint;
+
 class Response extends ArrayAccess implements \SplSubject
 {
     private $code       = null,
@@ -15,7 +17,7 @@ class Response extends ArrayAccess implements \SplSubject
             $charset    = 'utf8',
             $view       = 'index';
 
-    public function render()
+    public function render( Endpoint $endPoint )
     {       
         foreach( \Insomnia\Kernel::getInstance()->getResponsePlugins() as $plugin )
         {

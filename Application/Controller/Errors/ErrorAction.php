@@ -104,13 +104,29 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $previous[ 'file' ]             = $prev->getFile();
                 $previous[ 'line' ]             = $prev->getLine();
                 $previous[ 'code' ]             = $prev->getCode();
-                $previous[ 'message' ]          = $exception->getMessage();
+                $previous[ 'message' ]          = $prev->getMessage();
                 $debug[ 'previous' ]            = $previous;
             }
             
-            $debug[ 'backtrace' ] = \debug_backtrace();
+            if( is_array( $exception->getTrace() ) )
+            {
+                $debug[ 'backtrace' ] = array_reverse( array_merge( debug_backtrace(false), array( array( 'exception' => $exception ) ), $exception->getTrace() ) );
+            }
+            
+            else {
+                $debug[ 'backtrace' ] = array_reverse( debug_backtrace( false ) );
+            }
+            
+//            echo '<pre>';
+//            print_r( $debug[ 'backtrace' ] );
+//            die;
             
             $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
+            
+            
+//            echo '<pre>';
+//            print_r( $debug[ 'backtrace' ] );
+//            die;
             
             $response[ 'debug' ] = $debug;
         }
