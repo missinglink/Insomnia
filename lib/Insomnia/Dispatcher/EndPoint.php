@@ -50,7 +50,7 @@ class EndPoint extends Subject
 
             else throw $e;
         }
-
+                
         if( \method_exists( $this->getController(), 'getResponse' ) )
             $this->getController()->getResponse()->render( $this );
     }

@@ -14,10 +14,15 @@ class Response extends ArrayAccess implements \SplSubject
     private $code       = null,
             $mime       = '',
             $renderer   = null,
-            $modifiers  = array(),
             $ttl        = 0,
             $charset    = 'utf8',
             $endPoint   = null;
+    
+    /** Response Graph Modifiers **/
+    private $modifiers  = array();
+    
+    /** Subject Pattern **/
+    protected $observers = array();
 
     public function render( Endpoint $endPoint )
     {
@@ -116,7 +121,6 @@ class Response extends ArrayAccess implements \SplSubject
     }
 
     /** Subject Pattern **/
-    protected $observers = array();
 
     public function attach( \SplObserver $observer )
     {
