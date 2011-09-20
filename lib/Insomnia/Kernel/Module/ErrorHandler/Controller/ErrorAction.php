@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller\Errors;
+namespace Insomnia\Kernel\Module\ErrorHandler\Controller;
 
 use \Application\Controller\ErrorsController,
     \Insomnia\Response\Code,
@@ -17,9 +17,6 @@ class ErrorAction extends \Insomnia\Controller\Action
     /**
      * Map Errors to Output
      * 
-     * @insomnia:Route("/error", name="error")
-     * @insomnia:Method("GET")
-     *
      * @insomnia:View( "\Insomnia\Kernel\Module\ErrorHandler\View\Error" )
      * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
      * 

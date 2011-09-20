@@ -10,7 +10,7 @@ class Hiccup
     {
         try
         {
-            $endPoint = new EndPoint( '\Application\Controller\Errors\ErrorAction', 'action' );
+            $endPoint = new EndPoint( '\Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
             $endPoint->dispatch( $e );
         }
         catch( \Exception $e2 )
