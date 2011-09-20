@@ -1,12 +1,12 @@
-<?php $this->css( '/css/basic.css' ); ?>
-<?php $this->css( '/css/layout.css' ); ?>
+<?php $this->addStylesheet( '/css/basic.css' ); ?>
+<?php $this->addStylesheet( '/css/layout.css' ); ?>
 <html>
     <head>
         <title><?= $this['title']; ?></title>
-        <?php $this->css(); ?>
-        <?php $this->javascript(); ?>
+        <?php $this->printStylesheetsAsHtml(); ?>
+        <?php $this->printScriptsAsHtml(); ?>
     </head>
     <body>
-        <?php $this->getView()->render( $this->getResponse() ); ?>
+        <?php echo $this->getView()->getOutput(); ?>
     </body>
 </html>

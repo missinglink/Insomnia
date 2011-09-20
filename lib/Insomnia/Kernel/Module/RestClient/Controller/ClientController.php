@@ -29,14 +29,12 @@ class ClientController extends Action
      * @insomnia:Route("", name="client_index")
      * @insomnia:Method("GET")
      * 
+     * @insomnia:View( "\Insomnia\Kernel\Module\RestClient\View\Client" )
+     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
+     * 
      */
     public function action()
     {
-        $renderer = new ViewRenderer;
-        $renderer->setViewBasePath( realpath( __DIR__ . '/../View' ) . \DIRECTORY_SEPARATOR );
-        $renderer->useView( 'client/client' );
-        $this->getResponse()->setRenderer( $renderer );
-
         $this->response[ 'controllers' ] = array( '/v1/test', '/ping' );
     }
 }

@@ -185,7 +185,7 @@
         ?></ol>
     <?php endif; ?>
     <?php if( isset( $this['debug']['routes'] ) ): ?>
-        <!--<hr />
+        <hr />
         <strong>Controllers</strong>
         <ol style="width:100%; padding:0px;"><?php
            foreach( $this['debug']['routes'] as $route )
@@ -194,7 +194,55 @@
                echo $route;
                echo '</em></li>';
            };
-        ?></ol>-->
+        ?></ol>
+    <?php endif; ?>
+    <?php if( isset( $this['debug']['requestPlugins'] ) ): ?>
+        <hr />
+        <strong>Request Plugins</strong>
+        <ol style="width:100%; padding:0px;"><?php
+           foreach( $this['debug']['requestPlugins'] as $plugin )
+           {
+               echo '<li><em>';
+               echo get_class( $plugin );
+               echo '</em></li>';
+           };
+        ?></ol>
+    <?php endif; ?>
+    <?php if( isset( $this['debug']['responsePlugins'] ) ): ?>
+        <hr />
+        <strong>Response Plugins</strong>
+        <ol style="width:100%; padding:0px;"><?php
+           foreach( $this['debug']['responsePlugins'] as $plugin )
+           {
+               echo '<li><em>';
+               echo get_class( $plugin );
+               echo '</em></li>';
+           };
+        ?></ol>
+    <?php endif; ?>
+    <?php if( isset( $this['debug']['dispatcherPlugins'] ) ): ?>
+        <hr />
+        <strong>Dispatcher Plugins</strong>
+        <ol style="width:100%; padding:0px;"><?php
+           foreach( $this['debug']['dispatcherPlugins'] as $plugin )
+           {
+               echo '<li><em>';
+               echo get_class( $plugin );
+               echo '</em></li>';
+           };
+        ?></ol>
+    <?php endif; ?>
+    <?php if( isset( $this['debug']['modules'] ) ): ?>
+        <hr />
+        <strong>Modules</strong>
+        <ol style="width:100%; padding:0px;"><?php
+           foreach( $this['debug']['modules'] as $module )
+           {
+               echo '<li><em>';
+               echo get_class( $module );
+               echo '</em></li>';
+           };
+        ?></ol>
     <?php endif; ?>
     
     <hr />
@@ -202,7 +250,7 @@
 </div>
 
 <?php if( isset( $this['debug'] ) ): ?>
-<? $this->javascript( '/js/jquery-1.4.3.min.js' ); ?>
+<? $this->addScript( '/js/jquery-1.4.3.min.js' ); ?>
 <script type="text/javascript">
     $("a#toggle").click(
         function ()

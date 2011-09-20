@@ -2,9 +2,9 @@
 
 namespace Insomnia\Kernel\Module\ErrorHandler\View;
 
-use \Insomnia\Pattern\Layout as BaseLayout;
+use \Insomnia\Pattern\View;
 
-class Error extends BaseLayout
+class Error extends View
 {
     public function __construct()
     {

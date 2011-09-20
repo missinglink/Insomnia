@@ -31,25 +31,26 @@ class ViewRenderer extends ResponseAbstract implements ResponseInterface
         // Layout Annotations
         $layoutAnnotation = new LayoutParser( $endpoint->getMethodAnnotations() );
         $layoutClass = $layoutAnnotation->get( 'value' );
-
-        // Instantiate View
+        
+        /** @var $view \Insomnia\Pattern\View */
         $view = new $viewClass;
+        $view->setResponse( $this->getResponse() );
+        $view->render();
         
         // With Layout
         if( null !== $layoutClass || ClassLoader::classExists( trim( $layoutClass, '\\' ) ) )
         {
-            /** @var $layout \Insomnia\Pattern\Layout */
+            /** @var \Insomnia\Pattern\Layout $layout */
             $layout = new $layoutClass;
             $layout->setView( $view );
-            $view->setResponse( $this->getResponse() );
             $layout->render();
+            echo $layout->getOutput();
         }
         
         // View Only
         else
-        {
-            $view->setResponse( $this->getResponse() );
-            $view->render();
+        {           
+            echo $view->getOutput();
         }
     }
 }

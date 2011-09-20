@@ -118,16 +118,11 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $debug[ 'backtrace' ] = array_reverse( debug_backtrace( false ) );
             }
             
-//            echo '<pre>';
-//            print_r( $debug[ 'backtrace' ] );
-//            die;
-            
             $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
-            
-            
-//            echo '<pre>';
-//            print_r( $debug[ 'backtrace' ] );
-//            die;
+            $debug[ 'requestPlugins' ] = \Insomnia\Kernel::getInstance()->getRequestPlugins();
+            $debug[ 'responsePlugins' ] = \Insomnia\Kernel::getInstance()->getResponsePlugins();
+            $debug[ 'dispatcherPlugins' ] = \Insomnia\Kernel::getInstance()->getDispatcherPlugins();
+            $debug[ 'modules' ] = \Insomnia\Kernel::getInstance()->getModules();
             
             $response[ 'debug' ] = $debug;
         }

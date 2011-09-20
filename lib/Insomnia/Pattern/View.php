@@ -13,7 +13,8 @@ abstract class View extends ArrayAccess implements ResponseInterface
     protected $path,
               $stylesheets  = array(),
               $scripts      = array(),
-              $response     = null;
+              $response     = null,
+              $output       = '';
     
     public function render()
     {
@@ -24,9 +25,9 @@ abstract class View extends ArrayAccess implements ResponseInterface
         
         $this->merge( $this->getResponse() );
         
-        \ob_start();
+        ob_start();
         require $this->getPath();
-        \ob_get_flush();
+        $this->setOutput( ob_get_clean() );
     }
     
     public function getPath()
@@ -39,24 +40,6 @@ abstract class View extends ArrayAccess implements ResponseInterface
         $this->path = $path;
     }
     
-    public function css( $sheet = null )
-    {
-        if( \is_string( $sheet ) )
-            $this->stylesheets[ $sheet ] = $sheet;
-
-        else foreach( $this->stylesheets as $sheet )
-            echo '<link rel="stylesheet" href="'.$sheet.'" type="text/css" />' . PHP_EOL;
-    }
-
-    public function javascript( $script = null )
-    {
-        if( \is_string( $script ) )
-            $this->scripts[ $script ] = $script;
-        
-        else foreach( $this->scripts as $script )
-            echo '<script src="'.$script.'" type="text/javascript"></script>' . PHP_EOL;
-    }
-    
     /** @return \Insomnia\Response  */
     public function getResponse()
     {
@@ -67,4 +50,61 @@ abstract class View extends ArrayAccess implements ResponseInterface
     {
         $this->response = $response;
     }
+    
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    public function setOutput( $output )
+    {
+        $this->output = $output;
+    }
+    
+    public function addStylesheet( $stylesheet )
+    {
+       $this->stylesheets[] = $stylesheet;
+    }
+    
+    public function getStylesheets()
+    {
+        return $this->stylesheets;
+    }
+
+    public function setStylesheets( $stylesheets )
+    {
+        $this->stylesheets = $stylesheets;
+    }
+    
+    public function printStylesheetsAsHtml()
+    {
+        foreach( $this->getStylesheets() as $sheet )
+        {
+            echo '<link rel="stylesheet" href="'.$sheet.'" type="text/css" />' . PHP_EOL;
+        }
+    }
+
+    public function printScriptsAsHtml()
+    {
+        foreach( $this->getScripts() as $script )
+        {
+            echo '<script src="'.$script.'" type="text/javascript"></script>' . PHP_EOL;
+        }
+    }
+    
+    public function addScript( $script )
+    {
+        $this->scripts[] = $script;
+    }
+
+    public function getScripts()
+    {
+        return $this->scripts;
+    }
+
+    public function setScripts( $scripts )
+    {
+        $this->scripts = $scripts;
+    }
+
 }
