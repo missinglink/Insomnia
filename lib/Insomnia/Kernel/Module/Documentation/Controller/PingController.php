@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace Insomnia\Kernel\Module\Documentation\Controller;
 
 use \Insomnia\Controller\Action,
     \Insomnia\Registry;
@@ -11,7 +11,7 @@ use \Insomnia\Controller\Action,
  * @insomnia:Resource
  * 
  */
-class StatusController extends Action
+class PingController extends Action
 {
     /**
      * Ping
@@ -20,6 +20,11 @@ class StatusController extends Action
      * 
      * @insomnia:Route("/ping.*", name="ping")
      * @insomnia:Method("GET PUT POST DELETE TRACE STATUS")
+     * 
+     * @insomnia:View( "\Insomnia\Kernel\Module\Documentation\View\Ping" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * 
+     * @insomnia:Documentation( title="Documentation", description="Ping", category="System" )
      *
      */
     public function ping()
@@ -39,27 +44,12 @@ class StatusController extends Action
         $this->response->merge( array(
             'meta'    => $request->getHeaders(),
             'body'    => $request->toArray(),
-            'debug'   => array(
-                'includes'  => \count( \get_included_files() ),
-                'classes'   => \count( \get_declared_classes() ),
-                'memory'    => \floor( \memory_get_peak_usage() /1024 ) . 'kb',
-                'trace'     => $backtrace
-            )
+//            'debug'   => array(
+//                'includes'  => \count( \get_included_files() ),
+//                'classes'   => \count( \get_declared_classes() ),
+//                'memory'    => \floor( \memory_get_peak_usage() /1024 ) . 'kb',
+//                'trace'     => $backtrace
+//            )
         ) );
-    }
-    
-    /**
-     * Discover
-     * 
-     * List all possible endpoints
-     * 
-     * @insomnia:Route("/discover", name="discover")
-     * @insomnia:Method("GET")
-     *
-     */
-    public function endpoints()
-    {
-        $application = new \Application\Bootstrap\Insomnia;
-        $this->response->merge( array( 'routes' => $application->getRouter()->getClasses() ));
     }
 }
