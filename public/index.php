@@ -16,7 +16,6 @@ $bootstrap = new \Application\Bootstrap\Insomnia;
 
 Kernel::getInstance()
     ->addEndpoint( 'Application\Controller\TestController' )
-    ->addEndpoint( 'Application\Controller\StatusController' )
     ->addEndpoint( 'Application\Controller\UserController' )
     ->addModule( new \Insomnia\Kernel\Module\ErrorHandler\Bootstrap )
     ->addModule( new \Insomnia\Kernel\Module\HTTP\Bootstrap )

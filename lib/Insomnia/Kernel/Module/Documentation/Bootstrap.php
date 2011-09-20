@@ -11,5 +11,6 @@ class Bootstrap extends KernelModule
     {
         $kernel->addDispatcherPlugin( new Dispatcher\Plugin\DocumentationEndPoint );
         $kernel->addEndPoint( __NAMESPACE__ . '\Controller\DocumentationController' );
+        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\PingController' );
     }
 }
