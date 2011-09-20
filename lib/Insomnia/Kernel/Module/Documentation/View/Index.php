@@ -2,7 +2,7 @@
 
 namespace Insomnia\Kernel\Module\Documentation\View;
 
-use \Insomnia\Pattern\View;
+use \Insomnia\Kernel\Module\Mime\View;
 
 class Index extends View
 {

@@ -191,7 +191,7 @@
            foreach( $this['debug']['routes'] as $route )
            {
                echo '<li><em>';
-               echo $route;
+               echo renderNamespace( $route );
                echo '</em></li>';
            };
         ?></ol>
@@ -203,7 +203,7 @@
            foreach( $this['debug']['requestPlugins'] as $plugin )
            {
                echo '<li><em>';
-               echo get_class( $plugin );
+               echo renderNamespace( get_class( $plugin ) );
                echo '</em></li>';
            };
         ?></ol>
@@ -215,7 +215,7 @@
            foreach( $this['debug']['responsePlugins'] as $plugin )
            {
                echo '<li><em>';
-               echo get_class( $plugin );
+               echo renderNamespace( get_class( $plugin ) );
                echo '</em></li>';
            };
         ?></ol>
@@ -227,7 +227,7 @@
            foreach( $this['debug']['dispatcherPlugins'] as $plugin )
            {
                echo '<li><em>';
-               echo get_class( $plugin );
+               echo renderNamespace( get_class( $plugin ) );
                echo '</em></li>';
            };
         ?></ol>

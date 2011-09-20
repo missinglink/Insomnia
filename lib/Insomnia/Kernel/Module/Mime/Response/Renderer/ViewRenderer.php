@@ -9,6 +9,9 @@ use \Insomnia\Response,
 use \Insomnia\Response\ResponseInterface,
     \Insomnia\Response\ResponseAbstract;
 
+use \Insomnia\Kernel\Module\Mime\View;
+use \Insomnia\Kernel\Module\Mime\Layout;
+
 use \Doctrine\Common\ClassLoader;
 
 class ViewRenderer extends ResponseAbstract implements ResponseInterface
@@ -32,7 +35,7 @@ class ViewRenderer extends ResponseAbstract implements ResponseInterface
         $layoutAnnotation = new LayoutParser( $endpoint->getMethodAnnotations() );
         $layoutClass = $layoutAnnotation->get( 'value' );
         
-        /** @var $view \Insomnia\Pattern\View */
+        /** @var $view View */
         $view = new $viewClass;
         $view->setResponse( $this->getResponse() );
         $view->render();
@@ -40,7 +43,7 @@ class ViewRenderer extends ResponseAbstract implements ResponseInterface
         // With Layout
         if( null !== $layoutClass || ClassLoader::classExists( trim( $layoutClass, '\\' ) ) )
         {
-            /** @var \Insomnia\Pattern\Layout $layout */
+            /** @var Layout $layout */
             $layout = new $layoutClass;
             $layout->setView( $view );
             $layout->render();

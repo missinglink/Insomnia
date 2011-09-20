@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia\Pattern;
+namespace Insomnia\Kernel\Module\Mime;
 
 use \Insomnia\Kernel\Module\Mime\Response\Renderer\ViewException;
 use \Insomnia\Pattern\ArrayAccess,

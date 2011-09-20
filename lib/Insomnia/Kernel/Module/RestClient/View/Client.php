@@ -2,7 +2,7 @@
 
 namespace Insomnia\Kernel\Module\RestClient\View;
 
-use \Insomnia\Pattern\View;
+use \Insomnia\Kernel\Module\Mime\View;
 
 class Client extends View
 {

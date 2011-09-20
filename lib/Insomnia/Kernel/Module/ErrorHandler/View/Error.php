@@ -2,7 +2,7 @@
 
 namespace Insomnia\Kernel\Module\ErrorHandler\View;
 
-use \Insomnia\Pattern\View;
+use \Insomnia\Kernel\Module\Mime\View;
 
 class Error extends View
 {

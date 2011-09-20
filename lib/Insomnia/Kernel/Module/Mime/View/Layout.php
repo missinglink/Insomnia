@@ -2,7 +2,7 @@
 
 namespace Insomnia\Kernel\Module\Mime\View;
 
-use \Insomnia\Pattern\Layout as BaseLayout;
+use \Insomnia\Kernel\Module\Mime\Layout as BaseLayout;
 
 class Layout extends BaseLayout
 {

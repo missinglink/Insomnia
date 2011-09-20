@@ -1,9 +1,8 @@
 <?php
 
-namespace Insomnia\Pattern;
+namespace Insomnia\Kernel\Module\Mime;
 
-use \Insomnia\Pattern\View;
-use \Insomnia\Kernel\Module\Mime\Response\Renderer\ViewException;
+use Response\Renderer\ViewException;
 
 abstract class Layout extends View
 {
