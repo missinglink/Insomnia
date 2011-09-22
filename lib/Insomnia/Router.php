@@ -6,6 +6,7 @@ use \Insomnia\Annotation\Parser\Route as RouteParser;
 use \Insomnia\Router\AnnotationReader;
 use \Insomnia\Router\RouteStack;
 use \Insomnia\Router\RouteDispatcher;
+use \Insomnia\Router\RouterException;
 
 class Router
 {
@@ -27,14 +28,14 @@ class Router
         /** @var $route \Insomnia\Router\Route */
         foreach( $routes as $route )
         {
+            // Attempt to dispatch the route
             if( $route->match( $request ) )
             {
-                // Attempt to dispatch the route
                 new RouteDispatcher( $route );
             }       
         }
         
-        throw new \Insomnia\Router\RouterException( 'Failed to Match any Routes' );
+        throw new RouterException( 'Failed to Match any Routes', 404 );
     }
     
     public function addClass( $class )
