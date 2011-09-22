@@ -10,7 +10,8 @@ use \Insomnia\Kernel\Module\Mime\Response\Renderer\XmlRenderer,
     \Insomnia\Kernel\Module\Mime\Response\Renderer\ViewRenderer,
     \Insomnia\Kernel\Module\Mime\Response\Renderer\ArrayRenderer,
     \Insomnia\Kernel\Module\Mime\Response\Renderer\YamlRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\IniRenderer;
+    \Insomnia\Kernel\Module\Mime\Response\Renderer\IniRenderer,
+    \Insomnia\Kernel\Module\Mime\Response\Renderer\Rss2;
 
 class RendererSelector extends Observer
 {
@@ -40,6 +41,10 @@ class RendererSelector extends Observer
                 case '/ini':
                     $response->setRenderer( new IniRenderer );
                     break;
+                
+//                case '/rss+xml':
+//                    $response->setRenderer( new Rss2 );
+//                    break;
                 
                 case '/json':
                 default:

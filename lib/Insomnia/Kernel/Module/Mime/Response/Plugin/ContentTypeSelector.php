@@ -21,6 +21,7 @@ class ContentTypeSelector extends Observer
                 case '.yaml': return $response->setContentType( 'application/x-yaml' );
                 case '.txt' : return $response->setContentType( 'text/plain' );
                 case '.ini' : return $response->setContentType( 'text/ini' );
+//                case '.rss' : return $response->setContentType( 'application/rss+xml' );
             }
 
             foreach( \explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
@@ -47,6 +48,9 @@ class ContentTypeSelector extends Observer
 
                    case 'text/ini':
                         return $response->setContentType( 'text/ini' );
+                       
+//                   case 'application/rss+xml':
+//                        return $response->setContentType( 'application/rss+xml' );
                 }
             }
 
