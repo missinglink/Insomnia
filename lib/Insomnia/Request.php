@@ -96,7 +96,7 @@ class Request extends Subject
      */
     public function getFileExtension()
     {
-        \preg_match( '%^.*/[^/]+?(?<extension>\.[^[/]+)$%', $this->getParam( 'path' ), $matches );
+        \preg_match( '%^.*/[^/]+?(?<extension>\.[^/]+)$%', $this->getParam( 'path' ), $matches );
         return \array_key_exists( 'extension', $matches ) ? $matches[ 'extension' ] : false;
     }
 
