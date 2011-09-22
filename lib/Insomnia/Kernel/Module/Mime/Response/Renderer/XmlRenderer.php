@@ -16,13 +16,13 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
         $this->writer = new \XMLWriter;
 
         $this->writer->openURI( 'php://output' );
-        $this->writer->startDocument( '1.0' );
+        $this->writer->startDocument( '1.0', 'UTF-8' );
 
         $this->writer->setIndent( true );
         $this->writer->setIndentString( $this->indent );
 
         $this->writer->startElement( 'response' );
-        $this->writer->writeAttribute( 'version', '1.0' );
+        //$this->writer->writeAttribute( 'version', '1.0' );
 
         $this->writeXML( $this->getResponse()->toArray() );
 
