@@ -11,6 +11,8 @@ use \Insomnia\Response;
 abstract class View extends ArrayAccess implements ResponseInterface
 {
     protected $path,
+              $title        = '',
+              $meta         = array(),
               $stylesheets  = array(),
               $scripts      = array(),
               $response     = null,
@@ -74,6 +76,31 @@ abstract class View extends ArrayAccess implements ResponseInterface
     public function setStylesheets( $stylesheets )
     {
         $this->stylesheets = $stylesheets;
+    }
+    
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle( $title )
+    {
+        $this->title = $title;
+    }
+    
+    public function addMeta( $meta )
+    {
+       $this->v[] = $meta;
+    }
+
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    public function setMeta( $meta )
+    {
+        $this->meta = $meta;
     }
     
     public function printStylesheetsAsHtml()

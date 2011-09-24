@@ -2,7 +2,7 @@
 <?php $this->addStylesheet( '/css/layout.css' ); ?>
 <html>
     <head>
-        <title><?= $this['title']; ?></title>
+        <title><?= $this->getTitle(); ?></title>
         <?php $this->printStylesheetsAsHtml(); ?>
         <?php $this->printScriptsAsHtml(); ?>
     </head>

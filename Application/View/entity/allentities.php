@@ -1,3 +1,4 @@
+<?php $this->setTitle( 'Html Entities - Character Entity Reference' ); ?>
 <?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Delius' ); ?>
 
 <style type="text/css">

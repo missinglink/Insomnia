@@ -1,3 +1,4 @@
+<?php $this->setTitle( 'Html Entity - ' . ucfirst( $this->data[ 'description' ] ) ); ?>
 <?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Delius' ); ?>
 <?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Montez' ); ?>
 <?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Leckerli+One' ); ?>
