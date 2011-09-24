@@ -26,7 +26,7 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entities
      * 
-     * @insomnia:Route( "/entity", name="test_index" )
+     * @insomnia:Route( "/entity", name="entity_root" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -44,7 +44,7 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entity
      * 
-     * @insomnia:Route( "/entity/:id", name="test_index2" )
+     * @insomnia:Route( "/entity/:id", name="entity_index" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -71,7 +71,7 @@ class HtmlEntitiesController extends Action
 //    /**
 //     * Html Entity
 //     * 
-//     * @insomnia:Route( "/entity/:id/:prop", name="test_index3" )
+//     * @insomnia:Route( "/entity/:id/:prop", name="entity_info" )
 //     * @insomnia:Method( "GET" )
 //     * @insomnia:Documentation( category="Application" )
 //     *
