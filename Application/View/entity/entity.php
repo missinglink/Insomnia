@@ -1,14 +1,6 @@
 <?php $this->setTitle( 'Html Entity - ' . ucfirst( $this->data[ 'description' ] ) ); ?>
 <?php $this->addStylesheet( '/css/entity.css' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Delius' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Montez' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Leckerli+One' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=400italic' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Cardo' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Nobile' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Molengo' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Josefin+Sans' ); ?>
+<?php $this->addStylesheet( '/css/google-fonts' ); ?>
 
 <?php $fonts = array(
     'sans-serif',
@@ -17,12 +9,9 @@
     'cursive',
     'fantasy',
     'Montez',
-    //'Leckerli+One',
     'Delius',
-    //'400italic',
     'Times New Roman',
     'Arial',
-    //'Cardo',
     'Josefin Sans',
     'Yanone Kaffeesatz',
     'Nobile',

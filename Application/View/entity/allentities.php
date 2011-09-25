@@ -1,6 +1,6 @@
 <?php $this->setTitle( 'Html Entities - Character Entity Reference' ); ?>
 <?php $this->addStylesheet( '/css/entity.css' ); ?>
-<?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=Delius' ); ?>
+<?php $this->addStylesheet( '/css/google-fonts' ); ?>
 
 <div id="outer">
     
@@ -21,9 +21,9 @@
             </div>
 
             <?php if( isset( $data[ 'name' ] ) ): ?>
-            <p class="info">
-                <a href="<?php echo $data[ 'uri' ]; ?>.html"><?php echo $data[ 'name' ]; ?></a>
-            </p>
+                <p class="info">
+                    <a href="<?php echo $data[ 'uri' ]; ?>.html"><?php echo $data[ 'name' ]; ?></a>
+                </p>
             <?php endif; ?>
 
         </div>
