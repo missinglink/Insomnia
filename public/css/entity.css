@@ -1,0 +1,103 @@
+body {
+    background-color: none;
+    background-image: url( 'http://peter.john.so/n/bg.jpg' );
+    background-repeat: repeat-x;
+}
+
+div#outer {
+    padding:50px;
+}
+
+div.font-example {
+    width:4em;
+    height:4em;
+    padding:0px;
+    margin-bottom:25px;
+    margin-right:5px;
+    text-align: center;
+    float:left;
+    background-color: #fff;
+}
+
+div.font-example p {
+    font-size:3em;
+    line-height:1.3em;
+}
+
+table#entity-properties {
+    width:100%;
+}
+
+table#entity-properties td {
+    background-color:#fff;
+}
+
+div#entity-large {
+    width:8em;
+    height:8em;
+
+    border:solid 1px #ddd;
+    padding:0px;
+    margin-bottom:25px;
+    text-align: center;
+    float:left;
+    background-color: #fff;
+}
+
+div#entity-large p {
+    font-size:7em;
+    line-height:1.15em;
+}
+
+div#entity-info {
+    display:block;
+    float:left;
+    padding:5px 0px 0px 30px;
+}
+
+div#entity-list {
+    float:left;
+    width:4em;
+    text-align:center;
+    margin-right:10px;
+}
+
+div#entity-list div.entity {
+    width:4em;
+    height:4em;
+    border:dotted 1px #ddd;
+    margin:auto;
+    margin-bottom:5px;
+    text-align: center;
+    background-color:#fff;
+}
+
+div#entity-list p.font {
+    font-size:3em;
+    line-height:1.35em;
+}
+
+div#entity-list p.font a {
+    text-decoration:none;
+    color: #000;
+}
+
+div#entity-list p.info {
+    clear:both;
+}
+
+div#entity-list p.info a {
+    text-decoration:none;
+}
+
+hr {
+    clear-both;
+}
+
+p.breadcrumbs {
+    margin: .6em 0px;
+}
+
+p.breadcrumbs a {
+    text-decoration:none;
+}
