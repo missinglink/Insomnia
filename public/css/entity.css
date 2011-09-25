@@ -49,14 +49,14 @@ div#entity-info {
     padding:5px 0px 0px 30px;
 }
 
-div.el {
+div#el div {
     float:left;
     width:4em;
     text-align:center;
     margin-right:10px;
 }
 
-div.el div {
+div#el div div {
     width:4em;
     height:4em;
     border:dotted 1px #ddd;
@@ -66,21 +66,21 @@ div.el div {
     background-color:#fff;
 }
 
-div.el div p {
+div#el div div p {
     font-size:3em;
     line-height:1.35em;
 }
 
-div.el div p a {
+div#el div div p a {
     text-decoration:none;
     color: #000;
 }
 
-div.el p {
+div#el div p {
     clear:both;
 }
 
-div.el p a {
+div#el div p a {
     text-decoration:none;
 }
 

@@ -1,10 +1,10 @@
 <?php $this->addStylesheet( '/css/styles.css' ); ?>
 <html>
     <head>
-        <title><?= $this->getTitle(); ?></title>
-        <?php $this->printStylesheetsAsHtml(); ?>
-        <?php $this->printScriptsAsHtml(); ?>
-        <style type="text/css">body{background-color:none;background-image:url(http://peter.john.so/n/bg.jpg);background-repeat:repeat-x;}@font-face{font-family:'Josefin Sans';font-style:normal;font-weight:400;src:local('Josefin Sans'), local(JosefinSans), url(http://themes.googleusercontent.com/static/fonts/josefinsans/v1/xgzbb53t8j-Mo-vYa23n5nhCUOGz7vYGh680lGh-uXM.woff) format(woff);}</style>        
+        <title><?= $this->getTitle(); ?></title><?php
+            $this->printStylesheetsAsHtml();
+            $this->printScriptsAsHtml();
+        ?><style type="text/css">body{background-color:none;background-image:url(http://peter.john.so/n/bg.jpg);background-repeat:repeat-x;}@font-face{font-family:'Josefin Sans';font-style:normal;font-weight:400;src:local('Josefin Sans'), local(JosefinSans), url(http://themes.googleusercontent.com/static/fonts/josefinsans/v1/xgzbb53t8j-Mo-vYa23n5nhCUOGz7vYGh680lGh-uXM.woff) format(woff);}</style>        
     </head>
     <body>
         <?php echo $this->getView()->getOutput(); ?>
