@@ -31,7 +31,7 @@ class HtmlEntitiesController extends Action
      * @insomnia:Documentation( category="Application" )
      *
      * @insomnia:View( "\Application\View\Entities" )
-     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:Layout( "\Application\View\EntityLayout" )
      * 
      */
     public function index()
