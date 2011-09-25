@@ -1,6 +1,7 @@
-<?php $this->setTitle( 'Html Entity - ' . ucfirst( $this->data[ 'description' ] ) ); ?>
-
-<?php $fonts = array(
+<?php
+    $this->setTitle( 'Html Entity - ' . ucfirst( $this->data[ 'description' ] ) );
+    
+    $fonts = array(
     'sans-serif',
     'serif',
     'monospace',
@@ -15,9 +16,9 @@
     'Nobile',
     'Molengo',
     
-); ?>
-
-<div id="outer">
+);
+    
+ ?><div id="outer">
     
     <div id="entity-large">
         <?php if( isset( $this->data[ 'character' ] ) ): ?>
@@ -43,7 +44,6 @@
          
     </div>
     
-
     <hr style="margin-bottom:0px;" />
     
         <p class="breadcrumbs">

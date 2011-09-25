@@ -1,7 +1,6 @@
 <?php
 
     $this->setTitle( 'Html Entities - Character Entity Reference' );
-    $this->addStylesheet( '/css/entity.css' );
 
 ?><div id="outer">
     <h1 style="font-family: 'Delius', sans-serif;">Character Entity Reference</h1>
