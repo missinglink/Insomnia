@@ -1,4 +1,5 @@
 <?php $this->setTitle( 'Html Entities - Character Entity Reference' ); ?>
+<?php $this->addStylesheet( '/css/entity.css' ); ?>
 
 <div id="outer">
     
@@ -8,18 +9,18 @@
     
     <?php foreach( $this->data as $data ): ?>
 
-        <div id="entity-list">
+        <div class="el">
 
-            <div class="entity">
+            <div>
                 <?php if( isset( $data[ 'character' ] ) ): ?>
-                    <p class="font">
+                    <p>
                         <a href="<?php echo $data[ 'uri' ]; ?>.html"><?php echo $data[ 'character' ]; ?></a>
                     </p>
                 <?php endif; ?>
             </div>
 
             <?php if( isset( $data[ 'name' ] ) ): ?>
-                <p class="info">
+                <p>
                     <a href="<?php echo $data[ 'uri' ]; ?>.html"><?php echo $data[ 'name' ]; ?></a>
                 </p>
             <?php endif; ?>

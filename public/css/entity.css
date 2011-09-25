@@ -49,14 +49,14 @@ div#entity-info {
     padding:5px 0px 0px 30px;
 }
 
-div#entity-list {
+div.el {
     float:left;
     width:4em;
     text-align:center;
     margin-right:10px;
 }
 
-div#entity-list div.entity {
+div.el div {
     width:4em;
     height:4em;
     border:dotted 1px #ddd;
@@ -66,21 +66,21 @@ div#entity-list div.entity {
     background-color:#fff;
 }
 
-div#entity-list p.font {
+div.el div p {
     font-size:3em;
     line-height:1.35em;
 }
 
-div#entity-list p.font a {
+div.el div p a {
     text-decoration:none;
     color: #000;
 }
 
-div#entity-list p.info {
+div.el p {
     clear:both;
 }
 
-div#entity-list p.info a {
+div.el p a {
     text-decoration:none;
 }
 
