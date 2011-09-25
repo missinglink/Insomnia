@@ -1,9 +1,3 @@
-body {
-    background-color: none;
-    background-image: url( 'http://peter.john.so/n/bg.jpg' );
-    background-repeat: repeat-x;
-}
-
 div#outer {
     padding:50px;
 }
