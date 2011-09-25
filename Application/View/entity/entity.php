@@ -1,6 +1,6 @@
 <?php $this->setTitle( 'Html Entity - ' . ucfirst( $this->data[ 'description' ] ) ); ?>
 <?php $this->addStylesheet( '/css/entity.css' ); ?>
-<?php $this->addStylesheet( '/css/google-fonts' ); ?>
+<?php $this->addStylesheet( '/css/google-fonts.css' ); ?>
 
 <?php $fonts = array(
     'sans-serif',
