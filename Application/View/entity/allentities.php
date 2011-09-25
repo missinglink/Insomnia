@@ -1,6 +1,5 @@
 <?php $this->setTitle( 'Html Entities - Character Entity Reference' ); ?>
 <?php $this->addStylesheet( '/css/entity.css' ); ?>
-<?php $this->addStylesheet( '/css/google-fonts.css' ); ?>
 
 <div id="outer">
     
