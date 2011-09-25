@@ -67,7 +67,7 @@
     <hr style="margin-bottom:5px;" />
     
         <p style="margin-bottom:0px;">
-            <a href="/entity" style="text-decoration:none;">Character Entity Reference</a>
+            <a href="/" style="text-decoration:none;">Character Entity Reference</a>
             &raquo;
             <?php echo ucfirst( $this->data[ 'name' ] ); ?>
         </p>

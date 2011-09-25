@@ -24,9 +24,9 @@ use \Application\DataMapper\Test as DataMapper;
 class HtmlEntitiesController extends Action
 {    
     /**
-     * Html Entities
+     * Html Entities (domain root)
      * 
-     * @insomnia:Route( "/entity", name="entity_root" )
+     * @insomnia:Route( "/", name="entity_root" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -35,6 +35,22 @@ class HtmlEntitiesController extends Action
      * 
      */
     public function index()
+    {
+        return $this->multiple();
+    }
+    
+    /**
+     * Html Entities
+     * 
+     * @insomnia:Route( "/entity", name="entity_multiple" )
+     * @insomnia:Method( "GET" )
+     * @insomnia:Documentation( category="Application" )
+     *
+     * @insomnia:View( "\Application\View\Entities" )
+     * @insomnia:Layout( "\Application\View\EntityLayout" )
+     * 
+     */
+    public function multiple()
     {
         $entities = $this->getEntities();
         
@@ -46,7 +62,7 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entity
      * 
-     * @insomnia:Route( "/entity/:id", name="entity_index" )
+     * @insomnia:Route( "/entity/:id", name="entity_single" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -55,7 +71,7 @@ class HtmlEntitiesController extends Action
      * })
      * 
      * @insomnia:View( "\Application\View\Entity" )
-     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:Layout( "\Application\View\EntityLayout" )
      * 
      */
     public function single()
