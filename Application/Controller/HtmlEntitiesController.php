@@ -38,6 +38,8 @@ class HtmlEntitiesController extends Action
     {
         $entities = $this->getEntities();
         
+        $this->response->setTimeToLive( 31556926 );
+        
         $this->response->merge( $entities );
     }
     
@@ -59,6 +61,8 @@ class HtmlEntitiesController extends Action
     public function single()
     {
         $entities = $this->getEntities();
+        
+        $this->response->setTimeToLive( 31556926 );
         
         if( isset( $entities[ $this->validator->getParam( 'id' ) ] ) )
         {
