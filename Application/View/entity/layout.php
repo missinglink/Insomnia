@@ -1,5 +1,4 @@
-<?php $this->addStylesheet( '/css/basic.css' ); ?>
-<?php $this->addStylesheet( '/css/layout.css' ); ?>
+<?php $this->addStylesheet( '/css/styles.css' ); ?>
 <?php $this->addScript( '/js/google-tracker.js' ); ?>
 <html>
     <head>
