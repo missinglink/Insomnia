@@ -1,5 +1,4 @@
 <?php $this->addStylesheet( '/css/styles.css' ); ?>
-<?php $this->addScript( '/js/google-tracker.js' ); ?>
 <html>
     <head>
         <title><?= $this->getTitle(); ?></title>
@@ -55,9 +54,22 @@
               font-weight: 400;
               src: local('Josefin Sans'), local('JosefinSans'), url('http://themes.googleusercontent.com/static/fonts/josefinsans/v1/xgzbb53t8j-Mo-vYa23n5nhCUOGz7vYGh680lGh-uXM.woff') format('woff');
             }
-        </style>
+        </style>        
     </head>
     <body>
         <?php echo $this->getView()->getOutput(); ?>
+        
+        <script type="text/javascript">      
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-21161437-2']);
+            _gaq.push(['_setDomainName', '.htmlentities.org']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();           
+        </script>
     </body>
 </html>
