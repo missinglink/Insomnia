@@ -24,12 +24,6 @@ class Route
     {
         $this->setRequest( $request );
         
-        // @todo this stuff needs to be moved out
-        $this->params = array();
-        $this->params[ 'version' ]    = 'v\d+';
-        $this->params[ 'id' ]         = '\w+';
-        $this->params[ 'prop' ]       = '\w+';
-        
         $pattern = $this->createNamedPatterns();
         $pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
         // @todo this stuff needs to be moved out
@@ -79,6 +73,12 @@ class Route
     public function setParams( $params )
     {
         if( \is_array( $params ) ) $this->params = $params;
+        return $this;
+    }
+    
+    public function setParam( $key, $regex )
+    {
+        $this->params[ $key ] = $regex;
         return $this;
     }
     
