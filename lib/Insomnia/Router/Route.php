@@ -25,10 +25,10 @@ class Route
         $this->setRequest( $request );
         
         $pattern = $this->createNamedPatterns();
-        $pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
+        //$pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
         // @todo this stuff needs to be moved out
 
-        $path = $request->getParam( 'path' );
+        $path = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
         
         if( !\preg_match( "_^$pattern\$_", $path, $matches ) )
             return false;
