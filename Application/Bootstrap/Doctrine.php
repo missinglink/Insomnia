@@ -29,8 +29,6 @@ class Doctrine extends EntityManager
         $classLoader->register();
         $classLoader = new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' );
         $classLoader->register();
-        $classLoader = new ClassLoader( 'Gedmo', \ROOT . 'lib' );
-        $classLoader->register();
         
         $conn = \Doctrine\DBAL\DriverManager::getConnection( $this->getConnectionOptions(), $this->getConfig(), $this->createEventManager() );
         parent::__construct( $conn, $this->getConfig(), $conn->getEventManager() );
@@ -76,9 +74,8 @@ class Doctrine extends EntityManager
     
     private function createEventManager()
     {
-        // Timestampable extension
+        // Add EventSubscribers here...
         $evm = new \Doctrine\Common\EventManager();
-        $evm->addEventSubscriber( new \Gedmo\Timestampable\TimestampableListener );
         
         return $evm;
     }
