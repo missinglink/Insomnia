@@ -17,6 +17,36 @@ THIS RELEASE IS A DEVELOPMENT RELEASE AND NOT INTENDED FOR PRODUCTION USE.
 PLEASE USE AT YOUR OWN RISK.
 
 ------------------------
+ FEATURES
+------------------------
+
+Insomnia is a PHP 5.3 MVC framework built with one thing in mind, rapidly creating
+RESTFUL HTTP/1.1 web services.
+
+The Insomnia Kernel is built with performance and modularity in mind.
+A wide range of community modules are available to extend the core functionality.
+
+------------------------
+ MODULES
+------------------------
+
+Currently the following modules ship with Insomnia:
+
+-- CORE --
+- HTTP (Provides HTTP/1.1 functionality. Deals with the request [params/headers/body] and speaks HTTP/1.1)
+- Mime (Provides format detection [headers/file extensions] and multiple response formats [json/xml/txt/ini/yaml])
+- ErrorHandler (Catches exceptions and provides debugging information)
+
+-- COMMUNITY --
+- Documentation (Provides an interface to auto-generate documentation)
+- Console (Allows script execution via the command line)
+- Session (Provides flexible stateful session handling)
+- RequestValidator (Provides a basic request validator)
+- RestClient (Provides a basic rest client for testing)
+- Cors (Adds cross-origin-resources-sharing headers to all HTTP responses)
+- Compatibility (Provides a compatibility layer for difficult clients)
+
+------------------------
  SYSTEM REQUIREMENTS
 ------------------------
 
@@ -27,7 +57,7 @@ latest PHP version whenever possible.
  INSTALLATION
 ------------------------
 
-Please see INSTALL.txt.
+Please see INSTALL.txt
 
 ------------------------
  QUESTIONS AND FEEDBACK
@@ -37,4 +67,4 @@ If you would like to be notified of new releases, you can subscribe to our
 repository on Github https://github.com/missinglink/Insomnia.
 
 Or you can contact the lead developer directly:
-Peter Johnson ( insomnia@rcpt.at )
+Peter Johnson ( https://github.com/missinglink )
