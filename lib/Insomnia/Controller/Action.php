@@ -5,14 +5,14 @@ namespace Insomnia\Controller;
 use \Insomnia\Response;
 use \Insomnia\Registry;
 
-use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
+use \Community\Module\RequestValidator\Request\RequestValidator;
 
 abstract class Action
 {
     /* @var $response \Insomnia\Response */
     protected $response;
 
-    /* @var $validator \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator */
+    /* @var $validator \Community\Module\RequestValidator\Request\RequestValidator */
     protected $validator;
 
     public function __construct()
