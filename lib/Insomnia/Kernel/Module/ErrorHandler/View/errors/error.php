@@ -54,7 +54,7 @@
     }
 ?>   
 <div style="margin:50px;">
-    <img src="/images/logo.jpg" style="display:block; float:left;" />
+    <img src="/insomnia/images/logo.jpg" style="display:block; float:left;" />
     <div style="display:block; float:left; padding:5px 0px 0px 45px;">
         <h1 class="error"><?= $this['status']; ?></h1>
         <h4><?= $this['title']; ?></h4>
@@ -250,7 +250,7 @@
 </div>
 
 <?php if( isset( $this['debug'] ) ): ?>
-<? $this->addScript( '/js/jquery-1.4.3.min.js' ); ?>
+<? $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
 <script type="text/javascript">
     $("a#toggle").click(
         function ()
