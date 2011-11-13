@@ -1,5 +1,5 @@
-<?php $this->addStylesheet( '/css/basic.css' ); ?>
-<?php $this->addStylesheet( '/css/layout.css' ); ?>
+<?php $this->addStylesheet( '/insomnia/css/basic.css' ); ?>
+<?php $this->addStylesheet( '/insomnia/css/layout.css' ); ?>
 <html>
     <head>
         <title><?= $this->getTitle(); ?></title>
