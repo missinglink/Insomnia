@@ -18,9 +18,9 @@ $bootstrap = new \Application\Bootstrap\Insomnia;
 Kernel::getInstance()
     
     // Core modules - Warning: Removing these may make your system unstable or unusable
-    ->addModule( new \Insomnia\Kernel\Module\ErrorHandler\Bootstrap )
-    ->addModule( new \Insomnia\Kernel\Module\HTTP\Bootstrap )
-    ->addModule( new \Insomnia\Kernel\Module\Mime\Bootstrap )
+    ->addModule( new \Community\Module\ErrorHandler\Bootstrap )
+    ->addModule( new \Community\Module\HTTP\Bootstrap )
+    ->addModule( new \Community\Module\Mime\Bootstrap )
         
     // Community modules
     ->addModule( new \Community\Module\Console\Bootstrap )
