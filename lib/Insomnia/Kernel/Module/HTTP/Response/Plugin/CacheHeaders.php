@@ -14,8 +14,8 @@ class CacheHeaders extends Observer
         // Set caching time for response
         if( ( $ttl = $response->getTimeToLive() ) > 0 )
         {
-            \header( 'Expires: ' . \gmdate( 'D, d M Y H:i:s', \strtotime( "+$ttl secs" ) ) . ' GMT' );
-            \header( "Cache-Control: max-age=$ttl, public" );
+            \header( 'Expires: ' . \gmdate( 'D, d M Y H:i:s', \strtotime( "+{$ttl} secs" ) ) . ' GMT' );
+            \header( "Cache-Control: max-age={$ttl}, public" );
         }
 
         // Disable caching of response
