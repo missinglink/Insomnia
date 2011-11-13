@@ -6,7 +6,8 @@ use \Insomnia\Pattern\Observer;
 use \Insomnia\Annotation\Parser\ParamParser;
 
 use \Insomnia\Kernel\Module\RequestValidator\Request\Validator\IntegerValidator,
-    \Insomnia\Kernel\Module\RequestValidator\Request\Validator\StringValidator;
+    \Insomnia\Kernel\Module\RequestValidator\Request\Validator\StringValidator,
+    \Insomnia\Kernel\Module\RequestValidator\Request\Validator\RegexValidator;
 
 class ParamAnnotationValidator extends Observer
 {
@@ -22,6 +23,7 @@ class ParamAnnotationValidator extends Observer
             {
                 case 'integer' : $validator = new IntegerValidator( 1, 10 ); break;
                 case 'string' : $validator = new StringValidator( 1, 10 ); break;
+                case 'regex' : $validator = new RegexValidator( $param[ 'regex' ] ); break;
             }
 
             if( !isset( $validator ) ) throw new \Exception( 'Unsupported Request Type "' . $param[ 'type' ] . '"' );

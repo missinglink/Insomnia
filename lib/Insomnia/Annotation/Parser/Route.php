@@ -6,6 +6,7 @@ use \Insomnia\Router\RouteStack;
 use \Insomnia\Router\AnnotationReader;
 use \Insomnia\Pattern\ArrayAccess;
 use \Insomnia\Request;
+use \Insomnia\Kernel\Module\RequestValidator\Request\ValidatorException;
 
 class Route extends ArrayAccess
 {    
@@ -40,6 +41,47 @@ class Route extends ArrayAccess
 
         if( isset( $methodAnnotations[ 'Insomnia\Annotation\Method' ][ 'value' ] ) )
             $route->setMethods( \explode( ' ', \strtoupper( $methodAnnotations[ 'Insomnia\Annotation\Method' ][ 'value' ] ) ) );
+        
+        if( isset( $methodAnnotations[ 'Insomnia\Annotation\Request' ][ 'value' ] ) )
+        {
+            foreach( $methodAnnotations[ 'Insomnia\Annotation\Request' ][ 'value' ] as $param )
+            {
+                if( !isset( $param[ 'name' ] ) || empty( $param[ 'name' ] ) )
+                {
+                    throw new ValidatorException( 'Parameter name is required' );
+                }
+                
+                if( !isset( $param[ 'optional' ] ) || $param[ 'optional' ] != 'true' )
+                {
+                    $name = trim( $param[ 'name' ] );
+                    $type = isset( $param[ 'type' ] ) ? $param[ 'type' ] : 'string';
+                    
+                    switch( $type )
+                    {
+                        case 'alphanumeric' :
+                            $route->setParam( $name, '[a-zA-Z0-9]+' );
+                            break;
+                        
+                        case 'string' :
+                            $route->setParam( $name, '.+' );
+                            break;
+                        
+                        case 'integer' :
+                            $route->setParam( $name, '\d+' );
+                            break;
+                        
+                       case 'regex' :
+                            if( !isset( $param[ 'regex' ] ) || empty( $param[ 'regex' ] ) )
+                            {
+                                throw new ValidatorException( 'You must provide a valid regex' );
+                            }
+                            
+                            $route->setParam( $name, $param[ 'regex' ] );
+                            break;
+                    }                
+                }
+            }
+        }
 
         $viewFile = isset( $classAnnotations['Insomnia\Annotation\View']['value'] )
             ? $classAnnotations['Insomnia\Annotation\View']['value'] : '';
