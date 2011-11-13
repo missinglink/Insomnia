@@ -1,9 +1,9 @@
 <?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
-<? $this->addScript( '/js/jquery-1.4.3.min.js' ); ?>
-<? $this->addScript( '/js/stringify.js' ); ?>
-<? $this->addScript( '/prettify/prettify.js' ); ?>
-<? $this->addStylesheet( '/prettify/prettify.css' ); ?>
+<? $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
+<? $this->addScript( '/insomnia/js/stringify.js' ); ?>
+<? $this->addScript( '/insomnia/prettify/prettify.js' ); ?>
+<? $this->addStylesheet( '/insomnia/prettify/prettify.css' ); ?>
 
 <?
     $requestFormats = array(

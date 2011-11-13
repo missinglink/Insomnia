@@ -23,7 +23,7 @@
 </style>
 
 <div style="margin:50px;">
-    <img src="/images/logo.jpg" style="display:block; float:left;" />
+    <img src="/insomnia/images/logo.jpg" style="display:block; float:left;" />
     <div style="display:block; float:left; padding:5px 0px 0px 45px;">
         <h1 class="error">Reference</h1>
         <h4>Webservice Documentation</h4>

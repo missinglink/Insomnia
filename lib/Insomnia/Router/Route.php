@@ -24,17 +24,11 @@ class Route
     {
         $this->setRequest( $request );
         
-        // @todo this stuff needs to be moved out
-        $this->params = array();
-        $this->params[ 'version' ]    = 'v\d+';
-        $this->params[ 'id' ]         = '\w+';
-        $this->params[ 'prop' ]       = '\w+';
-        
         $pattern = $this->createNamedPatterns();
-        $pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
+        //$pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
         // @todo this stuff needs to be moved out
 
-        $path = $request->getParam( 'path' );
+        $path = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
         
         if( !\preg_match( "_^$pattern\$_", $path, $matches ) )
             return false;
@@ -79,6 +73,12 @@ class Route
     public function setParams( $params )
     {
         if( \is_array( $params ) ) $this->params = $params;
+        return $this;
+    }
+    
+    public function setParam( $key, $regex )
+    {
+        $this->params[ $key ] = $regex;
         return $this;
     }
     
