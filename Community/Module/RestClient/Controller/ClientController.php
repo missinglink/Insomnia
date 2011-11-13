@@ -28,7 +28,7 @@ class ClientController extends Action
      * @insomnia:Method("GET")
      * @insomnia:Documentation( category="Webservice Client" )
      * 
-     * @insomnia:View( "\Insomnia\Kernel\Module\RestClient\View\Client" )
+     * @insomnia:View( "\Community\Module\RestClient\View\Client" )
      * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */

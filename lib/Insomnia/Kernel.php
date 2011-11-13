@@ -4,7 +4,8 @@ namespace Insomnia;
 
 use \Insomnia\Pattern\KernelModule,
     \Insomnia\Controller\Action,
-    \Insomnia\Router;
+    \Insomnia\Router,
+    \Insomnia\Pattern\PriorityQueue;
 
 class Kernel
 {
@@ -20,7 +21,7 @@ class Kernel
     public function __construct()
     {
         $this->setRouter( new Router );
-        $this->responsePlugins = new PQtest;
+        $this->responsePlugins = new PriorityQueue;
     }
     
     public function addDispatcherPlugin( $plugin )
@@ -135,12 +136,3 @@ class Kernel
         return self::$_instance;
     }
 }
-
-class PQtest extends \SplPriorityQueue
-{
-    public function compare($priority1, $priority2)
-    {
-        if ($priority1 === $priority2) return 0;
-        return $priority1 < $priority2 ? -1 : 1;
-    }
-} 

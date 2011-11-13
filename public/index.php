@@ -17,28 +17,24 @@ $bootstrap = new \Application\Bootstrap\Insomnia;
 
 Kernel::getInstance()
     
-    // Core modules
-    // Warning: Removing these may make your system unstable or unusable
+    // Core modules - Warning: Removing these may make your system unstable or unusable
     ->addModule( new \Insomnia\Kernel\Module\ErrorHandler\Bootstrap )
     ->addModule( new \Insomnia\Kernel\Module\HTTP\Bootstrap )
     ->addModule( new \Insomnia\Kernel\Module\Mime\Bootstrap )
         
-    // Extra modules
+    // Community modules
     ->addModule( new \Community\Module\Console\Bootstrap )
     ->addModule( new \Community\Module\RequestValidator\Bootstrap )
     ->addModule( new \Community\Module\RestClient\Bootstrap )
     ->addModule( new \Community\Module\Compatability\Bootstrap )
     ->addModule( new \Community\Module\Cors\Bootstrap )
     ->addModule( new \Community\Module\Session\Bootstrap )
-    
-    // Community modules
-    ->addModule( new \Community\Module\Welcome\Bootstrap )
     ->addModule( new \Community\Module\Documentation\Bootstrap )
         
     // User modules
-    ->addEndpoint( 'Application\Controller\TestController' )
-    ->addEndpoint( 'Application\Controller\UserController' )
-    ->addEndpoint( 'Application\Controller\HtmlEntitiesController' )
+    ->addModule( new \Application\Module\CrudExample\Bootstrap )
+    //->addModule( new \Application\Module\HtmlEntities\Bootstrap )
+    ->addModule( new \Application\Module\Welcome\Bootstrap )
         
     // Run application
     ->run();
