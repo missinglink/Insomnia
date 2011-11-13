@@ -1,8 +1,8 @@
 <?php
 
-namespace Insomnia\Kernel\Module\Console\Controller;
+namespace Community\Module\Console\Controller;
 
-use Insomnia\Kernel\Module\Console\Controller\Action,
+use \Community\Module\Console\Controller\Action,
     \Insomnia\Kernel;
 
 use \Insomnia\Annotation\Parser\Route as RouteParser;

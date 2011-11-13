@@ -1,6 +1,6 @@
 <?php
 
-namespace Community\Module\Compatability\Response\Plugin;
+namespace Community\Module\Compatibility\Response\Plugin;
 
 use \Insomnia\Pattern\Observer;
 use \Insomnia\Registry;

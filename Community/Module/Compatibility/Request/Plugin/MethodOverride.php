@@ -1,6 +1,6 @@
 <?php
 
-namespace Community\Module\Compatability\Request\Plugin;
+namespace Community\Module\Compatibility\Request\Plugin;
 
 use \Insomnia\Pattern\Observer;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Community\Module\Compatability;
+namespace Community\Module\Compatibility;
 
 use \Insomnia\Kernel,
     \Insomnia\Pattern\KernelModule;
