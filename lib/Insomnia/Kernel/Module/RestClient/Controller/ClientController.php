@@ -21,13 +21,13 @@ class ClientController extends Action
     }
     
     /**
-     * Map Errors to Output
+     * General purpose RESTful webservices client
      * 
-     * Something that spans
-     * multiple lines.
+     * Useful for testing that the server is behaving as expected.
      * 
      * @insomnia:Route("", name="client_index")
      * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Webservice Client" )
      * 
      * @insomnia:View( "\Insomnia\Kernel\Module\RestClient\View\Client" )
      * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )

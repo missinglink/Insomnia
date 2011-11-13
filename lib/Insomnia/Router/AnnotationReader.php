@@ -2,7 +2,8 @@
 
 namespace Insomnia\Router;
 
-use Insomnia\Router\RouteStack;
+use \Insomnia\Router\RouteStack,
+    \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 
 class AnnotationReader
 {
@@ -12,14 +13,13 @@ class AnnotationReader
     
     public function __construct( $className )
     {
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader;
+        $reader = new DoctrineAnnotationReader;
         $reader->setAutoloadAnnotations( true );
         
         foreach( $this->alias as $k => $v )
             $reader->setAnnotationNamespaceAlias( $v, $k );
         
         $this->setReader( $reader );
-        
         $this->setReflector( new \ReflectionClass( $className ) );
     }
     
@@ -61,7 +61,7 @@ class AnnotationReader
         return $this->reflector;
     }
 
-    public function setReflector( $reflector )
+    public function setReflector( \ReflectionClass $reflector )
     {
         $this->reflector = $reflector;
     }

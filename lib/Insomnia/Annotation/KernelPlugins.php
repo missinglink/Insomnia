@@ -2,4 +2,4 @@
 
 namespace Insomnia\Annotation;
 
-class Param extends Generic {}
+class KernelPlugins extends Generic {}

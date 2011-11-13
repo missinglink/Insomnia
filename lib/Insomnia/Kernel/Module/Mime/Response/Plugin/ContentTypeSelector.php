@@ -54,7 +54,7 @@ class ContentTypeSelector extends Observer
                 }
             }
 
-            $response->setContentType( Registry::get( 'default_content_type' ) );
+            return $response->setContentType( 'application/json' );
         }
     }
 }

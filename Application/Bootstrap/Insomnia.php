@@ -24,12 +24,5 @@ class Insomnia
         
         \ini_set( 'default_charset',            'utf-8' ); // Set encoding
         \ini_set( 'mbstring.internal_encoding', 'utf-8' ); // Set encoding
-
-        Registry::set( 'controller_namespace',  'Application\Controller\\' );
-        Registry::set( 'error_endpoint',        '\Application\Controller\Errors\ErrorAction' );
-        Registry::set( 'action_suffix',         'Action' );
-        Registry::set( 'layout_path',           'Application/View' );
-        Registry::set( 'view_extension',        '.php' );
-        Registry::set( 'default_content_type',  'application/json' );
     }
 }

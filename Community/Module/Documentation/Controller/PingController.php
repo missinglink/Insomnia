@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia\Kernel\Module\Documentation\Controller;
+namespace Community\Module\Documentation\Controller;
 
 use \Insomnia\Controller\Action,
     \Insomnia\Registry;
@@ -19,12 +19,12 @@ class PingController extends Action
      * Get information about your request
      * 
      * @insomnia:Route("/ping.*", name="ping")
-     * @insomnia:Method("GET PUT POST DELETE TRACE STATUS")
+     * @insomnia:Method("GET PUT POST DELETE")
      * 
-     * @insomnia:View( "\Insomnia\Kernel\Module\Documentation\View\Ping" )
+     * @insomnia:View( "\Community\Module\Documentation\View\Ping" )
      * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
-     * @insomnia:Documentation( title="Documentation", description="Ping", category="System" )
+     * @insomnia:Documentation( title="Ping", description="A request echo function, useful for testing that a client configuration is working as expected.", category="Documentation" )
      *
      */
     public function ping()

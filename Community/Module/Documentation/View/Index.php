@@ -1,6 +1,6 @@
 <?php
 
-namespace Insomnia\Kernel\Module\Documentation\View;
+namespace Community\Module\Documentation\View;
 
 use \Insomnia\Kernel\Module\Mime\View;
 

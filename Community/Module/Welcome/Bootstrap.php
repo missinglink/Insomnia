@@ -1,17 +1,16 @@
 <?php
 
-namespace Insomnia\Kernel\Module\RequestValidator;
+namespace Community\Module\Welcome;
 
 use \Insomnia\Kernel,
     \Insomnia\Pattern\KernelModule;
 
 /**
- * Insomnia request validator module
+ * Insomnia default welcome screen
  * 
- * Provides a basic request validator.
+ * Provides a front page for the application.
  * 
  * @insomnia:Module
- * @beta
  */
 class Bootstrap extends KernelModule
 {
@@ -19,13 +18,13 @@ class Bootstrap extends KernelModule
      * Module configuration
      * 
      * @insomnia:KernelPlugins({
-     *      @insomnia:AnnotationParser( class="Dispatcher\Plugin\ParamAnnotationValidator" )
+     *      @insomnia:Endpoint( class="Controller\WelcomeController" )
      * })
      * 
      * @param Kernel $kernel
      */
     public function bootstrap( Kernel $kernel )
     {
-        $kernel->addDispatcherPlugin( new Dispatcher\Plugin\ParamAnnotationValidator );
+        $kernel->addEndpoint( __NAMESPACE__ . '\Controller\WelcomeController' );
     }
 }

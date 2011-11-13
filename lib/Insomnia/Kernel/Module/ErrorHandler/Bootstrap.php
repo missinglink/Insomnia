@@ -5,11 +5,23 @@ namespace Insomnia\Kernel\Module\ErrorHandler;
 use \Insomnia\Pattern\KernelModule;
 use \Insomnia\Kernel;
 
+/**
+ * Insomnia error module
+ * 
+ * Catches exceptions and provides debugging information
+ * 
+ * @insomnia:Module
+ */
 class Bootstrap extends KernelModule
 {
     private $exceptionHandler;
     private $errorHandler;
     
+    /**
+     * Module configuration
+     * 
+     * @param Kernel $kernel
+     */
     public function bootstrap( Kernel $kernel )
     {
         $hiccup = new Hiccup;
