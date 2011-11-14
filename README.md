@@ -1,23 +1,25 @@
 
 <pre>
+
   _ _|                                 _)      
     |  __ \   __|  _ \  __ `__ \  __ \  |  _` |
     |  |   |\__ \ (   | |   |   | |   | | (   |
   ___|_|  _|____/\___/ _|  _|  _|_|  _|_|\__,_|
+
 </pre>
 
 Welcome to the Insomnia Framework Beta Release! 
 
- RELEASE INFORMATION
-------------------------
+Release Information
+-------------------
 
 Insomnia Framework beta1
 
 THIS RELEASE IS A DEVELOPMENT RELEASE AND NOT INTENDED FOR PRODUCTION USE.
 PLEASE USE AT YOUR OWN RISK.
 
- FEATURES
-------------------------
+Features
+--------
 
 Insomnia is a PHP 5.3 MVC framework built with one thing in mind, rapidly creating
 RESTFUL HTTP/1.1 web services.
@@ -25,8 +27,8 @@ RESTFUL HTTP/1.1 web services.
 The Insomnia Kernel is built with performance and modularity in mind.
 A wide range of community modules are available to extend the core functionality.
 
- MODULES
-------------------------
+Modules
+-------
 
 Currently the following modules ship with Insomnia:
 
@@ -41,26 +43,33 @@ Currently the following modules ship with Insomnia:
 
 ### Community
 
-- Documentation (Provides an interface to auto-generate documentation)
-- Console (Allows script execution via the command line)
-- Session (Provides flexible stateful session handling)
-- RequestValidator (Provides a basic request validator)
-- RestClient (Provides a basic rest client for testing)
-- Cors (Adds cross-origin-resources-sharing headers to all HTTP responses)
-- Compatibility (Provides a compatibility layer for difficult clients)
+* [Documentation](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Documentation)
+    `Provides an interface to auto-generate documentation`
+* [Console](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Console)
+    `Allows script execution via the command line`
+* [Session](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Session)
+    `Allows script execution via the command line`
+* [RequestValidator](https://github.com/missinglink/Insomnia/tree/master/Community/Module/RequestValidator)
+    `Provides a basic request validator`
+* [RestClient](https://github.com/missinglink/Insomnia/tree/master/Community/Module/RestClient)
+    `Provides a basic rest client for testing`
+* [Cors](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Cors)
+    `Adds cross-origin-resources-sharing headers to all HTTP responses`
+* [Compatibility](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Compatibility)
+    `Provides a compatibility layer for difficult clients`
 
- SYSTEM REQUIREMENTS
+System Requirements
 ------------------------
 
 Insomnia Framework beta1 requires PHP 5.3 or later; we recommend using the
 latest PHP version whenever possible.
 
- INSTALLATION
+Installation
 ------------------------
 
 Please see INSTALL.txt
 
- QUESTIONS AND FEEDBACK
+Questions & Feedback
 ------------------------
 
 If you would like to be notified of new releases, you can subscribe to our 
