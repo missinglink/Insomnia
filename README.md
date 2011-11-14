@@ -1,12 +1,5 @@
-
-<pre>
-
-  _ _|                                 _)      
-    |  __ \   __|  _ \  __ `__ \  __ \  |  _` |
-    |  |   |\__ \ (   | |   |   | |   | | (   |
-  ___|_|  _|____/\___/ _|  _|  _|_|  _|_|\__,_|
-
-</pre>
+Insomnia
+=============
 
 Welcome to the Insomnia Framework Beta Release! 
 
@@ -15,7 +8,7 @@ Release Information
 
 Insomnia Framework beta1
 
-THIS RELEASE IS A DEVELOPMENT RELEASE AND NOT INTENDED FOR PRODUCTION USE.
+THIS RELEASE IS A DEVELOPMENT RELEASE AND IS NOT FULLY TESTED IN PRODUCTION USE.
 
 PLEASE USE AT YOUR OWN RISK.
 
