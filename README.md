@@ -16,15 +16,16 @@ Release Information
 Insomnia Framework beta1
 
 THIS RELEASE IS A DEVELOPMENT RELEASE AND NOT INTENDED FOR PRODUCTION USE.
+
 PLEASE USE AT YOUR OWN RISK.
 
 Features
 --------
 
-Insomnia is a PHP 5.3 MVC framework built with one thing in mind, rapidly creating
-RESTFUL HTTP/1.1 web services.
+Insomnia is designed to allow developers to quickly and easily create RESTFUL HTTP/1.1 web services in PHP.
 
 The Insomnia Kernel is built with performance and modularity in mind.
+
 A wide range of community modules are available to extend the core functionality.
 
 Modules
