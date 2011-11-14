@@ -30,8 +30,9 @@ A wide range of community modules are available to extend the core functionality
 Currently the following modules ship with Insomnia:
 
 Core
-* [HTTP](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/HTTP) -- `Provides HTTP/1.1 functionality. Deals with the request [params/headers/body] and speaks HTTP/1.1`
+----
 
+* [.HTTP](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/HTTP) -- `Provides HTTP/1.1 functionality.` `Deals with the request [params/headers/body] and speaks HTTP/1.1`
 
 -- CORE --
 - HTTP (Provides HTTP/1.1 functionality. Deals with the request [params/headers/body] and speaks HTTP/1.1)
