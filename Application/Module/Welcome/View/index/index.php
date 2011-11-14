@@ -17,7 +17,7 @@
 <h2>Features</h2>
 
 <ul>
-<li>Insomnia allow you to quickly and easily create RESTful HTTP/1.1 compliant web services in PHP.</li>
+<li>Insomnia allows you to quickly and easily create RESTful HTTP/1.1 compliant web services in PHP.</li>
 <li>The Insomnia Kernel is built with performance and modularity in mind.</li>
 <li>The Framework is structured such a way that it enforces separation between the Framework and Application layers.</li>
 <li>Insomnia works well with Doctrine 2, using some of the Doctrine common components such as ClassLoader and AnnotationParser.</li>
