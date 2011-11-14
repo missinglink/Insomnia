@@ -29,21 +29,17 @@ A wide range of community modules are available to extend the core functionality
 
 Currently the following modules ship with Insomnia:
 
-Core
-----
+### Core
 
 * [HTTP](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/HTTP)
-    Provides HTTP/1.1 functionality.` `Deals with the request [params/headers/body] and speaks HTTP/1.1
-
+    `Provides HTTP/1.1 functionality.` `Deals with the request [params/headers/body] and speaks HTTP/1.1`
 * [Mime](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/Mime)
-    Provides format detection [headers/file extensions] and multiple response formats [json/xml/txt/ini/yaml]
+    `Provides format detection [headers/file extensions]` `Provides multiple response formats [json/xml/txt/ini/yaml]`
+* [ErrorHandler](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/ErrorHandler)
+    `Catches exceptions and provides debugging information`
 
--- CORE --
-- HTTP (Provides HTTP/1.1 functionality. Deals with the request [params/headers/body] and speaks HTTP/1.1)
-- Mime (Provides format detection [headers/file extensions] and multiple response formats [json/xml/txt/ini/yaml])
-- ErrorHandler (Catches exceptions and provides debugging information)
+### Community
 
--- COMMUNITY --
 - Documentation (Provides an interface to auto-generate documentation)
 - Console (Allows script execution via the command line)
 - Session (Provides flexible stateful session handling)
