@@ -77,4 +77,5 @@ If you would like to be notified of new releases, you can subscribe to our
 repository on Github https://github.com/missinglink/Insomnia.
 
 Or you can contact the lead developer directly:
+
 Peter Johnson ( https://github.com/missinglink )
