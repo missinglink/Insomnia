@@ -1,9 +1,10 @@
 
+<pre>
   _ _|                                 _)      
     |  __ \   __|  _ \  __ `__ \  __ \  |  _` |
     |  |   |\__ \ (   | |   |   | |   | | (   |
   ___|_|  _|____/\___/ _|  _|  _|_|  _|_|\__,_|
-
+</pre>
 
 Welcome to the Insomnia Framework Beta Release! 
 
