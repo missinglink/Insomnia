@@ -9,8 +9,6 @@ Insomnia Framework beta1
 
 THIS RELEASE IS STILL IN ACTIVE DEVELOPMENT.
 
-PLEASE USE AT YOUR OWN RISK.
-
 Features
 --------
 
