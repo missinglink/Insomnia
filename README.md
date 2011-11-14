@@ -78,3 +78,5 @@ repository on Github https://github.com/missinglink/Insomnia.
 Or you can contact the lead developer directly:
 
 Peter Johnson ( https://github.com/missinglink )
+
+![Some Image](http://i.imgur.com/Ho0sr.jpg)
