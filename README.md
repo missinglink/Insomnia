@@ -32,7 +32,11 @@ Currently the following modules ship with Insomnia:
 Core
 ----
 
-* [.HTTP](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/HTTP) -- `Provides HTTP/1.1 functionality.` `Deals with the request [params/headers/body] and speaks HTTP/1.1`
+* [HTTP](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/HTTP)
+    Provides HTTP/1.1 functionality.` `Deals with the request [params/headers/body] and speaks HTTP/1.1
+
+* [Mime](https://github.com/missinglink/Insomnia/tree/master/lib/Insomnia/Kernel/Module/Mime)
+    Provides format detection [headers/file extensions] and multiple response formats [json/xml/txt/ini/yaml]
 
 -- CORE --
 - HTTP (Provides HTTP/1.1 functionality. Deals with the request [params/headers/body] and speaks HTTP/1.1)
