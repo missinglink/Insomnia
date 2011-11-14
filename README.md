@@ -1,4 +1,4 @@
-Insomnia
+# Insomnia
 =============
 
 Welcome to the Insomnia Framework Beta Release! 
@@ -8,7 +8,7 @@ Release Information
 
 Insomnia Framework beta1
 
-THIS RELEASE IS A DEVELOPMENT RELEASE AND IS NOT FULLY TESTED IN PRODUCTION USE.
+THIS RELEASE IS STILL IN ACTIVE DEVELOPMENT.
 
 PLEASE USE AT YOUR OWN RISK.
 
