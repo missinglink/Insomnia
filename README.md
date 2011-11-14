@@ -1,11 +1,4 @@
-<pre>
-
-     _ _|                                 _)      
-      |  __ \   __|  _ \  __ `__ \  __ \  |  _` |
-      |  |   |\__ \ (   | |   |   | |   | | (   |
-    ___|_|  _|____/\___/ _|  _|  _|_|  _|_|\__,_|
-
-</pre>
+![Insomnia](http://i.imgur.com/3zwKq.jpg)
 
 Welcome to the Insomnia Framework Beta Release! 
 
@@ -78,5 +71,3 @@ repository on Github https://github.com/missinglink/Insomnia.
 Or you can contact the lead developer directly:
 
 Peter Johnson ( https://github.com/missinglink )
-
-![Some Image](http://i.imgur.com/Ho0sr.jpg)
