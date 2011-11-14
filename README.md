@@ -40,7 +40,7 @@ Currently the following modules ship with Insomnia:
 * [Console](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Console)
     `Allows script execution via the command line`
 * [Session](https://github.com/missinglink/Insomnia/tree/master/Community/Module/Session)
-    `Allows script execution via the command line`
+    `Provides flexible stateful session handling`
 * [RequestValidator](https://github.com/missinglink/Insomnia/tree/master/Community/Module/RequestValidator)
     `Provides a basic request validator`
 * [RestClient](https://github.com/missinglink/Insomnia/tree/master/Community/Module/RestClient)
