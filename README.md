@@ -1,4 +1,4 @@
-![Insomnia](http://i.imgur.com/3zwKq.jpg)
+![Insomnia](http://i.imgur.com/J8PFF.jpg)
 
 Welcome to the Insomnia Framework Beta Release! 
 

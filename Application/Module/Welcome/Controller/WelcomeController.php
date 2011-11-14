@@ -2,7 +2,8 @@
 
 namespace Application\Module\Welcome\Controller;
 
-use \Insomnia\Response,
+use \Insomnia\Controller\Action,
+    \Insomnia\Response,
     \Insomnia\Response\Code,
     \Insomnia\Registry;
 
@@ -12,7 +13,7 @@ use \Insomnia\Response,
  * @insomnia:Resource
  * 
  */
-class WelcomeController
+class WelcomeController extends Action
 {   
     /**
      * Document Root
@@ -29,6 +30,5 @@ class WelcomeController
      */
     public function action( \Exception $exception )
     {
-        echo( 'welcome' );
     }
 }
