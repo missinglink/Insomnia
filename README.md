@@ -14,7 +14,7 @@ PLEASE USE AT YOUR OWN RISK.
 Features
 --------
 
-Insomnia is designed to allow developers to quickly and easily create RESTful HTTP/1.1 web services in PHP.
+Insomnia is designed to allow developers to quickly and easily create RESTful HTTP/1.1 compliant web services in PHP.
 
 The Insomnia Kernel is built with performance and modularity in mind.
 
