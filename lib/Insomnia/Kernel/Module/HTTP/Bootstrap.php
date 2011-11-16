@@ -19,6 +19,7 @@ class Bootstrap extends KernelModule
      * 
      * @insomnia:KernelPlugins({
      *      @insomnia:RequestPlugin( class="Request\Plugin\ParamParser" ),
+     *      @insomnia:RequestPlugin( class="Request\Plugin\UriParser" ),
      *      @insomnia:RequestPlugin( class="Request\Plugin\HeaderParser" ),
      *      @insomnia:RequestPlugin( class="Request\Plugin\BodyParser" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\HttpHeaders" ),
@@ -32,6 +33,7 @@ class Bootstrap extends KernelModule
     public function bootstrap( Kernel $kernel )
     {
         $kernel->addRequestPlugin( new Request\Plugin\ParamParser );
+        $kernel->addRequestPlugin( new Request\Plugin\UriParser );
         $kernel->addRequestPlugin( new Request\Plugin\HeaderParser );
         $kernel->addRequestPlugin( new Request\Plugin\BodyParser );
         

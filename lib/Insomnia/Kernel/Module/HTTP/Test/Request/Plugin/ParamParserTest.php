@@ -18,9 +18,8 @@ class ParamParserTest extends \PHPUnit_Framework_TestCase
         $this->request = new Request;
         $this->requestPlugin = new ParamParser;
         
-        // Default the PHP globals which contain request parameters
+        // Default the PHP global which contains the request parameters
         $_REQUEST = array();
-        unset( $_SERVER['REQUEST_URI'] );
     }
     
     /**
@@ -64,49 +63,6 @@ class ParamParserTest extends \PHPUnit_Framework_TestCase
         
         // Load test data in to the $_REQUEST superglobal
         $_REQUEST = $requestParams;
-        
-        // Run the plugin
-        $this->requestPlugin->update( $this->request );
-        
-        $this->assertEquals( $expectedParams, $this->request->getParams(), 'Subject should contain all request parameters' );
-    }
-    
-    /**
-     * Dummy request URI
-     *
-     * @return array 
-     */
-    public static function requestUriDataprovider()
-    {
-        return array(
-            array( 'http://www.example.com?test=test', array(
-                'scheme' => 'http', 
-                'host' => 'www.example.com', 
-                'query' => 'test=test'
-            )),
-            array( 'https://example.com', array(
-                'scheme' => 'https', 
-                'host' => 'example.com'
-            )),
-            array( 'ftp://ftp.example.com', array(
-                'scheme' => 'ftp', 
-                'host' => 'ftp.example.com'
-            )),
-        );
-    }
-    
-    /**
-     * Test that the ParamParser plugin parses $_SERVER['REQUEST_URI'] and adds
-     * the resulting information about the URI in to the Insomnia request object.
-     * 
-     * @dataProvider requestUriDataprovider
-     */
-    public function testLoadParamsFromRequestUri( $uri, $expectedParams )
-    {
-        $this->assertEquals( array(), $this->request->getParams(), 'Request should be empty' );
-        
-        // Load test data in to the $_SERVER superglobal
-        $_SERVER['REQUEST_URI'] = $uri;
         
         // Run the plugin
         $this->requestPlugin->update( $this->request );
