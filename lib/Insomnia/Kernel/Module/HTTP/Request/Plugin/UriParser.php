@@ -16,7 +16,7 @@ class UriParser extends Observer
         // If a request URI is passed via CGI params
         if( isset( $_SERVER['REQUEST_URI'] ) )
         {
-            // Parse url and add results to request object
+            // Parse URI and add results to request object
             $request->mergeParams( parse_url( $_SERVER['REQUEST_URI'] ) );
         }
     }
