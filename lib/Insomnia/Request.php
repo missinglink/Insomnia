@@ -162,6 +162,16 @@ class Request extends Subject
     }
 
     /**
+     * Get all request parameters
+     *
+     * @return array List of defined parameters
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+    
+    /**
      * Get a request parameter
      *
      * @param string $key Parameter key
