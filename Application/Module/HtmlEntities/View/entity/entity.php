@@ -47,7 +47,7 @@
     <hr style="margin-bottom:0px;" />
     
         <p class="breadcrumbs">
-            <a href="/">Character Entity Reference</a>
+            <a href="/example/entity">Character Entity Reference</a>
             &raquo;
             <?php echo ucfirst( $this->data[ 'name' ] ); ?>
         </p>

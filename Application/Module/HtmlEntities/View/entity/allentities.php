@@ -18,8 +18,8 @@
      endforeach; ?></div>
     <hr />
     <p>This content is available in the following formats:</p>
-    <a href="/entity.xml">Xml</a>
-    <a href="/entity.json">Json</a>
-    <a href="/entity.ini">Ini</a>
-    <a href="/entity.yaml">Yaml</a>
+    <a href="/example/entity.xml">Xml</a>
+    <a href="/example/entity.json">Json</a>
+    <a href="/example/entity.ini">Ini</a>
+    <a href="/example/entity.yaml">Yaml</a>
 </div>
