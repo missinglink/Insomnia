@@ -4,6 +4,10 @@ namespace Insomnia\Kernel\Module\HTTP\Request\Plugin;
 
 use \Insomnia\Pattern\Observer;
 
+/**
+ * Parse the request URI from the $_SERVER['REQUEST_URI'] global and add the
+ * resulting information to the Insomnia request object.
+ */
 class UriParser extends Observer
 {
     /* @var $request \Insomnia\Request */

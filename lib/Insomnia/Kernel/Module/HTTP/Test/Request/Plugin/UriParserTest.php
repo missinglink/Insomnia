@@ -18,7 +18,7 @@ class UriParserTest extends \PHPUnit_Framework_TestCase
         $this->request = new Request;
         $this->requestPlugin = new UriParser;
         
-        // Default the PHP global which contains the URI
+        // Clear the PHP global which contains the URI
         unset( $_SERVER['REQUEST_URI'] );
     }
     

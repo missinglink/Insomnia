@@ -18,7 +18,7 @@ class ParamParserTest extends \PHPUnit_Framework_TestCase
         $this->request = new Request;
         $this->requestPlugin = new ParamParser;
         
-        // Default the PHP global which contains the request parameters
+        // Clear the PHP global which contains the request parameters
         $_REQUEST = array();
     }
     
