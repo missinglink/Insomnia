@@ -20,27 +20,11 @@ use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
  * 
  */
 class HtmlEntitiesController extends Action
-{    
-    /**
-     * Html Entities (domain root)
-     * 
-     * @insomnia:Route( "/", name="entity_root" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Application" )
-     *
-     * @insomnia:View( "\Application\Module\HtmlEntities\View\Entities" )
-     * @insomnia:Layout( "\Application\Module\HtmlEntities\View\EntityLayout" )
-     * 
-     */
-    public function index()
-    {
-        return $this->multiple();
-    }
-    
+{       
     /**
      * Html Entities
      * 
-     * @insomnia:Route( "/entity", name="entity_multiple" )
+     * @insomnia:Route( "/example/entity", name="entity_multiple" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -60,7 +44,7 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entity
      * 
-     * @insomnia:Route( "/entity/:id", name="entity_single" )
+     * @insomnia:Route( "/example/entity/:id", name="entity_single" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application" )
      *
@@ -86,41 +70,15 @@ class HtmlEntitiesController extends Action
         else throw new \Insomnia\Router\RouterException( 'Failed to Match any Routes' );
     }
     
-//    /**
-//     * Html Entity
-//     * 
-//     * @insomnia:Route( "/entity/:id/:prop", name="entity_info" )
-//     * @insomnia:Method( "GET" )
-//     * @insomnia:Documentation( category="Application" )
-//     *
-//     * @insomnia:Request({
-//     *      @insomnia:Param( name="id", type="string" ),
-//     *      @insomnia:Param( name="prop", type="string", optional="true" )
-//     * })
-//     * 
-//     * @insomnia:View( "\Application\Module\HtmlEntities\View\Raw" )
-//     * 
-//     */
-//    public function singleRaw()
-//    {
-//        $entities = $this->getEntities();
-//        
-//        $allowedSearchKeys = array_keys( reset( $entities ) );
-//        if( in_array( $this->validator->getParam( 'prop' ), $allowedSearchKeys ) )
-//        {
-//        
-//            if( isset( $entities[ $this->validator->getParam( 'id' ) ] ) )
-//            {
-//                $this->response->merge( array( $entities[ $this->validator->getParam( 'id' ) ][ $this->validator->getParam( 'prop' ) ] ) );
-//            }
-//
-//            else throw new \Insomnia\Router\RouterException( 'Failed to Match any Routes' );
-//            
-//        }
-//        
-//        else throw new \Insomnia\Router\RouterException( 'Failed to Match any Routes' );
-//    }
-    
+    /**
+     * Load a list of html entities from data stolen from wikipedia
+     * 
+     * This method is pretty aweful, the wiki content needed a bit of cleaning up.
+     * @todo Clean up the data file so we don't need to process it on every page load.
+     * 
+     * @param boolean $header Whether to keep the first line of data
+     * @return array An array of entities 
+     */
     private function getEntities( $header = false )
     {
         $file = trim( file_get_contents( dirname( __DIR__ ) . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR . 'htmlentities.txt' ) );
@@ -147,7 +105,7 @@ class HtmlEntitiesController extends Action
                 {
                     case 0 :
                         $fe[ 'name' ] = $v;
-                        $fe[ 'uri' ] = ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . '/entity/' . $v;
+                        $fe[ 'uri' ] = ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . '/example/entity/' . $v;
                         break;
                     case 1 :
                         $fe[ 'character' ] = $v;
