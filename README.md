@@ -61,6 +61,13 @@ Installation
 
 Please see INSTALL.txt
 
+Unit Tests
+------------------------
+
+You can run the test suite with this command:
+
+    phpunit --bootstrap public/autoloader.php .
+
 Questions & Feedback
 ------------------------
 
