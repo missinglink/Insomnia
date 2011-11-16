@@ -18,8 +18,7 @@ class Bootstrap extends KernelModule
      * Module configuration
      * 
      * @insomnia:KernelPlugins({
-     *      @insomnia:DispatcherPlugin( class="Dispatcher\Plugin\DocumentationEndPoint" ),
-     *      @insomnia:Endpoint( class="Controller\DocumentationController" ),
+     *      @insomnia:Endpoint( class="Controller\DocumentationController" )
      *      @insomnia:Endpoint( class="Controller\PingController" )
      * })
      * 
