@@ -23,7 +23,7 @@ class Response extends ArrayAccess implements \SplSubject
     
     /** Subject Pattern **/
     protected $observers = array();
-
+    
     public function render( Endpoint $endPoint )
     {
         $this->setEndPoint( $endPoint );
@@ -43,7 +43,6 @@ class Response extends ArrayAccess implements \SplSubject
         $this->getRenderer()->render();
         
         \flush();
-        exit;
     }
 
     public function getRenderer()

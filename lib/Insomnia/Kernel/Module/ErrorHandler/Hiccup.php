@@ -17,17 +17,20 @@ class Hiccup
         {
             header( 'Content-type: text/plain' );
             echo 'Service is currently unavailable, Please try again later.' . PHP_EOL;
-            echo $e2->getMessage() . PHP_EOL;
-            echo $e2->getFile() . ':' . $e2->getLine() . PHP_EOL;
-            echo $e2->getTraceAsString() . PHP_EOL;
-            if( ( $p = $e2->getPrevious() ) instanceof \Exception )
-            {
-                echo PHP_EOL;
-                echo "\t" . $p->getMessage() . PHP_EOL;
-                echo "\t" . $p->getFile() . ':' . $p->getLine() . PHP_EOL;
-                echo "\t" . $p->getTraceAsString() . PHP_EOL;
+            if( \APPLICATION_ENV === 'development' )
+                {
+                echo $e2->getMessage() . PHP_EOL;
+                echo $e2->getFile() . ':' . $e2->getLine() . PHP_EOL;
+                echo $e2->getTraceAsString() . PHP_EOL;
+                if( ( $p = $e2->getPrevious() ) instanceof \Exception )
+                {
+                    echo PHP_EOL;
+                    echo "\t" . $p->getMessage() . PHP_EOL;
+                    echo "\t" . $p->getFile() . ':' . $p->getLine() . PHP_EOL;
+                    echo "\t" . $p->getTraceAsString() . PHP_EOL;
+                }
             }
-            die;
+            exit;
         }
         
         /* Don't execute PHP internal error handler */

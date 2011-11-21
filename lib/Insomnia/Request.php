@@ -25,12 +25,11 @@ class Request extends Subject
      */
     public function __construct()
     {
+        // Run all request plugins
         foreach( \Insomnia\Kernel::getInstance()->getRequestPlugins() as $plugin )
         {
-            $this->attach( $plugin );
+            $plugin->update( $this );
         }
-
-        $this->notify();
     }
 
     /**
@@ -162,6 +161,16 @@ class Request extends Subject
         if( \is_string( $body ) ) $this->body = $body;
     }
 
+    /**
+     * Get all request parameters
+     *
+     * @return array List of defined parameters
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+    
     /**
      * Get a request parameter
      *
