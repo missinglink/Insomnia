@@ -5,15 +5,9 @@ namespace Community\Module\RequestValidator\Dispatcher\Plugin;
 use \Insomnia\Pattern\Observer;
 use \Insomnia\Annotation\Parser\ParamParser;
 
-<<<<<<< HEAD
-use \Insomnia\Kernel\Module\RequestValidator\Request\Validator\IntegerValidator,
-    \Insomnia\Kernel\Module\RequestValidator\Request\Validator\StringValidator,
-    \Insomnia\Kernel\Module\RequestValidator\Request\Validator\RegexValidator;
-=======
 use \Community\Module\RequestValidator\Request\Validator\IntegerValidator,
     \Community\Module\RequestValidator\Request\Validator\StringValidator,
     \Community\Module\RequestValidator\Request\Validator\RegexValidator;
->>>>>>> 5e430dbd220e4c5b16d3e975975ba72770e5a617
 
 class ParamAnnotationValidator extends Observer
 {
