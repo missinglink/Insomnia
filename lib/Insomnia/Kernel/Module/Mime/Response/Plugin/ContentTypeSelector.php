@@ -34,7 +34,7 @@ class ContentTypeSelector extends Observer
      */
     public function update( \SplSubject $response )
     {
-        if( '' === $response->getContentType() )
+        if( false == $response->getContentType() )
         {
             switch( Registry::get( 'request' )->getFileExtension() )
             {
