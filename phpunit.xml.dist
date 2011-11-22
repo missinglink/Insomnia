@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="public/autoloader.php" colors="true">
+        <testsuites>
+            <testsuite name="Insomnia Kernel Modules">
+                <directory>lib/Insomnia/Kernel/Module/*Test.php</directory>
+            </testsuite>
+            <testsuite name="Insomnia Community Modules">
+                <directory>Community/Module/*Test.php</directory>
+            </testsuite>
+        </testsuites>
+        
+        <filter>
+            <whitelist>
+                <directory suffix=".php">lib/Insomnia/</directory>
+                <directory suffix=".php">Community/</directory>
+            </whitelist>
+        </filter>
+</phpunit>
