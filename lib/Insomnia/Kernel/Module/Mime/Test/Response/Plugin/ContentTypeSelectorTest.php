@@ -2,9 +2,10 @@
 
 namespace Insomnia\Kernel\Module\Mime\Response\Plugin;
 
-use \Insomnia\Registry;
-use \Insomnia\Request;
-use \Insomnia\Response;
+use \Insomnia\Registry,
+    \Insomnia\Request,
+    \Insomnia\Response,
+    \Insomnia\Kernel\Module\Mime\Response\Content;
 
 /**
  * This test covers all functionality of the ContentTypeSelector plugin
@@ -68,7 +69,7 @@ class ContentTypeSelectorTest extends \PHPUnit_Framework_TestCase
     {
         $this->contentPlugin->update( $this->response );
         
-        $this->assertEquals( ContentTypeSelector::TYPE_JSON, $this->response->getContentType(), 'Default mime type should be JSON' );
+        $this->assertEquals( Content::TYPE_JSON, $this->response->getContentType(), 'Default mime type should be JSON' );
     }
     
     /**
