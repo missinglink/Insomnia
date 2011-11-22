@@ -37,7 +37,10 @@ class ContentTypeSelectorTest extends \PHPUnit_Framework_TestCase
             array( '.ini' , 'text/ini'),
             array( '.yaml', 'application/x-yaml' ),
             array( '.txt',  'text/plain' ),
-            array( '.html', 'text/html' )
+            array( '.html', 'text/html' ),
+            
+            // Default mime type for invalid extension
+            array( '.invalid', 'application/json' )
         );
     }
     
@@ -49,9 +52,12 @@ class ContentTypeSelectorTest extends \PHPUnit_Framework_TestCase
     public static function responseMimeHeaderDataprovider()
     {
         return array(
-            array( 'text/xml',   'application/xml' ),
-            array( 'text/yaml' , 'application/x-yaml'),
-            array( 'application/xhtml', 'text/html' )
+            array( 'text/xml',  'application/xml' ),
+            array( 'text/yaml', 'application/x-yaml' ),
+            array( 'application/xhtml', 'text/html' ),
+            
+            // Default mime type for invalid Accept header
+            array( 'application/zip', 'application/json' )
         );
     }
     
@@ -87,27 +93,6 @@ class ContentTypeSelectorTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Test that the ContentTypeSelector plugin detects an
-     * invalid content type from extension
-     * 
-     * Current behavior defines that a default mime is used,
-     * but it would preferably throw an exception
-     */
-    public function testInvalidMimeFromExtension()
-    {
-        $extension = '.invalid';
-        
-        // Set the request path
-        $this->request->setParam( 'path', 'path/to/endpoint' . $extension );
-        
-        // Run the plugin
-        $this->contentPlugin->update( $this->response );
-        
-        $this->assertEquals( 'application/json', $this->response->getContentType(),
-            'Unexpected content type "' . $this->response->getContentType() . '" received for extension "' . $extension . '"' );
-    }
-    
-    /**
      * Test that the ContentTypeSelector plugin detects and returns
      * the requested content type from headers
      * 
@@ -124,27 +109,6 @@ class ContentTypeSelectorTest extends \PHPUnit_Framework_TestCase
         $this->contentPlugin->update( $this->response );
         
         $this->assertEquals( $expectedContent, $this->response->getContentType(),
-            'Unexpected content type "' . $this->response->getContentType() . '" received for requested type "' . $requestedContent . '"' );
-    }
-    
-    /**
-     * Test that the ContentTypeSelector plugin detects an
-     * invalid content type from headers
-     * 
-     * Current behavior defines that a default mime is used,
-     * but it would preferably throw an exception
-     */
-    public function testInvalidMimeFromHeader()
-    {
-        $requestedContent = 'application/zip';
-        
-        // Set a request path
-        $this->request->setHeader( 'Accept', $requestedContent );
-        
-        // Run the plugin
-        $this->contentPlugin->update( $this->response );
-        
-        $this->assertEquals( 'application/json', $this->response->getContentType(),
             'Unexpected content type "' . $this->response->getContentType() . '" received for requested type "' . $requestedContent . '"' );
     }
 }
