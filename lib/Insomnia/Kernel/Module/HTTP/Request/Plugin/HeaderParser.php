@@ -22,7 +22,6 @@ class HeaderParser extends Observer
                 // Set Header
                 $request->setHeader( $headerKey, $headerValue );
             }
-    
         }
     }
 }
