@@ -14,7 +14,7 @@ class ResponseCodeSelector extends Observer
     {
         if( null === $response->getCode() )
         {
-            $renderer = $response->getRenderer();
+//            $renderer = $response->getRenderer();
 
             // This code was commented out because it has a coupling to the Mime Component
 //            if( empty( $response ) && !( \is_object( $renderer ) && $renderer instanceof ViewRenderer ) )

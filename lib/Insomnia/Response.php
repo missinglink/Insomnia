@@ -16,7 +16,8 @@ class Response extends ArrayAccess implements \SplSubject
             $renderer   = null,
             $ttl        = 0,
             $charset    = 'utf8',
-            $endPoint   = null;
+            $endPoint   = null,
+            $headers    = array();
     
     /** Response Graph Modifiers **/
     private $modifiers  = array();
@@ -39,6 +40,7 @@ class Response extends ArrayAccess implements \SplSubject
         if( !\method_exists( $this->getRenderer(), 'render' ) )
             throw new ResponseException( 'Invalid Response Renderer' );
         
+        $this->flushHeaders();
         $this->getRenderer()->setResponse( $this );
         $this->getRenderer()->render();
         
@@ -93,6 +95,31 @@ class Response extends ArrayAccess implements \SplSubject
     public function setCharacterSet( $charset )
     {
         $this->charset = $charset;
+    }
+    
+    // Response Headers
+    
+    public function getHeader( $key )
+    {
+        return isset( $this->headers[ $key ] ) ? $this->headers[ $key ] : false;
+    }
+
+    public function setHeader( $key, $value )
+    {
+        $this->headers[ $key ] = $value;
+    }
+    
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+    
+    private function flushHeaders()
+    {
+        foreach( $this->getHeaders() as $key => $value )
+        {
+            header( $key . ': ' . $value );
+        }
     }
     
     /** @return \Insomnia\Dispatcher\Endpoint */
