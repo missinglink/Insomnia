@@ -5,7 +5,7 @@ namespace Insomnia\Kernel\Module\HTTP\Response\Plugin;
 use \Insomnia\Response;
 
 /**
- * This test covers all functionality of the HeaderParser plugin
+ * This test covers all functionality of the CacheHeaders plugin
  */
 class CacheHeadersTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,6 +25,8 @@ class CacheHeadersTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetCacheHeadersWithNoTimeToLiveSet()
     {
+        $this->response->setTimeToLive( 0 );
+        
         $this->assertEquals( array(), $this->response->getHeaders(), 'Headers should be empty' );
         
         // Run the plugin
