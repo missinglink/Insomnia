@@ -39,7 +39,7 @@ class Request extends Subject
      */
     public function getMethod()
     {
-        return $this->method;
+        return strtoupper( $this->getHeader( 'Method' ) );
     }
     
     /**
@@ -50,23 +50,23 @@ class Request extends Subject
     public function getUri()
     {
         return $this->getScheme() . '://' . $this->getHeader( 'Host' ) . 
-               \str_ireplace( $this->getFileExtension(), '', $this->getParam( 'path' ) );
+               str_ireplace( $this->getFileExtension(), '', $this->getParam( 'path' ) );
     }
 
-    /**
-     * Set HTTP request method
-     *
-     * @param string $method HTTP method
-     */
-    public function setMethod( $method )
-    {
-        switch( $method = \strtoupper( $method ) )
-        {
-            case 'GET': case 'PUT': case 'POST': case 'DELETE':
-            case 'HEAD': case 'STATUS': case 'TRACE':
-                $this->method = $method;
-        }
-    }
+//    /**
+//     * Set HTTP request method
+//     *
+//     * @param string $method HTTP method
+//     */
+//    public function setMethod( $method )
+//    {
+//        switch( $method = strtoupper( $method ) )
+//        {
+//            case 'GET': case 'PUT': case 'POST': case 'DELETE':
+//            case 'HEAD': case 'STATUS': case 'TRACE':
+//                $this->method = $method;
+//        }
+//    }
 
     /**
      * Get HTTP scheme
@@ -85,7 +85,7 @@ class Request extends Subject
      */
     public function getCname()
     {
-        return \strstr( $this->getHeader( 'Host' ) . '.', '.', true );
+        return strstr( $this->getHeader( 'Host' ) . '.', '.', true );
     }
 
     /**
@@ -95,8 +95,8 @@ class Request extends Subject
      */
     public function getFileExtension()
     {
-        \preg_match( '%^.*/[^/]+?(?<extension>\.[^/]+)$%', $this->getParam( 'path' ), $matches );
-        return \array_key_exists( 'extension', $matches ) ? $matches[ 'extension' ] : false;
+        preg_match( '%^.*/[^/]+?(?<extension>\.[^/]+)$%', $this->getParam( 'path' ), $matches );
+        return isset( $matches[ 'extension' ] ) ? $matches[ 'extension' ] : false;
     }
 
     /**
@@ -106,7 +106,7 @@ class Request extends Subject
      */
     public function getContentType()
     {
-        return \strstr( $this->getHeader( 'Content-Type' ) . ';', ';', true );
+        return strstr( $this->getHeader( 'Content-Type' ) . ';', ';', true );
     }
 
     /**
@@ -158,7 +158,7 @@ class Request extends Subject
      */
     public function setBody( $body )
     {
-        if( \is_string( $body ) ) $this->body = $body;
+        if( is_string( $body ) ) $this->body = $body;
     }
 
     /**
@@ -211,7 +211,7 @@ class Request extends Subject
      */
     public function mergeParams( $params )
     {
-        if( \is_array( $params ) ) $this->params = $params + $this->params;
+        if( is_array( $params ) ) $this->params = $params + $this->params;
     }
 
     /**

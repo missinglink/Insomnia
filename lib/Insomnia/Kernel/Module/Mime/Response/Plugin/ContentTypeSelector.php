@@ -2,59 +2,65 @@
 
 namespace Insomnia\Kernel\Module\Mime\Response\Plugin;
 
-use \Insomnia\Pattern\Observer;
-use \Insomnia\Registry;
+use \Insomnia\Pattern\Observer,
+    \Insomnia\Registry,
+    \Insomnia\Response,
+    \Insomnia\Kernel\Module\Mime\Response\Content;
 
 class ContentTypeSelector extends Observer
 {
-    /* @var $response \Insomnia\Response */
+    /**
+     * Sets the response content type based
+     * on either the given file extension or
+     * the type given in the 'Accept' header
+     * 
+     * @param Insomnia\Response $response
+     * @return void
+     */
     public function update( \SplSubject $response )
     {
-        if( '' === $response->getContentType() )
+        if( false == $response->getContentType() )
         {
             switch( Registry::get( 'request' )->getFileExtension() )
             {
                 case false  : break;
-                case '.json': return $response->setContentType( 'application/json' );
-                case '.xml' : return $response->setContentType( 'application/xml' );
-                case '.html': return $response->setContentType( 'text/html' );
-                case '.yaml': return $response->setContentType( 'application/x-yaml' );
-                case '.txt' : return $response->setContentType( 'text/plain' );
-                case '.ini' : return $response->setContentType( 'text/ini' );
-//                case '.rss' : return $response->setContentType( 'application/rss+xml' );
+                case '.json': return $response->setContentType( Content::TYPE_JSON );
+                case '.xml' : return $response->setContentType( Content::TYPE_XML );
+                case '.html': return $response->setContentType( Content::TYPE_HTML );
+                case '.yaml': return $response->setContentType( Content::TYPE_YAML );
+                case '.txt' : return $response->setContentType( Content::TYPE_PLAIN );
+                case '.ini' : return $response->setContentType( Content::TYPE_INI );
             }
 
-            foreach( \explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
+            foreach( explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
             {
-                switch( \strstr( $format . ';', ';', true ) )
+                switch( strstr( $format . ';', ';', true ) )
                 {
-                    case 'application/json':
-                        return $response->setContentType( 'application/json' );
+                    case Content::TYPE_JSON:
+                        return $response->setContentType( Content::TYPE_JSON );
 
-                    case 'application/xml':
-                    case 'text/xml':
-                        return $response->setContentType( 'application/xml' );
+                    case Content::TYPE_XML:
+                    case Content::TYPE_XML_TEXT:
+                        return $response->setContentType( Content::TYPE_XML );
 
-                    case 'application/xhtml':
-                    case 'text/html':
-                        return $response->setContentType( 'text/html' );
+                    case Content::TYPE_XHTML:
+                    case Content::TYPE_HTML:
+                        return $response->setContentType( Content::TYPE_HTML );
 
-                    case 'application/x-yaml':
-                    case 'text/yaml':
-                        return $response->setContentType( 'application/x-yaml' );
+                    case Content::TYPE_YAML:
+                    case Content::TYPE_YAML_TEXT:
+                        return $response->setContentType( Content::TYPE_YAML );
 
-                   case 'text/plain':
-                        return $response->setContentType( 'text/plain' );
+                   case Content::TYPE_PLAIN:
+                        return $response->setContentType( Content::TYPE_PLAIN );
 
-                   case 'text/ini':
-                        return $response->setContentType( 'text/ini' );
-                       
-//                   case 'application/rss+xml':
-//                        return $response->setContentType( 'application/rss+xml' );
+                   case Content::TYPE_INI:
+                        return $response->setContentType( Content::TYPE_INI );
                 }
             }
 
-            return $response->setContentType( 'application/json' );
+            // Default content type
+            return $response->setContentType( Content::TYPE_JSON );
         }
     }
 }

@@ -35,7 +35,6 @@ class Bootstrap extends KernelModule
         $kernel->addRequestPlugin( new Request\Plugin\ParamParser );
         $kernel->addRequestPlugin( new Request\Plugin\UriParser );
         $kernel->addRequestPlugin( new Request\Plugin\HeaderParser );
-        $kernel->addRequestPlugin( new Request\Plugin\BodyParser );
         
         $kernel->addResponsePlugin( new Response\Plugin\HttpHeaders, -999 ); // Setting HTTP header causes a bug with ini & yaml filetypes
         $kernel->addResponsePlugin( new Response\Plugin\ContentTypeHeaders, 999 );

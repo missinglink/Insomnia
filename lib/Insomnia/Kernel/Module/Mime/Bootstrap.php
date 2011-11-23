@@ -18,6 +18,7 @@ class Bootstrap extends KernelModule
      * Module configuration
      * 
      * @insomnia:KernelPlugins({
+     *      @insomnia:RequestPlugin( class="Request\Plugin\JsonParamParser" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\ContentTypeSelector" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\RendererSelector" )
      * })
@@ -26,6 +27,7 @@ class Bootstrap extends KernelModule
      */
     public function bootstrap( Kernel $kernel )
     {
+        $kernel->addRequestPlugin( new Request\Plugin\JsonParamParser );
         $kernel->addResponsePlugin( new Response\Plugin\ContentTypeSelector, 1 );
         $kernel->addResponsePlugin( new Response\Plugin\RendererSelector, 2 );
     }

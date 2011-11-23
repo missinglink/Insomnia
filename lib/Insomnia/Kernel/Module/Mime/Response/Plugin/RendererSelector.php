@@ -2,53 +2,49 @@
 
 namespace Insomnia\Kernel\Module\Mime\Response\Plugin;
 
-use \Insomnia\Pattern\Observer;
-use \Insomnia\Registry;
-
-use \Insomnia\Kernel\Module\Mime\Response\Renderer\XmlRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\JsonRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\ViewRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\ArrayRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\YamlRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\IniRenderer,
-    \Insomnia\Kernel\Module\Mime\Response\Renderer\Rss2;
+use \Insomnia\Pattern\Observer,
+    \Insomnia\Registry,
+    \Insomnia\Kernel\Module\Mime\Response\Renderer,
+    \Insomnia\Kernel\Module\Mime\Response\Content;
 
 class RendererSelector extends Observer
 {
-    /* @var $response \Insomnia\Response */
+    /**
+     * Set the reponse renderer based on the content type
+     * 
+     * @var $response \Insomnia\Response
+     */
     public function update( \SplSubject $response )
     {
         if( null === $response->getRenderer() )
         {
-            switch( \strstr( $response->getContentType(), '/' ) )
+            switch( $response->getContentType() )
             {
-                case '/xml':
-                    $response->setRenderer( new XmlRenderer );
+                case Content::TYPE_XML:
+                case Content::TYPE_XML_TEXT:
+                    $response->setRenderer( new Renderer\XmlRenderer );
                     break;
 
-                case '/x-yaml': case '/yaml':
-                    $response->setRenderer( new YamlRenderer );
+                case Content::TYPE_YAML:
+                case Content::TYPE_YAML_TEXT:
+                    $response->setRenderer( new Renderer\YamlRenderer );
                     break;
 
-                case '/xhtml': case '/html':
-                    $response->setRenderer( new ViewRenderer );
+                case Content::TYPE_HTML:
+                case Content::TYPE_XHTML:
+                    $response->setRenderer( new Renderer\ViewRenderer );
                     break;
 
-                case '/plain':
-                    $response->setRenderer( new ArrayRenderer );
+                case Content::TYPE_PLAIN:
+                    $response->setRenderer( new Renderer\ArrayRenderer );
                     break;
 
-                case '/ini':
-                    $response->setRenderer( new IniRenderer );
+                case Content::TYPE_INI:
+                    $response->setRenderer( new Renderer\IniRenderer );
                     break;
                 
-//                case '/rss+xml':
-//                    $response->setRenderer( new Rss2 );
-//                    break;
-                
-                case '/json':
                 default:
-                    $response->setRenderer( new JsonRenderer );
+                    $response->setRenderer( new Renderer\JsonRenderer );
                     break;
             }
         }
