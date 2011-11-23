@@ -4,6 +4,9 @@ namespace Insomnia\Kernel\Module\HTTP\Request\Plugin;
 
 use \Insomnia\Pattern\Observer;
 
+/**
+ * Merge request headers in to the Insomnia request object.
+ */
 class HeaderParser extends Observer
 {
     /* @var $request \Insomnia\Request */
@@ -11,11 +14,6 @@ class HeaderParser extends Observer
     {
         $this->addHeaders( $request, $_SERVER, 'HTTP_' );
         $this->addHeaders( $request, $_SERVER, 'REQUEST_' );
-        
-        if( isset( $_SERVER['REQUEST_METHOD'] ) )
-        {
-            $request->setMethod( $_SERVER['REQUEST_METHOD'] );
-        }
     }
 
     private function addHeaders( $request, $headers, $match = false )

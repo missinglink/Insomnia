@@ -39,7 +39,7 @@ class Request extends Subject
      */
     public function getMethod()
     {
-        return $this->method;
+        return strtoupper( $this->getHeader( 'Method' ) );
     }
     
     /**
@@ -53,20 +53,20 @@ class Request extends Subject
                str_ireplace( $this->getFileExtension(), '', $this->getParam( 'path' ) );
     }
 
-    /**
-     * Set HTTP request method
-     *
-     * @param string $method HTTP method
-     */
-    public function setMethod( $method )
-    {
-        switch( $method = strtoupper( $method ) )
-        {
-            case 'GET': case 'PUT': case 'POST': case 'DELETE':
-            case 'HEAD': case 'STATUS': case 'TRACE':
-                $this->method = $method;
-        }
-    }
+//    /**
+//     * Set HTTP request method
+//     *
+//     * @param string $method HTTP method
+//     */
+//    public function setMethod( $method )
+//    {
+//        switch( $method = strtoupper( $method ) )
+//        {
+//            case 'GET': case 'PUT': case 'POST': case 'DELETE':
+//            case 'HEAD': case 'STATUS': case 'TRACE':
+//                $this->method = $method;
+//        }
+//    }
 
     /**
      * Get HTTP scheme
