@@ -32,7 +32,7 @@ class CacheHeadersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertArrayHasKey( 'Last-Modified', $this->response->getHeaders() );
         $this->assertGreaterThan( strtotime( '-1 seconds' ), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
-        $this->assertLessThan( strtotime( '+1 seconds' ), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
+        $this->assertLessThanOrEqual( time(), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
         
         $this->assertArrayHasKey( 'Expires', $this->response->getHeaders() );
         $this->assertEquals( 'Sat, 22 Jan 1983 05:00:00 GMT', $this->response->getHeader( 'Expires' ) );
@@ -59,11 +59,11 @@ class CacheHeadersTest extends \PHPUnit_Framework_TestCase
         
         $this->assertArrayHasKey( 'Last-Modified', $this->response->getHeaders() );
         $this->assertGreaterThan( strtotime( '-1 seconds' ), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
-        $this->assertLessThan( strtotime( '+1 seconds' ), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
+        $this->assertLessThanOrEqual( time(), strtotime( $this->response->getHeader( 'Last-Modified' ) ) );
         
         $this->assertArrayHasKey( 'Expires', $this->response->getHeaders() );
-        $this->assertGreaterThan( strtotime( '+9 seconds' ), strtotime( $this->response->getHeader( 'Expires' ) ) );
-        $this->assertLessThan( strtotime( '+11 seconds' ), strtotime( $this->response->getHeader( 'Expires' ) ) );
+        $this->assertGreaterThan( strtotime( '+9.5 seconds' ), strtotime( $this->response->getHeader( 'Expires' ) ) );
+        $this->assertLessThanOrEqual( strtotime( '+10 seconds' ), strtotime( $this->response->getHeader( 'Expires' ) ) );
         
         $this->assertArrayHasKey( 'Cache-Control', $this->response->getHeaders() );
         $this->assertEquals( 'max-age=10, public', $this->response->getHeader( 'Cache-Control' ) );
