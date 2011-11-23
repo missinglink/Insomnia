@@ -47,7 +47,8 @@ class ParamParserTest extends \PHPUnit_Framework_TestCase
             array( array( 'a' => 0, 2 => '0' ),  array( 'a' => 0, 2 => '0' ) ),
             array( array( 'a' => 1, 'b' => '1' ), array( 'a' => 1, 'b' => '1' ) ),
             array( array( 'a' => '日本国', 'עִבְרִית' => 'b' ), array( 'a' => '日本国', 'עִבְרִית' => 'b' ) ),
-            array( array( 'a' => ' ', 'b' => '' ), array() )
+            array( array( 'a' => ' ', 'b' => '' ), array( 'a' => ' ', 'b' => '' ) ),
+            array( array( 'a' => array( 'a', 'b' ), 'c' => array( 'c' => 'd' ) ), array( 'a' => array( 'a', 'b' ), 'c' => array( 'c' => 'd' ) ) ),
         );
     }
     
