@@ -12,26 +12,17 @@ class HeaderParser extends Observer
     /* @var $request \Insomnia\Request */
     public function update( \SplSubject $request )
     {
-        $this->addHeaders( $request, $_SERVER, 'HTTP_' );
-        $this->addHeaders( $request, $_SERVER, 'REQUEST_' );
-    }
-
-    private function addHeaders( $request, $headers, $match = false )
-    {
-        $matchLength = \is_string( $match ) ? \strlen( $match ) : false;
-
-        foreach( $headers as $k => $v )
+        foreach( $_SERVER as $headerKey => $headerValue )
         {
-            if( false !== $matchLength )
+            if( preg_match( '%^(?:HTTP_|REQUEST_)(?<key>\w+)$%', $headerKey, $matches ) )
             {
-                if( \strncmp( $k, $match, $matchLength ) ) continue;
-                else $k = \substr( $k, $matchLength );
+                // Format Key
+                $headerKey = strtr( ucwords( strtolower( strtr( $matches[ 'key' ], '_', ' ' ) ) ), ' ', '-' );
+
+                // Set Header
+                $request->setHeader( $headerKey, $headerValue );
             }
-
-            /* Format Key */
-            $k = \strtr( \ucwords( \strtolower( \strtr( $k, '_', ' ' ) ) ), ' ', '-' );
-
-            $request->setHeader( $k, $v );
+    
         }
     }
 }
