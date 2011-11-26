@@ -118,7 +118,12 @@ class CrudController extends Action
     public function read()
     {
         $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Module\CrudExample\Entities\Test', $this->validator->getParam( 'id' ) );
+        $test = $doctrine->getManager()
+                    ->createQuery( 'SELECT t FROM Application\Module\CrudExample\Entities\Test t WHERE t.id = :id' )
+                    ->useResultCache( true, 99999 )
+                    ->setParameter( 'id', $this->validator->getParam( 'id' ) )
+                    ->getSingleResult();
+        
         if( !$test ) throw new NotFoundException( 'Entity Not Found' );
 
         $dataMapper = new DataMapper( $test );
