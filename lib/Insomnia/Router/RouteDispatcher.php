@@ -14,7 +14,7 @@ use \Insomnia\Router\DispatcherControllerException,
 class RouteDispatcher
 {
     /* @var STRICT_CHECKING boolean Check if class is semantically valid */
-    const STRICT_CHECKING = true;
+    const STRICT_CHECKING = false;
 
     public function __construct( Route $route )
     {
