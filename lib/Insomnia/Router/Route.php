@@ -23,14 +23,10 @@ class Route
     public function match( Request $request )
     {
         $this->setRequest( $request );
-        
         $pattern = $this->createNamedPatterns();
-        //$pattern .= '(\.(?:json|xml|html|yaml|txt|ini|form|rss))?';
-        // @todo this stuff needs to be moved out
-
-        $path = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
+        $pathWithoutFileExtension = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
         
-        if( !\preg_match( "_^$pattern\$_", $path, $matches ) )
+        if( !preg_match( "_^$pattern\$_", $pathWithoutFileExtension, $matches ) )
             return false;
         
         $method = $request->getMethod();
@@ -38,7 +34,7 @@ class Route
         if( !\in_array( $method, $this->methods ) )
             return false;
 
-        $this->matches = \array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
+        $this->matches = array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
         
         return true;
     }
@@ -50,16 +46,16 @@ class Route
 
     public function setPattern( $pattern )
     {
-        if( \is_string( $pattern ) ) $this->pattern = $pattern;
+        if( is_string( $pattern ) ) $this->pattern = $pattern;
     }
 
     private function createNamedPatterns()
     {
         $pattern = $this->pattern;
         
-        if( false !== \strpos( $this->pattern, ':', 1 ) )
+        if( false !== strpos( $this->pattern, ':', 1 ) )
             foreach( $this->params as $key => $match )
-                $pattern = \str_replace( ":$key", "(?P<$key>$match)", $pattern );
+                $pattern = str_replace( ":$key", "(?P<$key>$match)", $pattern );
         
         return $pattern;
     }
@@ -72,7 +68,7 @@ class Route
 
     public function setParams( $params )
     {
-        if( \is_array( $params ) ) $this->params = $params;
+        if( is_array( $params ) ) $this->params = $params;
         return $this;
     }
     
