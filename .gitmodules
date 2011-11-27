@@ -1,3 +1,0 @@
-[submodule "lib/Opl3"]
-	path = lib/Opl3
-	url = git://github.com/missinglink/opl3-autoloader.git
