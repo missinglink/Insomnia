@@ -90,7 +90,11 @@ class CrudController extends Action
     {
         $doctrine    = new Doctrine;
         $query       = new TestQuery( $doctrine->getManager() );
-        $paginator   = new Paginator( $query->getQuery() );
+        
+        $queryObject = $query->getQuery();
+        $queryObject->useResultCache( true, 99999 );
+        
+        $paginator   = new Paginator( $queryObject );
         $paginator->setCurrentPage( $this->validator->getParam( 'page' ) );
         
         $tests = $paginator->getItems();
