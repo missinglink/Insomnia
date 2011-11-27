@@ -15,7 +15,7 @@ define( 'APPLICATION_ENV', 'production' );
  */
 require_once \ROOT . '/lib/Insomnia/SpeedLoader.php';
 
-$loader = new \Insomnia\SpeedLoader;
+$loader = new SpeedLoader;
 $loader->addNamespace( 'Opl', \ROOT . 'lib/Opl3/src' )
        ->addNamespace( 'Insomnia', \ROOT . 'lib' )
        ->addNamespace( 'Doctrine', \ROOT . 'lib' )

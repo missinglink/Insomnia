@@ -18,7 +18,7 @@ class SpeedLoader
      */
     public function addNamespace( $namespace, $path, $extension = '.php' )
     {
-        $this->namespaces[ $namespace ] = DIRECTORY_SEPARATOR . trim( $path, \DIRECTORY_SEPARATOR ) . \DIRECTORY_SEPARATOR;
+        $this->namespaces[ $namespace ] = rtrim( $path, \DIRECTORY_SEPARATOR ) . \DIRECTORY_SEPARATOR;
         
         return $this;
     }
