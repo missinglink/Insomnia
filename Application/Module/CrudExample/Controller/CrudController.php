@@ -90,7 +90,11 @@ class CrudController extends Action
     {
         $doctrine    = new Doctrine;
         $query       = new TestQuery( $doctrine->getManager() );
-        $paginator   = new Paginator( $query->getQuery() );
+        
+        $queryObject = $query->getQuery();
+        $queryObject->useResultCache( true, 99999 );
+        
+        $paginator   = new Paginator( $queryObject );
         $paginator->setCurrentPage( $this->validator->getParam( 'page' ) );
         
         $tests = $paginator->getItems();
@@ -118,7 +122,12 @@ class CrudController extends Action
     public function read()
     {
         $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Module\CrudExample\Entities\Test', $this->validator->getParam( 'id' ) );
+        $test = $doctrine->getManager()
+                    ->createQuery( 'SELECT t FROM Application\Module\CrudExample\Entities\Test t WHERE t.id = :id' )
+                    ->useResultCache( true, 99999 )
+                    ->setParameter( 'id', $this->validator->getParam( 'id' ) )
+                    ->getSingleResult();
+        
         if( !$test ) throw new NotFoundException( 'Entity Not Found' );
 
         $dataMapper = new DataMapper( $test );

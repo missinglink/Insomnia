@@ -58,16 +58,26 @@ class Doctrine extends EntityManager
         $config->setProxyNamespace( 'Proxies' );
         $config->setAutoGenerateProxyClasses( APPLICATION_ENV === 'development' );
 
-        // Driver
-        $config->setMetadataDriverImpl( $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) ) );
-
         // Caching
-        $cache = ( APPLICATION_ENV === 'development' )
-            ? new \Doctrine\Common\Cache\ArrayCache
-            : new \Doctrine\Common\Cache\ApcCache;
+        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
+            ? new \Doctrine\Common\Cache\ApcCache
+            : new \Doctrine\Common\Cache\ArrayCache;
 
         $config->setMetadataCacheImpl( $cache );
         $config->setQueryCacheImpl( $cache );
+        $config->setResultCacheImpl( $cache );
+        
+        // Annotations
+//        $annotationDriver = $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) );
+        
+        $reader = new \Doctrine\Common\Annotations\AnnotationReader( $cache, new \Doctrine\Common\Annotations\Parser );
+        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver( $reader, array( \ROOT . 'Application/Entities' ) );
+        
+//        $annotationDriver = new \Doctrine\Common\Annotations\AnnotationReader(
+//            $cache, new \Doctrine\Common\Annotations\Parser
+//        );
+        $config->setMetadataDriverImpl( $annotationDriver );
         
         return $config;
     }

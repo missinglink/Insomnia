@@ -5,6 +5,9 @@ namespace Insomnia\Router;
 use \Insomnia\Router\RouteStack,
     \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 
+use \Doctrine\Common\Cache\ApcCache,
+    \Doctrine\Common\Cache\ArrayCache;
+
 class AnnotationReader
 {
     private $reader;
@@ -13,7 +16,11 @@ class AnnotationReader
     
     public function __construct( $className )
     {
-        $reader = new DoctrineAnnotationReader;
+        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
+            ? new \Doctrine\Common\Cache\ApcCache
+            : new \Doctrine\Common\Cache\ArrayCache;
+        
+        $reader = new DoctrineAnnotationReader( $cache );
         $reader->setAutoloadAnnotations( true );
         
         foreach( $this->alias as $k => $v )
