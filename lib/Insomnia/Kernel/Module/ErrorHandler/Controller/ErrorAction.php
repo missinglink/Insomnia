@@ -51,7 +51,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'body' ] = 'Authentication is possible but has failed or not yet been provided';
                 break;
 
-            case 'Insomnia\Kernel\Module\RequestValidator\Request\ValidatorException':
+            case 'Community\Module\RequestValidator\Request\ValidatorException':
                 $response->setCode( Code::HTTP_BAD_REQUEST );
                 $response[ 'status' ] = Code::HTTP_BAD_REQUEST;
                 $response[ 'title' ] = 'Missing or Invalid Request Parameter';
