@@ -15,7 +15,7 @@ class MethodOverride extends Observer
         /* Override Via Param */
         if( null !== ( $method = $request->getParam( self::PARAM ) ) )
         {
-            $request->setMethod( $method );
+            $request->setHeader( 'Method', $method );
             $request->setHeader( self::HEADER, $method );
         }
 
