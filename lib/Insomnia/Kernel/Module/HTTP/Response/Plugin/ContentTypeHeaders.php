@@ -9,6 +9,6 @@ class ContentTypeHeaders extends Observer
     /* @var $response \Insomnia\Response */
     public function update( \SplSubject $response )
     {
-        $response->setHeader( 'Content-Type:', $response->getContentType() . '; charset=' . $response->getCharacterSet() );
+        $response->setHeader( 'Content-Type', $response->getContentType() . '; charset=' . $response->getCharacterSet() );
     }
 }
