@@ -22,14 +22,9 @@ class BodyParser extends Observer
                     {
                         switch( $request->getContentType() )
                         {
-                            case 'application/json' :
-                                $json = \json_decode( $body, true );
-                                if( null !== $json ) $request->mergeParams( $json );
-                                break;
-
                             case 'application/x-www-form-urlencoded' :
                             default :
-                                \parse_str( $body, $params );
+                                parse_str( $body, $params );
                                 $request->mergeParams( \array_filter( $params ) );
                         }
                     }
