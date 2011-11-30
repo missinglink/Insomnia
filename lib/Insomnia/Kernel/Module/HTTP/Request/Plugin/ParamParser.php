@@ -13,9 +13,11 @@ class ParamParser extends Observer
     /* @var $request \Insomnia\Request */
     public function update( \SplSubject $request )
     {
-			// Merge in to request object
-			$request->mergeParams( array_filter( $_REQUEST, function($value) {
-				return $value !== '';
-			} ) );
+        // Merge in to request object
+        $request->mergeParams( array_filter( $_REQUEST, function($value) {
+            return $value !== '';
+        } ) );
+        
+        
     }
 }
