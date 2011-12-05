@@ -18,5 +18,5 @@ abstract class KernelModule
         $this->basePath = $basePath;
     }
     
-    abstract public function bootstrap( Kernel $kernel );
+    abstract public function run( Kernel $kernel );
 }

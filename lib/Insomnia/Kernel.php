@@ -101,7 +101,7 @@ class Kernel
     {
         foreach( $this->getModules() as $module )
         {
-            $module->bootstrap( $this );
+            $module->run( $this );
         }
         
         foreach( $this->getEndpoints() as $endPoint )

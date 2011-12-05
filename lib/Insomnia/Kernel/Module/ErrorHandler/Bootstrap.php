@@ -22,7 +22,7 @@ class Bootstrap extends KernelModule
      * 
      * @param Kernel $kernel
      */
-    public function bootstrap( Kernel $kernel )
+    public function run( Kernel $kernel )
     {
         $hiccup = new Hiccup;
         

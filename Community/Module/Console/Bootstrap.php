@@ -25,7 +25,7 @@ class Bootstrap extends KernelModule
      * 
      * @param Kernel $kernel
      */
-    public function bootstrap( Kernel $kernel )
+    public function run( Kernel $kernel )
     {
         if( php_sapi_name() == 'cli' && empty( $_SERVER['REMOTE_ADDR'] ) )
         {
