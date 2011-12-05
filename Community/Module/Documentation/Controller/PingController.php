@@ -21,7 +21,7 @@ class PingController extends Action
      * @insomnia:Route("/ping.*", name="ping")
      * @insomnia:Method("GET PUT POST DELETE")
      * 
-     * @insomnia:View( "\Community\Module\Documentation\View\Ping" )
+     * @insomnia:View( "Community\Module\Documentation\View\Ping" )
      * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      * @insomnia:Documentation( title="Ping", description="A request echo function, useful for testing that a client configuration is working as expected.", category="Documentation" )

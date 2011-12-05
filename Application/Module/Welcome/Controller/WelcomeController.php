@@ -24,8 +24,8 @@ class WelcomeController extends Action
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Welcome" )
      * 
-     * @insomnia:View( "\Application\Module\Welcome\View\Index" )
-     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:View( "Application\Module\Welcome\View\Index" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */
     public function action( \Exception $exception )
