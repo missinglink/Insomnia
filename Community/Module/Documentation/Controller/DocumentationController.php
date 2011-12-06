@@ -25,7 +25,7 @@ class DocumentationController extends Action
      * 
      * @insomnia:Route( "/doc", name="doc_index" )
      * @insomnia:Method( "GET" )
-     * @insomnia:View( "\Community\Module\Documentation\View\Index" )
+     * @insomnia:View( "Community\Module\Documentation\View\Index" )
      * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * @insomnia:Documentation( title="Documentation Index", description="WebService Documentation", category="Documentation" )
      *
@@ -86,7 +86,7 @@ class DocumentationController extends Action
      * 
      * @insomnia:Route( "/doc/routes", name="doc_routes" )
      * @insomnia:Method( "GET" )
-     * @insomnia:View( "\Community\Module\Documentation\View\Routes" )
+     * @insomnia:View( "Community\Module\Documentation\View\Routes" )
      * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * @insomnia:Documentation( title="List Routes", description="List Routes", category="Documentation" )
      *

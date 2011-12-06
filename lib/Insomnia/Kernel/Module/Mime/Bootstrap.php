@@ -25,7 +25,7 @@ class Bootstrap extends KernelModule
      * 
      * @param Kernel $kernel
      */
-    public function bootstrap( Kernel $kernel )
+    public function run( Kernel $kernel )
     {
         $kernel->addRequestPlugin( new Request\Plugin\JsonParamParser );
         $kernel->addResponsePlugin( new Response\Plugin\ContentTypeSelector, 1 );

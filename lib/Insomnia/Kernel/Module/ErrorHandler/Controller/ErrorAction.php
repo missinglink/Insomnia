@@ -17,8 +17,8 @@ class ErrorAction extends \Insomnia\Controller\Action
     /**
      * Map Errors to Output
      * 
-     * @insomnia:View( "\Insomnia\Kernel\Module\ErrorHandler\View\Error" )
-     * @insomnia:Layout( "\Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:View( "Insomnia\Kernel\Module\ErrorHandler\View\Error" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      * @param \Exception $exception 
      */

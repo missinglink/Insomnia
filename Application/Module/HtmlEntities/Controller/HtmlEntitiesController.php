@@ -28,8 +28,8 @@ class HtmlEntitiesController extends Action
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Application Demo" )
      *
-     * @insomnia:View( "\Application\Module\HtmlEntities\View\Entities" )
-     * @insomnia:Layout( "\Application\Module\HtmlEntities\View\EntityLayout" )
+     * @insomnia:View( "Application\Module\HtmlEntities\View\Entities" )
+     * @insomnia:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
      * 
      */
     public function multiple()
@@ -52,8 +52,8 @@ class HtmlEntitiesController extends Action
      *      @insomnia:Param( name="id", type="string" )
      * })
      * 
-     * @insomnia:View( "\Application\Module\HtmlEntities\View\Entity" )
-     * @insomnia:Layout( "\Application\Module\HtmlEntities\View\EntityLayout" )
+     * @insomnia:View( "Application\Module\HtmlEntities\View\Entity" )
+     * @insomnia:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
      * 
      */
     public function single()
