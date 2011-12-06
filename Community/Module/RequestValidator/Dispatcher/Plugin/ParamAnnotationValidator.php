@@ -8,7 +8,8 @@ use \Insomnia\Annotation\Parser\ParamParser;
 use \Community\Module\RequestValidator\Request\Validator\IntegerValidator,
     \Community\Module\RequestValidator\Request\Validator\StringValidator,
     \Community\Module\RequestValidator\Request\Validator\RegexValidator,
-    \Community\Module\RequestValidator\Request\Validator\ArrayValidator;
+    \Community\Module\RequestValidator\Request\Validator\ArrayValidator,
+    \Community\Module\RequestValidator\Request\Validator\EmailValidator;
     
 
 class ParamAnnotationValidator extends Observer
@@ -27,7 +28,8 @@ class ParamAnnotationValidator extends Observer
                 case 'string' : $validator = new StringValidator( 1, 10 ); break;
                 case 'regex' : $validator = new RegexValidator( $param[ 'regex' ] ); break;
                 case 'array[string]' : $validator = new ArrayValidator( 'string' ); break;
-                case 'array[numeric]' : $validator = new ArrayValidator( 'numeric' ); break;                
+                case 'array[numeric]' : $validator = new ArrayValidator( 'numeric' ); break;
+                case 'email' : $validator = new EmailValidator; break;
             }
 
             if( !isset( $validator ) ) throw new \Exception( 'Unsupported Request Type "' . $param[ 'type' ] . '"' );

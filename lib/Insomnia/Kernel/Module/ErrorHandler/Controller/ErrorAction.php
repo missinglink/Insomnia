@@ -44,7 +44,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'body' ] = 'A request was made of a resource using a request method not supported by that resource';
                 break;
 
-            case 'Insomnia\Session\SessionException':
+            case 'Community\Module\Session\SessionException':
                 $response->setCode( Code::HTTP_UNAUTHORIZED );
                 $response[ 'status' ] = Code::HTTP_UNAUTHORIZED;
                 $response[ 'title' ] = 'Authentication Failed';
@@ -72,6 +72,14 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'status' ] = Code::HTTP_UNSUPPORTED_MEDIA_TYPE;
                 $response[ 'title' ] = 'Invalid Response Format';
                 $response[ 'body' ] = 'Could not create a response with content characteristics acceptable according to the accept headers sent in the request';
+                $response[ 'parameter' ] = $exception->getMessage();
+                break;
+            
+            case 'Doctrine_Connection_Mysql_Exception':
+                $response->setCode( Code::HTTP_CONFLICT );
+                $response[ 'status' ] = Code::HTTP_CONFLICT;
+                $response[ 'title' ] = 'HTTP Conflict';
+                $response[ 'body' ] = 'The request could not be completed due to a conflict with the current state of the resource';
                 $response[ 'parameter' ] = $exception->getMessage();
                 break;
 
