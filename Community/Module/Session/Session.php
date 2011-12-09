@@ -2,8 +2,8 @@
 
 namespace Community\Module\Session;
 
-use Storage\Apc as SessionStorage,
-    Authentication\Token as SessionAuthentication;
+use Community\Module\Session\Storage\Apc as SessionStorage,
+    Community\Module\Session\Authentication\Token as SessionAuthentication;
 
 class Session extends SessionAbstract
 {
