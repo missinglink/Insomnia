@@ -2,7 +2,7 @@
 
 namespace Community\Module\Session;
 
-use Community\Module\Session\Storage\Apc as SessionStorage,
+use Community\Module\Session\Storage\Disk as SessionStorage,
     Community\Module\Session\Authentication\Token as SessionAuthentication;
 
 class Session extends SessionAbstract
@@ -22,7 +22,7 @@ class Session extends SessionAbstract
     {
         self::$authentication->authenticate( $request );
         
-        if( null === \Insomnia\Session::get( 'id' ) )
+        if( null === self::get( 'id' ) )
             throw new SessionException( 'Authentication Failed' );
     }
 
@@ -33,7 +33,7 @@ class Session extends SessionAbstract
 
     public static function setStorage( StorageAbstract $storage )
     {
-        if( $storage instanceof \Insomnia\Session\Storage\Disk )
+        if( $storage instanceof \Community\Module\Session\Storage\Disk )
             return;
 
         self::$storage = $storage;
@@ -107,6 +107,6 @@ class Session extends SessionAbstract
             self::start();
         }
         
-        \Insomnia\Session::set( 'id', \Insomnia\Session::getId() );
+        self::set( 'id', self::getId() );
     }
 }
