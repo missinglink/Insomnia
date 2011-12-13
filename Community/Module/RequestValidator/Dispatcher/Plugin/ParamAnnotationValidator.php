@@ -25,7 +25,7 @@ class ParamAnnotationValidator extends Observer
             switch( $param[ 'type' ] )
             {
                 case 'integer' : $validator = new IntegerValidator( 1, 10 ); break;
-                case 'string' : $validator = new StringValidator( 1, 10 ); break;
+                case 'string' : $validator = new StringValidator( 1 ); break;
                 case 'regex' : $validator = new RegexValidator( $param[ 'regex' ] ); break;
                 case 'array[string]' : $validator = new ArrayValidator( 'string' ); break;
                 case 'array[numeric]' : $validator = new ArrayValidator( 'numeric' ); break;

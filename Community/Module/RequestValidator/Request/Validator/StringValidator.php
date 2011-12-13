@@ -5,7 +5,7 @@ namespace Community\Module\RequestValidator\Request\Validator;
 use \Insomnia\Request,
     \Community\Module\RequestValidator\Request\ValidatorException;
 
-class StringValidator extends RegexValidator
+class StringValidator
 {
     private $min, $max;
     
@@ -13,18 +13,26 @@ class StringValidator extends RegexValidator
     {
         $this->min = $min;
         $this->max = $max;
-        
-        $chars = ( null !== $max && $min > 1 ) ? '{'.$min.','.$max.'}' : '';
-        $this->pattern = '%^(.+)'.$chars.'$%';
     }
     
     public function validate( $string, $key )
     {
-        try{ parent::validate( $string, $key ); }
-        
-        catch( ValidatorException $e )
+        // check it's actually a string
+        if ( !is_string( $string ) )
         {
-            throw new ValidatorException( ( null !== $this->max && $this->min > 1 ) ? 'length' : 'string' );
+            throw new ValidatorException( 'string' );
+        }
+        
+        // check it meets the minimum length requirements
+        if ( strlen( $string ) < $this->min )
+        {
+            throw new ValidatorException( 'string' );
+        }
+        
+        // check it meets the maximum length requirements
+        if (is_numeric( $this->max ) && strlen( $string ) > $this->max )
+        {
+            throw new ValidatorException( 'string' );
         }
     }
 }
