@@ -13,7 +13,7 @@ class BodyParser extends Observer
         {
             switch( \strtoupper( $_SERVER['REQUEST_METHOD'] ) )
             {
-                case 'PUT': case 'POST':
+                case 'PUT': case 'DELETE':
 
                     $body = \trim( \file_get_contents( 'php://input' ) );
                     $request->setBody( $body );
