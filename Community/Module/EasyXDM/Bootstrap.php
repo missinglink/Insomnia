@@ -1,14 +1,16 @@
 <?php
 
-namespace Community\Module\RestClient;
+namespace Community\Module\EasyXDM;
 
 use \Insomnia\Kernel,
     \Insomnia\Pattern\KernelModule;
 
 /**
- * Insomnia RestClient
+ * Insomnia EasyXDM Module
  * 
- * Provides a basic rest client for testing.
+ * Cross-Domain Messaging made easy
+ * 
+ * @link http://easyxdm.net/
  * 
  * @insomnia:Module
  * @beta
@@ -19,13 +21,13 @@ class Bootstrap extends KernelModule
      * Module configuration
      * 
      * @insomnia:KernelPlugins({
-     *      @insomnia:Endpoint( class="Controller\ClientController" )
+     *      @insomnia:Endpoint( class="Controller\EasyXDMController" )
      * })
      * 
      * @param Kernel $kernel
      */
     public function run( Kernel $kernel )
     {
-        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\ClientController' );
+        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\EasyXDMController' );
     }
 }

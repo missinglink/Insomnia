@@ -1,39 +1,123 @@
 <?php
 
-namespace Community\Module\RestClient\Controller;
+namespace Community\Module\EasyXDM\Controller;
 
-use \Insomnia\Controller\Action;
+use \Insomnia\Controller\Action,
+    \Insomnia\Controller\NotFoundException;
 
 /**
- * Client Controller
+ * EasyXDM Controller
+ * 
+ * Cross-Domain messaging made easy
  * 
  * @insomnia:Resource
- * @insomnia:Route("/client.*")
  * 
  */
-class ClientController extends Action
+class EasyXDMController extends Action
 {
+    private $viewPath = '';
+    
     public function __construct()
     {
         parent::__construct();
+        $this->viewPath = dirname( __DIR__ ) . \DIRECTORY_SEPARATOR . 'View' . \DIRECTORY_SEPARATOR . 'easyXDM' . \DIRECTORY_SEPARATOR;
+    }
+    
+    /**
+     * EasyXDM Library Index
+     * 
+     * Cross-Domain messaging made easy
+     * 
+     * @insomnia:Route("/xdm/hash", name="xdm_index")
+     * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * 
+     * @insomnia:View( "Community\Module\EasyXDM\View\Hash" )
+     * 
+     */
+    public function hash()
+    {
         $this->response->setContentType( 'text/html' );
     }
     
     /**
-     * General purpose RESTful webservices client
+     * EasyXDM Library Name File
      * 
-     * Useful for testing that the server is behaving as expected.
+     * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("", name="client_index")
+     * @insomnia:Route("/xdm/name", name="xdm_name")
      * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Webservice Client" )
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
      * 
-     * @insomnia:View( "Community\Module\RestClient\View\Client" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:View( "Community\Module\EasyXDM\View\Name" )
      * 
      */
-    public function action()
+    public function name()
     {
-        $this->response[ 'controllers' ] = array( '/v1/test', '/ping' );
+        $this->response->setContentType( 'text/html' );
+    }
+    
+    /**
+     * EasyXDM Library Javascript Library
+     * 
+     * Cross-Domain messaging made easy
+     * 
+     * @insomnia:Route("/xdm/easyXDM", name="xdm_lib")
+     * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * 
+     */
+    public function library()
+    {
+        $libPath = $this->viewPath . 'easyXDM.min.js';
+        
+        if( !file_exists( $libPath ) || !is_readable( $libPath ) )
+        {
+            throw new NotFoundException( 'File Not Found' );
+        }
+        
+        $this->getResponse()->replace( file_get_contents( $libPath ) );
+    }
+    
+    /**
+     * Json2 Javascript Library
+     * 
+     * @insomnia:Route("/xdm/json2", name="xdm_json2")
+     * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * 
+     */
+    public function json2()
+    {
+        $libPath = $this->viewPath . 'json2.min.js';
+        
+        if( !file_exists( $libPath ) || !is_readable( $libPath ) )
+        {
+            throw new NotFoundException( 'File Not Found' );
+        }
+        
+        $this->getResponse()->replace( file_get_contents( $libPath ) );
+    }
+    
+    /**
+     * EasyXDM Compatibility SWF
+     * 
+     * Cross-Domain messaging made easy
+     * 
+     * @insomnia:Route("/xdm/flash", name="xdm_flash")
+     * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * 
+     */
+    public function swf()
+    {
+        $libPath = $this->viewPath . 'easyXDM.swf';
+        
+        if( !file_exists( $libPath ) || !is_readable( $libPath ) )
+        {
+            throw new NotFoundException( 'File Not Found' );
+        }
+        
+        $this->getResponse()->replace( file_get_contents( $libPath ) );
     }
 }
