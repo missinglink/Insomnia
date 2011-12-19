@@ -43,6 +43,18 @@ class RendererSelector extends Observer
                     $response->setRenderer( new Renderer\IniRenderer );
                     break;
                 
+                case Content::TYPE_JAVASCRIPT:
+                    $response->setRenderer( new Renderer\RawRenderer );
+                    break;
+                
+                case Content::TYPE_CSS:
+                    $response->setRenderer( new Renderer\RawRenderer );
+                    break;
+                
+                case Content::TYPE_SWF:
+                    $response->setRenderer( new Renderer\RawRenderer );
+                    break;
+
                 default:
                     $response->setRenderer( new Renderer\JsonRenderer );
                     break;

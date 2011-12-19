@@ -30,6 +30,9 @@ class ContentTypeSelector extends Observer
                 case '.yaml': return $response->setContentType( Content::TYPE_YAML );
                 case '.txt' : return $response->setContentType( Content::TYPE_PLAIN );
                 case '.ini' : return $response->setContentType( Content::TYPE_INI );
+                case '.js':   return $response->setContentType( Content::TYPE_JAVASCRIPT );
+                case '.css':  return $response->setContentType( Content::TYPE_CSS );
+                case '.swf':  return $response->setContentType( Content::TYPE_SWF );
             }
 
             foreach( explode( ',', Registry::get( 'request' )->getHeader( 'Accept' ) ) as $format )
@@ -56,6 +59,15 @@ class ContentTypeSelector extends Observer
 
                    case Content::TYPE_INI:
                         return $response->setContentType( Content::TYPE_INI );
+                       
+                   case Content::TYPE_JAVASCRIPT:
+                        return $response->setContentType( Content::TYPE_JAVASCRIPT );
+                       
+                   case Content::TYPE_SWF:
+                        return $response->setContentType( Content::TYPE_SWF );
+                       
+                   case Content::TYPE_CSS:
+                        return $response->setContentType( Content::TYPE_CSS );
                 }
             }
 
