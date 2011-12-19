@@ -25,7 +25,8 @@ class Bootstrap extends KernelModule
      *      @insomnia:ResponsePlugin( class="Response\Plugin\HttpHeaders" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\ContentTypeHeaders" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\CacheHeaders" ),
-     *      @insomnia:ResponsePlugin( class="Response\Plugin\ResponseCodeSelector" )
+     *      @insomnia:ResponsePlugin( class="Response\Plugin\ResponseCodeSelector" ),
+     *      @insomnia:Endpoint( class="Controller\ClientController" )
      * })
      * 
      * @param Kernel $kernel
@@ -41,5 +42,7 @@ class Bootstrap extends KernelModule
         $kernel->addResponsePlugin( new Response\Plugin\ContentTypeHeaders, 999 );
         $kernel->addResponsePlugin( new Response\Plugin\CacheHeaders, 998 );
         $kernel->addResponsePlugin( new Response\Plugin\ResponseCodeSelector, 997 );
+        
+        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\OptionsController' );
     }
 }
