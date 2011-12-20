@@ -136,7 +136,6 @@
    
     <?php if( isset( $this['debug'] ) ): ?>
         <div id="codeView" style="display:none;">
-            <hr />
             <?php renderFileView( $this['debug']['file'], $this['debug']['line'] ); ?>
         </div>
     <?php endif; ?>
