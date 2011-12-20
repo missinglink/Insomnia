@@ -8,7 +8,7 @@ define( 'APPLICATION_ENV', 'development' );
 /**
  * SpeedLoader
  * 
- * An autoloader optimised for speed with xdebug and KCachegrind.
+ * An autoloader optimised for speed.
  * 
  * It usually out performs the Doctrine ClassLoader by a very small margin.
  * Use this if you are really worried about cutting every last millisecond.
@@ -16,13 +16,13 @@ define( 'APPLICATION_ENV', 'development' );
 require_once \ROOT . '/lib/Insomnia/SpeedLoader.php';
 
 $loader = new SpeedLoader;
-$loader->addNamespace( 'Opl', \ROOT . 'lib/Opl3/src' )
-       ->addNamespace( 'Insomnia', \ROOT . 'lib' )
+$loader->addNamespace( 'Insomnia', \ROOT . 'lib' )
        ->addNamespace( 'Doctrine', \ROOT . 'lib' )
        ->addNamespace( 'DoctrineExtensions', \ROOT . 'lib' )
        ->addNamespace( 'Application', \ROOT )
        ->addNamespace( 'Community', \ROOT )
        ->register();
+
 
 /**
  * Doctrine Autoloader

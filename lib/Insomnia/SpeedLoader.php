@@ -6,8 +6,12 @@ use \DomainException;
 
 class SpeedLoader
 {
+    static $throwExceptions = false;
+    static $emitErrors      = true;
+    static $logErrors       = true;
+    
     static $namespaceSeparator = '\\';
-    private $namespaces = array();
+    protected $namespaces = array();
 
     /**
      * Registers a new top-level namespace to match.
@@ -75,8 +79,31 @@ class SpeedLoader
         $classPath = str_replace( array( self::$namespaceSeparator, '_' ), \DIRECTORY_SEPARATOR, $classPath );
         $namespace = strstr( $classPath, \DIRECTORY_SEPARATOR, true );
         
-        return isset( $this->namespaces[ $namespace ] )
-            ? require $this->namespaces[ $namespace ] . $classPath . '.php'
-            : false;
+        switch( true )
+        {
+            case @include( $this->namespaces[ $namespace ] . $classPath . '.php' ):
+                return true;
+            
+            case isset( $this->namespaces[ $namespace ] ):
+                return $this->onError( 'Failed to include: ' . $this->namespaces[ $namespace ] . $classPath . '.php' );
+            
+            default:
+                return $this->onError( 'Autoloader not defined for: "' . $namespace . '" ( ' . $classPath . ' )' );
+        }
     }
-}
+    
+    protected function onError( $message )
+    {
+        if( self::$emitErrors )
+        {
+            trigger_error( $message );
+        }
+        
+        if( self::$throwExceptions )
+        {
+            throw new \Exception( $message );
+        }
+        
+        return false;
+    }
+}   
