@@ -53,6 +53,11 @@ class Route
     {
         $pattern = $this->pattern;
         
+        // Sort params by longest string length first
+        uasort($this->params, function($a, $b) {
+            return strlen($b) - strlen($a);
+        });
+        
         if( false !== strpos( $this->pattern, ':', 1 ) )
             foreach( $this->params as $key => $match )
                 $pattern = str_replace( ":$key", "(?P<$key>$match)", $pattern );
