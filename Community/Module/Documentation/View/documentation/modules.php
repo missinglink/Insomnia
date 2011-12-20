@@ -9,9 +9,10 @@
     </div>
     <div class="insomnia-documentation">
         <?php foreach( $this as $moduleName => $module ): ?>
-            <?php if( true || is_array( $module ) && !empty( $module ) ): ?>
-                <div class="insomnia-documentation-block posh">
-                    <h4><?= $moduleName; ?></h4>
+            
+            <div class="insomnia-documentation-block posh">
+                <h4><?= $moduleName; ?></h4>
+                <?php if( is_array( $module ) && !empty( $module ) ): ?>
                     <ul style="padding-bottom:0;">
                         <?php foreach( $module as $pluginType => $plugin ): ?>
                             <li><?= $pluginType; ?><ul>
@@ -21,8 +22,9 @@
                             </ul></li>
                         <?php endforeach; ?>
                     </ul>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            
         <?php endforeach; ?>
      </div>
 </div>

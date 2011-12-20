@@ -36,7 +36,7 @@
                         <option><?= $contentType; ?></option>
                         <? endforeach; ?>
                     </select>
-                    <br /><br />
+                    <div style="height:10px;">&nbsp;</div>
                     <select id="request-content-type" name="request-content-type">
                         <? foreach( $requestFormats as $label => $contentType ): ?>
                         <option value="<?= $contentType; ?>"><?= $label; ?></option>

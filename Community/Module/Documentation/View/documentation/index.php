@@ -8,7 +8,6 @@
         </div>
     </div>
     <div class="insomnia-documentation">
-        <hr />
         <?php if( isset( $this[ 'directory' ][ 'routes' ] ) ): ?>
             <div class="posh" style="float:left; margin-right:20px;">
                 <h4 style="text-align:center;"><a href="<?= $this[ 'directory' ][ 'routes' ]; ?>"><img src="/insomnia/icon/routes2.png" style="margin-bottom:20px;" /><br />Routes</a></h4>

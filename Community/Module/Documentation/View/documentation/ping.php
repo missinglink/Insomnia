@@ -8,7 +8,6 @@
         </div>
     </div>
     <div class="insomnia-documentation">
-        <hr />
         <pre><?php
                 foreach( $this['meta'] as $key => $value )
                 {

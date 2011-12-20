@@ -71,8 +71,7 @@
         </div>
     </div>
     <?php if( isset( $this['errors'] ) ): ?>
-        <hr />
-        <table>
+        <table style="clear:both;">
             <thead>
                 <th class="error">Param</th>
                 <th class="error">Error</th>
@@ -87,8 +86,7 @@
     <?php endif; ?>
         
     <?php if( isset( $this['debug'] ) ): ?>
-        <hr />
-        <table>
+        <table style="clear:both;">
             <?php if( !empty( $this['debug']['message'] ) ): ?>    
                 </tr>
                     <th>Message</th>
@@ -144,8 +142,6 @@
     <?php endif; ?>
         
     <?php if( isset( $this['debug']['backtrace'] ) ): ?>
-            
-        <hr />
         
         <div class="insomnia-backtrace posh"><p style="margin:0;"><?php
            foreach( $this['debug']['backtrace'] as $trace )

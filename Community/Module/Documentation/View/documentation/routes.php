@@ -7,7 +7,6 @@
             <p>Current: <?= date( 'r' ); ?></p>
         </div>
     </div>
-    <hr />
     <div class="insomnia-documentation">
         <?php foreach( $this as $categoryName => $category ): ?>
             <h4><?= $categoryName; ?></h4>
