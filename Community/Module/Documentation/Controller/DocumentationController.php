@@ -57,7 +57,7 @@ class DocumentationController extends Action
             $moduleClass = get_class( $moduleInstance );
             
             $reader = new AnnotationReader( $moduleClass );
-            $reflectionMethod  = $reader->getReflector()->getMethod( 'bootstrap' );
+            $reflectionMethod  = $reader->getReflector()->getMethod( 'run' );
             $methodAnnotations = $reader->getMethodAnnotations( $reflectionMethod );
 
             $moduleName = reset( array_slice( explode( '\\', $moduleClass ), -2, 1 ) );

@@ -1,3 +1,9 @@
+<?php
+    if( isset( $this['debug'] ) ):
+        $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' );
+        $this->addScript( '/insomnia/js/dev.js' );
+    endif;
+?>
 <?php 
     function renderNamespace( $fullNamespace )
     {
@@ -53,25 +59,27 @@
         echo '</code></pre>';
     }
 ?>   
-<div style="margin:50px;">
-    <img src="/insomnia/images/logo.jpg" style="display:block; float:left;" />
-    <div style="display:block; float:left; padding:5px 0px 0px 45px;">
-        <h1 class="error"><?= $this['status']; ?></h1>
-        <h4><?= $this['title']; ?></h4>
-        <?php if( !empty( $this['body'] ) ): ?> 
-            <p style="clear:both;"><?= $this['body']; ?>.</p>
-        <?php endif; ?>
+<div class="insomnia">
+    <div class="insomnia-error-header">
+        <h1 class="insomnia-logo">Insomnia</h1>
+        <div class="insomnia-title">
+            <h1 class="error"><?= $this['status']; ?></h1>
+            <h4><?= $this['title']; ?></h4>
+            <?php if( !empty( $this['body'] ) ): ?> 
+                <p><?= $this['body']; ?>.</p>
+            <?php endif; ?>
+        </div>
     </div>
     <?php if( isset( $this['errors'] ) ): ?>
         <hr />
-        <table style="width:100%;">
+        <table>
             <thead>
                 <th class="error">Param</th>
                 <th class="error">Error</th>
             </thead>
             <?php foreach( $this['errors'] as $id => $error ): ?>
                 <tr>
-                    <th style="width:150px;" class="error"><?= $id; ?></th>
+                    <th class="error"><?= $id; ?></th>
                     <td class="error"><?= $error; ?></td>
                 <tr>
             <?php endforeach; ?>
@@ -80,7 +88,7 @@
         
     <?php if( isset( $this['debug'] ) ): ?>
         <hr />
-        <table style="width:100%;">
+        <table>
             <?php if( !empty( $this['debug']['message'] ) ): ?>    
                 </tr>
                     <th>Message</th>
@@ -90,11 +98,11 @@
                 </tr>
             <?php endif; ?>
             <tr>
-                <th style="width:150px;">Exception</th>
+                <th>Exception</th>
                 <td>
                     <?= renderNamespace( $this['debug']['exception'] ); ?>
-                    <div style="float:right">
-                        <a id="toggle" style="text-decoration: none;" href="#" onclick="return false;">Verbose</a>
+                    <div class="button">
+                        <a id="toggle" href="#" onclick="return false;">Verbose</a>
                     </div>
                 </td>
             <tr>
@@ -102,15 +110,15 @@
                 <th>File</th>
                 <td>
                     <?= renderFilePath( $this['debug']['file'] ); ?>:<?= $this['debug']['line']; ?>
-                    <div style="float:right">
-                        <a id="codetoggle" style="text-decoration: none;" href="#" onclick="return false;">Source</a>
+                    <div class="button">
+                        <a id="codetoggle" href="#" onclick="return false;">Source</a>
                     </div>
                 </td>
             <tr>
         </table>
     <?php endif; ?>
     <?php if( isset( $this['debug']['previous'] ) ): ?>
-        <table style="width:100%;">
+        <table>
             <?php if( !empty( $this['debug']['previous']['message'] ) ): ?>
                 </tr>
                     <th>Message</th>
@@ -118,7 +126,7 @@
                 </tr>
             <?php endif; ?>
             <tr>
-                <th style="width:150px;">Exception</th>
+                <th>Exception</th>
                 <td><?= $this['debug']['previous']['exception']; ?></td>
             <tr>
             </tr>
@@ -139,12 +147,12 @@
             
         <hr />
         
-        <ol style="width:100%; padding:0px;"><?php
+        <div class="insomnia-backtrace posh"><p style="margin:0;"><?php
            foreach( $this['debug']['backtrace'] as $trace )
            {
                if( isset( $trace['exception'] ) )
                {                   
-                   echo '<li><em class="error">';
+                   echo '<em class="error">';
                    echo renderNamespace( get_class( $trace['exception'] ) ) . '( <span>' . $trace['exception']->getMessage() . '</span> )';
                    
                    $file = $trace['exception']->getFile();
@@ -153,11 +161,11 @@
                    if( !empty( $file ) && !empty( $line ) )
                         echo ' in ' . renderFilePath( $file ) . ':' . $line . PHP_EOL;
                    
-                   echo '</em></li>';
+                   echo '</em>';
                }
                else
                {
-                   echo '<li><em>';
+                   echo '<em>';
                    
                    $args = '';
                    
@@ -179,15 +187,19 @@
                    if( isset( $trace['file'], $trace['line'] ) )
                         echo ' in ' . renderFilePath( $trace['file'] ) . ':' . $trace['line'] . PHP_EOL;
                    
-                   echo '</em></li>';
+                   echo '</em>';
                }
+               
+               if( end( $this['debug']['backtrace'] ) !== $trace ):
+                   echo '<br />';
+               endif;
            };
-        ?></ol>
+        ?></p></div>
     <?php endif; ?>
     <?php if( isset( $this['debug']['routes'] ) ): ?>
         <hr />
         <strong>Controllers</strong>
-        <ol style="width:100%; padding:0px;"><?php
+        <ol class="insomnia-backtrace"><?php
            foreach( $this['debug']['routes'] as $route )
            {
                echo '<li><em>';
@@ -199,7 +211,7 @@
     <?php if( isset( $this['debug']['requestPlugins'] ) ): ?>
         <hr />
         <strong>Request Plugins</strong>
-        <ol style="width:100%; padding:0px;"><?php
+        <ol class="insomnia-backtrace"><?php
            foreach( $this['debug']['requestPlugins'] as $plugin )
            {
                echo '<li><em>';
@@ -211,7 +223,7 @@
     <?php if( isset( $this['debug']['responsePlugins'] ) ): ?>
         <hr />
         <strong>Response Plugins</strong>
-        <ol style="width:100%; padding:0px;"><?php
+        <ol class="insomnia-backtrace"><?php
            foreach( $this['debug']['responsePlugins'] as $plugin )
            {
                echo '<li><em>';
@@ -223,7 +235,7 @@
     <?php if( isset( $this['debug']['dispatcherPlugins'] ) ): ?>
         <hr />
         <strong>Dispatcher Plugins</strong>
-        <ol style="width:100%; padding:0px;"><?php
+        <ol class="insomnia-backtrace"><?php
            foreach( $this['debug']['dispatcherPlugins'] as $plugin )
            {
                echo '<li><em>';
@@ -235,7 +247,7 @@
     <?php if( isset( $this['debug']['modules'] ) ): ?>
         <hr />
         <strong>Modules</strong>
-        <ol style="width:100%; padding:0px;"><?php
+        <ol class="insomnia-backtrace"><?php
            foreach( $this['debug']['modules'] as $module )
            {
                echo '<li><em>';
@@ -246,63 +258,5 @@
     <?php endif; ?>
     
     <hr />
-    <a href="/doc" style="text-decoration:none;">Web Service Reference</a>
+    <a href="/doc">Web Service Reference</a>
 </div>
-
-<?php if( isset( $this['debug'] ) ): ?>
-<? $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
-<script type="text/javascript">
-    $("a#toggle").click(
-        function ()
-        {
-          $.each(
-            $('span.namespace'),
-            function( key, value )
-              {
-                  if ( $(this).css( 'display' ) == 'none' )
-                  {
-                      $(this).val( 'Concise' );
-                      $(this).css( 'display', 'inline' );
-                  }
-
-                  else
-                  {
-                      $(this).val( 'Verbose' );
-                      $(this).css( 'display', 'none' );
-                  }
-              }
-         )
-
-          if ( $(this).html() == 'Concise' )
-          {
-              $(this).html( 'Verbose' );
-          }
-
-          else
-          {
-             $(this).html( 'Concise' );
-          }
-
-        return false;
-       }
-   );
-
-
-   $("a#codetoggle").click(
-        function ()
-        {
-          if ( $(this).html() == 'Hide' )
-          {
-              $(this).html( 'Source' );
-              $('div#codeView').hide();
-          }
-
-          else
-          {
-             $(this).html( 'Hide' );
-             $('div#codeView').show();
-          }
-        }
-   );
-</script>
-<?php endif; ?>

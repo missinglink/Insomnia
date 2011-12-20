@@ -1,15 +1,23 @@
-<div style="margin:50px;">
-    <img src="/insomnia/images/logo.jpg" style="display:block; float:left;" />
-    <div style="display:block; float:left; padding:5px 0px 0px 45px;">
-        <h1 class="error">Webservice Documentation</h1>
-        <h4>Documentation Index</h4>
-        <p style="clear:both;">Current: <?= date( 'r' ); ?></p>
+<div class="insomnia">
+    <div class="insomnia-error-header">
+        <h1 class="insomnia-logo">Insomnia</h1>
+        <div class="insomnia-title">
+            <h1 class="error">Documentation</h1>
+            <h4>Documentation Index</h4>
+            <p>Current: <?= date( 'r' ); ?></p>
+        </div>
     </div>
-    <div style="clear:both;"></div>
-    <?php foreach( $this[ 'directory' ] as $key => $value ): ?>
+    <div class="insomnia-documentation">
         <hr />
-        <a href="<?= $value; ?>"><?= $key; ?></a>
-        <br /><br />
-    <?php endforeach; ?>
-    <hr />
+        <?php if( isset( $this[ 'directory' ][ 'routes' ] ) ): ?>
+            <div class="posh" style="float:left; margin-right:20px;">
+                <h4 style="text-align:center;"><a href="<?= $this[ 'directory' ][ 'routes' ]; ?>"><img src="/insomnia/icon/routes2.png" style="margin-bottom:20px;" /><br />Routes</a></h4>
+           </div>
+        <?php endif; ?>
+        <?php if( isset( $this[ 'directory' ][ 'modules' ] ) ): ?>
+            <div class="posh" style="float:left; margin-right:20px;">
+                <h4 style="text-align:center;"><a href="<?= $this[ 'directory' ][ 'modules' ]; ?>"><img src="/insomnia/icon/modules2.png" style="margin-bottom:20px;" /><br />Modules</a></h4>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>

@@ -3,7 +3,7 @@
 namespace Insomnia;
 
 define( 'ROOT', \dirname( \dirname( __FILE__ ) ) . \DIRECTORY_SEPARATOR );
-define( 'APPLICATION_ENV', 'production' );
+define( 'APPLICATION_ENV', 'development' );
 
 /**
  * SpeedLoader

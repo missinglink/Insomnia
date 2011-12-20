@@ -1,65 +1,48 @@
-<style type="text/css">
-    
-    p.pattern {
-        display: block;
-        width: 300px;
-    }
-    
-    p.pattern span.method {
-        margin: 0;
-        padding: 5px 15px;
-        width: 300px;
-        border: solid 1px #ccc;
-    }
-    
-    p.pattern span.pattern {
-        margin: 0;
-        padding: 5px 15px;
-        width: 300px;
-        border: solid 1px #ccc;
-        border-left: none;
-    }
-    
-</style>
-
-<div style="margin:50px;">
-    <img src="/insomnia/images/logo.jpg" style="display:block; float:left;" />
-    <div style="display:block; float:left; padding:5px 0px 0px 45px;">
-        <h1 class="error">Reference</h1>
-        <h4>Webservice Documentation</h4>
-        <p style="clear:both;">Current: <?= date( 'r' ); ?></p>
+<div class="insomnia">
+    <div class="insomnia-error-header">
+        <h1 class="insomnia-logo">Insomnia</h1>
+        <div class="insomnia-title">
+            <h1 class="error">Reference</h1>
+            <h4>Webservice Documentation</h4>
+            <p>Current: <?= date( 'r' ); ?></p>
+        </div>
     </div>
-    <?php foreach( $this as $categoryName => $category ): ?>
-        <hr />
-        <h4 style="background-color: #dedede; padding: 5px 20px; margin:0px;"><?= $categoryName; ?></h4>
-        <?php foreach( $category as $route ): ?>
-            <div style="padding:30px; margin-bottom:20px; background-color: #efefef;">
-                <strong><?= $route['title']; ?></strong>
-                <br />
-                <em><?= $route['description']; ?></em>
-                <br /><br />
+    <hr />
+    <div class="insomnia-documentation">
+        <?php foreach( $this as $categoryName => $category ): ?>
+            <h4><?= $categoryName; ?></h4>
+            <br />
+            <?php foreach( $category as $route ): ?>
+                <div class="insomnia-documentation-block posh">
+                    <strong><?= $route['title']; ?></strong>
+                    <br /><br />
+                    <?php if( strlen( $route['description'] ) ): ?>
+                        <em><?= $route['description']; ?></em>
+                        <br /><br />
+                    <?php endif; ?>
 
-                <?php foreach( $route['methods'] as $method ): ?>
-                    <p class="pattern">
-                        <span style="background-color: #fff;" class="method error"><?= $method; ?></span>
-                        <span style="background-color: #fff;" class="pattern">
-                            <a href="<?= $route['pattern']; ?>" style="text-decoration:none;"><?= $route['pattern']; ?></a>
-                        </span>
-                    </p>
-                <?php endforeach; ?>    
-                <?php if( !empty( $route['params'] ) ): ?>            
-                    <table>
-                        <?php foreach( $route['params'] as $param ): ?>
-                            <tr>
-                                <td style="width:150px; background-color: #fff;" class="error"><?= isset( $param['name'] ) ? $param['name'] : ''; ?></td>
-                                <td style="background-color: #fff;" class="type"><?= isset( $param['type'] ) ? $param['type'] : ''; ?></td>
-                                <td style="background-color: #fff;" class="optional"><?= isset( $param['optional'] ) && $param['optional'] == 'true' ? 'optional' : 'required'; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                <?php endif; ?>
-            </div>
-                
+                    <?php foreach( $route['methods'] as $method ): ?>
+                        <p style="margin-bottom:5px;">
+                            <span class="insomnia-documentation-http-method"><?= $method; ?></span>
+                            <span class="insomnia-documentation-http-uri">
+                                <a href="<?= $route['pattern']; ?>"><?= $route['pattern']; ?></a>
+                            </span>
+                        </p>
+                    <?php endforeach; ?>    
+                    <?php if( !empty( $route['params'] ) ): ?>            
+                        <table style="margin:0;">
+                            <?php foreach( $route['params'] as $param ): ?>
+                                <tr>
+                                    <td style="width:150px; background-color: #fff;" class="error"><?= isset( $param['name'] ) ? $param['name'] : ''; ?></td>
+                                    <td style="background-color: #fff;" class="type"><?= isset( $param['type'] ) ? $param['type'] : ''; ?></td>
+                                    <td style="background-color: #fff;" class="optional"><?= isset( $param['optional'] ) && $param['optional'] == 'true' ? 'optional' : 'required'; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+            <br /><br /><br />
         <?php endforeach; ?>
-    <?php endforeach; ?>
+   </div>
 </div>
