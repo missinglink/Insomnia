@@ -16,7 +16,7 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">REST Client</h1>
+            <h1 class="error">Client</h1>
             <h4>REST Client</h4>
             <p>&nbsp</p>
         </div>
@@ -132,5 +132,9 @@
             <hr />
             <pre id="response" style="font-size:14px;"></pre>
         </div>
+    </div>
+    <div class="footer">
+        <a href="/client">Client</a>
+        <a href="/doc">Documentation</a>
     </div>
 </div>

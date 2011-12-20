@@ -2,8 +2,8 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">Reference</h1>
-            <h4>Webservice Documentation</h4>
+            <h1 class="error">Routes</h1>
+            <h4>Webservice Endpoints and Parameters</h4>
             <p>Current: <?= date( 'r' ); ?></p>
         </div>
     </div>
@@ -41,7 +41,11 @@
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
-            <br /><br /><br />
+            <div style="margin-top:30px;">&nbsp;</div>
         <?php endforeach; ?>
    </div>
+    <div class="footer">
+        <a href="/client">Client</a>
+        <a href="/doc">Documentation</a>
+    </div>
 </div>

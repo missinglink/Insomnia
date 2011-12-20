@@ -191,7 +191,7 @@
            };
         ?></p></div>
     <?php endif; ?>
-    <?php if( isset( $this['debug']['routes'] ) ): ?>
+    <?php /* if( isset( $this['debug']['routes'] ) ): ?>
         <hr />
         <strong>Controllers</strong>
         <ol class="insomnia-backtrace"><?php
@@ -250,8 +250,10 @@
                echo '</em></li>';
            };
         ?></ol>
-    <?php endif; ?>
+    <?php endif; */ ?>
     
-    <hr />
-    <a href="/doc">Web Service Reference</a>
+    <div class="footer">
+        <a href="/client">Client</a>
+        <a href="/doc">Documentation</a>
+    </div>
 </div>
