@@ -130,28 +130,46 @@ div.insomnia div.insomnia-documentation span.header-key
 
 span.insomnia-documentation-http-method
 {
-    background-color: #eee;
-    color: #000;
+    background-color: #C80125;
+    color: #fff;
     padding:5px 10px;
     text-align: center;
     display: block;
-    font-weight: normal;
+    font-weight: bold;
+    letter-spacing: 0.125em;
     float:left;
     min-width:100px;
     
     font-size: 18px;
+    
+    background: #c80125; /* Old browsers */
+    background: -moz-linear-gradient(top, #c80125 0%, #c80125 44%, #a30127 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c80125), color-stop(44%,#c80125), color-stop(100%,#a30127)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #c80125 0%,#c80125 44%,#a30127 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #c80125 0%,#c80125 44%,#a30127 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #c80125 0%,#c80125 44%,#a30127 100%); /* IE10+ */
+    background: linear-gradient(top, #c80125 0%,#c80125 44%,#a30127 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c80125', endColorstr='#a30127',GradientType=0 ); /* IE6-9 */
+
+/*    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;*/
 }
 
 span.insomnia-documentation-http-uri
 {
     background-color: #FBFBFB;
-    padding:5px 10px;
+    padding:4px 0;
     display: block;
+    
+    border: solid 1px #ddd;
+    
+    letter-spacing: 0.125em;
 }
 
 span.insomnia-documentation-http-uri a
 {
-    padding:5px 10px;
+    padding:5px 15px;
     font-size: 18px;
 }
 
