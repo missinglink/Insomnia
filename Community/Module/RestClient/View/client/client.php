@@ -18,7 +18,6 @@
         <div class="insomnia-title">
             <h1 class="error">Client</h1>
             <h4>REST Client</h4>
-            <p>&nbsp</p>
         </div>
     </div>
     <div class="insomnia-documentation">
