@@ -53,14 +53,20 @@ class Route
     {
         $pattern = $this->pattern;
         
-        // Sort params by longest string length first
-        uasort($this->params, function($a, $b) {
-            return strlen($b) - strlen($a);
-        });
-        
         if( false !== strpos( $this->pattern, ':', 1 ) )
+        {
+            // Sort params by longest string length first
+            // This prevents a param named 'a' from matching before one called 'ab'
+            uasort( $this->params, function( $a, $b ) {
+                return strlen( $b ) - strlen( $a );
+            });
+
             foreach( $this->params as $key => $match )
-                $pattern = str_replace( ":$key", "(?P<$key>$match)", $pattern );
+            {
+                $maxReplace = 1; // For some reason PHP wants this passed by reference
+                $pattern = str_replace( ":$key", "(?P<$key>$match)", $pattern, $maxReplace );
+            }
+        }
         
         return $pattern;
     }
