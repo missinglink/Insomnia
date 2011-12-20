@@ -25,7 +25,7 @@ class ErrorAction extends \Insomnia\Controller\Action
     public function action( \Exception $exception )
     {        
         $response = $this->getResponse();
-        
+
         switch( \get_class( $exception ) )
         {
             case 'Insomnia\Router\RouterException':
@@ -83,7 +83,13 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'parameter' ] = $exception->getMessage();
                 break;
 
-            case 'Insomnia\Response\Renderer\ViewException':
+            case 'Insomnia\Kernel\Module\Mime\Response\Renderer\ViewException':
+                $response->setCode( Code::HTTP_UNSUPPORTED_MEDIA_TYPE );
+                $response[ 'status' ] = Code::HTTP_UNSUPPORTED_MEDIA_TYPE;
+                $response[ 'title' ] = 'View File Not Registered';
+                $response[ 'body' ] = 'An HTML view for this resource does not exist';
+                break;
+            
             case 'ReflectionException':
             case 'ErrorException':
             default:
