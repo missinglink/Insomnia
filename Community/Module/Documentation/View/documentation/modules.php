@@ -2,8 +2,8 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">List of loaded modules</h1>
-            <h4>Webservice documentation</h4>
+            <h1 class="error">System modules</h1>
+            <h4>A list of modules loaded in the current request</h4>
             <p>Current: <?= date( 'r' ); ?></p>
         </div>
     </div>
