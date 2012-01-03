@@ -2,8 +2,6 @@
 
 namespace Insomnia\Annotation\Parser;
 
-use Insomnia\Router\RouteStack;
-use Insomnia\Router\AnnotationReader;
 use \Insomnia\Pattern\ArrayAccess;
 
 class ViewParser extends ArrayAccess
