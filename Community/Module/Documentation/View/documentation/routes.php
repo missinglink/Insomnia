@@ -30,7 +30,8 @@
                             <?php endif; ?>
                             
                             <span class="insomnia-documentation-http-uri">
-                                <a href="<?= $route['pattern']; ?>"><?= str_replace( '.*', '', $route['pattern'] ); ?></a>
+                                <a href="<?= $route['pattern']; ?>"><?= htmlentities( str_replace( '.*', '', $route['pattern'] ) ); ?></a>
+                                <em style="float:right; padding-right:10px;"><?= htmlentities( preg_replace( '_\?P\<(?:.*)\>_', '', $route['patternRegex'] ) ); ?></em>
                             </span>
                         </p>
                     <?php endforeach; ?>    

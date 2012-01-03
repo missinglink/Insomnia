@@ -21,6 +21,7 @@ class Kernel
     public function __construct()
     {
         $this->setRouter( new Router );
+        
         $this->responsePlugins = new PriorityQueue;
     }
     
@@ -109,7 +110,9 @@ class Kernel
             $this->getRouter()->addClass( $endPoint );
         }    
         
-        $this->getRouter()->dispatch();
+        $request = new Request;
+        
+        $this->getRouter()->dispatch( $request );
         
         return $this;
     }

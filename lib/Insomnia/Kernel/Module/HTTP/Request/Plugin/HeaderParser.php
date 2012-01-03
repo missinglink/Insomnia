@@ -14,11 +14,11 @@ class HeaderParser extends Observer
     {
         foreach( $_SERVER as $headerKey => $headerValue )
         {
-            if( preg_match( '%^(?:HTTP_|REQUEST_)(?<key>\w+)$%', $headerKey, $matches ) )
+            if( preg_match( '/^(?:HTTP_|REQUEST_)(?<key>\w+)$/D', $headerKey, $matches ) )
             {
                 // Format Key
                 $headerKey = strtr( ucwords( strtolower( strtr( $matches[ 'key' ], '_', ' ' ) ) ), ' ', '-' );
-
+                
                 // Set Header
                 $request->setHeader( $headerKey, $headerValue );
             }
