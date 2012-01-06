@@ -15,7 +15,7 @@ class Response extends ArrayAccess implements \SplSubject
             $mime       = '',
             $renderer   = null,
             $ttl        = 0,
-            $charset    = 'utf8',
+            $charset    = 'UTF-8',
             $endPoint   = null,
             $headers    = array();
     
