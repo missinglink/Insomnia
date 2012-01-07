@@ -24,6 +24,24 @@ class EasyXDMController extends Action
     }
     
     /**
+     * EasyXDM Example
+     * 
+     * Cross-Domain messaging made easy
+     * 
+     * @insomnia:Route("/xdm/example", name="xdm_example")
+     * @insomnia:Method("GET")
+     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * 
+     * @insomnia:View( "Community\Module\EasyXDM\View\Example" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * 
+     */
+    public function example()
+    {
+        $this->response->setContentType( 'text/html' );
+    }
+    
+    /**
      * EasyXDM Library Index
      * 
      * Cross-Domain messaging made easy

@@ -13,6 +13,7 @@ class Content
           TYPE_JSON       = 'application/json',
           TYPE_PLAIN      = 'text/plain',
           TYPE_XHTML      = 'application/xhtml',
+          TYPE_XHTML_XML  = 'application/xhtml+xml',
           TYPE_XML        = 'application/xml',
           TYPE_XML_TEXT   = 'text/xml',
           TYPE_YAML       = 'application/x-yaml',
