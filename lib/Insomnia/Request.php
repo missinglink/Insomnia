@@ -17,7 +17,6 @@ class Request extends Subject
 {
     private $params     = array();
     private $headers    = array();
-    private $method     = 'GET';
     private $body       = '';
 
     /**
