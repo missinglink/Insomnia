@@ -2,14 +2,13 @@
 
 namespace Insomnia\Annotation\Parser;
 
-use \Insomnia\Router\RouteStack;
 use \Insomnia\Router\AnnotationReader;
 use \Insomnia\Pattern\ArrayAccess;
 use \Insomnia\Request;
 use \Insomnia\Kernel\Module\RequestValidator\Request\ValidatorException;
 
 class Route extends ArrayAccess
-{    
+{
     public function __construct( AnnotationReader $reader, Request $request )
     {
         $classAnnotations = $reader->getClassAnnotations();
@@ -29,6 +28,7 @@ class Route extends ArrayAccess
         $route = new \Insomnia\Router\Route;
         $route->setRequest( $request );
         $route->setReflectionMethod( $method );
+        $route->setClass( $method->getDeclaringClass()->getName() );
 
         $pattern = isset( $classAnnotations['Insomnia\Annotation\Route']['value'] )
             ? $classAnnotations['Insomnia\Annotation\Route']['value'] : '';
@@ -88,6 +88,9 @@ class Route extends ArrayAccess
 
         if( isset( $methodAnnotations[ 'Insomnia\Annotation\View' ][ 'value' ] ) )
             $route->setView( $viewFile . $methodAnnotations[ 'Insomnia\Annotation\View' ][ 'value' ] );
+        
+        // Convert route into regex for matching
+        $route->createNamedPatterns();
 
         if( '' == $route->getName() ) $this[] = $route;
         else $this[ $route->getName() ] = $route;

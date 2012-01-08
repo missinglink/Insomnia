@@ -4,29 +4,21 @@ namespace Insomnia;
 
 use \Insomnia\Annotation\Parser\Route as RouteParser;
 use \Insomnia\Router\AnnotationReader;
-use \Insomnia\Router\RouteStack;
 use \Insomnia\Router\RouteDispatcher;
-use \Insomnia\Router\RouterException;
+use \Insomnia\Router\RouterException,
+    \Insomnia\Router\RouteStack,
+    \Doctrine\Common\Cache\ApcCache;
 
 class Router
 {
     private $classes;
     
-    public function dispatch()
+    public function dispatch( Request $request )
     {
-        $request = new Request;
         Registry::set( 'request', $request );
-
-        $routes = new RouteStack;
-        
-        foreach( $this->classes as $controllerClass )
-        {
-            $reader = new AnnotationReader( $controllerClass );
-            $routes->merge( new RouteParser( $reader, $request ) );
-        }
         
         /** @var $route \Insomnia\Router\Route */
-        foreach( $routes as $route )
+        foreach( $this->loadRoutes( $request ) as $route )
         {
             // Attempt to dispatch the route
             if( $route->match( $request ) )
@@ -36,6 +28,25 @@ class Router
         }
         
         throw new RouterException( 'Failed to Match any Routes', 404 );
+    }
+    
+    private function loadRoutes( Request $request )
+    {
+        $routes = new RouteStack;
+        
+        if( 0 === $routes->count() )
+        {
+            foreach( $this->classes as $controllerClass )
+            {
+                $reader = new AnnotationReader( $controllerClass );
+                $routes->merge( new RouteParser( $reader, $request ) );
+            }
+            
+            // Commit Cache
+            $routes->save();
+        }
+        
+        return $routes;
     }
     
     public function addClass( $class )

@@ -26,7 +26,7 @@ class RouteDispatcher
         if( false === $reflectionMethod )
             throw new DispatcherMethodException( 'Unsupported Method ' . $request->getMethod() . ' on ' . $request->getParam( 'path' ) );
         
-        $class = $reflectionMethod->getDeclaringClass()->getName();
+        $class = $route->getClass();
 
         if( !ClassLoader::classExists( $class ) )
             throw new DispatcherControllerException( 'Failed to dispatch request' );

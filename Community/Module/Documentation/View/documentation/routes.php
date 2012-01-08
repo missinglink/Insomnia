@@ -13,18 +13,25 @@
             <br />
             <?php foreach( $category as $route ): ?>
                 <div class="insomnia-documentation-block posh">
-                    <strong><?= $route['title']; ?></strong>
-                    <br /><br />
+                       
                     <?php if( strlen( $route['description'] ) ): ?>
-                        <em><?= $route['description']; ?></em>
+                        <strong><?= $route['description']; ?></strong>
                         <br /><br />
                     <?php endif; ?>
 
                     <?php foreach( $route['methods'] as $method ): ?>
                         <p style="margin-bottom:5px;">
                             <span class="insomnia-documentation-http-method"><?= $method; ?></span>
+                            
+                            <?php if( strlen( $route['title'] ) ): ?>
+                                <span class="insomnia-documentation-http-title">
+                                    <em><?= $route['title']; ?></em>
+                                </span>
+                            <?php endif; ?>
+                            
                             <span class="insomnia-documentation-http-uri">
-                                <a href="<?= $route['pattern']; ?>"><?= $route['pattern']; ?></a>
+                                <a href="<?= $route['pattern']; ?>"><?= htmlentities( str_replace( '.*', '', $route['pattern'] ) ); ?></a>
+                                <em style="float:right; padding-right:10px;"><?= htmlentities( preg_replace( '_\?P\<(?:.*)\>_', '', $route['patternRegex'] ) ); ?></em>
                             </span>
                         </p>
                     <?php endforeach; ?>    

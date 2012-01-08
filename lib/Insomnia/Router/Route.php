@@ -4,35 +4,38 @@
 
 namespace Insomnia\Router;
 
-use \Insomnia\Registry;
 use \Insomnia\Request;
 
 class Route
 {
     private $matches = array(),
             $pattern = '',
+            $patternRegex = '',
             $params = array(),
             $methods = array(),
             $name = '',
             $reflectionMethod = array(),
             $defaults = array(),
-            $view = '';
+            $view = '',
+            $class = '';
     
     private $request;
 
     public function match( Request $request )
-    {
+    {            
         $this->setRequest( $request );
-        $pattern = $this->createNamedPatterns();
+        
         $pathWithoutFileExtension = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
         
-        if( !preg_match( "_^$pattern\$_", $pathWithoutFileExtension, $matches ) )
+        if( !preg_match( "_^" . $this->getPatternRegex() . "\$_", $pathWithoutFileExtension, $matches ) )
+        {
             return false;
+        }   
         
-        $method = $request->getMethod();
-
-        if( !\in_array( $method, $this->methods ) )
+        if( !\in_array( $request->getMethod(), $this->methods ) )
+        {
             return false;
+        }
 
         $this->matches = array_intersect_key( $matches + $this->defaults, $this->defaults + $this->params );
         
@@ -44,14 +47,32 @@ class Route
         return $this->pattern;
     }
 
+    /**
+     *
+     * @param string $pattern 
+     */
     public function setPattern( $pattern )
     {
-        if( is_string( $pattern ) ) $this->pattern = $pattern;
+        $this->pattern = $pattern;
+    }
+    
+    public function getPatternRegex()
+    {
+        return $this->patternRegex;
     }
 
-    private function createNamedPatterns()
+    /**
+     *
+     * @param string $pattern 
+     */
+    public function setPatternRegex( $pattern )
     {
-        $pattern = $this->pattern;
+        $this->patternRegex = $pattern;
+    }
+    
+    public function createNamedPatterns()
+    {
+        $this->patternRegex = $this->pattern;
         
         if( false !== strpos( $this->pattern, ':', 1 ) )
         {
@@ -64,11 +85,9 @@ class Route
             foreach( $this->params as $key => $match )
             {
                 $maxReplace = 1; // For some reason PHP wants this passed by reference
-                $pattern = str_replace( ":$key", "(?P<$key>$match)", $pattern, $maxReplace );
+                $this->patternRegex = str_replace( ":$key", "(?P<$key>$match)", $this->patternRegex, $maxReplace );
             }
         }
-        
-        return $pattern;
     }
 
     public function setDefault( $key, $value )
@@ -148,5 +167,24 @@ class Route
     public function setRequest( Request $request )
     {
         $this->request = $request;
+    }
+    
+    
+    /**
+     *
+     * @return string 
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     *
+     * @param string $class 
+     */
+    public function setClass( $class )
+    {
+        $this->class = $class;
     }
 }

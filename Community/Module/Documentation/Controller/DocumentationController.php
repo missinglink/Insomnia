@@ -121,6 +121,7 @@ class DocumentationController extends Action
                 $category = isset( $docs['category'] ) ? $docs['category'] : 'Uncategorized';
                 $a[ 'category' ] = $category;
                 $a[ 'pattern' ] = $route->getPattern();
+                $a[ 'patternRegex' ] = $route->getpatternRegex();
                 $a[ 'methods' ] = $route->getMethods();
                 
                 $params = new ParamParser( $reader->getMethodAnnotations( $reflectionMethod ) );

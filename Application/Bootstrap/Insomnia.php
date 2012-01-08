@@ -16,11 +16,8 @@ class Insomnia
             error_reporting( \E_ALL | \E_STRICT );
             ini_set( 'display_errors', 'On' );
         }
-
-        else if( function_exists( 'xdebug_disable' ) )
-        {
-            xdebug_disable();
-        }
+        
+        ini_set( 'html_errors',                0 ); // Disable HTML errors
         
         ini_set( 'session.auto_start',         0 ); // Turn off sessions by default
         ini_set( 'session.use_cookies',        0 ); // Turn off cookies by default

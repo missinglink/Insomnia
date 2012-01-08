@@ -19,9 +19,6 @@ class Response extends ArrayAccess implements \SplSubject
             $endPoint   = null,
             $headers    = array();
     
-    /** Response Graph Modifiers **/
-    private $modifiers  = array();
-    
     /** Subject Pattern **/
     protected $observers = array();
     
@@ -35,7 +32,6 @@ class Response extends ArrayAccess implements \SplSubject
         }
 
         $this->notify();
-        $this->runModifiers();
         
         if( !\method_exists( $this->getRenderer(), 'render' ) )
             throw new ResponseException( 'Invalid Response Renderer' );
@@ -131,19 +127,6 @@ class Response extends ArrayAccess implements \SplSubject
     public function setEndPoint( Endpoint $endPoint )
     {
         $this->endPoint = $endPoint;
-    }
-        
-    public function addModifier( $map )
-    {
-        $this->modifiers[] = $map;
-    }
-
-    public function runModifiers()
-    {
-        foreach( $this->modifiers as $modifier )
-        {
-            if( \method_exists( $modifier, 'render' ) ) $modifier->render( $this );
-        }
     }
 
     /** Subject Pattern **/

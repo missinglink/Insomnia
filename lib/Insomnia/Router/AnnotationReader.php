@@ -2,8 +2,7 @@
 
 namespace Insomnia\Router;
 
-use \Insomnia\Router\RouteStack,
-    \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 
 use \Doctrine\Common\Cache\ApcCache,
     \Doctrine\Common\Cache\ArrayCache;

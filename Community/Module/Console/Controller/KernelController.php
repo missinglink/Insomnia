@@ -9,7 +9,6 @@ use \Insomnia\Annotation\Parser\Route as RouteParser;
 use \Insomnia\Annotation\Parser\ParamParser;
 use \Insomnia\Annotation\Parser\Documentation;
 use \Insomnia\Router\AnnotationReader;
-use \Insomnia\Router\RouteStack;
 use \Insomnia\Registry;
 
 /**
