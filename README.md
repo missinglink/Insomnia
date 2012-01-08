@@ -80,9 +80,9 @@ Insomnia is released under the MIT(Poetic) Software license
 Unit Tests
 ------------------------
 
-You can run the test suite with this command:
+Once you've installed PHPUnit you can run the test suite by executing:
 
-    phpunit --bootstrap public/autoloader.php .
+    phpunit
 
 Questions & Feedback
 ------------------------

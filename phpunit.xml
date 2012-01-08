@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="public/autoloader.php" colors="true">
+    <testsuites>
+        <testsuite name="Insomnia Core">
+            <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">lib/Insomnia</directory>
+        </testsuite>
+        <testsuite name="Community Modules">
+            <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">Community</directory>
+        </testsuite>
+       <testsuite name="Application Tests">
+            <directory suffix="Test.php" phpVersion="5.3.0" phpVersionOperator=">=">Application</directory>
+        </testsuite>
+        <!-- Add more tests here -->
+    </testsuites>
+</phpunit>
