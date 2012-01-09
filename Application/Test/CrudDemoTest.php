@@ -57,6 +57,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testCreateSingle_Json( $browserTemplate )
@@ -84,6 +85,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testReadSingle_Json( $browserTemplate )
@@ -126,6 +128,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testUpdateSingle_Json( $browserTemplate )
@@ -152,6 +155,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testDeleteSingle_Json( $browserTemplate )
