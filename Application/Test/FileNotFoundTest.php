@@ -1,70 +1,86 @@
 <?php
 
-namespace Insomnia\Kernel\Module\HTTP\Request\Plugin;
+namespace Application\Test;
 
-use \Insomnia\Request;
+use \Community\Module\Testing\FunctionalTestCase,
+    \Community\Module\Testing\Transport\HTTPRequest,
+    \Community\Module\Testing\Transport\HTTPResponse,
+    \Insomnia\Response\Code;
 
 /**
- * This test covers all functionality of the HeaderParser plugin
+ * @group functional
  */
-class HeaderParserTest extends \PHPUnit_Framework_TestCase
+class FileNotFoundTest extends FunctionalTestCase
 {
     /**
-     * Configure the test
-     */
-    public function setUp()
-    {
-        // Create test objects
-        $this->request = new Request;
-        $this->requestPlugin = new HeaderParser;
-        
-        // Clear the PHP global which contains the request headers
-        $_SERVER = array();
-    }
-    
-    /**
-     * Test that the HeaderParser plugin does nothing when do data is present
-     */
-    public function testDryRun()
-    {
-        $this->assertEquals( array(), $this->request->getHeaders(), 'Headers should be empty' );
-        
-        // Run the plugin
-        $this->requestPlugin->update( $this->request );
-        
-        $this->assertEquals( array(), $this->request->getHeaders(), 'Headers should be empty' );
-    }
-    
-    /**
-     * Dummy request headers
-     *
-     * @return array 
-     */
-    public static function serverGlobalDataprovider()
-    {
-        return array(
-            array( array( 'HTTP_ACCEPT' => 'text/html,application/xhtml+xml' ), array( 'Accept' => 'text/html,application/xhtml+xml' ) ),
-            array( array( 'HTTP_HOST' => 'test.com', 'HTTP_USER_AGENT' => 'phpunit' ), array( 'Host' => 'test.com', 'User-Agent' => 'phpunit' ) ),
-            array( array( 'REQUEST_METHOD' => 'GET', 'REQUEST_URI' => '/test' ),  array( 'Method' => 'GET', 'Uri' => '/test' ) ),
-        );
-    }
-    
-    /**
-     * Test that the HeaderParser plugin adds all header information from the
-     * $_SERVER superglobal in to the Insomnia request object.
+     * @dataProvider getBrowserTemplates
      * 
-     * @dataProvider serverGlobalDataprovider
-     */
-    public function testLoadHeadersFromServerGlobal( $requestHeaders, $expectedHeaders )
+     * @param HTTPRequest $browserTemplate
+     */   
+    public function testFileNotFound_Json( $browserTemplate )
     {
-        $this->assertEquals( array(), $this->request->getHeaders(), 'Headers should be empty' );
+        $request = new HTTPRequest( '/invalid/url' );
+        $request->setHeaders( $browserTemplate->getHeaders() );
+        $request->setHeader( 'Accept', 'application/json' );
         
-        // Load test data in to the $_SERVER superglobal
-        $_SERVER = $requestHeaders;
+        $response = $this->transfer( $request );
         
-        // Run the plugin
-        $this->requestPlugin->update( $this->request );
+        $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
+        $this->assertEquals( 'application/json', $response->getContentType() );
+        $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
+        $this->assertLessThan( 250, $response->getExecutionTime() );
         
-        $this->assertEquals( $expectedHeaders, $this->request->getHeaders(), 'Subject should contain all request parameters' );
+        $json = json_decode( $response->getBody(), true );
+        
+        $this->assertEquals( '404 Not Found', $json[ 'status' ] );
+        $this->assertEquals( 'Resource Not Found', $json[ 'title' ] );
+        $this->assertEquals( 'The requested resource could not be found but may be available again in the future', $json[ 'body' ] );
+    }
+    
+    /**
+     * @dataProvider getBrowserTemplates
+     * 
+     * @param HTTPRequest $browserTemplate
+     */   
+    public function testFileNotFound_Xml( $browserTemplate )
+    {
+        $request = new HTTPRequest( '/invalid/url' );
+        $request->setHeaders( $browserTemplate->getHeaders() );
+        $request->setHeader( 'Accept', 'application/xml' );
+        
+        $response = $this->transfer( $request );
+        
+        $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
+        $this->assertEquals( 'application/xml', $response->getContentType() );
+        $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
+        $this->assertLessThan( 250, $response->getExecutionTime() );
+        
+        $xml = new \SimpleXMLElement( $response->getBody() );
+        
+        $this->assertEquals( '404 Not Found', (string) $xml->status );
+        $this->assertEquals( 'Resource Not Found', (string) $xml->title );
+        $this->assertEquals( 'The requested resource could not be found but may be available again in the future', (string) $xml->body );
+    }
+    
+    /**
+     * @dataProvider getBrowserTemplates
+     * 
+     * @param HTTPRequest $browserTemplate
+     */   
+    public function testFileNotFound_Default( $browserTemplate )
+    {
+        $request = new HTTPRequest( '/invalid/url' );
+        $request->setHeaders( $browserTemplate->getHeaders() );
+        
+        $response = $this->transfer( $request );
+        
+        $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
+        $this->assertEquals( 'text/html', $response->getContentType() );
+        $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
+        $this->assertLessThan( 250, $response->getExecutionTime() );
+        
+        $this->assertContains( '404 Not Found', $response->getBody() );
+        $this->assertContains( 'Resource Not Found', $response->getBody() );
+        $this->assertContains( 'The requested resource could not be found but may be available again in the future', $response->getBody() );
     }
 }

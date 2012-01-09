@@ -9,12 +9,13 @@ use \Insomnia\Controller\Action,
     \Insomnia\Request\Validator\StringValidator,
     \Insomnia\Controller\NotFoundException,
     \Insomnia\Response\Paginator,
+    \Insomnia\Response\Code,
     \Application\Module\CrudExample\Queries\TestQuery;
 
 use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
 
 use \Application\Module\CrudExample\DataMapper\Test as DataMapper;
-use \Application\Module\CrudExample\Entities as ExampleEntity;
+use \Application\Module\CrudExample\Entities\Test as ExampleEntity;
 
 /**
  * Test Create Action
@@ -48,6 +49,7 @@ class CrudController extends Action
 
         $dataMapper = new DataMapper( $test );
         $this->response->merge( $dataMapper->export() );
+        $this->response->setCode( Code::HTTP_CREATED );
     }
     
     /**
@@ -98,7 +100,7 @@ class CrudController extends Action
         $paginator->setCurrentPage( $this->validator->getParam( 'page' ) );
         
         $tests = $paginator->getItems();
-        if( !$tests ) throw new NotFoundException( 'Entity Not Found' );
+        if( !$tests ) throw new NotFoundException( 'Entity Not Found', 404 );
 
         foreach( $tests as $test )
         {
@@ -126,11 +128,11 @@ class CrudController extends Action
                     ->createQuery( 'SELECT t FROM Application\Module\CrudExample\Entities\Test t WHERE t.id = :id' )
                     ->useResultCache( true, 99999 )
                     ->setParameter( 'id', $this->validator->getParam( 'id' ) )
-                    ->getSingleResult();
+                    ->getResult();
         
         if( !$test ) throw new NotFoundException( 'Entity Not Found' );
 
-        $dataMapper = new DataMapper( $test );
+        $dataMapper = new DataMapper( reset( $test ) );
         $this->response->merge( $dataMapper->export() );
     }
     
