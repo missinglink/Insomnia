@@ -22,7 +22,9 @@ class CrudDemoTest extends FunctionalTestCase
      */   
     public function testReadSingleNotFound_Json( $browserTemplate )
     {
-        $request = new HTTPRequest( '/example/crud/' . mt_rand( mt_getrandmax() - 1000, null ) );
+        $randomId = mt_rand( mt_getrandmax() - 1000, mt_getrandmax() );
+        
+        $request = new HTTPRequest( '/example/crud/' . $randomId );
         $request->setHeaders( $browserTemplate->getHeaders() );
         $request->setHeader( 'Accept', 'application/json' );
         
