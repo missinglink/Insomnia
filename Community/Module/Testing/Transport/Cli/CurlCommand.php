@@ -77,11 +77,20 @@ class CurlCommand
         // Set Execution Time
         $this->setExecutionTime( microtime( true ) - $timer );
         
-        // Set Response Body
-        $this->setResponseBody( file_get_contents( $this->getOutputFilePath() ) );
-        
+        // Get Response Body
+        $responseBody = file_get_contents( $this->getOutputFilePath() );
+                
         // Delete Output File
         @unlink( $this->getOutputFilePath() );
+        
+        // Decode Gzipped Content
+        if( stripos( implode( \PHP_EOL, $this->stdout ), 'Content-Encoding: gzip' ) )
+        {
+            $responseBody = gzinflate( substr( $responseBody, 10 ) );
+        }
+        
+        // Set Response Body
+        $this->setResponseBody( $responseBody );
     }
     
     public function getCommand()
