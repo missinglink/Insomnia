@@ -29,7 +29,7 @@ class CurlCommand
                 break;
             
             default :
-                throw new \Exception( 'Failed to execute command: ' . $this->getCommand(), $this->getExitCode(), new \Exception( $this->getStdout() ) );
+                throw new \Exception( 'Failed to execute command: ' . $this->getCommand() );
         }
     }
     
