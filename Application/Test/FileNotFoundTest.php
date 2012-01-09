@@ -28,7 +28,7 @@ class FileNotFoundTest extends FunctionalTestCase
         $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
         $this->assertEquals( 'application/json', $response->getContentType() );
         $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
-        $this->assertLessThan( 250, $response->getExecutionTime() );
+        $this->assertLessThan( 500, $response->getExecutionTime() );
         
         $json = json_decode( $response->getBody(), true );
         
@@ -53,7 +53,7 @@ class FileNotFoundTest extends FunctionalTestCase
         $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
         $this->assertEquals( 'application/xml', $response->getContentType() );
         $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
-        $this->assertLessThan( 250, $response->getExecutionTime() );
+        $this->assertLessThan( 500, $response->getExecutionTime() );
         
         $xml = new \SimpleXMLElement( $response->getBody() );
         
@@ -77,8 +77,8 @@ class FileNotFoundTest extends FunctionalTestCase
         $this->assertEquals( Code::HTTP_NOT_FOUND, $response->getCode() );
         $this->assertEquals( 'text/html', $response->getContentType() );
         $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
-        $this->assertLessThan( 250, $response->getExecutionTime() );
-        
+        $this->assertLessThan( 500, $response->getExecutionTime() );
+          
         $this->assertContains( '404 Not Found', $response->getBody() );
         $this->assertContains( 'Resource Not Found', $response->getBody() );
         $this->assertContains( 'The requested resource could not be found but may be available again in the future', $response->getBody() );

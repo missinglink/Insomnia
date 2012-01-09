@@ -25,6 +25,8 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
     {
+        $request->setDomain( 'ws.local.bnt' );
+        
         if( null === $response )
         {
             $response = new HTTPResponse;
@@ -38,7 +40,7 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals( $code, $response->getCode() );
         $this->assertEquals( $contentType, $response->getContentType() );
         $this->assertEquals( $charset, $response->getCharacterSet() );
-        $this->assertLessThan( 250, $response->getExecutionTime() );
+        $this->assertLessThan( 500, $response->getExecutionTime() );
     }
     
     /**
