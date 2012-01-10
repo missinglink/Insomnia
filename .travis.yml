@@ -4,3 +4,5 @@ php:
     - 5.3
 
 script: phpunit .
+
+before_script: sudo apt-get install curl
