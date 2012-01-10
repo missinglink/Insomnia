@@ -25,12 +25,20 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
     {
-        if( null === $response )
+        try
         {
-            $response = new HTTPResponse;
+            if( null === $response )
+            {
+                $response = new HTTPResponse;
+            }
+
+            return $this->getTransport()->execute( $request, $response );
         }
         
-        return $this->getTransport()->execute( $request, $response );
+        catch( \Exception $e )
+        {
+            $this->markTestSkipped( 'Transport ' . get_class( $this->getTransport() ) . ' failed with message: ' . $e->getMessage() );
+        }
     }
     
     public function assertValidResponse( HTTPResponse $response, $code = Code::HTTP_OK, $contentType = 'application/json', $charset = 'UTF-8' )

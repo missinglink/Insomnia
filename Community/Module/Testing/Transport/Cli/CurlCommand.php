@@ -15,6 +15,15 @@ class CurlCommand
     private $requestHeaders;
     private $responseHeaders;
     private $responseBody;
+    
+    public function __construct()
+    {
+        // Check Curl binary installed correctly
+        if( !exec( 'which curl 2>&1' ) )
+        {
+            throw new \Exception( 'Curl binary not found. Install curl binary package to run tests.' );
+        }
+    }
        
     public function execute( HTTPRequest $request )
     {
