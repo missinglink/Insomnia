@@ -8,6 +8,8 @@ class Hiccup
 {
     public function catchException( \Exception $e )
     {
+        \BNT\Utils\Logger::log( $e->getMessage() );
+
         try
         {
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
