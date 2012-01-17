@@ -14,20 +14,22 @@
             <?php foreach( $category as $route ): ?>
                 <div class="insomnia-documentation-block posh">
                        
-                    <?php if( strlen( $route['description'] ) ): ?>
-                        <strong><?= $route['description']; ?></strong>
+                    <?php if( strlen( $route['title'] ) ): ?>
+                        <strong><?= $route['title']; ?></strong>
                         <br /><br />
                     <?php endif; ?>
 
                     <?php foreach( $route['methods'] as $method ): ?>
+                        
+                        <?php if( strlen( $route['description'] ) ): ?>
+                            <span class="insomnia-documentation-http-title">
+                                <em><?= $route['description']; ?></em>
+                            </span>
+                            <br /><br />
+                        <?php endif; ?>
+                        
                         <p style="margin-bottom:5px;">
                             <span class="insomnia-documentation-http-method"><?= $method; ?></span>
-                            
-                            <?php if( strlen( $route['title'] ) ): ?>
-                                <span class="insomnia-documentation-http-title">
-                                    <em><?= $route['title']; ?></em>
-                                </span>
-                            <?php endif; ?>
                             
                             <span class="insomnia-documentation-http-uri">
                                 <a href="<?= $route['pattern']; ?>"><?= htmlentities( str_replace( '.*', '', $route['pattern'] ) ); ?></a>
