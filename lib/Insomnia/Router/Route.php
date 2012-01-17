@@ -25,7 +25,7 @@ class Route
     {            
         $this->setRequest( $request );
         
-        $pathWithoutFileExtension = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
+        $pathWithoutFileExtension = str_replace( array( $request->getFileExtension(), $_SERVER[ 'SCRIPT_NAME' ] ), '', $request->getParam( 'path' ) );
         
         if( !preg_match( "_^" . $this->getPatternRegex() . "\$_", $pathWithoutFileExtension, $matches ) )
         {
