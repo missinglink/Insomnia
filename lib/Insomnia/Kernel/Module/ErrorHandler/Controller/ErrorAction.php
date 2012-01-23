@@ -56,7 +56,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'status' ] = Code::HTTP_BAD_REQUEST;
                 $response[ 'title' ] = 'Missing or Invalid Request Parameter';
                 $response[ 'body' ] = 'The request could not be understood by the server due to malformed syntax';
-                $response[ 'parameter' ] = $exception->getMessage();
+                if( \APPLICATION_ENV === 'development' ) $response[ 'parameter' ] = $exception->getMessage();
                 break;
             
             case 'Insomnia\Validator\ErrorStack':
@@ -64,7 +64,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'status' ] = Code::HTTP_BAD_REQUEST;
                 $response[ 'title' ] = 'Missing or Invalid Request Parameter';
                 $response[ 'body' ] = 'The request contained missing or invalid request parameters';
-                $response[ 'errors' ] = $exception->getErrors();
+                if( \APPLICATION_ENV === 'development' ) $response[ 'errors' ] = $exception->getErrors();
                 break;
 
             case 'Insomnia\Response\ResponseException':
@@ -72,7 +72,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'status' ] = Code::HTTP_UNSUPPORTED_MEDIA_TYPE;
                 $response[ 'title' ] = 'Invalid Response Format';
                 $response[ 'body' ] = 'Could not create a response with content characteristics acceptable according to the accept headers sent in the request';
-                $response[ 'parameter' ] = $exception->getMessage();
+                if( \APPLICATION_ENV === 'development' ) $response[ 'parameter' ] = $exception->getMessage();
                 break;
             
             case 'Doctrine_Connection_Mysql_Exception':
@@ -80,7 +80,7 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $response[ 'status' ] = Code::HTTP_CONFLICT;
                 $response[ 'title' ] = 'HTTP Conflict';
                 $response[ 'body' ] = 'The request could not be completed due to a conflict with the current state of the resource';
-                $response[ 'parameter' ] = $exception->getMessage();
+                if( \APPLICATION_ENV === 'development' ) $response[ 'parameter' ] = $exception->getMessage();
                 break;
 
             case 'Insomnia\Kernel\Module\Mime\Response\Renderer\ViewException':
