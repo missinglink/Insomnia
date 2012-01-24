@@ -51,7 +51,7 @@ class EndPoint extends Subject
             else throw $e;
         }
         
-        if( extension_loaded( 'xhprof' ) )
+        if( extension_loaded( 'xhprof' ) && class_exists( 'XHProfRuns_Default' ) )
         {
             $xhprof_runs = new \XHProfRuns_Default();
             $run_id = $xhprof_runs->save_run( xhprof_disable(), 'insomnia' );
