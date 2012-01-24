@@ -129,7 +129,7 @@
     <?php if( isset( $this->data[ 'character' ] ) ): ?>
         <?php foreach( $fonts as $font ): ?>
             <div class="font-example">
-                <p style="font-family: '<?= $font; ?>', sans-serif;"><?php echo $this->data[ 'character' ]; ?></p>
+                <p style="font-family: '<?php echo $font; ?>', sans-serif;"><?php echo $this->data[ 'character' ]; ?></p>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

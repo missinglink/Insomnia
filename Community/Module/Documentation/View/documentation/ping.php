@@ -16,7 +16,7 @@
         ?></pre>
         </div>
         <div class="insomnia-documentation posh">
-        <pre style="margin:0;"><?= trim( print_r( $this['body'], true ) ); ?></pre>
+        <pre style="margin:0;"><?php echo trim( print_r( $this['body'], true ) ); ?></pre>
     </div>
     <div class="footer">
         <a href="/client">Client</a>

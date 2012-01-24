@@ -28,19 +28,19 @@
                 <div>
                    <select id="method" name="method">
                         <? foreach( array( 'GET', 'POST', 'PUT', 'DELETE' ) as $method ): ?>
-                        <option<? if( $request->getMethod() === $method ) echo ' selected="selected"' ;?>><?= $method; ?></option>
+                        <option<? if( $request->getMethod() === $method ) echo ' selected="selected"' ;?>><?php echo $method; ?></option>
                         <? endforeach; ?>
                     </select>
-                    <input id="request-uri" name="request-uri" value='<?= $request->getParam( 'path' ) === '/xdm/example' ? '/ping' : \str_replace( '/client', '', $request->getParam( 'path' ) ); ?>' />
+                    <input id="request-uri" name="request-uri" value='<?php echo $request->getParam( 'path' ) === '/xdm/example' ? '/ping' : \str_replace( '/client', '', $request->getParam( 'path' ) ); ?>' />
                     <select id="content-type" name="content-type">
                         <? foreach( array( 'application/json', 'application/xml', 'text/yaml', 'text/ini', 'text/html', 'text/plain' ) as $contentType ): ?>
-                        <option><?= $contentType; ?></option>
+                        <option><?php echo $contentType; ?></option>
                         <? endforeach; ?>
                     </select>
                     <div style="height:10px;">&nbsp;</div>
                     <select id="request-content-type" name="request-content-type">
                         <? foreach( $requestFormats as $label => $contentType ): ?>
-                        <option value="<?= $contentType; ?>"><?= $label; ?></option>
+                        <option value="<?php echo $contentType; ?>"><?php echo $label; ?></option>
                         <? endforeach; ?>
                     </select>
                     <input id="request-body" name="request-body" value='name=John+Smith' />

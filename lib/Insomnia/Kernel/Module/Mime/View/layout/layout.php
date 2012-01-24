@@ -6,7 +6,7 @@
 <?php $this->addStylesheet( 'http://fonts.googleapis.com/css?family=PT+Sans' ); ?>
 <html>
     <head>
-        <title><?= $this->getTitle(); ?></title>
+        <title><?php echo $this->getTitle(); ?></title>
         <?php $this->printStylesheetsAsHtml(); ?>
         <?php $this->printScriptsAsHtml(); ?>
     </head>

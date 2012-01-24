@@ -63,10 +63,10 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error"><?= $this['status']; ?></h1>
-            <h4><?= $this['title']; ?></h4>
+            <h1 class="error"><?php echo $this['status']; ?></h1>
+            <h4><?php echo $this['title']; ?></h4>
             <?php if( !empty( $this['body'] ) ): ?> 
-                <p><?= $this['body']; ?>.</p>
+                <p><?php echo $this['body']; ?>.</p>
             <?php endif; ?>
         </div>
     </div>
@@ -78,8 +78,8 @@
             </thead>
             <?php foreach( $this['errors'] as $id => $error ): ?>
                 <tr>
-                    <th class="error"><?= $id; ?></th>
-                    <td class="error"><?= $error; ?></td>
+                    <th class="error"><?php echo $id; ?></th>
+                    <td class="error"><?php echo $error; ?></td>
                 <tr>
             <?php endforeach; ?>
         </table>
@@ -91,14 +91,14 @@
                 </tr>
                     <th>Message</th>
                     <td>
-                        <?= $this['debug']['message']; ?>
+                        <?php echo $this['debug']['message']; ?>
                     </td>
                 </tr>
             <?php endif; ?>
             <tr>
                 <th>Exception</th>
                 <td>
-                    <?= renderNamespace( $this['debug']['exception'] ); ?>
+                    <?php echo renderNamespace( $this['debug']['exception'] ); ?>
                     <div class="button">
                         <a id="toggle" href="#" onclick="return false;">Verbose</a>
                     </div>
@@ -107,7 +107,7 @@
             </tr>
                 <th>File</th>
                 <td>
-                    <?= renderFilePath( $this['debug']['file'] ); ?>:<?= $this['debug']['line']; ?>
+                    <?php echo renderFilePath( $this['debug']['file'] ); ?>:<?php echo $this['debug']['line']; ?>
                     <div class="button">
                         <a id="codetoggle" href="#" onclick="return false;">Source</a>
                     </div>
@@ -120,16 +120,16 @@
             <?php if( !empty( $this['debug']['previous']['message'] ) ): ?>
                 </tr>
                     <th>Message</th>
-                    <td><?= $this['debug']['previous']['message']; ?></td>
+                    <td><?php echo $this['debug']['previous']['message']; ?></td>
                 </tr>
             <?php endif; ?>
             <tr>
                 <th>Exception</th>
-                <td><?= $this['debug']['previous']['exception']; ?></td>
+                <td><?php echo $this['debug']['previous']['exception']; ?></td>
             <tr>
             </tr>
                 <th>File</th>
-                <td><?= renderFilePath( $this['debug']['previous']['file'] ); ?>:<?= $this['debug']['previous']['line']; ?></td>
+                <td><?php echo renderFilePath( $this['debug']['previous']['file'] ); ?>:<?php echo $this['debug']['previous']['line']; ?></td>
             <tr>
         </table>
     <?php endif; ?>
