@@ -94,7 +94,6 @@ class DocumentationController extends Action
     public function routes()
     {
         $routes = new ArrayAccess;
-        $validations = new ArrayAccess;
         $doc = array();
         
         foreach( Kernel::getInstance()->getEndPoints() as $controllerClass )
