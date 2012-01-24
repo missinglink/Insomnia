@@ -9,61 +9,47 @@ use \Insomnia\Pattern\KernelModule,
 
 class Kernel
 {
-    private static $_instance;
+    private static $router;
+    private static $dispatcherPlugins = array();
+    private static $requestPlugins = array();
+    private static $responsePlugins;
+    private static $modules = array();
+    private static $endPoints = array();
+    private static $annotationAliases = array();
     
-    private $router;
-    private $dispatcherPlugins = array();
-    private $requestPlugins = array();
-    private $responsePlugins;
-    private $modules = array();
-    private $endPoints = array();
-    private $annotationAliases = array();
-    
-    public function __construct()
+    public static function addDispatcherPlugin( $plugin )
     {
-        $this->setRouter( new Router );
-        
-        $this->responsePlugins = new PriorityQueue;
+        self::$dispatcherPlugins[] = $plugin;
     }
     
-    public function addDispatcherPlugin( $plugin )
+    public static function getDispatcherPlugins()
     {
-        $this->dispatcherPlugins[] = $plugin;
-        
-        return $this;
+        return self::$dispatcherPlugins;
     }
     
-    public function getDispatcherPlugins()
+    public static function addRequestPlugin( $plugin )
     {
-        return $this->dispatcherPlugins;
+        self::$requestPlugins[] = $plugin;
     }
     
-    public function addRequestPlugin( $plugin )
+    public static function getRequestPlugins()
     {
-        $this->requestPlugins[] = $plugin;
-        
-        return $this;
-    }
-    
-    public function getRequestPlugins()
-    {
-        return $this->requestPlugins;
+        return self::$requestPlugins;
     }
 
-    public function addResponsePlugin( $plugin, $level = 50 )
+    public static function addResponsePlugin( $plugin, $level = 50 )
     {
-        $this->responsePlugins->insert( $plugin, -$level );
-  
-        return $this;
+        if( !isset( self::$responsePlugins ) ) self::$responsePlugins = new PriorityQueue;
+        self::$responsePlugins->insert( $plugin, -$level );
     }
 
-    public function getResponsePlugins()
+    public static function getResponsePlugins()
     { 
         $return = array();
         
-        if( 0 < $this->responsePlugins->count() )
+        if( 0 < self::$responsePlugins->count() )
         {
-            $plugins = clone $this->responsePlugins;
+            $plugins = clone self::$responsePlugins;
             
             while( $plugins->valid() )
             {
@@ -75,92 +61,72 @@ class Kernel
         return $return;
     }
 
-    public function addModule( KernelModule $component )
+    public static function addModule( KernelModule $component )
     {
-        $this->modules[] = $component;
-        
-        return $this;
+        self::$modules[] = $component;
+
     }
     
-    public function getModules()
+    public static function getModules()
     {
-        return $this->modules;
+        return self::$modules;
     }
    
-    public function addEndpoint( $endPoint )
+    public static function addEndpoint( $endPoint )
     {
-        $this->endPoints[] = $endPoint;
+        self::$endPoints[] = $endPoint;
+    }
+    
+    public static function getEndPoints()
+    {
+        return self::$endPoints;
+    }
+    
+    public static function run()
+    {
+        if( !isset( self::$router ) ) self::setRouter( new Router );
         
-        return $this;
-    }
-    
-    public function getEndPoints()
-    {
-        return $this->endPoints;
-    }
-    
-    public function run()
-    {
-        foreach( $this->getModules() as $module )
+        foreach( self::getModules() as $module )
         {
-            $module->run( $this );
+            $module->run();
         }
         
-        foreach( $this->getEndpoints() as $endPoint )
+        foreach( self::getEndpoints() as $endPoint )
         {
-            $this->getRouter()->addClass( $endPoint );
+            self::getRouter()->addClass( $endPoint );
         }    
         
-        $request = new Request;
-        
-        $this->getRouter()->dispatch( $request );
-        
-        return $this;
+        self::getRouter()->dispatch( new Request );
     }
     
-    public function getAnnotationAliases()
+    public static function getAnnotationAliases()
     {
-        return $this->annotationAliases;
+        return self::$annotationAliases;
     }
 
-    public function setAnnotationAliases( $annotationAliases )
+    public static function setAnnotationAliases( $annotationAliases )
     {
-        $this->annotationAliases = $annotationAliases;
+        self::$annotationAliases = $annotationAliases;
     }
 
-    public function addAnnotationAlias( $alias, $classPath = 'Insomnia\Annotation\\' )
+    public static function addAnnotationAlias( $alias, $classPath = 'Insomnia\Annotation\\' )
     {
-        $this->annotationAliases[ $alias ] = $classPath;
-        
-        return $this;
+        self::$annotationAliases[ $alias ] = $classPath;
     }
 
-    public function removeAnnotationAlias( $alias )
+    public static function removeAnnotationAlias( $alias )
     {
-        if( isset( $this->annotationAliases[ $alias ] ) ) unset( $this->annotationAliases[ $alias ] );
-        
-        return $this;
+        if( isset( self::$annotationAliases[ $alias ] ) ) unset( self::$annotationAliases[ $alias ] );
     }
     
     /** @return Router */
-    public function getRouter()
+    public static function getRouter()
     {
-        return $this->router;
+        return self::$router;
     }
 
-    public function setRouter( $router )
+    public static function setRouter( $router )
     {
-        $this->router = $router;
-    }
-
-    /** @return \Insomnia\Kernel */
-    public static function getInstance()
-    {
-        if( is_null( self::$_instance ) )
-        {
-            self::$_instance = new self;
-        }
-        
-        return self::$_instance;
+        self::$router = $router;
     }
 }

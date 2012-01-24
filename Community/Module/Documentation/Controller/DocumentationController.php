@@ -52,7 +52,7 @@ class DocumentationController extends Action
      */
     public function modules()
     {
-        foreach( Kernel::getInstance()->getModules() as $moduleInstance )
+        foreach( Kernel::getModules() as $moduleInstance )
         {
             $moduleClass = get_class( $moduleInstance );
             
@@ -96,7 +96,7 @@ class DocumentationController extends Action
         $routes = new ArrayAccess;
         $doc = array();
         
-        foreach( Kernel::getInstance()->getEndPoints() as $controllerClass )
+        foreach( Kernel::getEndPoints() as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
             $routes = new RouteParser( $reader );

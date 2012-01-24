@@ -22,16 +22,14 @@ class Bootstrap extends KernelModule
      *      @insomnia:RequestPlugin( class="Request\Plugin\ConsoleParamParser" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\ConsoleOutput" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
         if( php_sapi_name() == 'cli' && empty( $_SERVER['REMOTE_ADDR'] ) )
         {
-            $kernel->addEndpoint( __NAMESPACE__ . '\Controller\KernelController' );
-            $kernel->addRequestPlugin( new Request\Plugin\ConsoleParamParser );
-            $kernel->addResponsePlugin( new Response\Plugin\ConsoleOutput, 1 );
+            Kernel::addEndpoint( __NAMESPACE__ . '\Controller\KernelController' );
+            Kernel::addRequestPlugin( new Request\Plugin\ConsoleParamParser );
+            Kernel::addResponsePlugin( new Response\Plugin\ConsoleOutput, 1 );
         }
     }
 }

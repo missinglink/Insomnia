@@ -8,8 +8,6 @@ use \Insomnia\Kernel\Module\HTTP\Bootstrap as KernelModule;
  * Insomnia core HTTP module
  * 
  * Provides basic HTTP/1.1 functionality.
- * 
- * @insomnia:Module
  */
 class Bootstrap extends KernelModule
 {

@@ -21,11 +21,9 @@ class Bootstrap extends KernelModule
      * @insomnia:KernelPlugins({
      *      @insomnia:AnnotationParser( class="Dispatcher\Plugin\ParamAnnotationValidator" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addDispatcherPlugin( new Dispatcher\Plugin\ParamAnnotationValidator );
+        Kernel::addDispatcherPlugin( new Dispatcher\Plugin\ParamAnnotationValidator );
     }
 }

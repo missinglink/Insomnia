@@ -22,12 +22,10 @@ class Bootstrap extends KernelModule
      *      @insomnia:RequestPlugin( class="Request\Plugin\MethodOverride" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\VersionHeaders" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addRequestPlugin( new Request\Plugin\MethodOverride );
-        $kernel->addResponsePlugin( new Response\Plugin\VersionHeaders );
+        Kernel::addRequestPlugin( new Request\Plugin\MethodOverride );
+        Kernel::addResponsePlugin( new Response\Plugin\VersionHeaders );
     }
 }

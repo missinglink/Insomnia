@@ -4,7 +4,8 @@ namespace Insomnia\Kernel\Module\ErrorHandler\Controller;
 
 use \Application\Controller\ErrorsController,
     \Insomnia\Response\Code,
-    \Insomnia\Registry;
+    \Insomnia\Registry,
+    \Insomnia\Kernel;
 
 /**
  * Error Controller
@@ -129,11 +130,11 @@ class ErrorAction extends \Insomnia\Controller\Action
                 $debug[ 'backtrace' ] = array_reverse( debug_backtrace( false ) );
             }
             
-            $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
-            $debug[ 'requestPlugins' ] = \Insomnia\Kernel::getInstance()->getRequestPlugins();
-            $debug[ 'responsePlugins' ] = \Insomnia\Kernel::getInstance()->getResponsePlugins();
-            $debug[ 'dispatcherPlugins' ] = \Insomnia\Kernel::getInstance()->getDispatcherPlugins();
-            $debug[ 'modules' ] = \Insomnia\Kernel::getInstance()->getModules();
+            $debug[ 'routes' ] = Kernel::getEndPoints();
+            $debug[ 'requestPlugins' ] = Kernel::getRequestPlugins();
+            $debug[ 'responsePlugins' ] = Kernel::getResponsePlugins();
+            $debug[ 'dispatcherPlugins' ] = Kernel::getDispatcherPlugins();
+            $debug[ 'modules' ] = Kernel::getModules();
             
             $response[ 'debug' ] = $debug;
         }

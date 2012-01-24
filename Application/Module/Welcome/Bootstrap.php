@@ -20,11 +20,9 @@ class Bootstrap extends KernelModule
      * @insomnia:KernelPlugins({
      *      @insomnia:Endpoint( class="Controller\WelcomeController" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addEndpoint( __NAMESPACE__ . '\Controller\WelcomeController' );
+        Kernel::addEndpoint( __NAMESPACE__ . '\Controller\WelcomeController' );
     }
 }

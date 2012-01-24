@@ -8,8 +8,6 @@ use \Insomnia\Kernel\Module\Mime\Bootstrap as KernelModule;
  * Insomnia core MIME module
  * 
  * Provides basic MIME functionality.
- * 
- * @insomnia:Module
  */
 class Bootstrap extends KernelModule
 {

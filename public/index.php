@@ -8,4 +8,4 @@ require_once 'autoloader.php';
 new \Application\Bootstrap\Insomnia;
 
 // Run application
-Kernel::getInstance()->run();
+Kernel::run();

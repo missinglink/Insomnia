@@ -22,7 +22,7 @@ class AnnotationReader
         $reader = new DoctrineAnnotationReader( $cache );
         $reader->setAutoloadAnnotations( true );
         
-        foreach( Kernel::getInstance()->getAnnotationAliases() as $k => $v )
+        foreach( Kernel::getAnnotationAliases() as $k => $v )
             $reader->setAnnotationNamespaceAlias( $v, $k );
         
         $this->setReader( $reader );

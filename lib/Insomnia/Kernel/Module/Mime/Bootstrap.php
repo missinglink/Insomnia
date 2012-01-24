@@ -22,13 +22,11 @@ class Bootstrap extends KernelModule
      *      @insomnia:ResponsePlugin( class="Response\Plugin\ContentTypeSelector" ),
      *      @insomnia:ResponsePlugin( class="Response\Plugin\RendererSelector" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addRequestPlugin( new Request\Plugin\JsonParamParser );
-        $kernel->addResponsePlugin( new Response\Plugin\ContentTypeSelector, 1 );
-        $kernel->addResponsePlugin( new Response\Plugin\RendererSelector, 2 );
+        Kernel::addRequestPlugin( new Request\Plugin\JsonParamParser );
+        Kernel::addResponsePlugin( new Response\Plugin\ContentTypeSelector, 1 );
+        Kernel::addResponsePlugin( new Response\Plugin\RendererSelector, 2 );
     }
 }

@@ -20,11 +20,9 @@ class Bootstrap extends KernelModule
      * @insomnia:KernelPlugins({
      *      @insomnia:ResponsePlugin( class="Response\Plugin\CorsHeaders" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addResponsePlugin( new Response\Plugin\CorsHeaders );
+        Kernel::addResponsePlugin( new Response\Plugin\CorsHeaders );
     }
 }

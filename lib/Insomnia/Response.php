@@ -5,7 +5,8 @@
 namespace Insomnia;
 
 use \Insomnia\Pattern\ArrayAccess,
-    \Insomnia\Response\ResponseException;
+    \Insomnia\Response\ResponseException,
+    \Insomnia\Kernel;
 
 use \Insomnia\Dispatcher\Endpoint;
 
@@ -26,7 +27,7 @@ class Response extends ArrayAccess implements \SplSubject
     {
         $this->setEndPoint( $endPoint );
         
-        foreach( \Insomnia\Kernel::getInstance()->getResponsePlugins() as $plugin )
+        foreach( Kernel::getResponsePlugins() as $plugin )
         {
             $this->attach( $plugin );
         }

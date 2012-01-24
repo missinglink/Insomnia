@@ -29,14 +29,11 @@ class KernelController extends Action
      */
     public function index()
     {
-        /* @var $kernel \Insomnia\Kernel */
-        $kernel = Kernel::getInstance();
-        
         $this->outputTitle();
 
         $this->outputHeader( 'Modules' );
         /* @var $component \Insomnia\Pattern\KernelModule */
-        foreach( $kernel->getModules() as $module )
+        foreach( Kernel::getModules() as $module )
         {
             preg_match( '#Module\\\\(?<name>.+)\\\\Bootstrap#', get_class( $module ), $moduleName ); 
             
@@ -53,7 +50,7 @@ class KernelController extends Action
         
         $this->outputHeader( 'Controllers' );
         /* @var $endPoint \Insomnia\Dispatcher\EndPoint */
-        foreach( $kernel->getEndPoints() as $endPoint )
+        foreach( Kernel::getEndPoints() as $endPoint )
         {
             $this->outputString( '  - ' . $endPoint );
         }
@@ -61,7 +58,7 @@ class KernelController extends Action
         
         $this->outputHeader( 'Dispatcher Plugins' );
         /* @var $plugin \Insomnia\Dispatcher\EndPoint */
-        foreach( $kernel->getDispatcherPlugins() as $plugin )
+        foreach( Kernel::getDispatcherPlugins() as $plugin )
         {
             $this->outputString( '  - ' . get_class( $plugin ) );
         }
@@ -69,7 +66,7 @@ class KernelController extends Action
         
         $this->outputHeader( 'Request Plugins' );
         /* @var $plugin \Insomnia\Dispatcher\EndPoint */
-        foreach( $kernel->getRequestPlugins() as $plugin )
+        foreach( Kernel::getRequestPlugins() as $plugin )
         {
             $this->outputString( '  - ' . get_class( $plugin ) );
         }
@@ -77,14 +74,14 @@ class KernelController extends Action
         
         $this->outputHeader( 'Response Plugins' );
         /* @var $plugin \Insomnia\Dispatcher\EndPoint */
-        foreach( $kernel->getResponsePlugins() as $plugin )
+        foreach( Kernel::getResponsePlugins() as $plugin )
         {
            $this->outputString( '  - ' . get_class( $plugin ) );
         }
         echo PHP_EOL;
         
         $this->outputHeader( 'Routes' );
-        foreach( \Insomnia\Kernel::getInstance()->getEndPoints() as $controllerClass )
+        foreach( Kernel::getEndPoints() as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
             $routes = new RouteParser( $reader );

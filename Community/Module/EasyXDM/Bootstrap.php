@@ -23,11 +23,9 @@ class Bootstrap extends KernelModule
      * @insomnia:KernelPlugins({
      *      @insomnia:Endpoint( class="Controller\EasyXDMController" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\EasyXDMController' );
+        Kernel::addEndPoint( __NAMESPACE__ . '\Controller\EasyXDMController' );
     }
 }

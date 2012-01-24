@@ -8,8 +8,6 @@ use \Insomnia\Kernel\Module\ErrorHandler\Bootstrap as KernelModule;
  * Insomnia error module
  * 
  * Catches exceptions and provides debugging information
- * 
- * @insomnia:Module
  */
 class Bootstrap extends KernelModule
 {

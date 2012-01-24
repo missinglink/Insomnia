@@ -21,12 +21,10 @@ class Bootstrap extends KernelModule
      *      @insomnia:Endpoint( class="Controller\DocumentationController" ),
      *      @insomnia:Endpoint( class="Controller\PingController" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\DocumentationController' );
-        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\PingController' );
+        Kernel::addEndPoint( __NAMESPACE__ . '\Controller\DocumentationController' );
+        Kernel::addEndPoint( __NAMESPACE__ . '\Controller\PingController' );
     }
 }

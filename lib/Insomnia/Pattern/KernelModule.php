@@ -2,8 +2,6 @@
 
 namespace Insomnia\Pattern;
 
-use \Insomnia\Kernel;
-
 abstract class KernelModule
 {
     protected $basePath = '';
@@ -18,5 +16,5 @@ abstract class KernelModule
         $this->basePath = $basePath;
     }
     
-    abstract public function run( Kernel $kernel );
+    abstract public function run();
 }

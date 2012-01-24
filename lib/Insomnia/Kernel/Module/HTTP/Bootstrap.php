@@ -28,21 +28,19 @@ class Bootstrap extends KernelModule
      *      @insomnia:ResponsePlugin( class="Response\Plugin\ResponseCodeSelector" ),
      *      @insomnia:Endpoint( class="Controller\ClientController" )
      * })
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
-        $kernel->addRequestPlugin( new Request\Plugin\ParamParser );
-        $kernel->addRequestPlugin( new Request\Plugin\UriParser );
-        $kernel->addRequestPlugin( new Request\Plugin\HeaderParser );
-        $kernel->addRequestPlugin( new Request\Plugin\BodyParser );
+        Kernel::addRequestPlugin( new Request\Plugin\ParamParser );
+        Kernel::addRequestPlugin( new Request\Plugin\UriParser );
+        Kernel::addRequestPlugin( new Request\Plugin\HeaderParser );
+        Kernel::addRequestPlugin( new Request\Plugin\BodyParser );
         
-        $kernel->addResponsePlugin( new Response\Plugin\HttpHeaders, -999 ); // Setting HTTP header causes a bug with ini & yaml filetypes
-        $kernel->addResponsePlugin( new Response\Plugin\ContentTypeHeaders, 999 );
-        $kernel->addResponsePlugin( new Response\Plugin\CacheHeaders, 998 );
-        $kernel->addResponsePlugin( new Response\Plugin\ResponseCodeSelector, 997 );
+        Kernel::addResponsePlugin( new Response\Plugin\HttpHeaders, -999 ); // Setting HTTP header causes a bug with ini & yaml filetypes
+        Kernel::addResponsePlugin( new Response\Plugin\ContentTypeHeaders, 999 );
+        Kernel::addResponsePlugin( new Response\Plugin\CacheHeaders, 998 );
+        Kernel::addResponsePlugin( new Response\Plugin\ResponseCodeSelector, 997 );
         
-        $kernel->addEndPoint( __NAMESPACE__ . '\Controller\OptionsController' );
+        Kernel::addEndPoint( __NAMESPACE__ . '\Controller\OptionsController' );
     }
 }

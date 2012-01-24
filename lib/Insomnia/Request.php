@@ -6,7 +6,8 @@ use \Insomnia\Pattern\Subject;
 use \Insomnia\Request\Plugin\ParamParser,
     \Insomnia\Request\Plugin\HeaderParser,
     \Insomnia\Request\Plugin\BodyParser,
-    \Insomnia\Request\Plugin\MethodOverride;
+    \Insomnia\Request\Plugin\MethodOverride,
+    \Insomnia\Kernel;
 
 /**
  * HTTP request object
@@ -25,7 +26,7 @@ class Request extends Subject
     public function __construct()
     {
         // Run all request plugins
-        foreach( \Insomnia\Kernel::getInstance()->getRequestPlugins() as $plugin )
+        foreach( Kernel::getRequestPlugins() as $plugin )
         {
             $plugin->update( $this );
         }

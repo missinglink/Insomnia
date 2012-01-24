@@ -17,10 +17,8 @@ class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
-     * 
-     * @param Kernel $kernel
      */
-    public function run( Kernel $kernel )
+    public function run()
     {
         // This module is still under development
     }

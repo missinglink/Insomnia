@@ -7,6 +7,7 @@ use \Insomnia\Pattern\Subject,
     \Insomnia\Validator\DatabaseException;
 
 use \Insomnia\Controller\Action;
+use \Insomnia\Kernel;
 
 use \Insomnia\Router\RouterException;
 
@@ -30,7 +31,7 @@ class EndPoint extends Subject
         // Instantiate controller
         $this->setController( new $class );
 
-        foreach( \Insomnia\Kernel::getInstance()->getDispatcherPlugins() as $plugin )
+        foreach( Kernel::getDispatcherPlugins() as $plugin )
         {
             $plugin->update( $this );
         }
