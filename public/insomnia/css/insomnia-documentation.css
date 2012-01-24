@@ -1,0 +1,104 @@
+div.insomnia div.insomnia-documentation
+{
+    clear:both;
+}
+
+div.insomnia div.insomnia-documentation-block
+{
+    margin-bottom:10px;
+}
+
+div.insomnia div.insomnia-documentation input, 
+div.insomnia div.insomnia-documentation select
+{
+    padding:5px;
+}
+
+
+div.insomnia div.insomnia-documentation h4
+{
+    padding: 5px 20px;
+    margin:0px;
+}
+
+div.insomnia div.insomnia-documentation ul
+{
+    padding:10px 20px;
+    margin-bottom:10px;
+}
+
+div.insomnia div.insomnia-documentation ul li
+{
+    font-weight: bold;
+    list-style: none;
+    margin-left:0;
+    margin-top:10px;
+}
+
+div.insomnia div.insomnia-documentation ul li ul li
+{
+    font-weight: normal;
+    list-style:circle;
+    margin-left:0;
+    margin-top:10px;
+}
+
+div.insomnia div.insomnia-documentation span.header-key
+{
+   color:#008;
+}
+
+span.insomnia-documentation-http-method
+{
+    background-color: #C80125;
+    color: #fff;
+    padding:5px 10px;
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    letter-spacing: 0.125em;
+    float:left;
+    min-width:100px;
+    
+    font-size: 18px;
+
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+span.insomnia-documentation-http-title
+{
+    color: #512E10;
+    padding:6px 25px;
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+    float:left;
+    min-width:100px;
+    
+    background-color: #eee;
+    
+    font-size: 16px;
+    
+    border-right:solid 1px #ddd;
+}
+
+span.insomnia-documentation-http-uri
+{
+    background-color: #FBFBFB;
+    padding:4px 0;
+    display: block;
+    
+    border: solid 1px #ddd;
+    
+    letter-spacing: 0.125em;
+}
+
+span.insomnia-documentation-http-uri a
+{
+    padding:5px 15px;
+    font-size: 18px;
+}
