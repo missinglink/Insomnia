@@ -17,6 +17,7 @@ class Kernel
     private $responsePlugins;
     private $modules = array();
     private $endPoints = array();
+    private $annotationAliases = array();
     
     public function __construct()
     {
@@ -113,6 +114,30 @@ class Kernel
         $request = new Request;
         
         $this->getRouter()->dispatch( $request );
+        
+        return $this;
+    }
+    
+    public function getAnnotationAliases()
+    {
+        return $this->annotationAliases;
+    }
+
+    public function setAnnotationAliases( $annotationAliases )
+    {
+        $this->annotationAliases = $annotationAliases;
+    }
+
+    public function addAnnotationAlias( $alias, $classPath = 'Insomnia\Annotation\\' )
+    {
+        $this->annotationAliases[ $alias ] = $classPath;
+        
+        return $this;
+    }
+
+    public function removeAnnotationAlias( $alias )
+    {
+        if( isset( $this->annotationAliases[ $alias ] ) ) unset( $this->annotationAliases[ $alias ] );
         
         return $this;
     }

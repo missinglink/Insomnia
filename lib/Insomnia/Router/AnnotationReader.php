@@ -2,8 +2,9 @@
 
 namespace Insomnia\Router;
 
-use \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
+use \Insomnia\Kernel;
 
+use \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use \Doctrine\Common\Cache\ApcCache,
     \Doctrine\Common\Cache\ArrayCache;
 
@@ -11,7 +12,6 @@ class AnnotationReader
 {
     private $reader;
     private $reflector;
-    private $alias = array( 'insomnia' => 'Insomnia\Annotation\\' );
     
     public function __construct( $className )
     {
@@ -22,7 +22,7 @@ class AnnotationReader
         $reader = new DoctrineAnnotationReader( $cache );
         $reader->setAutoloadAnnotations( true );
         
-        foreach( $this->alias as $k => $v )
+        foreach( Kernel::getInstance()->getAnnotationAliases() as $k => $v )
             $reader->setAnnotationNamespaceAlias( $v, $k );
         
         $this->setReader( $reader );

@@ -3,9 +3,7 @@
 namespace Application\Bootstrap;
 
 use \Doctrine\Common\ClassLoader;
-use \Insomnia\Request;
-use \Insomnia\Dispatcher;
-use \Insomnia\Registry;
+use \Insomnia\Kernel;
 
 class Insomnia
 {
@@ -26,5 +24,29 @@ class Insomnia
         
         ini_set( 'default_charset',            'utf-8' ); // Set encoding
         ini_set( 'mbstring.internal_encoding', 'utf-8' ); // Set encoding
+        
+        Kernel::getInstance()
+            
+            // Set insomnia annotation namespace
+            ->addAnnotationAlias( 'insomnia', 'Insomnia\Annotation\\' )
+        
+            // Core modules - Warning: Removing these may make your system unstable or unusable
+            ->addModule( new \Community\Module\ErrorHandler\Bootstrap )
+            ->addModule( new \Community\Module\HTTP\Bootstrap )
+            ->addModule( new \Community\Module\Mime\Bootstrap )
+
+            // Community modules
+            ->addModule( new \Community\Module\Console\Bootstrap )
+            ->addModule( new \Community\Module\RequestValidator\Bootstrap )
+            ->addModule( new \Community\Module\RestClient\Bootstrap )
+            ->addModule( new \Community\Module\Compatibility\Bootstrap )
+            ->addModule( new \Community\Module\Cors\Bootstrap )
+            ->addModule( new \Community\Module\Session\Bootstrap )
+            ->addModule( new \Community\Module\Documentation\Bootstrap )
+      
+            // User modules
+            ->addModule( new \Application\Module\CrudExample\Bootstrap )
+            ->addModule( new \Application\Module\HtmlEntities\Bootstrap )
+            ->addModule( new \Application\Module\Welcome\Bootstrap );
     }
 }
