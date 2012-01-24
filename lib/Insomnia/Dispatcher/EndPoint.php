@@ -50,10 +50,18 @@ class EndPoint extends Subject
 
             else throw $e;
         }
+        
+        if( extension_loaded( 'xhprof' ) )
+        {
+            $xhprof_runs = new \XHProfRuns_Default();
+            $run_id = $xhprof_runs->save_run( xhprof_disable(), 'insomnia' );
+            
+            $this->getController()->getResponse()->setHeader( 'X-xprof', $run_id );
+        }
                 
         if( \method_exists( $this->getController(), 'getResponse' ) )
             $this->getController()->getResponse()->render( $this );
-        
+    
         exit;
     }
     
