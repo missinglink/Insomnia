@@ -8,8 +8,14 @@ class Hiccup
 {
     public function catchException( \Exception $e )
     {
-        \BNT\Utils\Logger::log( $e->getMessage() );
+        // Do not halt script execution for all recoverable errors in production
+        if( \APPLICATION_ENV !== 'development' && $e instanceof \ErrorException && $e->getCode() > \E_ERROR )
+        {
+            return true;
+        }
 
+        \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::WARN, $e );
+        
         try
         {
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
@@ -39,16 +45,17 @@ class Hiccup
         return true;
     }
     
-    public function error()
+    public function error( $errno, $errstr, $errfile, $errline )
     {
-        $error = error_get_last();
-        
-        if( $error !== NULL )
+        if( isset( $errstr, $errno, $errfile, $errline ) )
         {
-            //ob_end_clean();
-            
-            $exception = new \ErrorException( $error[ 'message' ], 0, $error[ 'type' ], $error[ 'file' ], $error[ 'line' ] );
+            $exception = new \ErrorException( $errstr, $errno, 1, $errfile, $errline );
             return $this->catchException( $exception );
+        }
+        
+        else
+        {
+            \BNT\Utils\Logger::log( 'Error Handler failed to get the required info from last error.', \Zend_Log::CRIT );
         }
         
         /* Don't execute PHP internal error handler */
@@ -63,7 +70,6 @@ class Hiccup
     public function registerErrorHandler()
     {
         set_error_handler( array( $this, 'error' ), E_ALL | E_STRICT );
-        
         //register_shutdown_function( array( $this, 'error' ) );
     }
 }
