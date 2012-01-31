@@ -53,6 +53,12 @@ class CurlCommand
             $cmd[] = '-H "' . $headerKey . ': ' . $headerValue . '"';
         }
         
+        // Treat Request Params as a GET
+        if( in_array( $request->getMethod(), array( 'GET', 'HEAD' ) ) )
+        {
+            $cmd[] = '-G';
+        }
+        
         // Add Request Params
         foreach( $request->getParams() as $paramKey => $paramValue )
         {
