@@ -8,37 +8,46 @@ class Hiccup
 {
     public function catchException( \Exception $e )
     {
-        // Do not halt script execution for all recoverable errors in production
-        if( \APPLICATION_ENV !== 'development' && $e instanceof \ErrorException && $e->getCode() > \E_ERROR )
-        {
-            return true;
-        }
-
-        \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::WARN, $e );
-        
         try
         {
+            //// Log the errors
+            if( $e instanceof \Exception && $e->getCode() > \E_ERROR )
+            {
+                \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::WARN, $e );
+
+                // Do not halt script execution for all recoverable errors in production
+                if ( \APPLICATION_ENV !== 'development' )
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::CRIT, $e );
+            }    
+
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
             $endPoint->dispatch( $e );
         }
         catch( \Exception $e2 )
         {
-            header( 'Content-type: text/plain' );
-            echo 'Service is currently unavailable, Please try again later.' . PHP_EOL;
+            $lastWords = '';
             if( \APPLICATION_ENV === 'development' )
-                {
-                echo $e2->getMessage() . PHP_EOL;
-                echo $e2->getFile() . ':' . $e2->getLine() . PHP_EOL;
-                echo $e2->getTraceAsString() . PHP_EOL;
+            {
+                $lastWords .= $e2->getMessage() . PHP_EOL;
+                $lastWords .= $e2->getFile() . ':' . $e2->getLine() . PHP_EOL;
+                $lastWords .= $e2->getTraceAsString() . PHP_EOL;
+                
                 if( ( $p = $e2->getPrevious() ) instanceof \Exception )
                 {
-                    echo PHP_EOL;
-                    echo "\t" . $p->getMessage() . PHP_EOL;
-                    echo "\t" . $p->getFile() . ':' . $p->getLine() . PHP_EOL;
-                    echo "\t" . $p->getTraceAsString() . PHP_EOL;
+                    $lastWords .= PHP_EOL;
+                    $lastWords .= "\t" . $p->getMessage() . PHP_EOL;
+                    $lastWords .= "\t" . $p->getFile() . ':' . $p->getLine() . PHP_EOL;
+                    $lastWords .= "\t" . $p->getTraceAsString() . PHP_EOL;
                 }
             }
-            exit;
+            
+            $this->terminateExecution( $lastWords );           
         }
         
         /* Don't execute PHP internal error handler */
@@ -50,18 +59,19 @@ class Hiccup
         if( isset( $errstr, $errno, $errfile, $errline ) )
         {
             $exception = new \ErrorException( $errstr, $errno, 1, $errfile, $errline );
+            
             return $this->catchException( $exception );
-        }
-        
+        }        
         else
         {
             \BNT\Utils\Logger::log( 'Error Handler failed to get the required info from last error.', \Zend_Log::CRIT );
+            $this->terminateExecution();
         }
         
         /* Don't execute PHP internal error handler */
         return true;
     }
-    
+
     public function registerExceptionHandler()
     {
         set_exception_handler( array( $this, 'catchException' ) );
@@ -70,6 +80,16 @@ class Hiccup
     public function registerErrorHandler()
     {
         set_error_handler( array( $this, 'error' ), E_ALL | E_STRICT );
-        //register_shutdown_function( array( $this, 'error' ) );
+    }
+    
+    private function terminateExecution( $lastWords = '' )
+    {
+        header( 'Content-type: text/plain' );
+        echo 'Service is currently unavailable, Please try again later.' . PHP_EOL;
+        if ( $lastWords !== '' )
+        {
+            echo $lastWords;
+        }
+        exit;
     }
 }
