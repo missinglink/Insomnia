@@ -15,11 +15,11 @@ use \Insomnia\Response\Code;
 class FunctionalTestCase extends \PHPUnit_Framework_TestCase
 {
     private $transport;
-
+    
     protected function setUp()
     {
         $this->setTransport( new CurlTransport );
-        $this->getTransport()->attach( new CliDebugger( /* CliDebugger::DEBUG_FULL */ ) );
+        $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_VERBOSE ) );
         //$this->getTransport()->attach( new SqliteDebugger );
     }
     
@@ -41,6 +41,11 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals( $contentType, $response->getContentType() );
         $this->assertEquals( $charset, $response->getCharacterSet() );
         $this->assertLessThan( 500, $response->getExecutionTime() );
+    }
+    
+    public function testNothing()
+    {
+        
     }
     
     /**
