@@ -57,6 +57,19 @@ class CliDebugger extends Observer
             
             echo \PHP_EOL;
         }
+        
+        if( self::DEBUG_VERBOSE === $this->getDebugLevel() )
+        {
+            echo $this->output( ' Request Parameters:', 'brown' ) . \PHP_EOL;
+            
+            foreach( $transport->getRequest()->getParams() as $paramKey => $paramValue )
+            {
+                $paramString = '  ' . $this->output( $paramKey . ': ', 'light_blue' );
+                echo $this->output( $paramString . $paramValue ) . \PHP_EOL;
+            }
+            
+            echo \PHP_EOL;
+        }
     }
     
     private function debugResponse( Transporter $transport )
