@@ -48,6 +48,26 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         
     }
     
+    protected function getSessionId()
+    {
+        $request = new HTTPRequest( '/session', 'POST' );
+        $request->setHeader( 'Accept', 'application/json' );
+        $request->setParam( 'email', 'peter@bravenewtalent.com' );
+        $request->setParam( 'password', 'qwerty' );
+        
+        $response = $this->transfer( $request );
+        
+        $this->assertEquals( Code::HTTP_OK, $response->getCode() );
+        $this->assertEquals( 'application/json', $response->getContentType() );
+        $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
+        $this->assertLessThan( 500, $response->getExecutionTime() );
+        
+        $json = json_decode( $response->getBody(), true );
+        $this->assertArrayHasKey( 'sessionId', $json );
+        
+        return (string) $json[ 'sessionId' ];
+    }
+    
     /**
      * Load a list of browsers to test against
      * 
