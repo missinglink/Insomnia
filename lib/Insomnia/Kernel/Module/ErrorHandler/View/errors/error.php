@@ -185,7 +185,10 @@
                    echo '</em>';
                }
                
-               if( end( $this['debug']['backtrace'] ) !== $trace ):
+               //must assign a real variable to end() (needs array passed by reference)
+               $backtrace = $this['debug']['backtrace'];
+               
+               if( end( $backtrace ) !== $trace ):
                    echo '<br />';
                endif;
            };

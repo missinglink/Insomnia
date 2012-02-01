@@ -2,7 +2,7 @@
 
 namespace Insomnia\Router;
 
-use \Doctrine\Common\Cache;
+use \Doctrine\Common\Cache\Cache;
 use \Doctrine\Common\Cache\ArrayCache;
 use \Insomnia\Pattern\ArrayAccess;
 
