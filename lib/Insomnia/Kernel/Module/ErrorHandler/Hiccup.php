@@ -46,16 +46,14 @@ class Hiccup
     {
         if( isset( $errstr, $errno, $errfile, $errline ) )
         {
-            // Do not halt script execution for all recoverable errors in production
-            if( $errno <= \E_ERROR || \APPLICATION_ENV === 'development' )
+            // Do not halt script execution for all errors not in the currently 
+            // defined error_reporting bitmask.
+            if( error_reporting() & $errno )
             {
                 return $this->catchException( new \ErrorException( $errstr, $errno, \Zend_Log::CRIT, $errfile, $errline ) );
             }
             
-            else
-            {
-                \BNT\Utils\Logger::log( $errstr, \Zend_Log::WARN );
-            }
+            \BNT\Utils\Logger::log( $errstr, \Zend_Log::WARN );
         }        
         else
         {
