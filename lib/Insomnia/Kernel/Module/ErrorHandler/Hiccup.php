@@ -34,16 +34,16 @@ class Hiccup
             $lastWords = '';
             if( \APPLICATION_ENV === 'development' )
             {
-                $lastWords .= $e2->getMessage() . PHP_EOL;
-                $lastWords .= $e2->getFile() . ':' . $e2->getLine() . PHP_EOL;
-                $lastWords .= $e2->getTraceAsString() . PHP_EOL;
+                $lastWords .= $e2->getMessage() . \PHP_EOL;
+                $lastWords .= $e2->getFile() . ':' . $e2->getLine() . \PHP_EOL;
+                $lastWords .= $e2->getTraceAsString() . \PHP_EOL;
                 
                 if( ( $p = $e2->getPrevious() ) instanceof \Exception )
                 {
-                    $lastWords .= PHP_EOL;
-                    $lastWords .= "\t" . $p->getMessage() . PHP_EOL;
-                    $lastWords .= "\t" . $p->getFile() . ':' . $p->getLine() . PHP_EOL;
-                    $lastWords .= "\t" . $p->getTraceAsString() . PHP_EOL;
+                    $lastWords .= \PHP_EOL;
+                    $lastWords .= "\t" . $p->getMessage() . \PHP_EOL;
+                    $lastWords .= "\t" . $p->getFile() . ':' . $p->getLine() . \PHP_EOL;
+                    $lastWords .= "\t" . $p->getTraceAsString() . \PHP_EOL;
                 }
             }
             
@@ -85,7 +85,7 @@ class Hiccup
     private function terminateExecution( $lastWords = '' )
     {
         header( 'Content-type: text/plain' );
-        echo 'Service is currently unavailable, Please try again later.' . PHP_EOL;
+        echo 'Service is currently unavailable, Please try again later.' . \PHP_EOL;
         if ( $lastWords !== '' )
         {
             echo $lastWords;
