@@ -9,26 +9,14 @@ class Hiccup
     public function catchException( \Exception $e )
     {
         try
-        {
-            //// Log the errors
-            if( $e instanceof \Exception && $e->getCode() > \E_ERROR )
-            {
-                \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::WARN, $e );
-
-                // Do not halt script execution for all recoverable errors in production
-                if ( \APPLICATION_ENV !== 'development' )
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::CRIT, $e );
-            }    
+        {           
+            // Fatal Exception
+            \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::CRIT, $e );
 
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
             $endPoint->dispatch( $e );
         }
+        
         catch( \Exception $e2 )
         {
             $lastWords = '';
@@ -58,9 +46,16 @@ class Hiccup
     {
         if( isset( $errstr, $errno, $errfile, $errline ) )
         {
-            $exception = new \ErrorException( $errstr, $errno, 1, $errfile, $errline );
+            // Do not halt script execution for all recoverable errors in production
+            if( $errno <= \E_ERROR || \APPLICATION_ENV === 'development' )
+            {
+                return $this->catchException( new \ErrorException( $errstr, $errno, \Zend_Log::CRIT, $errfile, $errline ) );
+            }
             
-            return $this->catchException( $exception );
+            else
+            {
+                \BNT\Utils\Logger::log( $errstr, \Zend_Log::WARN );
+            }
         }        
         else
         {
@@ -79,7 +74,7 @@ class Hiccup
     
     public function registerErrorHandler()
     {
-        set_error_handler( array( $this, 'error' ), E_ALL | E_STRICT );
+        set_error_handler( array( $this, 'error' ), \E_ALL | \E_STRICT );
     }
     
     private function terminateExecution( $lastWords = '' )
