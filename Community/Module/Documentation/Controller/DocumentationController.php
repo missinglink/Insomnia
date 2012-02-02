@@ -100,7 +100,7 @@ class DocumentationController extends Action
         foreach( Kernel::getInstance()->getEndPoints() as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
-            $routes = new RouteParser( $reader );
+            $routes = new RouteParser( $reader, Registry::get( 'request' ) );
             
             foreach( $routes->toArray() as $route )
             {
