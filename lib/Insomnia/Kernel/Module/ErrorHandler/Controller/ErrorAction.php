@@ -3,6 +3,7 @@
 namespace Insomnia\Kernel\Module\ErrorHandler\Controller;
 
 use \Application\Controller\ErrorsController,
+    \Insomnia\Controller\Action,
     \Insomnia\Kernel\Module\ErrorHandler\Mapper,
     \Insomnia\Response\Code,
     \Insomnia\Registry;
@@ -15,7 +16,7 @@ use \Insomnia\Kernel;
  * @insomnia:Resource
  * 
  */
-class ErrorAction extends \Insomnia\Controller\Action
+class ErrorAction extends Action
 {   
     /**
      * Map Errors to Output
