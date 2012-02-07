@@ -14,7 +14,6 @@ class Kernel
     private static $_instance;
     
     private $router;
-    private $errorSubscribers = array();
     private $dispatcherPlugins = array();
     private $requestPlugins = array();
     private $responsePlugins;
@@ -129,16 +128,6 @@ class Kernel
     public function setRouter( $router )
     {
         $this->router = $router;
-    }
-
-    public function getErrorSubscribers()
-    {
-        return $this->errorSubscribers;
-    }
-
-    public function setErrorSubscriber( ErrorSubscriber $subscriber )
-    {
-        $this->errorSubscribers[] = $subscriber;
     }
 
     /** @return \Insomnia\Kernel */

@@ -19,10 +19,8 @@ class ExceptionClass extends ErrorSubscriber
     {
         if( isset( $this->classMaps[ get_class( $exception ) ] ) )
         {
-            return $this->classMaps[ get_class( $exception ) ];
+            $exception->setCode( $this->classMaps[ get_class( $exception ) ] );
         }
-
-        return false;
     }
 
     public function addClassMap( $httpCode, $className )

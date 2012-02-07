@@ -27,11 +27,6 @@ class ErrorAction extends \Insomnia\Controller\Action
      */
     public function action( \Exception $exception )
     {
-        foreach( Kernel::getInstance()->getErrorSubscribers() as $subscriber )
-        {
-            $subscriber->update( $exception, $request );
-        }
-
         $mappers = array();
         
         switch( $code = $exception->getCode() )
