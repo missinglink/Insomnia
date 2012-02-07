@@ -46,7 +46,7 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals( $code, $response->getCode() );
         $this->assertEquals( $contentType, $response->getContentType() );
         $this->assertEquals( $charset, $response->getCharacterSet() );
-        $this->assertLessThan( 250, $response->getExecutionTime() );
+        $this->assertLessThan( 500, $response->getExecutionTime() );
     }
     
     /**

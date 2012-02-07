@@ -46,7 +46,9 @@ class EndPoint extends Subject
         catch( \Exception $e )
         {
             if( $e instanceof \PDOException )
-                throw new DatabaseException( 'Database error', null, $e );
+            {
+                throw new DatabaseException( 'Database Error', 500, $e );
+            }
 
             else throw $e;
         }

@@ -24,6 +24,7 @@ Kernel::getInstance()
     ->addModule( new \Community\Module\Documentation\Bootstrap )
         
     // User modules
+    ->addModule( new \Application\Module\Examples\Bootstrap )
     ->addModule( new \Application\Module\CrudExample\Bootstrap )
     ->addModule( new \Application\Module\HtmlEntities\Bootstrap )
     ->addModule( new \Application\Module\Welcome\Bootstrap )

@@ -21,6 +21,7 @@
                 <a href="/ping" class="ping" title="Ping">&nbsp;<span>Ping</span></a>
                 <a href="/doc" class="docs" title="Documentation">&nbsp;<span>Documentation</span></a>
                 <a href="/doc/modules" class="modules" title="Modules">&nbsp;<span>Modules</span></a>
+                <a href="/example" class="examples" title="Examples">&nbsp;<span>Examples</span></a>
             </div>
         <?php endif; ?>
     </body>

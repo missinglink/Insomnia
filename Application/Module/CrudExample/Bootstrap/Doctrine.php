@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Bootstrap;
+namespace Application\Module\CrudExample\Bootstrap;
 
 use \Doctrine\Common\ClassLoader,
     \Doctrine\ORM\Mapping\Driver\DriverChain,
@@ -23,9 +23,9 @@ class Doctrine extends EntityManager
     public function __construct()
     {
         // Autoloader
-        $classLoader = new ClassLoader( 'Entities', \ROOT . 'Application' );
+        $classLoader = new ClassLoader( 'Entities', dirname( __DIR__ ) );
         $classLoader->register();
-        $classLoader = new ClassLoader( 'Proxies', \ROOT . 'Application' );
+        $classLoader = new ClassLoader( 'Proxies', dirname( __DIR__ ) );
         $classLoader->register();
         $classLoader = new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' );
         $classLoader->register();
@@ -54,7 +54,7 @@ class Doctrine extends EntityManager
         $config = new Configuration;
 
         // Proxies
-        $config->setProxyDir( \ROOT . 'Application/Proxies' );
+        $config->setProxyDir( dirname( __DIR__ ) . '/Proxies' );
         $config->setProxyNamespace( 'Proxies' );
         $config->setAutoGenerateProxyClasses( APPLICATION_ENV === 'development' );
 
@@ -72,7 +72,7 @@ class Doctrine extends EntityManager
         
         $reader = new \Doctrine\Common\Annotations\AnnotationReader( $cache, new \Doctrine\Common\Annotations\Parser );
         $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
-        $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver( $reader, array( \ROOT . 'Application/Entities' ) );
+        $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver( $reader, array( dirname( __DIR__ ) . '/Entities' ) );
         
 //        $annotationDriver = new \Doctrine\Common\Annotations\AnnotationReader(
 //            $cache, new \Doctrine\Common\Annotations\Parser

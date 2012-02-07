@@ -358,6 +358,12 @@ div.footer a.docs
     background-image: url("/insomnia/icon/android/ic_menu_bookmark.png");
 }
 
+div.footer a.examples
+{
+    background-image: url("/insomnia/icon/android/ic_menu_gallery.png");
+}
+
+
 html
 {
     background-image: url( '/insomnia/images/gradient.jpg' );
@@ -367,6 +373,6 @@ html
 h1.icon
 {
     background-repeat: no-repeat;
-    background-position: -5px 1px;
+    background-position: -5px 2px;
     padding-left:50px;
 }
