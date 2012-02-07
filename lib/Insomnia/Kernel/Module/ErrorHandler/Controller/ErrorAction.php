@@ -33,7 +33,7 @@ class ErrorAction extends \Insomnia\Controller\Action
         {
             case 400 :
                 $mappers[ $code ] = new Mapper\ErrorStack400( $exception );
-                //$mappers[ $code ][] = new Mapper\Generic400;
+                //$mappers[ $code ] = new Mapper\Generic400;
                 break;
 
             case 401 : $mappers[ $code ] = new Mapper\Generic401; break;
