@@ -109,29 +109,31 @@
                 <td>
                     <?= renderFilePath( $this['debug']['file'] ); ?>:<?= $this['debug']['line']; ?>
                     <div class="button">
-                        <a id="codetoggle" href="#" onclick="return false;">Source</a>
+                        <a class="codetoggle" href="#" onclick="return false;">Source</a>
                     </div>
                 </td>
             <tr>
         </table>
     <?php endif; ?>
-    <?php if( isset( $this['debug']['previous'] ) ): ?>
-        <table>
-            <?php if( !empty( $this['debug']['previous']['message'] ) ): ?>
+    <?php if( is_array( $this['debug']['previous'] ) ): ?>
+        <?php foreach( $this['debug']['previous'] as $exception ): ?>
+            <table>
+                <?php if( !empty( $exception['message'] ) ): ?>
+                    </tr>
+                        <th>Message</th>
+                        <td><?= $exception['message']; ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <th>Exception</th>
+                    <td><?= $exception['exception']; ?></td>
+                <tr>
                 </tr>
-                    <th>Message</th>
-                    <td><?= $this['debug']['previous']['message']; ?></td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-                <th>Exception</th>
-                <td><?= $this['debug']['previous']['exception']; ?></td>
-            <tr>
-            </tr>
-                <th>File</th>
-                <td><?= renderFilePath( $this['debug']['previous']['file'] ); ?>:<?= $this['debug']['previous']['line']; ?></td>
-            <tr>
-        </table>
+                    <th>File</th>
+                    <td><?= renderFilePath( $exception['file'] ); ?>:<?= $exception['line']; ?></td>
+                <tr>
+            </table>
+        <?php endforeach; ?>
     <?php endif; ?>
    
     <?php if( isset( $this['debug'] ) ): ?>
@@ -143,10 +145,15 @@
     <?php if( isset( $this['debug']['backtrace'] ) ): ?>
         
         <div class="insomnia-backtrace posh"><p style="margin:0;"><?php
+        
+           $exceptionTriggered = false;
+           
            foreach( $this['debug']['backtrace'] as $trace )
            {
                if( isset( $trace['exception'] ) )
-               {                   
+               {
+                   $exceptionTriggered = true;
+                   
                    echo '<em class="error">';
                    echo renderNamespace( get_class( $trace['exception'] ) ) . '( <span>' . $trace['exception']->getMessage() . '</span> )';
                    
@@ -160,7 +167,15 @@
                }
                else
                {
-                   echo '<em>';
+                   if( $exceptionTriggered )
+                   {
+                       echo '<em class="dim">';
+                   }
+                   
+                   else
+                   {
+                       echo '<em class="ok">';
+                   }
                    
                    $args = '';
                    
@@ -185,9 +200,9 @@
                    echo '</em>';
                }
                
-               if( end( $this['debug']['backtrace'] ) !== $trace ):
-                   echo '<br />';
-               endif;
+//               if( end( $this['debug']['backtrace'] ) !== $trace ):
+//                   echo '<br />';
+//               endif;
            };
         ?></p></div>
     <?php endif; ?>
@@ -251,11 +266,4 @@
            };
         ?></ol>
     <?php endif; */ ?>
-    
-    <?php if( isset( $this['debug'] ) ): ?>
-        <div class="footer">
-            <a href="/client">Client</a>
-            <a href="/doc">Documentation</a>
-        </div>
-    <?php endif; ?>
 </div>

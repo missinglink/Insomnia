@@ -31,6 +31,18 @@ class Bootstrap extends KernelModule
         
         $this->getExceptionHandler()->registerExceptionHandler();
         $this->getErrorHandler()->registerErrorHandler();
+
+        $this->setupSubscribers( $kernel );
+    }
+
+    private function setupSubscribers( Kernel $kernel )
+    {
+        $classMaps = new Subscriber\ExceptionClass;
+        $classMaps->addClassMap( 409, 'Doctrine_Connection_Mysql_Exception' );
+        $classMaps->addClassMap( 500, 'ReflectionException' );
+        $classMaps->addClassMap( 500, 'ErrorException' );
+
+        $kernel->setErrorSubscriber( $classMaps );
     }
     
     public function getExceptionHandler()
