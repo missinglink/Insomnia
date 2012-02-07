@@ -1,6 +1,5 @@
 <?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
-<? $this->javascript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
 <? $this->javascript( '/insomnia/js/stringify.js' ); ?>
 <? $this->javascript( '/insomnia/js/jquery.cors.js' ); ?>
 

@@ -1,6 +1,5 @@
 <?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
-<? $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
 <? $this->addScript( '/insomnia/js/stringify.js' ); ?>
 <? $this->addScript( '/insomnia/prettify/prettify.js' ); ?>
 <? $this->addStylesheet( '/insomnia/prettify/prettify.css' ); ?>
@@ -131,9 +130,5 @@
             <hr />
             <pre id="response" style="font-size:14px;"></pre>
         </div>
-    </div>
-    <div class="footer">
-        <a href="/client">Client</a>
-        <a href="/doc">Documentation</a>
     </div>
 </div>

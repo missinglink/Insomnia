@@ -27,8 +27,4 @@
             
         <?php endforeach; ?>
      </div>
-    <div class="footer">
-        <a href="/client">Client</a>
-        <a href="/doc">Documentation</a>
-    </div>
 </div>

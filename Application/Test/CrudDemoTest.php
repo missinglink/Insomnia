@@ -9,6 +9,7 @@ use \Community\Module\Testing\FunctionalTestCase,
 
 /**
  * @group functional
+ * @group CrudDemo
  */
 class CrudDemoTest extends FunctionalTestCase
 {
