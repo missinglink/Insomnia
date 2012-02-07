@@ -36,25 +36,20 @@ $(document).ready(function()
     );
 
 
-    $.each( $("a.codetoggle"),
-        function()
+    $("a.codetoggle").click(
+        function ()
         {
-            $(this).click(
-                function ()
-                {
-                  if ( $(this).html() == 'Hide' )
-                  {
-                      $(this).html( 'Source' );
-                      $('div#codeView').hide();
-                  }
+          if ( $(this).html() == 'Hide' )
+          {
+              $(this).html( 'Source' );
+              $('div#codeView').hide();
+          }
 
-                  else
-                  {
-                     $(this).html( 'Hide' );
-                     $('div#codeView').show();
-                  }
-                }
-            );
+          else
+          {
+             $(this).html( 'Hide' );
+             $('div#codeView').show();
+          }
         }
     );
 });

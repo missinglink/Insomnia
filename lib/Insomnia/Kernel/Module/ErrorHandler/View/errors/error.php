@@ -1,6 +1,5 @@
 <?php
     if( isset( $this['debug'] ) ):
-        $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' );
         $this->addScript( '/insomnia/js/dev.js' );
     endif;
 ?>
