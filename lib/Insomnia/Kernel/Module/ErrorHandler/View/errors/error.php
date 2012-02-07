@@ -58,12 +58,12 @@
         
         echo '</code></pre>';
     }
-?>   
+?>
 <div class="insomnia">
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error"><?= $this['status']; ?></h1>
+            <h1 class="error icon" style="background-image: url('/insomnia/icon/android/ic_menu_end_conversation.png');""><?= $this['status']; ?></h1>
             <h4><?= $this['title']; ?></h4>
             <?php if( !empty( $this['body'] ) ): ?> 
                 <p><?= $this['body']; ?>.</p>

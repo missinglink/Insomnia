@@ -64,7 +64,7 @@ div.insomnia div.insomnia-backtrace p
 
 div.insomnia div.insomnia-backtrace em.ok
 {
-    color: green;
+/*    color: green;*/
 /*    background-image: url("/insomnia/icon/tree-V.png");
     background-repeat: no-repeat;*/
 
@@ -80,7 +80,7 @@ div.insomnia div.insomnia-backtrace em.error
 
     display: block;
     margin: 0px;
-    padding: 10px 0px 10px 5px;
+    padding: 5px 0px 5px 0px;
 
     font-size: 18px;
 }
@@ -350,7 +350,7 @@ div.footer a.modules
 
 div.footer a.ping
 {
-    background-image: url("/insomnia/icon/android/ic_menu_mylocation.png");
+    background-image: url("/insomnia/icon/android/ic_menu_scan_network.png");
 }
 
 div.footer a.docs
@@ -362,4 +362,11 @@ html
 {
     background-image: url( '/insomnia/images/gradient.jpg' );
     background-repeat: repeat-x;
+}
+
+h1.icon
+{
+    background-repeat: no-repeat;
+    background-position: -5px 1px;
+    padding-left:50px;
 }
