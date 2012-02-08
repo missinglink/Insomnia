@@ -1,4 +1,14 @@
-<div class="insomnia">
+<?php
+
+    function dummyData( $regex )
+    {
+        $simple = preg_replace( '_\?P\<(?:.*)\>_', '', $regex );
+        $regex = str_replace( "(.+)", 'a', $simple );
+        $regex = str_replace( '(\d+)', '1', $regex );
+        return $regex;
+    }
+
+?><div class="insomnia">
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
@@ -27,11 +37,14 @@
                             <?php elseif( $paramKey === 'pattern' ): ?>
                                 <tr>
                                     <th>URL Structure</th>
-                                    <td><?php echo 'http://' . $_SERVER[ 'HTTP_HOST' ] . htmlentities( $route['pattern'] ); ?></td>
+                                    <td>
+                                        <?php $url = 'http://' . $_SERVER[ 'HTTP_HOST' ] . htmlentities( dummyData( $route['patternRegex'] ) ) . '.json'; ?>
+                                        <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
+                                    </td>
                                 </tr>
                             <?php elseif( $paramKey === 'patternRegex' ): ?>
                                 <tr>
-                                    <th style="width:200px;"><?php echo 'Regular Expression'; ?></th>
+                                    <th style="width:200px;"><?php echo 'Match Pattern'; ?></th>
                                     <td><?php echo htmlentities( preg_replace( '_\?P\<(?:.*)\>_', '', $route['patternRegex'] ) ); ?></td>
                                 </tr>
                             <?php elseif( $paramKey === 'methods' ): ?>
