@@ -79,7 +79,7 @@ class Hiccup
     
     public function registerErrorHandler()
     {
-        set_error_handler( array( $this, 'error' ), \E_ALL | \E_STRICT );
+        set_error_handler( array( $this, 'error' ), \E_ALL );
     }
     
     private function terminateExecution( $lastWords = '' )
