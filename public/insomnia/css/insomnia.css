@@ -13,12 +13,21 @@ div.insomnia h1
     line-height: 55px;
 }
 
-div.insomnia h3
+div.insomnia h2
 {
     font-family: 'PT Sans', Georgia, Times, serif;
     font-weight: normal;
     font-size: 26px;
     line-height: 20px;
+    color: #333;
+}
+
+div.insomnia h3
+{
+    font-family: 'PT Sans', Georgia, Times, serif;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 18px;
     color: #555;
 }
 
