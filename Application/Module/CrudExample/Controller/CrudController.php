@@ -174,7 +174,7 @@ class CrudController extends Action
      * @insomnia:Documentation( category="Crud Demo" )
      *
      */
-    public function setup( \Exception $exception )
+    public function setup()
     {
         $this->response[ 'setup' ] = array(
             'title' => 'Setting up the example',

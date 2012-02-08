@@ -114,7 +114,7 @@
             <tr>
         </table>
     <?php endif; ?>
-    <?php if( is_array( $this['debug']['previous'] ) ): ?>
+    <?php if( isset( $this['debug']['previous'] ) && is_array( $this['debug']['previous'] ) ): ?>
         <?php foreach( $this['debug']['previous'] as $exception ): ?>
             <table>
                 <?php if( !empty( $exception['message'] ) ): ?>
