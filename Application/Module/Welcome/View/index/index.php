@@ -63,10 +63,6 @@
     <p>Insomnia Framework beta1 requires PHP 5.3 or later; we recommend using the
     latest PHP version whenever possible.</p>
 
-    <h2>Installation</h2>
-
-    <p>Please see INSTALL.txt</p>
-
     <h2>Questions & Feedback</h2>
 
     <p>If you would like to be notified of new releases, you can subscribe to our
