@@ -60,17 +60,19 @@ class DocumentationController extends Action
             $reflectionMethod  = $reader->getReflector()->getMethod( 'run' );
             $methodAnnotations = $reader->getMethodAnnotations( $reflectionMethod );
 
-            $moduleName = reset( array_slice( explode( '\\', $moduleClass ), -2, 1 ) );
+            $slice = array_slice( explode( '\\', $moduleClass ), -2, 1 );
+            $moduleName = reset( $slice );
             
             $this->getResponse()->set( $moduleName, array() );
             
             foreach( $methodAnnotations as $annotation )
             {
-                if( \get_class( $annotation ) == 'Insomnia\Annotation\KernelPlugins' )
+                if( get_class( $annotation ) == 'Insomnia\Annotation\KernelPlugins' )
                 {
                     foreach( $annotation[ 'value' ] as $value )
                     {
-                        $annotationName = end( explode( '\\', get_class( $value ) ) );
+                        $explode = explode( '\\', get_class( $value ) );
+                        $annotationName = end( $explode );
                         
                         $this->getResponse()->set( $moduleName,
                             array_merge_recursive( $this->getResponse()->get( $moduleName ), array( $annotationName => array( $value->get( 'class' ) ) ) )
@@ -100,7 +102,7 @@ class DocumentationController extends Action
         foreach( Kernel::getInstance()->getEndPoints() as $controllerClass )
         {
             $reader = new AnnotationReader( $controllerClass );
-            $routes = new RouteParser( $reader );
+            $routes = new RouteParser( $reader, Registry::get( 'request' ) );
             
             foreach( $routes->toArray() as $route )
             {

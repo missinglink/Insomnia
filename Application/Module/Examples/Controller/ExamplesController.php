@@ -26,7 +26,7 @@ class ExamplesController extends Action
      * @insomnia:Documentation( title="Examples Index", description="Examples", category="Examples" )
      *
      */
-    public function action( \Exception $exception )
+    public function action()
     {
         $this->response[ 'examples' ] = array(
             array(

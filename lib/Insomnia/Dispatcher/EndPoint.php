@@ -41,7 +41,7 @@ class EndPoint extends Subject
     public function dispatch()
     {
         try {
-            \call_user_func_array( array( $this->getController(), $this->getMethod() ), func_get_args() );
+            call_user_func_array( array( $this->getController(), $this->getMethod() ), func_get_args() );
         }
         catch( \Exception $e )
         {
@@ -53,7 +53,7 @@ class EndPoint extends Subject
             else throw $e;
         }
                 
-        if( \method_exists( $this->getController(), 'getResponse' ) )
+        if( method_exists( $this->getController(), 'getResponse' ) )
             $this->getController()->getResponse()->render( $this );
         
         exit;
