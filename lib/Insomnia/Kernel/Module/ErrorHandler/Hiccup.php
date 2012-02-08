@@ -14,6 +14,13 @@ class Hiccup
             \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::CRIT, $e );
 
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
+            
+            if( \APPLICATION_ENV === 'development' )
+            {
+                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-Message', $e->getMessage() );
+                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-File', $e->getFile() . ':' . $e->getLine() );
+            }
+            
             $endPoint->dispatch( $e );
         }
         
