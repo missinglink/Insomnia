@@ -1,6 +1,5 @@
 <?php
     if( isset( $this['debug'] ) ):
-        $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' );
         $this->addScript( '/insomnia/js/dev.js' );
     endif;
 ?>
@@ -58,7 +57,7 @@
         
         echo '</code></pre>';
     }
-?>   
+?>
 <div class="insomnia">
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
@@ -91,7 +90,7 @@
                 </tr>
                     <th>Message</th>
                     <td>
-                        <?= $this['debug']['message']; ?>
+                        <?= ucfirst( $this['debug']['message'] ); ?>
                     </td>
                 </tr>
             <?php endif; ?>
@@ -109,29 +108,31 @@
                 <td>
                     <?= renderFilePath( $this['debug']['file'] ); ?>:<?= $this['debug']['line']; ?>
                     <div class="button">
-                        <a id="codetoggle" href="#" onclick="return false;">Source</a>
+                        <a class="codetoggle" href="#" onclick="return false;">Source</a>
                     </div>
                 </td>
             <tr>
         </table>
     <?php endif; ?>
-    <?php if( isset( $this['debug']['previous'] ) ): ?>
-        <table>
-            <?php if( !empty( $this['debug']['previous']['message'] ) ): ?>
+    <?php if( is_array( $this['debug']['previous'] ) ): ?>
+        <?php foreach( $this['debug']['previous'] as $exception ): ?>
+            <table>
+                <?php if( !empty( $exception['message'] ) ): ?>
+                    </tr>
+                        <th>Message</th>
+                        <td><?= ucfirst( $exception['message'] ); ?></td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <th>Exception</th>
+                    <td><?= $exception['exception']; ?></td>
+                <tr>
                 </tr>
-                    <th>Message</th>
-                    <td><?= $this['debug']['previous']['message']; ?></td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-                <th>Exception</th>
-                <td><?= $this['debug']['previous']['exception']; ?></td>
-            <tr>
-            </tr>
-                <th>File</th>
-                <td><?= renderFilePath( $this['debug']['previous']['file'] ); ?>:<?= $this['debug']['previous']['line']; ?></td>
-            <tr>
-        </table>
+                    <th>File</th>
+                    <td><?= renderFilePath( $exception['file'] ); ?>:<?= $exception['line']; ?></td>
+                <tr>
+            </table>
+        <?php endforeach; ?>
     <?php endif; ?>
    
     <?php if( isset( $this['debug'] ) ): ?>
@@ -143,10 +144,15 @@
     <?php if( isset( $this['debug']['backtrace'] ) ): ?>
         
         <div class="insomnia-backtrace posh"><p style="margin:0;"><?php
+        
+           $exceptionTriggered = false;
+           
            foreach( $this['debug']['backtrace'] as $trace )
            {
                if( isset( $trace['exception'] ) )
-               {                   
+               {
+                   $exceptionTriggered = true;
+                   
                    echo '<em class="error">';
                    echo renderNamespace( get_class( $trace['exception'] ) ) . '( <span>' . $trace['exception']->getMessage() . '</span> )';
                    
@@ -160,7 +166,15 @@
                }
                else
                {
-                   echo '<em>';
+                   if( $exceptionTriggered )
+                   {
+                       echo '<em class="dim">';
+                   }
+                   
+                   else
+                   {
+                       echo '<em class="ok">';
+                   }
                    
                    $args = '';
                    
@@ -185,12 +199,12 @@
                    echo '</em>';
                }
                
-               //must assign a real variable to end() (needs array passed by reference)
-               $backtrace = $this['debug']['backtrace'];
-               
-               if( end( $backtrace ) !== $trace ):
-                   echo '<br />';
-               endif;
+                //must assign a real variable to end() (needs array passed by reference)
+                $backtrace = $this['debug']['backtrace'];
+
+                if( end( $backtrace ) !== $trace ):
+                    echo '<br />';
+                endif;
            };
         ?></p></div>
     <?php endif; ?>
@@ -254,11 +268,4 @@
            };
         ?></ol>
     <?php endif; */ ?>
-    
-    <?php if( isset( $this['debug'] ) ): ?>
-        <div class="footer">
-            <a href="/client">Client</a>
-            <a href="/doc">Documentation</a>
-        </div>
-    <?php endif; ?>
 </div>

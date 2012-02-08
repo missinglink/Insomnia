@@ -10,16 +10,16 @@ namespace Insomnia\Validator;
 
 class DatabaseException extends \Exception
 {
-    public function __construct( $message, $code = 0, $previous = null )
+    public function __construct( $message, $code = null, $previous = null )
     {
         if( $previous instanceof \PDOException )
         {
             if( $previous->getCode() == 23000 && \preg_match( '%key \'unique_(?P<key>.+)\'%', $previous->getMessage(), $match ) )
             {
-                throw new \Insomnia\Validator\ErrorStack( array( $match[ 'key' ] => 'unique' ) );
+                throw new \Insomnia\Validator\ErrorStack( array( $match[ 'key' ] => 'unique' ), $code, $previous );
             }
-            
-            else throw new self( 'Application error' );
         }
+
+        parent::__construct( 'Application error', $code, $previous );
     }
 }

@@ -25,7 +25,7 @@ class BodyParser extends Observer
                             //case 'application/x-www-form-urlencoded' :
                             default :
                                 parse_str( $body, $params );
-                                
+      
                                 $request->mergeParams( array_filter( $params, function($value) {
                                     return $value !== '';
                                 }));

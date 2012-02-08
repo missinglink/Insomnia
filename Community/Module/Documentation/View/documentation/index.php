@@ -2,7 +2,7 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">Documentation</h1>
+            <h1 class="error icon" style="background-image: url('/insomnia/icon/android/ic_menu_bookmark.png');">Documentation</h1>
             <h4>Documentation Index</h4>
         </div>
     </div>
