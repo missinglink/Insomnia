@@ -376,3 +376,11 @@ h1.icon
     background-position: -5px 2px;
     padding-left:50px;
 }
+
+h3.icon
+{
+    background-repeat: no-repeat;
+    background-position: -5px -8px;
+    padding: 5px 0;
+    padding-left:50px;
+}

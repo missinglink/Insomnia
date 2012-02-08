@@ -29,9 +29,9 @@
             <?php foreach( $category as $route ): ?>
                 <div class="insomnia-documentation-block" style="margin-bottom:40px;">
 
-                    <h3><?php echo implode( ', ', $route['methods'] ); ?> <?php echo $route['pattern']; ?></h3>
+                    <h3 class="icon" style="background-image: url('/insomnia/icon/android/ic_menu_replace.png');"><?php echo implode( ', ', $route['methods'] ); ?> <?php echo $route['pattern']; ?></h3>
                     
-                    <table>
+                    <table style="background-color:#fff;">
                         <?php foreach( $route as $paramKey => $paramValue ): ?>
                             <?php if( $paramKey === 'params' ): continue ?>
                             <?php elseif( $paramKey === 'pattern' ): ?>
