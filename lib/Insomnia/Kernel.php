@@ -7,6 +7,8 @@ use \Insomnia\Pattern\KernelModule,
     \Insomnia\Router,
     \Insomnia\Pattern\PriorityQueue;
 
+use \Insomnia\Pattern\ErrorSubscriber;
+
 class Kernel
 {
     private static $_instance;

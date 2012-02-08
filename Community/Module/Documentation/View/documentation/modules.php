@@ -2,7 +2,7 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">Modules</h1>
+            <h1 class="error icon" style="background-image: url('/insomnia/icon/android/ic_menu_manage.png');">Modules</h1>
             <h4>A list of modules loaded in the current request</h4>
             <p>Current: <?= date( 'r' ); ?></p>
         </div>
@@ -27,8 +27,4 @@
             
         <?php endforeach; ?>
      </div>
-    <div class="footer">
-        <a href="/client">Client</a>
-        <a href="/doc">Documentation</a>
-    </div>
 </div>

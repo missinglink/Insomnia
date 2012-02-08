@@ -8,6 +8,7 @@ class ErrorStack extends \Exception
     
     public function __construct( $errors )
     {
+        parent::__construct( 'ErrorStack', 400 );
         $this->setErrors( $errors );
     }
     
@@ -15,7 +16,8 @@ class ErrorStack extends \Exception
         return $this->errors;
     }
 
-    public function setErrors($errors) {
+    public function setErrors( $errors )
+    {
         $this->errors = $errors;
     }
 }

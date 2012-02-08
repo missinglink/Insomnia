@@ -1,6 +1,5 @@
 <?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
-<? $this->addScript( 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' ); ?>
 <? $this->addScript( '/insomnia/js/stringify.js' ); ?>
 <? $this->addScript( '/insomnia/prettify/prettify.js' ); ?>
 <? $this->addStylesheet( '/insomnia/prettify/prettify.css' ); ?>
@@ -16,7 +15,7 @@
     <div class="insomnia-error-header">
         <h1 class="insomnia-logo">Insomnia</h1>
         <div class="insomnia-title">
-            <h1 class="error">Client</h1>
+            <h1 class="error icon" style="background-image: url('/insomnia/icon/android/ic_menu_invites.png');">Client</h1>
             <h4>REST Client</h4>
         </div>
     </div>
@@ -131,9 +130,5 @@
             <hr />
             <pre id="response" style="font-size:14px;"></pre>
         </div>
-    </div>
-    <div class="footer">
-        <a href="/client">Client</a>
-        <a href="/doc">Documentation</a>
     </div>
 </div>

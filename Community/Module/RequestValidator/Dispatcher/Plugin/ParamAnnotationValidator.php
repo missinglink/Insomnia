@@ -38,8 +38,8 @@ class ParamAnnotationValidator extends Observer
                 $endpoint->getController()->getValidator()->optional( $param[ 'name' ], $validator );
             else
                 $endpoint->getController()->getValidator()->required( $param[ 'name' ], $validator );
-            
-            $endpoint->getController()->getValidator()->validate();
-        }        
+        }
+
+        $endpoint->getController()->getValidator()->validate();
     }
 }

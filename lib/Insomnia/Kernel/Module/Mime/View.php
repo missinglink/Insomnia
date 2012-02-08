@@ -113,7 +113,7 @@ abstract class View extends ArrayAccess implements ResponseInterface
 
     public function printScriptsAsHtml()
     {
-        foreach( $this->getScripts() as $script )
+        foreach( array_reverse( $this->getScripts() ) as $script )
         {
             echo '<script src="'.$script.'" type="text/javascript"></script>' . PHP_EOL;
         }
