@@ -28,7 +28,7 @@ class WelcomeController extends Action
      * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */
-    public function action( \Exception $exception )
+    public function action()
     {
     }
 }

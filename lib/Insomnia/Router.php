@@ -15,8 +15,6 @@ class Router
     
     public function dispatch( Request $request )
     {
-        Registry::set( 'request', $request );
-        
         /** @var $route \Insomnia\Router\Route */
         foreach( $this->loadRoutes( $request ) as $route )
         {

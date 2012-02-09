@@ -36,7 +36,7 @@ $(document).ready(function()
     );
 
 
-    $("a#codetoggle").click(
+    $("a.codetoggle").click(
         function ()
         {
           if ( $(this).html() == 'Hide' )

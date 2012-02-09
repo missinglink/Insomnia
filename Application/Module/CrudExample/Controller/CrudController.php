@@ -3,7 +3,7 @@
 namespace Application\Module\CrudExample\Controller;
 
 use \Insomnia\Controller\Action,
-    \Application\Bootstrap\Doctrine,
+    \Application\Module\CrudExample\Bootstrap\Doctrine,
     \Application\Controller\TestController,
     \Insomnia\Request\Validator\IntegerValidator,
     \Insomnia\Request\Validator\StringValidator,
@@ -161,5 +161,25 @@ class CrudController extends Action
         $doctrine->getManager()->flush();
 
         $this->response->merge( $dataMapper->export() );
+    }
+
+    /**
+     * CrudExample Setup Help
+     *
+     * @insomnia:Route( "/crud/setup", name="CrudExample_setup" )
+     * @insomnia:Method( "GET" )
+     *
+     * @insomnia:View( "Application\Module\CrudExample\View\Setup" )
+     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @insomnia:Documentation( category="Crud Demo" )
+     *
+     */
+    public function setup()
+    {
+        $this->response[ 'setup' ] = array(
+            'title' => 'Setting up the example',
+            'description' => 'You must setup your database before running this example',
+            'example' => file_get_contents( __DIR__ . '../../Scripts/user_create.sql' ),
+        );
     }
 }

@@ -26,7 +26,7 @@ class HtmlEntitiesController extends Action
      * 
      * @insomnia:Route( "/example/entity", name="entity_multiple" )
      * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Application Demo" )
+     * @insomnia:Documentation( category="HTML Entities Demo" )
      *
      * @insomnia:View( "Application\Module\HtmlEntities\View\Entities" )
      * @insomnia:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
@@ -46,7 +46,7 @@ class HtmlEntitiesController extends Action
      * 
      * @insomnia:Route( "/example/entity/:id", name="entity_single" )
      * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Application Demo" )
+     * @insomnia:Documentation( category="HTML Entities Demo" )
      *
      * @insomnia:Request({
      *      @insomnia:Param( name="id", type="string" )

@@ -23,7 +23,9 @@ class CrudDemoTest extends FunctionalTestCase
      */   
     public function testReadSingleNotFound_Json( $browserTemplate )
     {
-        $request = new HTTPRequest( '/example/crud/' . mt_rand( mt_getrandmax() - 1000, null ) );
+        $randomId = mt_rand( mt_getrandmax() - 1000, mt_getrandmax() );
+        
+        $request = new HTTPRequest( '/example/crud/' . $randomId );
         $request->setHeaders( $browserTemplate->getHeaders() );
         $request->setHeader( 'Accept', 'application/json' );
         
@@ -56,6 +58,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testCreateSingle_Json( $browserTemplate )
@@ -83,6 +86,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testReadSingle_Json( $browserTemplate )
@@ -125,6 +129,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testUpdateSingle_Json( $browserTemplate )
@@ -151,6 +156,7 @@ class CrudDemoTest extends FunctionalTestCase
     /**
      * @dataProvider getBrowserTemplates
      * 
+     * @depends testCreateSingleMissingName_Json
      * @param HTTPRequest $browserTemplate
      */   
     public function testDeleteSingle_Json( $browserTemplate )

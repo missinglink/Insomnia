@@ -51,12 +51,20 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     {
         $request->setDomain( 'ws.local.test' );
         
-        if( null === $response )
+        try
         {
-            $response = new HTTPResponse;
+            if( null === $response )
+            {
+                $response = new HTTPResponse;
+            }
+
+            return $this->getTransport()->execute( $request, $response );
         }
         
-        return $this->getTransport()->execute( $request, $response );
+        catch( \Exception $e )
+        {
+            $this->markTestSkipped( 'Transport ' . get_class( $this->getTransport() ) . ' failed with message: ' . $e->getMessage() );
+        }
     }
     
     public function assertValidResponse( HTTPResponse $response, $code = Code::HTTP_OK, $contentType = 'application/json', $charset = 'UTF-8' )

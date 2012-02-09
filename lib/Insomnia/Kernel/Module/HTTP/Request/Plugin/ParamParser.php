@@ -17,7 +17,5 @@ class ParamParser extends Observer
         $request->mergeParams( array_filter( $_REQUEST, function($value) {
             return $value !== '';
         } ) );
-        
-        
     }
 }

@@ -1,6 +1,6 @@
 <?php $request = \Insomnia\Registry::get( 'request' ); ?>
 
-<? $this->addScript( '/insomnia/js/jquery-1.4.3.min.js' ); ?>
+<?php $this->addScript( 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' ); ?>
 <? $this->addScript( '/insomnia/js/stringify.js' ); ?>
 <? $this->addScript( '/insomnia/prettify/prettify.js' ); ?>
 <? $this->addStylesheet( '/insomnia/prettify/prettify.css' ); ?>

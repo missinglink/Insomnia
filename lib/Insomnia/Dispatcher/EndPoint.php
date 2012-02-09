@@ -41,12 +41,14 @@ class EndPoint extends Subject
     public function dispatch()
     {
         try {
-            \call_user_func_array( array( $this->getController(), $this->getMethod() ), func_get_args() );
+            call_user_func_array( array( $this->getController(), $this->getMethod() ), func_get_args() );
         }
         catch( \Exception $e )
         {
             if( $e instanceof \PDOException )
-                throw new DatabaseException( 'Database error', null, $e );
+            {
+                throw new DatabaseException( 'Database Error', 500, $e );
+            }
 
             else throw $e;
         }
@@ -59,7 +61,7 @@ class EndPoint extends Subject
             $this->getController()->getResponse()->setHeader( 'X-xprof', $run_id );
         }
                 
-        if( \method_exists( $this->getController(), 'getResponse' ) )
+        if( method_exists( $this->getController(), 'getResponse' ) )
             $this->getController()->getResponse()->render( $this );
     
         exit;

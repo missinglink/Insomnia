@@ -2,7 +2,7 @@
 
 namespace Community\Module\Session;
 
-use Community\Module\Session\Storage\Disk as SessionStorage,
+use Community\Module\Session\Storage\Disk as SessionStorageMethod,
     Community\Module\Session\Authentication\Token as SessionAuthentication;
 
 class Session extends SessionAbstract
@@ -13,7 +13,7 @@ class Session extends SessionAbstract
     public function  __construct()
     {
         self::setName( 'SESSION' );
-        self::setStorage( new SessionStorage );
+        self::setStorage( new SessionStorageMethod );
         self::setAuthentication( new SessionAuthentication );
         self::start();
     }
