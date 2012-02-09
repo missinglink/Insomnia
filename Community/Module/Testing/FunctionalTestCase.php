@@ -12,20 +12,44 @@ use \Community\Module\Testing\Transport\Cli\CurlTransport,
 
 use \Insomnia\Response\Code;
 
-class FunctionalTestCase extends \PHPUnit_Framework_TestCase
+abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
     private $transport;
     
+    // only instantiate pdo once for test clean-up/fixture load
+    static private $pdo = null;
+
+    // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+    private $conn = null;
+    
+
     protected function setUp()
     {
+        parent::setUp();
+        
         $this->setTransport( new CurlTransport );
         $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_VERBOSE ) );
         //$this->getTransport()->attach( new SqliteDebugger );
     }
+
+    final public function getConnection()
+    {
+        if ($this->conn === null)
+        {
+            if (self::$pdo == null)
+            {
+                self::$pdo = new \PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+            }
+            
+            $this->conn = $this->createDefaultDBConnection( self::$pdo, $GLOBALS['DB_DBNAME'] );
+        }
+
+        return $this->conn;
+    }
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
     {
-        $request->setDomain( 'ws.local.bnt' );
+        $request->setDomain( 'ws.local.test' );
         
         if( null === $response )
         {
@@ -43,16 +67,11 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertLessThan( 500, $response->getExecutionTime() );
     }
     
-    public function testNothing()
-    {
-        
-    }
-    
     protected function getSessionId()
     {
         $request = new HTTPRequest( '/session', 'POST' );
         $request->setHeader( 'Accept', 'application/json' );
-        $request->setParam( 'email', 'peter@bravenewtalent.com' );
+        $request->setParam( 'email', 'elvis@bravenewtalent.com' );
         $request->setParam( 'password', 'qwerty' );
         
         $response = $this->transfer( $request );
