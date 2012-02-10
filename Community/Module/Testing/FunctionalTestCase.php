@@ -12,20 +12,118 @@ use \Community\Module\Testing\Transport\Cli\CurlTransport,
 
 use \Insomnia\Response\Code;
 
-class FunctionalTestCase extends \PHPUnit_Framework_TestCase
+abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
+    /**
+     * Type of transport
+     * 
+     * @var Transporter
+     */
     private $transport;
+    
+    /**
+     * Current debug level, based on CliDebugger constant
+     * 
+     * @var integer 
+     */
+    private $debugLevel = CliDebugger::DEBUG_NONE;
+    
+    /**
+     * Only instantiate \PDO once for test clean-up/fixture load
+     * 
+     * @var \PDO 
+     */
+    static private $pdo;
+    
+    /**
+     * Only instantiate \PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+     * 
+     * @var \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection 
+     */
+    private $conn;
+        
+ 
+        
+    /**
+     * Method to return an array of filepathes to yaml fixture files
+     * 
+     * @return array
+     */
+    abstract function loadFixtureData(); 
     
     protected function setUp()
     {
+        parent::setUp();
+        
         $this->setTransport( new CurlTransport );
-        $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_VERBOSE ) );
+        $this->getTransport()->attach( new CliDebugger( $this->debugLevel ) );
         //$this->getTransport()->attach( new SqliteDebugger );
+    }
+
+    /**
+     * Provides PHPUnit with the needed database connection object
+     * (based on the phpunit.xml)
+     * 
+     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection 
+     */
+    final public function getConnection()
+    {
+        if ( $this->conn === null )
+        {
+            if ( self::$pdo == null )
+            {
+                self::$pdo = new \PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+            }
+            
+            $this->conn = $this->createDefaultDBConnection( self::$pdo, $GLOBALS['DB_DBNAME'] );
+        }
+        
+        return $this->conn;
+    }
+    
+    /**
+     * Provides PHPUnit with the needed fixture data (yaml based)
+     * 
+     * @return \PHPUnit_Extensions_Database_DataSet_CompositeDataSet|\PHPUnit_Extensions_Database_DataSet_YamlDataSet
+     * @throws \Exception 
+     */
+    final protected function getDataSet()
+    {
+        $fixtureData = $this->loadFixtureData();
+        
+        if ( is_array( $fixtureData ) && 1 < count($fixtureData) )
+        {
+            $datasets = array();
+            
+            foreach ( $fixtureData as $fixture )
+            {
+                if ( !is_readable( $fixture ) )
+                {
+                    throw new \Exception( 'cannot read from: ' . $fixture );
+                }
+                $datasets[] = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixture ); 
+            }
+            
+            return new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet( $datasets );
+        }
+        elseif (  is_array( $fixtureData ) && 1 === count($fixtureData) )
+        {
+            if ( !is_readable( $fixtureData[ 0 ] ) )
+            {
+                throw new \Exception( 'cannot read from: ' . $fixtureData[ 0 ]  );
+            }
+            
+            return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] ); 
+        }
+        else
+        {
+            throw new \Exception( 'please return an array with at least 1 path in loadFixtureData()' );
+        }
     }
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
     {
-        $request->setDomain( 'ws.local.bnt' );
+        $request->setDomain( 'ws.local.test' );
         
         try
         {
@@ -51,16 +149,11 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertLessThan( 500, $response->getExecutionTime() );
     }
     
-    public function testNothing()
-    {
-        
-    }
-    
     protected function getSessionId()
     {
         $request = new HTTPRequest( '/session', 'POST' );
         $request->setHeader( 'Accept', 'application/json' );
-        $request->setParam( 'email', 'peter@bravenewtalent.com' );
+        $request->setParam( 'email', 'elvis@bravenewtalent.com' );
         $request->setParam( 'password', 'qwerty' );
         
         $response = $this->transfer( $request );
@@ -93,7 +186,6 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
      * @return Transporter 
      */
     protected function getTransport()
@@ -105,4 +197,18 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     {
         $this->transport = $transport;
     }
+    
+    /**
+     * @return integer 
+     */
+    public function getDebugLevel()
+    {
+        return $this->debugLevel;
+    }
+
+    public function setDebugLevel( $debugLevel )
+    {
+        $this->debugLevel = $debugLevel;
+    }
+
 }
