@@ -14,29 +14,63 @@ use \Insomnia\Response\Code;
 
 abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
+    /**
+     * Type of transport
+     * 
+     * @var Transporter
+     */
     private $transport;
     
-    // only instantiate pdo once for test clean-up/fixture load
-    static private $pdo = null;
-
-    // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-    private $conn = null;
+    /**
+     * Current debug level, based on CliDebugger constant
+     * 
+     * @var integer 
+     */
+    private $debugLevel = CliDebugger::DEBUG_NONE;
+    
+    /**
+     * Only instantiate \PDO once for test clean-up/fixture load
+     * 
+     * @var \PDO 
+     */
+    static private $pdo;
+    
+    /**
+     * Only instantiate \PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+     * 
+     * @var \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection 
+     */
+    private $conn;
         
-
+ 
+        
+    /**
+     * Method to return an array of filepathes to yaml fixture files
+     * 
+     * @return array
+     */
+    abstract function loadFixtureData(); 
+    
     protected function setUp()
     {
         parent::setUp();
         
         $this->setTransport( new CurlTransport );
-        $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_FULL ) );
+        $this->getTransport()->attach( new CliDebugger( $this->debugLevel ) );
         //$this->getTransport()->attach( new SqliteDebugger );
     }
 
+    /**
+     * Provides PHPUnit with the needed database connection object
+     * (based on the phpunit.xml)
+     * 
+     * @return \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection 
+     */
     final public function getConnection()
     {
-        if ($this->conn === null)
+        if ( $this->conn === null )
         {
-            if (self::$pdo == null)
+            if ( self::$pdo == null )
             {
                 self::$pdo = new \PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
             }
@@ -47,8 +81,12 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         return $this->conn;
     }
     
-    abstract function loadFixtureData(); 
-    
+    /**
+     * Provides PHPUnit with the needed fixture data (yaml based)
+     * 
+     * @return \PHPUnit_Extensions_Database_DataSet_CompositeDataSet|\PHPUnit_Extensions_Database_DataSet_YamlDataSet
+     * @throws \Exception 
+     */
     final protected function getDataSet()
     {
         $fixtureData = $this->loadFixtureData();
@@ -148,7 +186,6 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /**
-     *
      * @return Transporter 
      */
     protected function getTransport()
@@ -160,4 +197,18 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     {
         $this->transport = $transport;
     }
+    
+    /**
+     * @return integer 
+     */
+    public function getDebugLevel()
+    {
+        return $this->debugLevel;
+    }
+
+    public function setDebugLevel( $debugLevel )
+    {
+        $this->debugLevel = $debugLevel;
+    }
+
 }
