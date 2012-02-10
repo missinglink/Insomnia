@@ -21,14 +21,14 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
 
     // only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
     private $conn = null;
-    
+        
 
     protected function setUp()
     {
         parent::setUp();
         
         $this->setTransport( new CurlTransport );
-        $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_VERBOSE ) );
+        $this->getTransport()->attach( new CliDebugger( CliDebugger::DEBUG_FULL ) );
         //$this->getTransport()->attach( new SqliteDebugger );
     }
 
@@ -43,8 +43,44 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
             
             $this->conn = $this->createDefaultDBConnection( self::$pdo, $GLOBALS['DB_DBNAME'] );
         }
-
+        
         return $this->conn;
+    }
+    
+    abstract function loadFixtureData(); 
+    
+    final protected function getDataSet()
+    {
+        $fixtureData = $this->loadFixtureData();
+        
+        if ( is_array( $fixtureData ) && 1 < count($fixtureData) )
+        {
+            $datasets = array();
+            
+            foreach ( $fixtureData as $fixture )
+            {
+                if ( !is_readable( $fixture ) )
+                {
+                    throw new \Exception( 'cannot read from: ' . $fixture );
+                }
+                $datasets[] = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixture ); 
+            }
+            
+            return new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet( $datasets );
+        }
+        elseif (  is_array( $fixtureData ) && 1 === count($fixtureData) )
+        {
+            if ( !is_readable( $fixtureData[ 0 ] ) )
+            {
+                throw new \Exception( 'cannot read from: ' . $fixtureData[ 0 ]  );
+            }
+            
+            return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] ); 
+        }
+        else
+        {
+            throw new \Exception( 'please return an array with at least 1 path in loadFixtureData()' );
+        }
     }
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
