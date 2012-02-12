@@ -58,6 +58,31 @@ class Hiccup
         /* Don't execute PHP internal error handler */
         return true;
     }
+    
+    public function useBuffer()
+    {
+        $this->cleanBuffer();
+        ob_start( array( $this, 'test' ) );
+    }
+    
+    private function cleanBuffer()
+    {
+        $buffer = '';
+        while( $buf = ob_end_clean() )
+        {
+            $buffer .= $buf;
+        }
+        
+        return $buffer;
+    }
+    
+    public function test()
+    {
+        $this->cleanBuffer();
+        
+//        $this->catchException( new \ErrorException( 'a', 1, 2, '$errfile', 1 ) );
+        return 'BUFFER!';
+    }
 
     public function registerExceptionHandler()
     {

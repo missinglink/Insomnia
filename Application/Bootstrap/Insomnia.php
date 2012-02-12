@@ -27,7 +27,7 @@ class Insomnia
         ini_set( 'session.use_cookies',        0 ); // Turn off cookies by default
         ini_set( 'session.use_only_cookies',   0 ); // Turn off cookies by default
         ini_set( 'session.use_trans_sid',      0 ); // Turn off sid by default
-
+        
         // Development Mode
         if( defined( 'APPLICATION_ENV' ) && \APPLICATION_ENV === 'development' )
         {
