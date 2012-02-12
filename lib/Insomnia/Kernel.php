@@ -3,7 +3,6 @@
 namespace Insomnia;
 
 use \Insomnia\Pattern\KernelModule,
-    \Insomnia\Controller\Action,
     \Insomnia\Router,
     \Insomnia\Pattern\PriorityQueue;
 
