@@ -146,7 +146,7 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals( $code, $response->getCode() );
         $this->assertEquals( $contentType, $response->getContentType() );
         $this->assertEquals( $charset, $response->getCharacterSet() );
-        $this->assertLessThan( 500, $response->getExecutionTime() );
+        $this->assertLessThan( 1000, $response->getExecutionTime() );
     }
     
     protected function getSessionId()
