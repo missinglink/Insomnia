@@ -158,10 +158,7 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         
         $response = $this->transfer( $request );
         
-        $this->assertEquals( Code::HTTP_OK, $response->getCode() );
-        $this->assertEquals( 'application/json', $response->getContentType() );
-        $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
-        $this->assertLessThan( 500, $response->getExecutionTime() );
+        $this->assertValidResponse( $response, Code::HTTP_OK, 'application/json' );
         
         $json = json_decode( $response->getBody(), true );
         $this->assertArrayHasKey( 'sessionId', $json );
