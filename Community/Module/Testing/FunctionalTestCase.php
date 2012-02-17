@@ -53,6 +53,20 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     
     protected function setUp()
     {
+        global $argv;
+        if( isset( $argv ) )
+        {
+            if( in_array( '--debug', $argv ) )
+            {
+                $this->setDebugLevel( CliDebugger::DEBUG_VERBOSE );
+            }
+            
+            elseif( in_array( '--verbose', $argv ) || in_array( '-v', $argv ) )
+            {
+                $this->setDebugLevel( CliDebugger::DEBUG_SIMPLE );
+            }
+        }
+        
         parent::setUp();
         
         $this->setTransport( new CurlTransport );
