@@ -137,7 +137,10 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
     {
-        $request->setDomain( 'ws.local.test' );
+        if( $request->getDomain() === 'localhost' )
+        {
+            $request->setDomain( 'ws.local.test' );
+        }
         
         try
         {
@@ -178,6 +181,26 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         $this->assertArrayHasKey( 'sessionId', $json );
         
         return (string) $json[ 'sessionId' ];
+    }
+    
+    protected function getZendAuthCookieId()
+    {
+        $request = new HTTPRequest( '/signin', 'POST' );
+        $request->setDomain( 'www.local.test' );
+        $request->setParam( 'email', 'elvis@bravenewtalent.com' );
+        $request->setParam( 'passwordInput', 'qwerty' );
+        $request->setParam( 'submit', 'Sign In' );
+        
+        $response = $this->transfer( $request );
+        
+        $this->assertValidResponse( $response, Code::HTTP_FOUND, 'text/html', '' );
+        
+        $this->assertContains( 'PHPSESSID=', $response->getHeader( 'Set-Cookie' ) );
+        $this->assertRegExp( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', $response->getHeader( 'Set-Cookie' ) );
+        
+        $sessionId = preg_filter( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', '$1', $response->getHeader( 'Set-Cookie' ) );
+        
+        return (string) $sessionId;
     }
     
     /**
