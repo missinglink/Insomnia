@@ -197,6 +197,9 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         
         $this->assertContains( 'PHPSESSID=', $response->getHeader( 'Set-Cookie' ) );
         $this->assertRegExp( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', $response->getHeader( 'Set-Cookie' ) );
+
+        // Make sure we were re-directed correctly (This is a simple way of confirming the login was successful)
+        $this->assertEquals( 'http://www.local.test/onboarding', $response->getHeader( 'Location' ) );
         
         $sessionId = preg_filter( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', '$1', $response->getHeader( 'Set-Cookie' ) );
         
