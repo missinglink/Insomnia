@@ -23,7 +23,7 @@ class Session extends SessionAbstract
         
         else
         {
-            self::start( self::generateId() );
+            self::useId( self::generateId() );
         }
     }
 
