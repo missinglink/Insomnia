@@ -8,8 +8,8 @@ class Disk extends StorageAbstract
 {
     public function __construct()
     {
-        \session_module_name( 'files' );
-        \session_cache_expire( $this->timeout / 60 );
+//        \session_module_name( 'files' );
+//        \session_cache_expire( $this->timeout / 60 );
     }
 
     public function read( $key )

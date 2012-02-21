@@ -45,6 +45,7 @@ class CliDebugger extends Observer
         $methodString   = ' ' . $this->output( $transport->getRequest()->getMethod(), 'brown' ) . ' ';
         $protocolString = ' ' . $this->output( $transport->getRequest()->getProtocol(), 'dark_gray' );
 
+        echo $transport->getRequest()->getDomain();
         echo $methodString . $transport->getRequest()->getUri() . ( self::DEBUG_SIMPLE === $this->getDebugLevel() ? $this->output( ' -', 'brown' ) : $protocolString . \PHP_EOL );
 
         if( self::DEBUG_SIMPLE < $this->getDebugLevel() )

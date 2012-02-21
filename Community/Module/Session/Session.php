@@ -10,20 +10,36 @@ class Session extends SessionAbstract
     protected static $authentication,
                      $storage;
 
-    public function  __construct()
+    public function  __construct( $sessionId = null )
     {
         self::setName( 'SESSION' );
         self::setStorage( new SessionStorageMethod );
         self::setAuthentication( new SessionAuthentication );
-        self::start();
+        
+        if( null !== $sessionId )
+        {
+            self::useId( $sessionId );
+        }
+        
+        else
+        {
+            self::start( self::generateId() );
+        }
     }
 
+    public static function generateId()
+    {
+        return md5( time() . mt_rand( 0, \PHP_INT_MAX ) );
+    }
+    
     public static function authenticate( $request )
     {
         self::$authentication->authenticate( $request );
         
         if( null === self::get( 'id' ) )
+        {
             throw new SessionException( 'Authentication Failed' );
+        }
     }
 
     public static function setAuthentication( AuthenticationAbstract $authentication )
@@ -98,15 +114,26 @@ class Session extends SessionAbstract
 
     public static function useId( $id = null )
     {
+        if( !self::validateId( $id ) )
+        {
+            throw new \Exception( "The session id is too long or contains illegal characters, valid characters are a-z, A-Z, 0-9 and '-'", 400 );
+        }
+        
         if( isset( $id ) )
         {
             $name = self::getName();
             self::close();
             self::setId( $id );
             self::setName( $name );
-            self::start();
+            self::start( self::generateId() );
         }
         
         self::set( 'id', self::getId() );
+    }
+    
+    public static function validateId( $id = null )
+    {
+        // PHP is picky about the session id
+        return preg_match( '/^[a-zA-Z0-9\-]{0,32}$/', $id );
     }
 }
