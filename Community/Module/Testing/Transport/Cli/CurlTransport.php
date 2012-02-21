@@ -10,7 +10,7 @@ use \Community\Module\Testing\Transport\HTTPResponse;
 
 class CurlTransport extends Subject implements Transporter
 {
-    const FOLLOW_REDIRECTS = true;
+    public static $followRedirects = true;
     
     private $request;
     private $response;
@@ -21,6 +21,7 @@ class CurlTransport extends Subject implements Transporter
         $this->setResponse( $response );
         
         $cli = new CurlCommand;
+        $cli->followRedirects( self::$followRedirects );
         $cli->execute( $request );
         
         // Request Headers
@@ -79,6 +80,14 @@ class CurlTransport extends Subject implements Transporter
         
         // Return Response Object
         return $response;
+    }
+    
+    /**
+     * @param boolean $followRedirects 
+     */
+    public function followRedirects( $followRedirects )
+    {
+        self::$followRedirects = (bool) $followRedirects;
     }
     
     public function getRequest()

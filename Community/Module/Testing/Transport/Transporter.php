@@ -16,4 +16,9 @@ interface Transporter
     public function getResponse();
 
     public function setResponse( $response );
+    
+    /**
+     * @param boolean $followRedirects
+     */
+    public function followRedirects( $followRedirects );
 }

@@ -135,7 +135,7 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         }
     }
     
-    protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
+    protected function transfer( HTTPRequest $request, HTTPResponse $response = null, $followRedirects = true )
     {
         if( $request->getDomain() === 'localhost' )
         {
@@ -148,6 +148,8 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
             {
                 $response = new HTTPResponse;
             }
+            
+            $this->getTransport()->followRedirects( (bool) $followRedirects );
 
             return $this->getTransport()->execute( $request, $response );
         }
@@ -191,7 +193,7 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         $request->setParam( 'passwordInput', 'qwerty' );
         $request->setParam( 'submit', 'Sign In' );
         
-        $response = $this->transfer( $request );
+        $response = $this->transfer( $request, new \Community\Module\Testing\Transport\HTTPResponse, false );
         
         $this->assertValidResponse( $response, Code::HTTP_FOUND, 'text/html', '' );
         
@@ -199,7 +201,7 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         $this->assertRegExp( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', $response->getHeader( 'Set-Cookie' ) );
 
         // Make sure we were re-directed correctly (This is a simple way of confirming the login was successful)
-        $this->assertEquals( 'http://www.local.test/onboarding', $response->getHeader( 'Location' ) );
+        $this->assertEquals( 'http://www.local.test/home', $response->getHeader( 'Location' ) );
         
         $sessionId = preg_filter( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', '$1', $response->getHeader( 'Set-Cookie' ) );
         
