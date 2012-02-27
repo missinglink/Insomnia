@@ -39,6 +39,7 @@
                                     <th>URL Structure</th>
                                     <td>
                                         <?php $url = 'http://' . $_SERVER[ 'HTTP_HOST' ] . htmlentities( dummyData( $route['patternRegex'] ) ) . '.json'; ?>
+                                        <?php if( !empty( $route[ 'methods' ] ) && 'GET' != strtoupper( reset( $route['methods'] ) ) ){ $url .= '?_method=' . strtoupper( reset( $route['methods'] ) ); } ?>
                                         <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
                                     </td>
                                 </tr>
