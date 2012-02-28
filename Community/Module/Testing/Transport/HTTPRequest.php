@@ -91,7 +91,7 @@ class HTTPRequest
     
     public function setParam( $key, $value )
     {
-        $this->params[ $key ] = $value;
+        $this->params[ urlencode( $key ) ] = urlencode( $value );
     }
 
     public function unsetParam( $key )
