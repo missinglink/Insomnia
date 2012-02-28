@@ -105,30 +105,33 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     {
         $fixtureData = $this->loadFixtureData();
         
-        if ( is_array( $fixtureData ) && 1 < count($fixtureData) )
+        if ( is_array( $fixtureData ) && 1 < count( $fixtureData ) )
         {
-            $datasets = array();
+            $dataset = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] );
             
-            foreach ( $fixtureData as $fixture )
+            for( $x=1; $x<count($fixtureData); $x++ )
             {
-                if ( !is_readable( $fixture ) )
+                if ( !is_readable( $fixtureData[ 1 ] ) )
                 {
-                    throw new \Exception( 'cannot read from: ' . $fixture );
+                    throw new \Exception( 'cannot read from: ' . $fixtureData[ 1 ] );
                 }
-                $datasets[] = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixture ); 
+                
+                $dataset->addYamlFile( $fixtureData[ 1 ] );
             }
             
-            return new \PHPUnit_Extensions_Database_DataSet_CompositeDataSet( $datasets );
+            return $dataset;
         }
-        elseif (  is_array( $fixtureData ) && 1 === count($fixtureData) )
+        
+        elseif ( is_array( $fixtureData ) && 1 === count($fixtureData) )
         {
             if ( !is_readable( $fixtureData[ 0 ] ) )
             {
-                throw new \Exception( 'cannot read from: ' . $fixtureData[ 0 ]  );
+                throw new \Exception( 'cannot read from: ' . $fixtureData[ 0 ] );
             }
             
             return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] ); 
         }
+        
         else
         {
             throw new \Exception( 'please return an array with at least 1 path in loadFixtureData()' );
@@ -168,12 +171,12 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
 //        $this->assertLessThan( 1000, $response->getExecutionTime() );
     }
     
-    protected function getSessionId()
+    protected function getSessionId( $email = 'elvis@bravenewtalent.com', $password = 'qwerty' )
     {
         $request = new HTTPRequest( '/session', 'POST' );
         $request->setHeader( 'Accept', 'application/json' );
-        $request->setParam( 'email', 'elvis@bravenewtalent.com' );
-        $request->setParam( 'password', 'qwerty' );
+        $request->setParam( 'email', $email );
+        $request->setParam( 'password', $password );
         
         $response = $this->transfer( $request );
         
