@@ -7,15 +7,22 @@ namespace Community\Module\RequestValidator\Request;
  */
 class InputSanitiser
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private $value = '';
     
-    /** @param string $uncleanValue */
+    /**
+     * @param string $uncleanValue
+     */
     public function __construct( $uncleanValue )
     {
         $this->value = $uncleanValue;
     }
     
+    /**
+     * @return InputSanitiser
+     */
     public function stripTags()
     {
         $this->value = strip_tags( $this->value );
@@ -23,7 +30,10 @@ class InputSanitiser
         return $this;
     }
     
-    /** @param string $htmlTag */
+    /**
+     * @param string $htmlTag
+     * @return InputSanitiser
+     */
     public function removeTagBody( $htmlTag )
     {
         $this->value = preg_replace( '/<'.preg_quote($htmlTag).'\b[^>]*>(.*?)<\/'.preg_quote($htmlTag).'>/i', '', $this->value );
@@ -31,7 +41,9 @@ class InputSanitiser
         return $this;
     }
     
-    /** @return type */
+    /**
+     * @return type
+     */
     public function getValue()
     {
         return $this->value;
