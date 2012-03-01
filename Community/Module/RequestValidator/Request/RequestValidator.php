@@ -51,9 +51,15 @@ class RequestValidator
             
             if( $request->hasParam( $key ) )
             {
-                try {
-                    $validator->validate( $request->getParam( $key ), $key );
-                    $this->params[ $key ] = $request->getParam( $key );
+                try
+                {    
+                    $sanitiser = new InputSanitiser( $request->getParam( $key ) );
+                    $sanitiser->removeTagBody( 'script' )
+                              ->removeTagBody( 'style' )
+                              ->stripTags();
+                    
+                    $validator->validate( $sanitiser->getValue(), $key );
+                    $this->params[ $key ] = $sanitiser->getValue();
                 }
                 catch( ValidatorException $e )
                 {
