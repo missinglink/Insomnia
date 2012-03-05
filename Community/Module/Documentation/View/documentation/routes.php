@@ -45,6 +45,11 @@
                                         <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
                                     </td>
                                 </tr>
+                            <?php elseif( $paramKey === 'category' ): ?>
+                                <tr>
+                                    <th style="width:200px;"><?php echo 'Category'; ?></th>
+                                    <td><a href="#<?php echo $paramValue; ?>"><?php echo $paramValue; ?></a></td>
+                                </tr>
                             <?php elseif( $paramKey === 'patternRegex' ): ?>
                                 <tr>
                                     <th style="width:200px;"><?php echo 'Match Pattern'; ?></th>
