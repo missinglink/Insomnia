@@ -131,6 +131,9 @@ class DocumentationController extends Action
                 
                 if( !isset( $doc[ $category ] ) ) $doc[ $category ] = array();
                 $doc[ $category ][] = $a;
+                
+                $a[ 'controller' ] = $route->getClass();
+                $a[ 'function' ] = $route->getReflectionMethod()->getName();
             }
         }
         

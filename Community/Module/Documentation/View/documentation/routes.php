@@ -34,6 +34,8 @@
                     <table style="background-color:#fff;">
                         <?php foreach( $route as $paramKey => $paramValue ): ?>
                             <?php if( $paramKey === 'params' ): continue ?>
+                            <?php elseif( $paramKey === 'controller' ): continue ?>
+                            <?php elseif( $paramKey === 'function' ): continue ?>
                             <?php elseif( $paramKey === 'pattern' ): ?>
                                 <tr>
                                     <th>URL Structure</th>
@@ -75,6 +77,12 @@
                             ?>
                             <td><?php echo htmlentities( $curlCommand ); ?></td>
                         <tr>
+                        <?php if( isset( $route[ 'controller' ], $route[ 'function' ] ) ): ?>
+                            <tr>
+                                <th>Endpoint</th>
+                                <td><?php echo htmlentities( $route[ 'controller' ] ); ?>::<?php echo htmlentities( $route[ 'function' ] ); ?>()</td>
+                            <tr>
+                        <?php endif; ?>
                     </table>
 
                     <?php if( !empty( $route['params'] ) ): ?>
