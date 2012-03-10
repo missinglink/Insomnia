@@ -32,9 +32,9 @@ define( 'APPLICATION_ENV', 'development' );
  * @link http://www.doctrine-project.org/api/common/2.0/doctrine/common/classloader.html
  */
 use \Doctrine\Common\ClassLoader;
-require_once \ROOT.'/lib/Doctrine/Common/ClassLoader.php';
+require_once \ROOT.'/lib/Doctrine/lib/Doctrine/Common/ClassLoader.php';
 spl_autoload_register( array( new ClassLoader( 'Insomnia', \ROOT . 'lib' ), 'loadClass' ) );
-spl_autoload_register( array( new ClassLoader( 'Doctrine', \ROOT . 'lib' ), 'loadClass' ) );
+spl_autoload_register( array( new ClassLoader( 'Doctrine', \ROOT . 'lib/Doctrine/lib' ), 'loadClass' ) );
 spl_autoload_register( array( new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' ), 'loadClass' ) );
 spl_autoload_register( array( new ClassLoader( 'Application', \ROOT ), 'loadClass' ) );
 spl_autoload_register( array( new ClassLoader( 'Community', \ROOT ), 'loadClass' ) );

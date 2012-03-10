@@ -1,3 +1,6 @@
 [submodule "lib/Rediska"]
 	path = lib/Rediska
 	url = git://github.com/Shumkov/Rediska.git
+[submodule "lib/Doctrine"]
+	path = lib/Doctrine
+	url = git://github.com/doctrine/common.git
