@@ -28,7 +28,7 @@ class Route
         if( !preg_match( "_^" . $this->getPatternRegex() . "\$_", $request->getCanonicalUri(), $matches ) )
         {
             return false;
-        }   
+        }
         
         if( !\in_array( $request->getMethod(), $this->methods ) )
         {
