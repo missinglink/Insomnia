@@ -88,7 +88,7 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
     
     private function debug( $message = 'XML Renderer Failed', $level = 1 )
     {
-        if( $level >= $this->getDebugLevel() )
+        if( $this->getDebugLevel() >= $level )
         {
             $this->writer->startElement( 'error' );
             $this->writer->writeCData( $message  );
