@@ -57,11 +57,11 @@ class Backtrace implements Mapper
                 $debug[ 'backtrace' ] = array_reverse( debug_backtrace( false ) );
             }
 
-            $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
-            $debug[ 'requestPlugins' ] = \Insomnia\Kernel::getInstance()->getRequestPlugins();
-            $debug[ 'responsePlugins' ] = \Insomnia\Kernel::getInstance()->getResponsePlugins();
-            $debug[ 'dispatcherPlugins' ] = \Insomnia\Kernel::getInstance()->getDispatcherPlugins();
-            $debug[ 'modules' ] = \Insomnia\Kernel::getInstance()->getModules();
+//            $debug[ 'routes' ] = \Insomnia\Kernel::getInstance()->getEndPoints();
+//            $debug[ 'requestPlugins' ] = \Insomnia\Kernel::getInstance()->getRequestPlugins();
+//            $debug[ 'responsePlugins' ] = \Insomnia\Kernel::getInstance()->getResponsePlugins();
+//            $debug[ 'dispatcherPlugins' ] = \Insomnia\Kernel::getInstance()->getDispatcherPlugins();
+//            $debug[ 'modules' ] = \Insomnia\Kernel::getInstance()->getModules();
 
             $response[ 'debug' ] = $debug;
         }
