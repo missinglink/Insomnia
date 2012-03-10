@@ -126,6 +126,9 @@ class DocumentationController extends Action
                 $a[ 'patternRegex' ] = $route->getpatternRegex();
                 $a[ 'methods' ] = $route->getMethods();
                 
+                $a[ 'controller' ] = $route->getClass();
+                $a[ 'function' ] = $route->getReflectionMethod()->getName();
+                
                 $params = new ParamParser( $reader->getMethodAnnotations( $reflectionMethod ) );
                 $a[ 'params' ] = $params->toArray();
                 

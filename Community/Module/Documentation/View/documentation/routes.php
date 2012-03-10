@@ -34,13 +34,21 @@
                     <table style="background-color:#fff;">
                         <?php foreach( $route as $paramKey => $paramValue ): ?>
                             <?php if( $paramKey === 'params' ): continue ?>
+                            <?php elseif( $paramKey === 'controller' ): continue ?>
+                            <?php elseif( $paramKey === 'function' ): continue ?>
                             <?php elseif( $paramKey === 'pattern' ): ?>
                                 <tr>
                                     <th>URL Structure</th>
                                     <td>
                                         <?php $url = 'http://' . $_SERVER[ 'HTTP_HOST' ] . htmlentities( dummyData( $route['patternRegex'] ) ) . '.json'; ?>
+                                        <?php if( !empty( $route[ 'methods' ] ) && 'GET' != strtoupper( reset( $route['methods'] ) ) ){ $url .= '?_method=' . strtoupper( reset( $route['methods'] ) ); } ?>
                                         <a href="<?php echo $url; ?>"><?php echo $url; ?></a>
                                     </td>
+                                </tr>
+                            <?php elseif( $paramKey === 'category' ): ?>
+                                <tr>
+                                    <th style="width:200px;"><?php echo 'Category'; ?></th>
+                                    <td><a href="#<?php echo $paramValue; ?>"><?php echo $paramValue; ?></a></td>
                                 </tr>
                             <?php elseif( $paramKey === 'patternRegex' ): ?>
                                 <tr>
@@ -74,6 +82,12 @@
                             ?>
                             <td><?php echo htmlentities( $curlCommand ); ?></td>
                         <tr>
+                        <?php if( isset( $route[ 'controller' ], $route[ 'function' ] ) ): ?>
+                            <tr>
+                                <th>Endpoint</th>
+                                <td><?php echo htmlentities( $route[ 'controller' ] ); ?>::<?php echo htmlentities( $route[ 'function' ] ); ?>()</td>
+                            <tr>
+                        <?php endif; ?>
                     </table>
 
                     <?php if( !empty( $route['params'] ) ): ?>
