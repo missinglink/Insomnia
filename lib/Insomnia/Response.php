@@ -34,9 +34,7 @@ class Response extends ArrayAccess implements \SplSubject
         $this->notify();
         
         if( !\method_exists( $this->getRenderer(), 'render' ) )
-        {
             throw new ResponseException( 'Invalid Response Renderer' );
-        }
         
         $this->flushHeaders();
         $this->getRenderer()->setResponse( $this );
