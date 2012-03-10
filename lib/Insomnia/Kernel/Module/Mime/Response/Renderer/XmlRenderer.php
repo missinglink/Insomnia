@@ -35,7 +35,7 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
     {
         foreach( $item as $key => $item )
         {
-            if( \is_array( $item ) )
+            if( \is_array( $item ) || \is_object( $item ) )
             {
                 $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
                 $this->writeXML( $item );
