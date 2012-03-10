@@ -45,6 +45,7 @@ class CliDebugger extends Observer
         $methodString   = ' ' . $this->output( $transport->getRequest()->getMethod(), 'brown' ) . ' ';
         $protocolString = ' ' . $this->output( $transport->getRequest()->getProtocol(), 'dark_gray' );
 
+        echo $transport->getRequest()->getDomain();
         echo $methodString . $transport->getRequest()->getUri() . ( self::DEBUG_SIMPLE === $this->getDebugLevel() ? $this->output( ' -', 'brown' ) : $protocolString . \PHP_EOL );
 
         if( self::DEBUG_SIMPLE < $this->getDebugLevel() )
@@ -53,6 +54,19 @@ class CliDebugger extends Observer
             {
                 $headerString = '  ' . $this->output( $headerKey . ': ', 'light_blue' );
                 echo $this->output( $headerString . $headerValue ) . \PHP_EOL;
+            }
+            
+            echo \PHP_EOL;
+        }
+        
+        if( self::DEBUG_VERBOSE === $this->getDebugLevel() )
+        {
+            echo $this->output( ' Request Parameters:', 'brown' ) . \PHP_EOL;
+            
+            foreach( $transport->getRequest()->getParams() as $paramKey => $paramValue )
+            {
+                $paramString = '  ' . $this->output( $paramKey . ': ', 'light_blue' );
+                echo $this->output( $paramString . $paramValue ) . \PHP_EOL;
             }
             
             echo \PHP_EOL;
@@ -80,16 +94,24 @@ class CliDebugger extends Observer
         {
             echo \PHP_EOL;
             echo $this->output( ' Response:', 'brown' ) . \PHP_EOL;
-            echo $this->output( str_pad( $transport->getResponse()->getBody(), 120, ' ' ) ) . \PHP_EOL;
+            
+            if( is_string( $transport->getResponse()->getBody() ) && strlen( $transport->getResponse()->getBody() ) < 1000 )
+            {
+                echo $this->output( str_pad( $transport->getResponse()->getBody(), 120, ' ' ) ) . \PHP_EOL;
+            }
+            
+            else
+            {
+                echo $this->output( str_pad( substr( $transport->getResponse()->getBody(), 0, 1000 ), 120, ' ' ) ) . \PHP_EOL;
+                echo $this->output( str_pad( '... only showing first 1000 chars because content length > 10000 chars', 120, ' ' ), 'brown' ) . \PHP_EOL;
+            }
 
             if( true === self::PARSE_RESPONSE )
             {
-                switch( $transport->getResponse()->getHeader( 'Content-Type' ) )
+                if( strpos( $transport->getResponse()->getHeader( 'Content-Type' ), '/json' ) )
                 {
-                    case 'application/json' :
-                        $json = json_decode( $transport->getResponse()->getBody(), true );
-                        echo $this->output( str_pad( \PHP_EOL . print_r( $json, true ) . \PHP_EOL, 120, ' ' ) ) . \PHP_EOL;
-                        break;
+                    $json = json_decode( $transport->getResponse()->getBody(), true );
+                    echo $this->output( str_pad( \PHP_EOL . print_r( $json, true ) . \PHP_EOL, 120, ' ' ) ) . \PHP_EOL;
                 }
             }
         }
