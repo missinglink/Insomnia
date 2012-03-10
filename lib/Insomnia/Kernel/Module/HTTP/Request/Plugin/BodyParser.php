@@ -22,10 +22,13 @@ class BodyParser extends Observer
                     {
                         switch( $request->getContentType() )
                         {
-                            case 'application/x-www-form-urlencoded' :
+                            //case 'application/x-www-form-urlencoded' :
                             default :
                                 parse_str( $body, $params );
-                                $request->mergeParams( array_filter( $params ) );
+      
+                                $request->mergeParams( array_filter( $params, function($value) {
+                                    return $value !== '';
+                                }));
                         }
                     }
             }
