@@ -6,6 +6,8 @@ use \Community\Module\Testing\Transport\HTTPRequest;
 
 class CurlCommand
 {
+    public static $followRedirects = true;
+    
     private $command = '';
     private $stdout = '';
     private $exitCode = 0;
@@ -45,7 +47,12 @@ class CurlCommand
     private function prepare( HTTPRequest $request )
     {        
         // Setup Command
-        $cmd = array( 'curl -vsL' );
+        $cmd = array( 'curl -vs' );
+        
+        if( true === self::$followRedirects )
+        {
+            $cmd[] = '-L';
+        }
       
         // Create Output File
         $this->setOutputFilePath( tempnam( sys_get_temp_dir(), 'curl_' ) );
@@ -60,6 +67,12 @@ class CurlCommand
         foreach( $request->getHeaders() as $headerKey => $headerValue )
         {
             $cmd[] = '-H "' . $headerKey . ': ' . $headerValue . '"';
+        }
+        
+        // Treat Request Params as a GET
+        if( in_array( $request->getMethod(), array( 'GET', 'HEAD' ) ) )
+        {
+            $cmd[] = '-G';
         }
         
         // Add Request Params
@@ -100,6 +113,14 @@ class CurlCommand
         
         // Set Response Body
         $this->setResponseBody( $responseBody );
+    }
+    
+    /**
+     * @param boolean $followRedirects 
+     */
+    public function followRedirects( $followRedirects )
+    {
+        self::$followRedirects = (bool) $followRedirects;
     }
     
     public function getCommand()
