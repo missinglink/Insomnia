@@ -1,0 +1,3 @@
+[submodule "lib/Rediska"]
+	path = lib/Rediska
+	url = git://github.com/Shumkov/Rediska.git
