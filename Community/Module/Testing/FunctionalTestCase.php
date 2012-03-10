@@ -14,16 +14,45 @@ use \Insomnia\Response\Code;
 
 class FunctionalTestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Type of transport
+     * 
+     * @var Transporter
+     */
     private $transport;
 
+    /**
+     * Current debug level, based on CliDebugger constant
+     * 
+     * @var integer 
+     */
+    private $debugLevel = CliDebugger::DEBUG_NONE;
+
+    
     protected function setUp()
     {
+        global $argv;
+        if( isset( $argv ) )
+        {
+            if( in_array( '--debug', $argv ) )
+            {
+                $this->setDebugLevel( CliDebugger::DEBUG_VERBOSE );
+            }
+            
+            elseif( in_array( '--verbose', $argv ) || in_array( '-v', $argv ) )
+            {
+                $this->setDebugLevel( CliDebugger::DEBUG_SIMPLE );
+            }
+        }
+        
+        parent::setUp();
+        
         $this->setTransport( new CurlTransport );
-        $this->getTransport()->attach( new CliDebugger( /* CliDebugger::DEBUG_FULL */ ) );
+        $this->getTransport()->attach( new CliDebugger( $this->debugLevel ) );
         //$this->getTransport()->attach( new SqliteDebugger );
     }
     
-    protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
+    protected function transfer( HTTPRequest $request, HTTPResponse $response = null, $followRedirects = true )
     {
         try
         {
@@ -31,6 +60,8 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
             {
                 $response = new HTTPResponse;
             }
+            
+            $this->getTransport()->followRedirects( (bool) $followRedirects );
 
             return $this->getTransport()->execute( $request, $response );
         }
@@ -46,7 +77,7 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         $this->assertEquals( $code, $response->getCode() );
         $this->assertEquals( $contentType, $response->getContentType() );
         $this->assertEquals( $charset, $response->getCharacterSet() );
-        $this->assertLessThan( 500, $response->getExecutionTime() );
+//        $this->assertLessThan( 1000, $response->getExecutionTime() );
     }
     
     /**
@@ -58,10 +89,10 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     {
         return array(
             array( new Browser\Firefox_v8_0 ),
-            array( new Browser\Chromium_v14_0 ),
-            array( new Browser\Konqueror_v4_5_5 ),
+//            array( new Browser\Chromium_v14_0 ),
+//            array( new Browser\Konqueror_v4_5_5 ),
 //            array( new Browser\Curl_v7_21 ),
-            array( new Browser\BlackBerry_6 ),
+//            array( new Browser\BlackBerry_6 ),
         );
     }
 
@@ -78,4 +109,18 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     {
         $this->transport = $transport;
     }
+        
+    /**
+     * @return integer 
+     */
+    public function getDebugLevel()
+    {
+        return $this->debugLevel;
+    }
+
+    public function setDebugLevel( $debugLevel )
+    {
+        $this->debugLevel = $debugLevel;
+    }
+
 }
