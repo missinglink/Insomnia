@@ -2,19 +2,6 @@
 
 namespace Insomnia;
 
-if( extension_loaded( 'xhprof' ) )
-{
-    $xprofDir = '/var/www/xprof/xhprof_lib/utils/';
-    
-    if( file_exists( $xprofDir . 'xhprof_lib.php' ) &&
-        file_exists( $xprofDir . 'xhprof_runs.php' ) )
-    {
-        include_once $xprofDir . 'xhprof_lib.php';
-        include_once $xprofDir . 'xhprof_runs.php';
-        xhprof_enable( \XHPROF_FLAGS_CPU + \XHPROF_FLAGS_MEMORY );
-    }
-}
-
 require_once 'autoloader.php';
 
 // Run Bootstraps
