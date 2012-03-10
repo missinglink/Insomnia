@@ -4,23 +4,36 @@ namespace Community\Module\Testing;
 
 use \Community\Module\Testing\Transport\Cli\CurlTransport,
     \Community\Module\Testing\Transport\Debugger\CliDebugger,
-    \Community\Module\Testing\Transport\Debugger\SqliteDebugger,
+    \Community\Module\Testing\Transport\Debugger\HarWriter,
     \Community\Module\Testing\Transport\Transporter,
     \Community\Module\Testing\Transport\Browser,
     \Community\Module\Testing\Transport\HTTPRequest,
     \Community\Module\Testing\Transport\HTTPResponse;
 
+use \Community\Module\Testing\Transport\Debugger\Har;
+
 use \Insomnia\Response\Code;
 
+/**
+ * @backupStaticAttributes disabled
+ */
 class FunctionalTestCase extends \PHPUnit_Framework_TestCase
 {
     private $transport;
+    public static $testCaseId;
+    
+    public static function setUpBeforeClass()
+    {
+        self::$testCaseId = md5( mt_rand( 0, \PHP_INT_MAX ) . microtime( true ) );
+    }
 
     protected function setUp()
     {
         $this->setTransport( new CurlTransport );
         $this->getTransport()->attach( new CliDebugger( /* CliDebugger::DEBUG_FULL */ ) );
-        //$this->getTransport()->attach( new SqliteDebugger );
+        
+        $title = '['.date( 'H:i:s d/m/Y' ).'] ' . strstr( get_class( $this ), '\\', true );
+        $this->getTransport()->attach( new HarWriter( '/tmp/har', self::$testCaseId, $title ) );
     }
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null )
@@ -37,7 +50,7 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
         
         catch( \Exception $e )
         {
-            $this->markTestSkipped( 'Transport ' . get_class( $this->getTransport() ) . ' failed with message: ' . $e->getMessage() );
+            $this->markTestSkipped( 'new ' . get_class( $e ) . '( ' . $e->getMessage() . ' ) ' . $e->getFile() . ':' . $e->getLine() );
         }
     }
     
@@ -57,11 +70,11 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     public static function getBrowserTemplates()
     {
         return array(
-            array( new Browser\Firefox_v8_0 ),
-            array( new Browser\Chromium_v14_0 ),
-            array( new Browser\Konqueror_v4_5_5 ),
-//            array( new Browser\Curl_v7_21 ),
-            array( new Browser\BlackBerry_6 ),
+//            array( new Browser\Firefox_v8_0 ),
+//            array( new Browser\Chromium_v14_0 ),
+//            array( new Browser\Konqueror_v4_5_5 ),
+            array( new Browser\Curl_v7_21 ),
+//            array( new Browser\BlackBerry_6 ),
         );
     }
 

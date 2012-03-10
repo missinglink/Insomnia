@@ -16,6 +16,8 @@ class CurlCommand
     private $responseHeaders;
     private $responseBody;
     
+    private $stats;
+    
     public function __construct()
     {
         // Check Curl binary installed correctly
@@ -29,12 +31,16 @@ class CurlCommand
     {
         $this->prepare( $request );
         $this->exec();
+        
+        $logParser = new CurlVerboseLogParser( $this->getStdout() );
 
         switch( $this->getExitCode() )
         {
+            // Command execute successfully
             case 0 :
-                $this->setRequestHeaders( preg_replace( '_^> _', '', preg_grep( '_^> (.*)$_', $this->getStdout() ) ) );
-                $this->setResponseHeaders( preg_replace( '_^< _', '', preg_grep( '_^< (.*)$_', $this->getStdout() ) ) );
+                $this->setRequestHeaders( $logParser->getRequestSection() );
+                $this->setResponseHeaders( $logParser->getResponseSection() );
+                $this->setStats( $logParser->getStats() );
                 break;
             
             default :
@@ -45,7 +51,7 @@ class CurlCommand
     private function prepare( HTTPRequest $request )
     {        
         // Setup Command
-        $cmd = array( 'curl -vsL' );
+        $cmd = array( 'curl -vsL --trace-time' );
       
         // Create Output File
         $this->setOutputFilePath( tempnam( sys_get_temp_dir(), 'curl_' ) );
@@ -180,5 +186,15 @@ class CurlCommand
     public function setResponseBody( $responseBody )
     {
         $this->responseBody = trim( $responseBody );
+    }
+    
+    public function getStats()
+    {
+        return $this->stats;
+    }
+
+    public function setStats( $stats )
+    {
+        $this->stats = $stats;
     }
 }

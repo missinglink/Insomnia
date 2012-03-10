@@ -14,6 +14,7 @@ class CurlTransport extends Subject implements Transporter
     
     private $request;
     private $response;
+    private $stats;
     
     public function execute( HTTPRequest $request, HTTPResponse $response )
     {
@@ -22,6 +23,8 @@ class CurlTransport extends Subject implements Transporter
         
         $cli = new CurlCommand;
         $cli->execute( $request );
+        
+        $this->setStats( $cli->getStats() );
         
         // Request Headers
         $requestHeaders = $cli->getRequestHeaders();
@@ -99,5 +102,15 @@ class CurlTransport extends Subject implements Transporter
     public function setResponse( $response )
     {
         $this->response = $response;
+    }
+    
+    public function getStats()
+    {
+        return $this->stats;
+    }
+
+    public function setStats( $stats )
+    {
+        $this->stats = $stats;
     }
 }
