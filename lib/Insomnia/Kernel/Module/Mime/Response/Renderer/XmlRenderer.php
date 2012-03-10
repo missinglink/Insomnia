@@ -8,8 +8,11 @@ use \Insomnia\Response\ResponseInterface,
 
 class XmlRenderer extends ResponseAbstract implements ResponseInterface
 {
-    private $writer,
-            $indent = '   ';
+    const INDENT_STRING = '   ';
+    const MAX_RECURSION = 20;
+    const NUMERIC_KEY_REPLACEMENT = 'item'; // Replace numeric keys with this string.
+    
+    private $writer;
 
     public function render()
     {
@@ -19,7 +22,7 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
         $this->writer->startDocument( '1.0', 'UTF-8' );
 
         $this->writer->setIndent( true );
-        $this->writer->setIndentString( $this->indent );
+        $this->writer->setIndentString( self::INDENT_STRING );
 
         $this->writer->startElement( 'response' );
         //$this->writer->writeAttribute( 'version', '1.0' );
@@ -31,24 +34,30 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
         $this->writer->flush();
     }
 
-    private function writeXML( $item )
+    private function writeXML( $item, $level = 0 )
     {
+        if( $level > self::MAX_RECURSION )
+        {
+            return $this->writer->writeCData( '{ error: max recursion reached }' );
+        }
+        
         foreach( $item as $key => $item )
         {
-            if( \is_array( $item ) || \is_object( $item ) )
+            // XML keys cannot start with a number.
+            $xmlKeyFix = is_numeric( $key ) ? self::NUMERIC_KEY_REPLACEMENT : $key;
+            
+            if( is_array( $item ) || is_object( $item ) )
             {
-                $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
-                $this->writeXML( $item );
+                $this->writer->startElement( $xmlKeyFix );
+                $this->writeXML( $item, $level++ );
                 $this->writer->endElement();
-                continue;
             }
 
-            if( \is_scalar( $item ) || \is_null( $item ) )
+            if( is_scalar( $item ) || is_null( $item ) )
             {
-                $this->writer->startElement( \is_numeric( $key ) ? 'item' : $key );
+                $this->writer->startElement( $xmlKeyFix );
                 $this->writer->writeCData( $item );
                 $this->writer->endElement();
-                continue;
             }
         }
     }
