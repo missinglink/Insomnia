@@ -48,7 +48,7 @@ class Route extends ArrayAccess
             {
                 if( !isset( $param[ 'name' ] ) || empty( $param[ 'name' ] ) )
                 {
-                    throw new ValidatorException( 'Parameter name is required' );
+                    throw new \Exception( 'Parameter name is required' );
                 }
                 
                 if( !isset( $param[ 'optional' ] ) || $param[ 'optional' ] != 'true' )
