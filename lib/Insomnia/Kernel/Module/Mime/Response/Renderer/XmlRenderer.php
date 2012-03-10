@@ -74,7 +74,7 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
     private function getValidXMLElementName( $key )
     {
         // XML keys cannot start with a number or contain spaces.
-        $key = ( is_numeric( $key ) ? self::NUMERIC_KEY_REPLACEMENT : str_replace( ' ', '_', $key ) );
+        $key = ( is_numeric( $key ) ? self::NUMERIC_KEY_REPLACEMENT : strtr( $key, ' ', '_' ) );
 
         // Validate element name
         if( $this->getDebugLevel() === self::DEBUG_VALIDATE )
