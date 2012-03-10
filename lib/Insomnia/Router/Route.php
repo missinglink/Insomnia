@@ -25,9 +25,7 @@ class Route
     {            
         $this->setRequest( $request );
         
-        $pathWithoutFileExtension = str_replace( $request->getFileExtension(), '', $request->getParam( 'path' ) );
-        
-        if( !preg_match( "_^" . $this->getPatternRegex() . "\$_", $pathWithoutFileExtension, $matches ) )
+        if( !preg_match( "_^" . $this->getPatternRegex() . "\$_", $request->getCanonicalUri(), $matches ) )
         {
             return false;
         }   

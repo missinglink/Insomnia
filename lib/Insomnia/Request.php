@@ -51,6 +51,23 @@ class Request extends Subject
         return $this->getScheme() . '://' . $this->getHeader( 'Host' ) . 
                str_ireplace( $this->getFileExtension(), '', $this->getParam( 'path' ) );
     }
+    
+    /**
+     * Get HTTP request URI - Disregard formatting & environment specific segments
+     * 
+     * @return type 
+     */
+    public function getCanonicalUri()
+    {
+        $removals = array( $this->getFileExtension() );
+        
+        if( isset( $_SERVER[ 'SCRIPT_NAME' ] ) )
+        {
+            $removals[] = $_SERVER[ 'SCRIPT_NAME' ];
+        }
+        
+        return str_ireplace( $removals, '', $this->getParam( 'path' ) );
+    }
 
     /**
      * Get HTTP scheme
