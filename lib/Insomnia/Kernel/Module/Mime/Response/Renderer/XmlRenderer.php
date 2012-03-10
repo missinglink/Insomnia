@@ -33,7 +33,6 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
             $this->writer->startElement( self::ROOT_ELEMENT_NAME );
             
                 //$this->writer->writeAttribute( 'version', '1.0' );
-                $this->setDebugLevel( \APPLICATION_ENV === 'development' ? self::DEBUG_VALIDATE : self::DEBUG_NONE );
                 $this->writeXML( $this->getResponse()->toArray() );
 
             $this->writer->endElement();

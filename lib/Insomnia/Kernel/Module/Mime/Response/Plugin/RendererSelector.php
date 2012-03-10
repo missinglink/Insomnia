@@ -22,7 +22,14 @@ class RendererSelector extends Observer
             {
                 case Content::TYPE_XML:
                 case Content::TYPE_XML_TEXT:
-                    $response->setRenderer( new Renderer\XmlRenderer );
+                    $renderer = new Renderer\XmlRenderer;
+                    
+                    if( defined( 'APPLICATION_ENV' ) && \APPLICATION_ENV === 'development' )
+                    {
+                        $renderer->setDebugLevel( Renderer\XmlRenderer::DEBUG_VALIDATE );
+                    }
+                    
+                    $response->setRenderer( $renderer );
                     break;
 
                 case Content::TYPE_YAML:
