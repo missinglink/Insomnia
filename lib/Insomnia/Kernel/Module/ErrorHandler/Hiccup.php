@@ -6,11 +6,18 @@ use \Insomnia\Dispatcher\EndPoint;
 
 class Hiccup
 {
-    public function catchException( \Exception $e )
+    public function onException( \Exception $e )
     {
         try
         {
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
+            
+            if( \APPLICATION_ENV === 'development' )
+            {
+                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-Message', $e->getMessage() );
+                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-File', $e->getFile() . ':' . $e->getLine() );
+            }
+            
             $endPoint->dispatch( $e );
         }
         
@@ -32,27 +39,26 @@ class Hiccup
                 }
             }
             
-            $this->terminateExecution( $lastWords );           
+            $this->failWhale( $lastWords );           
         }
         
-        /* Don't execute PHP internal error handler */
-        return true;
+        /* Script execution will now terminate. */
     }
     
-    public function error( $errno, $errstr, $errfile, $errline )
+    public function onError( $errno, $errstr, $errfile, $errline )
     {
-        if( isset( $errstr, $errno, $errfile, $errline ) )
+        if( isset( $errno, $errstr, $errfile, $errline ) )
         {
-            // Do not halt script execution for all errors not in the currently 
-            // defined error_reporting bitmask.
+            // Do not halt script execution for errors not in the error_reporting bitmask.
             if( error_reporting() & $errno )
             {
-                return $this->catchException( new \ErrorException( $errstr, $errno, 2, $errfile, $errline ) );
+                return $this->onException( new \ErrorException( $errstr, $errno, \E_ERROR, $errfile, $errline ) );
             }
-        }        
+        }
+        
         else
         {
-            $this->terminateExecution();
+            $this->failWhale();
         }
         
         /* Don't execute PHP internal error handler */
@@ -61,22 +67,33 @@ class Hiccup
 
     public function registerExceptionHandler()
     {
-        set_exception_handler( array( $this, 'catchException' ) );
+        set_exception_handler( array( $this, 'onException' ) );
     }
     
     public function registerErrorHandler()
     {
-        set_error_handler( array( $this, 'error' ), \E_ALL | \E_STRICT );
+        set_error_handler( array( $this, 'onError' ), \E_ALL );
     }
     
-    private function terminateExecution( $lastWords = '' )
+    /*
+     * Something really bad just happened
+     * 
+     *  ▄██████████████▄▐█▄▄▄▄█▌
+     *  ██████▌▄▌▄▐▐▌███▌▀▀██▀▀ 
+     *  ████▄█▌▄▌▄▐▐▌▀███▄▄█▌
+     *  ▄▄▄▄▄██████████████▀
+     * 
+     */
+    private function failWhale( $lastWords = '' )
     {
         header( 'Content-type: text/plain' );
         echo 'Service is currently unavailable, Please try again later.' . \PHP_EOL;
-        if ( $lastWords !== '' )
+        
+        if ( is_string( $lastWords ) && !empty( $lastWords ) )
         {
             echo $lastWords;
         }
+        
         exit;
     }
 }

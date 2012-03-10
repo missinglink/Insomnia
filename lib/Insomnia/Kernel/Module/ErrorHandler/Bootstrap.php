@@ -28,9 +28,6 @@ class Bootstrap extends KernelModule
         
         $this->setExceptionHandler( $hiccup );
         $this->setErrorHandler( $hiccup );
-        
-        $this->getExceptionHandler()->registerExceptionHandler();
-        $this->getErrorHandler()->registerErrorHandler();
     }
     
     public function getExceptionHandler()
@@ -41,6 +38,7 @@ class Bootstrap extends KernelModule
     public function setExceptionHandler( $exceptionHandler )
     {
         $this->exceptionHandler = $exceptionHandler;
+        $this->exceptionHandler->registerExceptionHandler();
     }
 
     public function getErrorHandler()
@@ -51,5 +49,6 @@ class Bootstrap extends KernelModule
     public function setErrorHandler( $errorHandler )
     {
         $this->errorHandler = $errorHandler;
+        $this->errorHandler->registerErrorHandler();
     }
 }
