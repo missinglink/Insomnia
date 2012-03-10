@@ -13,7 +13,7 @@ use \Insomnia\Kernel;
 /**
  * Error Controller
  * 
- * Insomnia\Annotation\:Resource
+ * @Insomnia\Annotation\Resource
  * 
  */
 class ErrorAction extends Action
@@ -21,8 +21,8 @@ class ErrorAction extends Action
     /**
      * Map Errors to Output
      * 
-     * Insomnia\Annotation\:View( "Insomnia\Kernel\Module\ErrorHandler\View\Error" )
-     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @Insomnia\Annotation\View( "Insomnia\Kernel\Module\ErrorHandler\View\Error" )
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      * @param \Exception $exception 
      */

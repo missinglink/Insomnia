@@ -12,7 +12,7 @@ use \Insomnia\Kernel,
  * 
  * @link http://easyxdm.net/
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  * @beta
  */
 class Bootstrap extends KernelModule
@@ -20,8 +20,8 @@ class Bootstrap extends KernelModule
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:Endpoint( class="Controller\EasyXDMController" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\Endpoint( class="Controller\EasyXDMController" )
      * })
      * 
      * @param Kernel $kernel

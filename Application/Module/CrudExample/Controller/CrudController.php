@@ -20,8 +20,8 @@ use \Application\Module\CrudExample\Entities\Test as ExampleEntity;
 /**
  * Test Create Action
  * 
- * Insomnia\Annotation\:Resource
- * Insomnia\Annotation\:Route( "/example" )
+ * @Insomnia\Annotation\Resource
+ * @Insomnia\Annotation\Route( "/example" )
  * 
  */
 class CrudController extends Action
@@ -29,12 +29,12 @@ class CrudController extends Action
     /**
      * Create a new Entity
      * 
-     * Insomnia\Annotation\:Route( "/crud", name="test_create" )
-     * Insomnia\Annotation\:Method( "PUT" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\Route( "/crud", name="test_create" )
+     * @Insomnia\Annotation\Method( "PUT" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      * 
-     * Insomnia\Annotation\:Request({
-     *      Insomnia\Annotation\:Param( name="name", type="string", minlength="4", maxlength="10" )
+     * @Insomnia\Annotation\Request({
+     *      @Insomnia\Annotation\Param( name="name", type="string", minlength="4", maxlength="10" )
      * })
      * 
      */
@@ -55,12 +55,12 @@ class CrudController extends Action
     /**
      * Delete a Entity
      * 
-     * Insomnia\Annotation\:Route( "/crud/:id", name="test_delete" )
-     * Insomnia\Annotation\:Method( "DELETE" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\Route( "/crud/:id", name="test_delete" )
+     * @Insomnia\Annotation\Method( "DELETE" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      *
-     * Insomnia\Annotation\:Request({
-     *      Insomnia\Annotation\:Param( name="id", type="integer" )
+     * @Insomnia\Annotation\Request({
+     *      @Insomnia\Annotation\Param( name="id", type="integer" )
      * })
      * 
      */
@@ -79,12 +79,12 @@ class CrudController extends Action
     /**
      * List Entities
      * 
-     * Insomnia\Annotation\:Route( "/crud", name="test_index" )
-     * Insomnia\Annotation\:Method( "GET" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\Route( "/crud", name="test_index" )
+     * @Insomnia\Annotation\Method( "GET" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      * 
-     * Insomnia\Annotation\:Request({
-     *      Insomnia\Annotation\:Param( name="page", type="integer", optional="true" )
+     * @Insomnia\Annotation\Request({
+     *      @Insomnia\Annotation\Param( name="page", type="integer", optional="true" )
      * })
      *
      */
@@ -112,12 +112,12 @@ class CrudController extends Action
     /**
      * View a Single Entity
      * 
-     * Insomnia\Annotation\:Route( "/crud/:id", name="test_read" )
-     * Insomnia\Annotation\:Method( "GET" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\Route( "/crud/:id", name="test_read" )
+     * @Insomnia\Annotation\Method( "GET" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      * 
-     * Insomnia\Annotation\:Request({
-     *      Insomnia\Annotation\:Param( name="id", type="integer" )
+     * @Insomnia\Annotation\Request({
+     *      @Insomnia\Annotation\Param( name="id", type="integer" )
      * })
      * 
      */
@@ -139,13 +139,13 @@ class CrudController extends Action
     /**
      * Update an Entity
      * 
-     * Insomnia\Annotation\:Route( "/crud/:id", name="test_update" )
-     * Insomnia\Annotation\:Method( "POST" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\Route( "/crud/:id", name="test_update" )
+     * @Insomnia\Annotation\Method( "POST" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      *
-     * Insomnia\Annotation\:Request({
-     *      Insomnia\Annotation\:Param( name="id", type="integer" ),
-     *      Insomnia\Annotation\:Param( name="name", type="string", minlength="4", maxlength="10", optional="true" )
+     * @Insomnia\Annotation\Request({
+     *      @Insomnia\Annotation\Param( name="id", type="integer" ),
+     *      @Insomnia\Annotation\Param( name="name", type="string", minlength="4", maxlength="10", optional="true" )
      * })
      * 
      */
@@ -166,12 +166,12 @@ class CrudController extends Action
     /**
      * CrudExample Setup Help
      *
-     * Insomnia\Annotation\:Route( "/crud/setup", name="CrudExample_setup" )
-     * Insomnia\Annotation\:Method( "GET" )
+     * @Insomnia\Annotation\Route( "/crud/setup", name="CrudExample_setup" )
+     * @Insomnia\Annotation\Method( "GET" )
      *
-     * Insomnia\Annotation\:View( "Application\Module\CrudExample\View\Setup" )
-     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * Insomnia\Annotation\:Documentation( category="Crud Demo" )
+     * @Insomnia\Annotation\View( "Application\Module\CrudExample\View\Setup" )
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @Insomnia\Annotation\Documentation( category="Crud Demo" )
      *
      */
     public function setup()

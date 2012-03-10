@@ -10,7 +10,7 @@ use \Insomnia\Kernel,
  * 
  * Provides flexible stateful session handling.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  * @beta
  */
 class Bootstrap extends KernelModule

@@ -10,7 +10,7 @@ use \Insomnia\Kernel,
  * 
  * Provides a basic rest client for testing.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  * @beta
  */
 class Bootstrap extends KernelModule
@@ -18,8 +18,8 @@ class Bootstrap extends KernelModule
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:Endpoint( class="Controller\ClientController" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\Endpoint( class="Controller\ClientController" )
      * })
      * 
      * @param Kernel $kernel

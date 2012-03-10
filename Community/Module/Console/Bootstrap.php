@@ -10,17 +10,17 @@ use \Insomnia\Kernel,
  * 
  * Allows execution via the command line.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:Endpoint( class="Controller\KernelController" ),
-     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\ConsoleParamParser" ),
-     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\ConsoleOutput" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\Endpoint( class="Controller\KernelController" ),
+     *      @Insomnia\Annotation\RequestPlugin( class="Request\Plugin\ConsoleParamParser" ),
+     *      @Insomnia\Annotation\ResponsePlugin( class="Response\Plugin\ConsoleOutput" )
      * })
      * 
      * @param Kernel $kernel

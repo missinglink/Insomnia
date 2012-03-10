@@ -10,15 +10,15 @@ use \Insomnia\Kernel,
  * 
  * Provides a front page for the application.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:Endpoint( class="Controller\WelcomeController" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\Endpoint( class="Controller\WelcomeController" )
      * })
      * 
      * @param Kernel $kernel

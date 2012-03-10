@@ -10,15 +10,15 @@ use \Insomnia\Kernel,
  * 
  * Adds cross-origin-resources-sharing headers to all HTTP responses.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\CorsHeaders" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\ResponsePlugin( class="Response\Plugin\CorsHeaders" )
      * })
      * 
      * @param Kernel $kernel

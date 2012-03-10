@@ -12,11 +12,22 @@ class Route extends ArrayAccess
     public function __construct( AnnotationReader $reader, Request $request )
     {
         $classAnnotations = $reader->getClassAnnotations();
-        if( !isset( $classAnnotations[ 'Insomnia\Annotation\Resource' ] ) ) return;
+        
+//        echo '<pre>';
+//        var_dump( $method->getDeclaringClass()->getName() );
+//        var_dump( $reader->getClassAnnotations(), $reader->getReflectionMethods() );
+        
+//        if( !isset( $classAnnotations[ '\Insomnia\Annotation\Resource' ] ) ) return;
         
         foreach( $reader->getReflectionMethods() as $method )
         {
+//            var_dump( $method->getDeclaringClass()->getName() );
+            
+            
             $methodAnnotations = $reader->getMethodAnnotations( $method );
+            
+//            var_dump( $methodAnnotations );
+            
             if( !isset( $methodAnnotations[ 'Insomnia\Annotation\Route' ] ) ) continue;
             
             $this->addRoute( $classAnnotations, $methodAnnotations, $method, $request );

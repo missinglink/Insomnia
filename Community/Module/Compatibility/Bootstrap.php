@@ -10,7 +10,7 @@ use \Insomnia\Kernel,
  * 
  * Provides a compatibility layer for difficult clients.
  * 
- * Insomnia\Annotation\:Module
+ * @Insomnia\Annotation\Module
  * @beta
  */
 class Bootstrap extends KernelModule
@@ -18,9 +18,9 @@ class Bootstrap extends KernelModule
     /**
      * Module configuration
      * 
-     * Insomnia\Annotation\:KernelPlugins({
-     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\MethodOverride" ),
-     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\VersionHeaders" )
+     * @Insomnia\Annotation\KernelPlugins({
+     *      @Insomnia\Annotation\RequestPlugin( class="Request\Plugin\MethodOverride" ),
+     *      @Insomnia\Annotation\ResponsePlugin( class="Response\Plugin\VersionHeaders" )
      * })
      * 
      * @param Kernel $kernel

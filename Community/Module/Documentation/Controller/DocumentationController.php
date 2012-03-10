@@ -15,7 +15,7 @@ use \Insomnia\Kernel;
 /**
  * WebService Documentation
  * 
- * Insomnia\Annotation\:Resource
+ * @Insomnia\Annotation\Resource
  * 
  */
 class DocumentationController extends Action
@@ -23,11 +23,11 @@ class DocumentationController extends Action
     /**
      * Documentation Index
      * 
-     * Insomnia\Annotation\:Route( "/doc", name="doc_index" )
-     * Insomnia\Annotation\:Method( "GET" )
-     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Index" )
-     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * Insomnia\Annotation\:Documentation( title="Documentation Index", description="WebService Documentation", category="Documentation" )
+     * @Insomnia\Annotation\Route( "/doc", name="doc_index" )
+     * @Insomnia\Annotation\Method( "GET" )
+     * @Insomnia\Annotation\View( "Community\Module\Documentation\View\Index" )
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @Insomnia\Annotation\Documentation( title="Documentation Index", description="WebService Documentation", category="Documentation" )
      *
      */
     public function index()
@@ -43,11 +43,11 @@ class DocumentationController extends Action
     /**
      * List Modules
      * 
-     * Insomnia\Annotation\:Route( "/doc/modules", name="doc_modules" )
-     * Insomnia\Annotation\:Method( "GET" )
-     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Modules" )
-     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * Insomnia\Annotation\:Documentation( title="List Modules", description="List Modules", category="Documentation" )
+     * @Insomnia\Annotation\Route( "/doc/modules", name="doc_modules" )
+     * @Insomnia\Annotation\Method( "GET" )
+     * @Insomnia\Annotation\View( "Community\Module\Documentation\View\Modules" )
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @Insomnia\Annotation\Documentation( title="List Modules", description="List Modules", category="Documentation" )
      *
      */
     public function modules()
@@ -86,11 +86,11 @@ class DocumentationController extends Action
     /**
      * List Routes
      * 
-     * Insomnia\Annotation\:Route( "/doc/routes", name="doc_routes" )
-     * Insomnia\Annotation\:Method( "GET" )
-     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Routes" )
-     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * Insomnia\Annotation\:Documentation( title="List Routes", description="List Routes", category="Documentation" )
+     * @Insomnia\Annotation\Route( "/doc/routes", name="doc_routes" )
+     * @Insomnia\Annotation\Method( "GET" )
+     * @Insomnia\Annotation\View( "Community\Module\Documentation\View\Routes" )
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * @Insomnia\Annotation\Documentation( title="List Routes", description="List Routes", category="Documentation" )
      *
      */
     public function routes()

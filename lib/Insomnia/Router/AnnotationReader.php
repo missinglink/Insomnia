@@ -2,8 +2,7 @@
 
 namespace Insomnia\Router;
 
-use \Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
-
+use \Doctrine\Common\Annotations;
 use \Doctrine\Common\Cache\ApcCache,
     \Doctrine\Common\Cache\ArrayCache;
 
@@ -14,14 +13,21 @@ class AnnotationReader
 
     public function __construct( $className )
     {
-        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
-            ? new \Doctrine\Common\Cache\ApcCache
-            : new \Doctrine\Common\Cache\ArrayCache;
+        $reflectionClass = new \ReflectionClass( $className );
         
-        $reader = new DoctrineAnnotationReader( $cache );
+//        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
+//            ? new \Doctrine\Common\Cache\ApcCache
+//            : new \Doctrine\Common\Cache\ArrayCache;
         
-        $this->setReader( $reader );
-        $this->setReflector( new \ReflectionClass( $className ) );
+
+//        Annotations\AnnotationRegistry::registerFile( realpath( \ROOT . 'lib/Insomnia/Annotation/Route.php' ) );
+        Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Insomnia\Annotation', \ROOT . 'lib' );
+        
+//        $loader = new \Doctrine\Common\ClassLoader();
+//        Annotations\AnnotationRegistry::registerLoader( array( $loader, 'loadClass' ) );
+        
+        $this->setReader( new \Doctrine\Common\Annotations\IndexedReader( new Annotations\AnnotationReader ) );
+        $this->setReflector( $reflectionClass );
     }
     
     public function getClassAnnotations()

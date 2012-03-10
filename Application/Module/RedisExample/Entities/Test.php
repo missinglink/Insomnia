@@ -14,9 +14,9 @@ class Test
     /**
      * @Column(type="string",length=50)
      * 
-     * Insomnia\Annotation\:Property({
-     *      Insomnia\Annotation\:Validate( name="id", type="integer" ),
-     *      Insomnia\Annotation\:Validate( name="name", class="\Insomnia\Request\Validator\StringValidator", minlength="4", maxlength="10", optional="true" )
+     * @Insomnia\Annotation\Property({
+     *      @Insomnia\Annotation\Validate( name="id", type="integer" ),
+     *      @Insomnia\Annotation\Validate( name="name", class="\Insomnia\Request\Validator\StringValidator", minlength="4", maxlength="10", optional="true" )
      * })
      */
     private $name;
