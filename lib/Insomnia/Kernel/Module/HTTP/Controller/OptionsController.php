@@ -8,7 +8,7 @@ use \Insomnia\Controller\Action,
 /**
  * HTTP OPTIONS method controller
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class OptionsController extends Action
@@ -18,10 +18,10 @@ class OptionsController extends Action
      * 
      * Respond with a 204 No Content to all requests for the OPTIONS HTTP method.
      * 
-     * @insomnia:Route("/.*", name="http_options")
-     * @insomnia:Method("OPTIONS")
+     * Insomnia\Annotation\:Route("/.*", name="http_options")
+     * Insomnia\Annotation\:Method("OPTIONS")
      * 
-     * @insomnia:Documentation( title="Options", description="Responds to HTTP OPTIONS requests.", category="HTTP" )
+     * Insomnia\Annotation\:Documentation( title="Options", description="Responds to HTTP OPTIONS requests.", category="HTTP" )
      *
      */
     public function options()

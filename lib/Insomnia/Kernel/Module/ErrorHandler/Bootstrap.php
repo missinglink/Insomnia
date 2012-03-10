@@ -10,7 +10,7 @@ use \Insomnia\Kernel;
  * 
  * Catches exceptions and provides debugging information
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {

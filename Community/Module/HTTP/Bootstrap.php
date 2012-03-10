@@ -9,7 +9,7 @@ use \Insomnia\Kernel\Module\HTTP\Bootstrap as KernelModule;
  * 
  * Provides basic HTTP/1.1 functionality.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {

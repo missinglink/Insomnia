@@ -10,15 +10,15 @@ use \Insomnia\Kernel,
  * 
  * Provides a front page for the application.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * @insomnia:KernelPlugins({
-     *      @insomnia:Endpoint( class="Controller\RedisController" )
+     * Insomnia\Annotation\:KernelPlugins({
+     *      Insomnia\Annotation\:Endpoint( class="Controller\RedisController" )
      * })
      * 
      * @param Kernel $kernel

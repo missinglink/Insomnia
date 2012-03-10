@@ -10,7 +10,7 @@ use \Insomnia\Kernel,
  * 
  * Provides a basic request validator.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  * @beta
  */
 class Bootstrap extends KernelModule
@@ -18,8 +18,8 @@ class Bootstrap extends KernelModule
     /**
      * Module configuration
      * 
-     * @insomnia:KernelPlugins({
-     *      @insomnia:AnnotationParser( class="Dispatcher\Plugin\ParamAnnotationValidator" )
+     * Insomnia\Annotation\:KernelPlugins({
+     *      Insomnia\Annotation\:AnnotationParser( class="Dispatcher\Plugin\ParamAnnotationValidator" )
      * })
      * 
      * @param Kernel $kernel

@@ -20,8 +20,8 @@ use \Application\Module\RedisExample\Entities\Test as ExampleEntity;
 /**
  * Test Create Action
  * 
- * @insomnia:Resource
- * @insomnia:Route( "/example" )
+ * Insomnia\Annotation\:Resource
+ * Insomnia\Annotation\:Route( "/example" )
  * 
  */
 class RedisController extends Action
@@ -29,12 +29,12 @@ class RedisController extends Action
     /**
      * Create a new Entity
      * 
-     * @insomnia:Route( "/redis", name="redis_test_create" )
-     * @insomnia:Method( "PUT" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:Route( "/redis", name="redis_test_create" )
+     * Insomnia\Annotation\:Method( "PUT" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      * 
-     * @insomnia:Request({
-     *      @insomnia:Param( name="name", type="string", minlength="4", maxlength="10" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="name", type="string", minlength="4", maxlength="10" )
      * })
      * 
      */
@@ -55,12 +55,12 @@ class RedisController extends Action
     /**
      * Delete a Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="redis_test_delete" )
-     * @insomnia:Method( "DELETE" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:Route( "/redis/:id", name="redis_test_delete" )
+     * Insomnia\Annotation\:Method( "DELETE" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      *
-     * @insomnia:Request({
-     *      @insomnia:Param( name="id", type="integer" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="id", type="integer" )
      * })
      * 
      */
@@ -79,12 +79,12 @@ class RedisController extends Action
     /**
      * List Entities
      * 
-     * @insomnia:Route( "/redis", name="redis_test_index" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:Route( "/redis", name="redis_test_index" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      * 
-     * @insomnia:Request({
-     *      @insomnia:Param( name="page", type="integer", optional="true" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="page", type="integer", optional="true" )
      * })
      *
      */
@@ -112,12 +112,12 @@ class RedisController extends Action
     /**
      * View a Single Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="redis_test_read" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:Route( "/redis/:id", name="redis_test_read" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      * 
-     * @insomnia:Request({
-     *      @insomnia:Param( name="id", type="integer" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="id", type="integer" )
      * })
      * 
      */
@@ -139,13 +139,13 @@ class RedisController extends Action
     /**
      * Update an Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="redis_test_update" )
-     * @insomnia:Method( "POST" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:Route( "/redis/:id", name="redis_test_update" )
+     * Insomnia\Annotation\:Method( "POST" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      *
-     * @insomnia:Request({
-     *      @insomnia:Param( name="id", type="integer" ),
-     *      @insomnia:Param( name="name", type="string", minlength="4", maxlength="10", optional="true" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="id", type="integer" ),
+     *      Insomnia\Annotation\:Param( name="name", type="string", minlength="4", maxlength="10", optional="true" )
      * })
      * 
      */
@@ -166,12 +166,12 @@ class RedisController extends Action
     /**
      * RedisExample Setup Help
      *
-     * @insomnia:Route( "/redis/setup", name="redis_setup" )
-     * @insomnia:Method( "GET" )
+     * Insomnia\Annotation\:Route( "/redis/setup", name="redis_setup" )
+     * Insomnia\Annotation\:Method( "GET" )
      *
-     * @insomnia:View( "Application\Module\RedisExample\View\Setup" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @insomnia:Documentation( category="Redis Demo" )
+     * Insomnia\Annotation\:View( "Application\Module\RedisExample\View\Setup" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:Documentation( category="Redis Demo" )
      *
      */
     public function setup()

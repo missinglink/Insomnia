@@ -14,7 +14,7 @@ use \Insomnia\Registry;
 /**
  * WebService Documentation
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class KernelController extends Action
@@ -22,9 +22,9 @@ class KernelController extends Action
     /**
      * Debug Kernel
      * 
-     * @insomnia:Route( "/info", name="kernel_debug" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( title="Kernel Debug", description="Debug Kernel Object", category="CLI" )
+     * Insomnia\Annotation\:Route( "/info", name="kernel_debug" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( title="Kernel Debug", description="Debug Kernel Object", category="CLI" )
      *
      */
     public function index()

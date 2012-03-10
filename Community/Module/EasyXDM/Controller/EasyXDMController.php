@@ -10,7 +10,7 @@ use \Insomnia\Controller\Action,
  * 
  * Cross-Domain messaging made easy
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class EasyXDMController extends Action
@@ -28,12 +28,12 @@ class EasyXDMController extends Action
      * 
      * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("/xdm/example", name="xdm_example")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/example", name="xdm_example")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
-     * @insomnia:View( "Community\Module\EasyXDM\View\Example" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:View( "Community\Module\EasyXDM\View\Example" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */
     public function example()
@@ -46,11 +46,11 @@ class EasyXDMController extends Action
      * 
      * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("/xdm/hash", name="xdm_index")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/hash", name="xdm_index")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
-     * @insomnia:View( "Community\Module\EasyXDM\View\Hash" )
+     * Insomnia\Annotation\:View( "Community\Module\EasyXDM\View\Hash" )
      * 
      */
     public function hash()
@@ -63,11 +63,11 @@ class EasyXDMController extends Action
      * 
      * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("/xdm/name", name="xdm_name")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/name", name="xdm_name")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
-     * @insomnia:View( "Community\Module\EasyXDM\View\Name" )
+     * Insomnia\Annotation\:View( "Community\Module\EasyXDM\View\Name" )
      * 
      */
     public function name()
@@ -80,9 +80,9 @@ class EasyXDMController extends Action
      * 
      * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("/xdm/easyXDM", name="xdm_lib")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/easyXDM", name="xdm_lib")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
      */
     public function library()
@@ -100,9 +100,9 @@ class EasyXDMController extends Action
     /**
      * Json2 Javascript Library
      * 
-     * @insomnia:Route("/xdm/json2", name="xdm_json2")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/json2", name="xdm_json2")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
      */
     public function json2()
@@ -122,9 +122,9 @@ class EasyXDMController extends Action
      * 
      * Cross-Domain messaging made easy
      * 
-     * @insomnia:Route("/xdm/flash", name="xdm_flash")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Cross-Domain Messaging" )
+     * Insomnia\Annotation\:Route("/xdm/flash", name="xdm_flash")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Cross-Domain Messaging" )
      * 
      */
     public function swf()

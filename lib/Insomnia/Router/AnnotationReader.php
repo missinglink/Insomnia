@@ -11,8 +11,7 @@ class AnnotationReader
 {
     private $reader;
     private $reflector;
-    private $alias = array( 'insomnia' => 'Insomnia\Annotation\\' );
-    
+
     public function __construct( $className )
     {
         $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
@@ -20,10 +19,6 @@ class AnnotationReader
             : new \Doctrine\Common\Cache\ArrayCache;
         
         $reader = new DoctrineAnnotationReader( $cache );
-        $reader->setAutoloadAnnotations( true );
-        
-        foreach( $this->alias as $k => $v )
-            $reader->setAnnotationNamespaceAlias( $v, $k );
         
         $this->setReader( $reader );
         $this->setReflector( new \ReflectionClass( $className ) );

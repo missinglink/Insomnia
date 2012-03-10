@@ -10,7 +10,7 @@ use \Insomnia\Controller\Action,
 /**
  * Welcome Controller
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class WelcomeController extends Action
@@ -20,12 +20,12 @@ class WelcomeController extends Action
      * 
      * The default landing page.
      * 
-     * @insomnia:Route( "/", name="welcome_index" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="Welcome" )
+     * Insomnia\Annotation\:Route( "/", name="welcome_index" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( category="Welcome" )
      * 
-     * @insomnia:View( "Application\Module\Welcome\View\Index" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:View( "Application\Module\Welcome\View\Index" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */
     public function action()

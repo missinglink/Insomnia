@@ -16,7 +16,7 @@ use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
 /**
  * Test Create Action
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class HtmlEntitiesController extends Action
@@ -24,12 +24,12 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entities
      * 
-     * @insomnia:Route( "/example/entity", name="entity_multiple" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="HTML Entities Demo" )
+     * Insomnia\Annotation\:Route( "/example/entity", name="entity_multiple" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( category="HTML Entities Demo" )
      *
-     * @insomnia:View( "Application\Module\HtmlEntities\View\Entities" )
-     * @insomnia:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
+     * Insomnia\Annotation\:View( "Application\Module\HtmlEntities\View\Entities" )
+     * Insomnia\Annotation\:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
      * 
      */
     public function multiple()
@@ -44,16 +44,16 @@ class HtmlEntitiesController extends Action
     /**
      * Html Entity
      * 
-     * @insomnia:Route( "/example/entity/:id", name="entity_single" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:Documentation( category="HTML Entities Demo" )
+     * Insomnia\Annotation\:Route( "/example/entity/:id", name="entity_single" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:Documentation( category="HTML Entities Demo" )
      *
-     * @insomnia:Request({
-     *      @insomnia:Param( name="id", type="string" )
+     * Insomnia\Annotation\:Request({
+     *      Insomnia\Annotation\:Param( name="id", type="string" )
      * })
      * 
-     * @insomnia:View( "Application\Module\HtmlEntities\View\Entity" )
-     * @insomnia:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
+     * Insomnia\Annotation\:View( "Application\Module\HtmlEntities\View\Entity" )
+     * Insomnia\Annotation\:Layout( "Application\Module\HtmlEntities\View\EntityLayout" )
      * 
      */
     public function single()

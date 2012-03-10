@@ -10,16 +10,16 @@ use \Insomnia\Kernel,
  * 
  * Provides an interface to auto-generate documentation.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * @insomnia:KernelPlugins({
-     *      @insomnia:Endpoint( class="Controller\DocumentationController" ),
-     *      @insomnia:Endpoint( class="Controller\PingController" )
+     * Insomnia\Annotation\:KernelPlugins({
+     *      Insomnia\Annotation\:Endpoint( class="Controller\DocumentationController" ),
+     *      Insomnia\Annotation\:Endpoint( class="Controller\PingController" )
      * })
      * 
      * @param Kernel $kernel

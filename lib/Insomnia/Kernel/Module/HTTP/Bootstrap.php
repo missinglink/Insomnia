@@ -10,23 +10,23 @@ use \Insomnia\Kernel,
  * 
  * Provides basic HTTP/1.1 functionality.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {
     /**
      * Module configuration
      * 
-     * @insomnia:KernelPlugins({
-     *      @insomnia:RequestPlugin( class="Request\Plugin\ParamParser" ),
-     *      @insomnia:RequestPlugin( class="Request\Plugin\UriParser" ),
-     *      @insomnia:RequestPlugin( class="Request\Plugin\HeaderParser" ),
-     *      @insomnia:RequestPlugin( class="Request\Plugin\BodyParser" ),
-     *      @insomnia:ResponsePlugin( class="Response\Plugin\HttpHeaders" ),
-     *      @insomnia:ResponsePlugin( class="Response\Plugin\ContentTypeHeaders" ),
-     *      @insomnia:ResponsePlugin( class="Response\Plugin\CacheHeaders" ),
-     *      @insomnia:ResponsePlugin( class="Response\Plugin\ResponseCodeSelector" ),
-     *      @insomnia:Endpoint( class="Controller\ClientController" )
+     * Insomnia\Annotation\:KernelPlugins({
+     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\ParamParser" ),
+     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\UriParser" ),
+     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\HeaderParser" ),
+     *      Insomnia\Annotation\:RequestPlugin( class="Request\Plugin\BodyParser" ),
+     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\HttpHeaders" ),
+     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\ContentTypeHeaders" ),
+     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\CacheHeaders" ),
+     *      Insomnia\Annotation\:ResponsePlugin( class="Response\Plugin\ResponseCodeSelector" ),
+     *      Insomnia\Annotation\:Endpoint( class="Controller\ClientController" )
      * })
      * 
      * @param Kernel $kernel

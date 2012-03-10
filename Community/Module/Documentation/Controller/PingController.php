@@ -8,7 +8,7 @@ use \Insomnia\Controller\Action,
 /**
  * Webservice discovery
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class PingController extends Action
@@ -18,13 +18,13 @@ class PingController extends Action
      * 
      * Get information about your request
      * 
-     * @insomnia:Route("/ping.*", name="ping")
-     * @insomnia:Method("GET PUT POST DELETE")
+     * Insomnia\Annotation\:Route("/ping.*", name="ping")
+     * Insomnia\Annotation\:Method("GET PUT POST DELETE")
      * 
-     * @insomnia:View( "Community\Module\Documentation\View\Ping" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Ping" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
-     * @insomnia:Documentation( title="Ping", description="A request echo function, useful for testing that a client configuration is working as expected.", category="Documentation" )
+     * Insomnia\Annotation\:Documentation( title="Ping", description="A request echo function, useful for testing that a client configuration is working as expected.", category="Documentation" )
      *
      */
     public function ping()

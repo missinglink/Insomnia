@@ -9,7 +9,7 @@ use \Insomnia\Kernel\Module\Mime\Bootstrap as KernelModule;
  * 
  * Provides basic MIME functionality.
  * 
- * @insomnia:Module
+ * Insomnia\Annotation\:Module
  */
 class Bootstrap extends KernelModule
 {

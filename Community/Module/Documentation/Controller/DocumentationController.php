@@ -15,7 +15,7 @@ use \Insomnia\Kernel;
 /**
  * WebService Documentation
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class DocumentationController extends Action
@@ -23,11 +23,11 @@ class DocumentationController extends Action
     /**
      * Documentation Index
      * 
-     * @insomnia:Route( "/doc", name="doc_index" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:View( "Community\Module\Documentation\View\Index" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @insomnia:Documentation( title="Documentation Index", description="WebService Documentation", category="Documentation" )
+     * Insomnia\Annotation\:Route( "/doc", name="doc_index" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Index" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:Documentation( title="Documentation Index", description="WebService Documentation", category="Documentation" )
      *
      */
     public function index()
@@ -43,11 +43,11 @@ class DocumentationController extends Action
     /**
      * List Modules
      * 
-     * @insomnia:Route( "/doc/modules", name="doc_modules" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:View( "Community\Module\Documentation\View\Modules" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @insomnia:Documentation( title="List Modules", description="List Modules", category="Documentation" )
+     * Insomnia\Annotation\:Route( "/doc/modules", name="doc_modules" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Modules" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:Documentation( title="List Modules", description="List Modules", category="Documentation" )
      *
      */
     public function modules()
@@ -86,11 +86,11 @@ class DocumentationController extends Action
     /**
      * List Routes
      * 
-     * @insomnia:Route( "/doc/routes", name="doc_routes" )
-     * @insomnia:Method( "GET" )
-     * @insomnia:View( "Community\Module\Documentation\View\Routes" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @insomnia:Documentation( title="List Routes", description="List Routes", category="Documentation" )
+     * Insomnia\Annotation\:Route( "/doc/routes", name="doc_routes" )
+     * Insomnia\Annotation\:Method( "GET" )
+     * Insomnia\Annotation\:View( "Community\Module\Documentation\View\Routes" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:Documentation( title="List Routes", description="List Routes", category="Documentation" )
      *
      */
     public function routes()

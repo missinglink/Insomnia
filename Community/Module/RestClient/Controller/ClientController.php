@@ -7,8 +7,8 @@ use \Insomnia\Controller\Action;
 /**
  * Client Controller
  * 
- * @insomnia:Resource
- * @insomnia:Route("/client.*")
+ * Insomnia\Annotation\:Resource
+ * Insomnia\Annotation\:Route("/client.*")
  * 
  */
 class ClientController extends Action
@@ -24,12 +24,12 @@ class ClientController extends Action
      * 
      * Useful for testing that the server is behaving as expected.
      * 
-     * @insomnia:Route("", name="client_index")
-     * @insomnia:Method("GET")
-     * @insomnia:Documentation( category="Webservice Client" )
+     * Insomnia\Annotation\:Route("", name="client_index")
+     * Insomnia\Annotation\:Method("GET")
+     * Insomnia\Annotation\:Documentation( category="Webservice Client" )
      * 
-     * @insomnia:View( "Community\Module\RestClient\View\Client" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:View( "Community\Module\RestClient\View\Client" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
      * 
      */
     public function action()

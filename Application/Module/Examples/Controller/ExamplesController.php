@@ -10,7 +10,7 @@ use \Insomnia\Controller\Action,
 /**
  * Examples Controller
  * 
- * @insomnia:Resource
+ * Insomnia\Annotation\:Resource
  * 
  */
 class ExamplesController extends Action
@@ -18,12 +18,12 @@ class ExamplesController extends Action
     /**
      * Examples Index
      * 
-     * @insomnia:Route( "/example", name="Examples_index" )
-     * @insomnia:Method( "GET" )
+     * Insomnia\Annotation\:Route( "/example", name="Examples_index" )
+     * Insomnia\Annotation\:Method( "GET" )
      * 
-     * @insomnia:View( "Application\Module\Examples\View\Index" )
-     * @insomnia:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @insomnia:Documentation( title="Examples Index", description="Examples", category="Examples" )
+     * Insomnia\Annotation\:View( "Application\Module\Examples\View\Index" )
+     * Insomnia\Annotation\:Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * Insomnia\Annotation\:Documentation( title="Examples Index", description="Examples", category="Examples" )
      *
      */
     public function action()
