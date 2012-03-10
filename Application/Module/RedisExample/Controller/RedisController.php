@@ -3,7 +3,7 @@
 namespace Application\Module\RedisExample\Controller;
 
 use \Insomnia\Controller\Action,
-    \Application\Module\RedisExample\Bootstrap\Doctrine,
+    \Application\Module\RedisExample\Bootstrap\Redis,
     \Application\Controller\TestController,
     \Insomnia\Request\Validator\IntegerValidator,
     \Insomnia\Request\Validator\StringValidator,
@@ -29,7 +29,7 @@ class RedisController extends Action
     /**
      * Create a new Entity
      * 
-     * @insomnia:Route( "/redis", name="test_create" )
+     * @insomnia:Route( "/redis", name="redis_test_create" )
      * @insomnia:Method( "PUT" )
      * @insomnia:Documentation( category="Redis Demo" )
      * 
@@ -43,9 +43,9 @@ class RedisController extends Action
         $test = new ExampleEntity;
         $test->setName( $this->validator->getParam( 'name' ) );
 
-        $doctrine = new Doctrine;
-        $doctrine->getManager()->persist( $test );
-        $doctrine->getManager()->flush();
+        $redis = new Redis;
+        $redis->getManager()->persist( $test );
+        $redis->getManager()->flush();
 
         $dataMapper = new DataMapper( $test );
         $this->response->merge( $dataMapper->export() );
@@ -55,7 +55,7 @@ class RedisController extends Action
     /**
      * Delete a Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="test_delete" )
+     * @insomnia:Route( "/redis/:id", name="redis_test_delete" )
      * @insomnia:Method( "DELETE" )
      * @insomnia:Documentation( category="Redis Demo" )
      *
@@ -66,12 +66,12 @@ class RedisController extends Action
      */
     public function delete()
     {
-        $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
+        $redis = new Redis;
+        $test = $redis->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
         if( !$test ) throw new NotFoundException( 'Entity Not Found' );
 
-        $doctrine->getManager()->remove( $test );
-        $doctrine->getManager()->flush();
+        $redis->getManager()->remove( $test );
+        $redis->getManager()->flush();
 
         $this->response[ 'message' ] = 'Entity Deleted';
     }
@@ -79,7 +79,7 @@ class RedisController extends Action
     /**
      * List Entities
      * 
-     * @insomnia:Route( "/redis", name="test_index" )
+     * @insomnia:Route( "/redis", name="redis_test_index" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Redis Demo" )
      * 
@@ -90,8 +90,8 @@ class RedisController extends Action
      */
     public function index()
     {
-        $doctrine    = new Doctrine;
-        $query       = new TestQuery( $doctrine->getManager() );
+        $redis    = new Redis;
+        $query       = new TestQuery( $redis->getManager() );
         
         $queryObject = $query->getQuery();
         $queryObject->useResultCache( true, 99999 );
@@ -112,7 +112,7 @@ class RedisController extends Action
     /**
      * View a Single Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="test_read" )
+     * @insomnia:Route( "/redis/:id", name="redis_test_read" )
      * @insomnia:Method( "GET" )
      * @insomnia:Documentation( category="Redis Demo" )
      * 
@@ -123,8 +123,8 @@ class RedisController extends Action
      */
     public function read()
     {
-        $doctrine = new Doctrine;
-        $test = $doctrine->getManager()
+        $redis = new Redis;
+        $test = $redis->getManager()
                     ->createQuery( 'SELECT t FROM Application\Module\RedisExample\Entities\Test t WHERE t.id = :id' )
                     ->useResultCache( true, 99999 )
                     ->setParameter( 'id', $this->validator->getParam( 'id' ) )
@@ -139,7 +139,7 @@ class RedisController extends Action
     /**
      * Update an Entity
      * 
-     * @insomnia:Route( "/redis/:id", name="test_update" )
+     * @insomnia:Route( "/redis/:id", name="redis_test_update" )
      * @insomnia:Method( "POST" )
      * @insomnia:Documentation( category="Redis Demo" )
      *
@@ -151,14 +151,14 @@ class RedisController extends Action
      */
     public function update()
     {
-        $doctrine = new Doctrine;
-        $test = $doctrine->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
+        $redis = new Redis;
+        $test = $redis->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
         if( !$test ) throw new NotFoundException( 'Entity Not Found' );
 
         $dataMapper = new DataMapper( $test );
         $dataMapper->import( $this->validator->getParams() );
-        $doctrine->getManager()->persist( $test );
-        $doctrine->getManager()->flush();
+        $redis->getManager()->persist( $test );
+        $redis->getManager()->flush();
 
         $this->response->merge( $dataMapper->export() );
     }
@@ -166,7 +166,7 @@ class RedisController extends Action
     /**
      * RedisExample Setup Help
      *
-     * @insomnia:Route( "/redis/setup", name="RedisExample_setup" )
+     * @insomnia:Route( "/redis/setup", name="redis_setup" )
      * @insomnia:Method( "GET" )
      *
      * @insomnia:View( "Application\Module\RedisExample\View\Setup" )
