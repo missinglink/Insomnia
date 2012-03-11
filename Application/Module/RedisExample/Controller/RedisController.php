@@ -8,8 +8,8 @@ use \Insomnia\Controller\Action,
     \Insomnia\Response\Code;
 
 use \Application\Module\RedisExample\DataMapper\Test as DataMapper;
-use \Application\Module\RedisExample\EntityIndex\Test as Entity;
-use \Application\Module\RedisExample\EntityIndex\Tests as EntityIndex;
+use \Application\Module\RedisExample\Entities\Test as Entity;
+use \Application\Module\RedisExample\Entities\Tests as EntityIndex;
 
 /**
  * Test Create Action
