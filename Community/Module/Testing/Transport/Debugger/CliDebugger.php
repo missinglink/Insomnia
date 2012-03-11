@@ -85,8 +85,17 @@ class CliDebugger extends Observer
         {            
             foreach( $transport->getResponse()->getHeaders() as $headerKey => $headerValue )
             {
-                $headerString = '  ' . $this->output( $headerKey . ': ', 'light_blue' );
-                echo $this->output( $headerString . $headerValue ) . \PHP_EOL;
+                echo $this->output( '  ' . $this->output( $headerKey . ': ', 'light_blue' ) );
+                
+                if( false !== strstr( $headerKey, 'X-Debug-' ) )
+                {
+                    echo $this->output( $headerValue, 'yellow' ) . \PHP_EOL;
+                }
+                
+                else
+                {
+                    echo $this->output( $headerValue ) . \PHP_EOL;
+                }
             }
         }
 
