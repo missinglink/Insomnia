@@ -173,24 +173,4 @@ class RedisController extends Action
 
         $this->response->merge( $dataMapper->export() );
     }
-
-    /**
-     * RedisExample Setup Help
-     *
-     * @Insomnia\Annotation\Route( "/redis/setup", name="redis_setup" )
-     * @Insomnia\Annotation\Method( "GET" )
-     *
-     * @Insomnia\Annotation\View( "Application\Module\RedisExample\View\Setup" )
-     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
-     * @Insomnia\Annotation\Documentation( category="Redis Demo" )
-     *
-     */
-    public function setup()
-    {
-        $this->response[ 'setup' ] = array(
-            'title' => 'Setting up the example',
-            'description' => 'You must setup your database before running this example',
-            'example' => file_get_contents( __DIR__ . '../../Scripts/user_create.sql' ),
-        );
-    }
 }
