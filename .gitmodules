@@ -1,6 +1,3 @@
-[submodule "lib/Rediska"]
-	path = lib/Rediska
-	url = git://github.com/Shumkov/Rediska.git
 [submodule "lib/ClassLoader"]
 	path = lib/ClassLoader
 	url = git://github.com/symfony/ClassLoader.git
@@ -19,3 +16,6 @@
 [submodule "lib/pagerfanta"]
 	path = lib/pagerfanta
 	url = git://github.com/whiteoctober/Pagerfanta.git
+[submodule "lib/rediska"]
+	path = lib/rediska
+	url = git://github.com/Shumkov/Rediska.git

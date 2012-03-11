@@ -34,18 +34,21 @@ class RedisController extends Action
      * @Insomnia\Annotation\Documentation( category="Redis Demo" )
      * 
      * @Insomnia\Annotation\Request({
-     *      @Insomnia\Annotation\Param( name="name", type="string", minlength="4", maxlength="10" )
+     *      @Insomnia\Annotation\Param( name="name", type="string" )
      * })
      * 
      */
     public function create()
     {
-        $test = new ExampleEntity;
-        $test->setName( $this->validator->getParam( 'name' ) );
-
         $redis = new Redis;
-        $redis->getManager()->persist( $test );
-        $redis->getManager()->flush();
+        
+        // Save Entity
+        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test->name = $this->validator->getParam( 'name' );
+        
+        // Save Entity Index
+        $tests = new \Application\Module\RedisExample\Entities\Tests;
+        $tests->add( $test->getId() );
 
         $dataMapper = new DataMapper( $test );
         $this->response->merge( $dataMapper->export() );
@@ -67,13 +70,23 @@ class RedisController extends Action
     public function delete()
     {
         $redis = new Redis;
-        $test = $redis->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        
+        // Create Entity
+        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test->setId( (int) $this->validator->getParam( 'id' ) );
 
-        $redis->getManager()->remove( $test );
-        $redis->getManager()->flush();
-
-        $this->response[ 'message' ] = 'Entity Deleted';
+        // Delete Entity
+        if( $test->delete() )
+        {
+            // Update Entity Index
+            $tests = new \Application\Module\RedisExample\Entities\Tests;
+            $tests->remove( $test->getId() );
+         
+            $this->response->setCode( Code::HTTP_OK );
+        }
+        
+        // Entity Not Found
+        else throw new \Exception( 'Entity Not Found', 404 );
     }
     
     /**
@@ -90,20 +103,19 @@ class RedisController extends Action
      */
     public function index()
     {
-        $redis    = new Redis;
-        $query       = new TestQuery( $redis->getManager() );
+        $redis = new Redis;
         
-        $queryObject = $query->getQuery();
-        $queryObject->useResultCache( true, 99999 );
+        // Update Entity Index
+        $tests = new \Application\Module\RedisExample\Entities\Tests;
+        $iterator = $tests->getIterator();
         
-        $paginator   = new Paginator( $queryObject );
-        $paginator->setCurrentPage( $this->validator->getParam( 'page' ) );
+        if( !$iterator->count() ) throw new NotFoundException( 'Entity Not Found', 404 );
         
-        $tests = $paginator->getItems();
-        if( !$tests ) throw new NotFoundException( 'Entity Not Found', 404 );
-
-        foreach( $tests as $test )
+        foreach( $iterator as $indexValue )
         {
+            $test = new \Application\Module\RedisExample\Entities\Test;
+            $test->setId( $indexValue );
+
             $dataMapper = new DataMapper( $test );
             $this->response->push( $dataMapper->export() );
         }
@@ -124,15 +136,13 @@ class RedisController extends Action
     public function read()
     {
         $redis = new Redis;
-        $test = $redis->getManager()
-                    ->createQuery( 'SELECT t FROM Application\Module\RedisExample\Entities\Test t WHERE t.id = :id' )
-                    ->useResultCache( true, 99999 )
-                    ->setParameter( 'id', $this->validator->getParam( 'id' ) )
-                    ->getResult();
         
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test->setId( (int) $this->validator->getParam( 'id' ) );
+        
+        if( !isset( $test->name ) ) throw new NotFoundException( 'Entity Not Found' );
 
-        $dataMapper = new DataMapper( reset( $test ) );
+        $dataMapper = new DataMapper( $test );
         $this->response->merge( $dataMapper->export() );
     }
     
@@ -145,20 +155,21 @@ class RedisController extends Action
      *
      * @Insomnia\Annotation\Request({
      *      @Insomnia\Annotation\Param( name="id", type="integer" ),
-     *      @Insomnia\Annotation\Param( name="name", type="string", minlength="4", maxlength="10", optional="true" )
+     *      @Insomnia\Annotation\Param( name="name", type="string" )
      * })
      * 
      */
     public function update()
     {
         $redis = new Redis;
-        $test = $redis->getManager()->find( 'Application\Module\RedisExample\Entities\Test', $this->validator->getParam( 'id' ) );
-        if( !$test ) throw new NotFoundException( 'Entity Not Found' );
+        
+        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test->setId( (int) $this->validator->getParam( 'id' ) );
+        
+        if( !isset( $test->name ) ) throw new NotFoundException( 'Entity Not Found' );
 
         $dataMapper = new DataMapper( $test );
         $dataMapper->import( $this->validator->getParams() );
-        $redis->getManager()->persist( $test );
-        $redis->getManager()->flush();
 
         $this->response->merge( $dataMapper->export() );
     }

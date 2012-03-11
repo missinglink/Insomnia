@@ -10,12 +10,12 @@ class Test extends DataMapper
     {
         return array(
             'id'    => $this->object->getId(),
-            'name'  => $this->object->getName()
+            'name'  => $this->object->name
         );
     }
 
     public function import( array $data )
     {
-        if( isset( $data['name'] ) )       $this->object->setName( $data[ 'name' ] );
+        if( isset( $data['name'] ) )       $this->object->name = $data[ 'name' ];
     }
 }

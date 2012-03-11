@@ -2,38 +2,71 @@
 
 namespace Application\Module\RedisExample\Entities;
 
-/** @Entity */
 class Test
 {
-    /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
-     */
-    private $id;
+    const KEY = 'user';
+    private $_id;
     
-    /**
-     * @Column(type="string",length=50)
-     * 
-     * @Insomnia\Annotation\Property({
-     *      @Insomnia\Annotation\Validate( name="id", type="integer" ),
-     *      @Insomnia\Annotation\Validate( name="name", class="\Insomnia\Request\Validator\StringValidator", minlength="4", maxlength="10", optional="true" )
-     * })
-     */
-    private $name;
-
-    public function getId() {
-        return $this->id;
+    public function __construct( $id = null )
+    {
+        $this->_id = $id;
+    }
+    
+    public function delete()
+    {
+        $key = new \Rediska_Key( self::KEY . ':' . $this->getId() );
+        return $key->delete();
+    }
+    
+    public function __set( $name, $value )
+    {
+        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId( false ) );
+        $key->set( $name, $value );
+    }
+    
+    public function __get( $name )
+    {        
+        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId() );
+        return $key->get( $name );
+    }
+    
+    public function __isset( $name )
+    {
+        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId() );
+        return $key->exists( $name );
+    }
+    
+    public function __unset( $name )
+    {
+        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId() );
+        $key->delete( $name );
+    }
+    
+    private function generateId()
+    {
+        $key = new \Rediska_Key( self::KEY . '_increment' );
+        return $key->increment();
+    }
+    
+    public function getId( $strict = true )
+    {
+        // Autoincrement if key is not set
+        if( null === $this->_id )
+        {
+            // Throw errors
+            if( true === $strict )
+            {
+                throw new \Rediska_Exception( 'Invalid Key' );
+            }
+            
+            $this->_id = $this->generateId();
+        }
+        
+        return $this->_id;
     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
+    public function setId( $id )
+    {
+        $this->_id = $id;
     }
 }

@@ -169,9 +169,5 @@ class RedisDemoTest extends FunctionalTestCase
         
         $response = $this->transfer( $request );
         $this->assertValidResponse( $response, Code::HTTP_OK, 'application/json' );
-        
-        $json = json_decode( $response->getBody(), true );
-        
-        $this->assertEquals( 'Entity Deleted', (string) $json[ 'message' ] );
     }
 }
