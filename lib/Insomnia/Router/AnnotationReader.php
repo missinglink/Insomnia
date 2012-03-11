@@ -15,15 +15,14 @@ class AnnotationReader
     {
         $reflectionClass = new \ReflectionClass( $className );
         
-//        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
-//            ? new \Doctrine\Common\Cache\ApcCache
-//            : new \Doctrine\Common\Cache\ArrayCache;
-        
+        $cache = ( \APPLICATION_ENV !== 'development' && extension_loaded( 'apc' ) )
+            ? new \Doctrine\Common\Cache\ApcCache
+            : new \Doctrine\Common\Cache\ArrayCache;
 
         Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Insomnia\Annotation', \ROOT . 'lib' );
         Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Doctrine\ORM', \ROOT . 'lib/doctrine-orm/lib' );
         
-        $this->setReader( new \Doctrine\Common\Annotations\IndexedReader( new Annotations\AnnotationReader ) );
+        $this->setReader( new Annotations\IndexedReader( new Annotations\CachedReader( new Annotations\AnnotationReader, $cache ) ) );
         $this->setReflector( $reflectionClass );
     }
     
