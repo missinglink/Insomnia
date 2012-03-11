@@ -2,10 +2,12 @@
 
 namespace Application\Module\CrudExample\Bootstrap;
 
+require_once \ROOT.'/lib/doctrine-orm/lib/Doctrine/ORM/EntityManager.php';
+
+use \Symfony\Component\ClassLoader\UniversalClassLoader;
 use \Doctrine\Common\Annotations;
 
-use \Doctrine\Common\ClassLoader,
-    \Doctrine\ORM\Mapping\Driver\DriverChain,
+use \Doctrine\ORM\Mapping\Driver\DriverChain,
     \Doctrine\ORM\EntityManager,
     \Doctrine\ORM\Configuration,
     \Doctrine\Common\Cache\ArrayCache,
@@ -25,11 +27,12 @@ class Doctrine extends EntityManager
     public function __construct()
     {
         // Autoloader
-        $classLoader = new ClassLoader( 'Entities', dirname( __DIR__ ) );
-        $classLoader->register();
-        $classLoader = new ClassLoader( 'Proxies', dirname( __DIR__ ) );
-        $classLoader->register();
-        $classLoader = new ClassLoader( 'DoctrineExtensions', \ROOT . 'lib' );
+        $classLoader = new UniversalClassLoader;
+        $classLoader->registerNamespace( 'Entities', dirname( __DIR__ ) );
+        $classLoader->registerNamespace( 'Proxies', dirname( __DIR__ ) );
+        $classLoader->registerNamespace( 'Doctrine\\ORM', \ROOT . 'lib/doctrine-orm/lib' );
+        $classLoader->registerNamespace( 'Doctrine\\DBAL', \ROOT . 'lib/doctrine-dbal/lib' );
+        $classLoader->registerNamespace( 'Pagerfanta', \ROOT . 'lib/pagerfanta/src' );
         $classLoader->register();
         
         $conn = \Doctrine\DBAL\DriverManager::getConnection( $this->getConnectionOptions(), $this->getConfig(), $this->createEventManager() );

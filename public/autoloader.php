@@ -16,8 +16,6 @@ require_once \ROOT.'/lib/ClassLoader/UniversalClassLoader.php';
 $classLoader = new UniversalClassLoader;
 $classLoader->registerNamespace( 'Insomnia', \ROOT . 'lib' );
 $classLoader->registerNamespace( 'Doctrine\\Common', \ROOT . 'lib/doctrine-common/lib' );
-$classLoader->registerNamespace( 'Doctrine\\ORM', \ROOT . 'lib/doctrine-orm/lib' );
-$classLoader->registerNamespace( 'Doctrine\\DBAL', \ROOT . 'lib/doctrine-dbal/lib' );
 $classLoader->registerNamespace( 'Pagerfanta', \ROOT . 'lib/pagerfanta/src' );
 $classLoader->registerNamespace( 'Application', \ROOT );
 $classLoader->registerNamespace( 'Community', \ROOT );

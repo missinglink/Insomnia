@@ -17,7 +17,14 @@ class Redis
 
     public function __construct()
     {
-        
+        // Autoloader
+        $classLoader = new UniversalClassLoader;
+        $classLoader->registerNamespace( 'Entities', dirname( __DIR__ ) );
+        $classLoader->registerNamespace( 'Proxies', dirname( __DIR__ ) );
+//        $classLoader->registerNamespace( 'Doctrine\\ORM', \ROOT . 'lib/doctrine-orm/lib' );
+//        $classLoader->registerNamespace( 'Doctrine\\DBAL', \ROOT . 'lib/doctrine-dbal/lib' );
+        $classLoader->registerNamespace( 'Pagerfanta', \ROOT . 'lib/pagerfanta/src' );
+        $classLoader->register();
     }
  
     /**
