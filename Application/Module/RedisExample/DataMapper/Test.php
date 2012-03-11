@@ -8,14 +8,17 @@ class Test extends DataMapper
 {
     public function export()
     {
-        return array(
-            'id'    => $this->object->getId(),
-            'name'  => $this->object->name
-        );
+        $result[ 'id' ] = $this->object->getId();
+        $result[ 'name' ] = $this->object->name;
+        
+        return $result;
     }
 
     public function import( array $data )
     {
-        if( isset( $data['name'] ) )       $this->object->name = $data[ 'name' ];
+        if( isset( $data[ 'name' ] ) )
+        {
+            $this->object->name = $data[ 'name' ];
+        }
     }
 }

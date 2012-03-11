@@ -20,7 +20,7 @@ class Test
     
     public function __set( $name, $value )
     {
-        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId( false ) );
+        $key = new \Rediska_Key_Hash( self::KEY . ':' . $this->getId() );
         $key->set( $name, $value );
     }
     
@@ -53,12 +53,6 @@ class Test
         // Autoincrement if key is not set
         if( null === $this->_id )
         {
-            // Throw errors
-            if( true === $strict )
-            {
-                throw new \Rediska_Exception( 'Invalid Key' );
-            }
-            
             $this->_id = $this->generateId();
         }
         
