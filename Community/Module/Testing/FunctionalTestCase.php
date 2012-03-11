@@ -88,11 +88,11 @@ class FunctionalTestCase extends \PHPUnit_Framework_TestCase
     public static function getBrowserTemplates()
     {
         return array(
-            array( new Browser\Firefox_v8_0 ),
-//            array( new Browser\Chromium_v14_0 ),
-//            array( new Browser\Konqueror_v4_5_5 ),
-//            array( new Browser\Curl_v7_21 ),
-//            array( new Browser\BlackBerry_6 ),
+            array( new Browser\Firefox ),
+//            array( new Browser\Chromium ),
+//            array( new Browser\Konqueror ),
+//            array( new Browser\Curl ),
+//            array( new Browser\BlackBerry ),
         );
     }
 

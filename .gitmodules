@@ -1,6 +1,21 @@
 [submodule "lib/Rediska"]
 	path = lib/Rediska
 	url = git://github.com/Shumkov/Rediska.git
-[submodule "lib/Doctrine"]
-	path = lib/Doctrine
+[submodule "lib/ClassLoader"]
+	path = lib/ClassLoader
+	url = git://github.com/symfony/ClassLoader.git
+[submodule "lib/doctrine-orm"]
+	path = lib/doctrine-orm
+	url = git://github.com/doctrine/doctrine2.git
+[submodule "lib/doctrine-common"]
+	path = lib/doctrine-common
 	url = git://github.com/doctrine/common.git
+[submodule "lib/doctrine-dbal"]
+	path = lib/doctrine-dbal
+	url = git://github.com/doctrine/dbal.git
+[submodule "lib/doctrine-extensions"]
+	path = lib/doctrine-extensions
+	url = https://github.com/beberlei/DoctrineExtensions
+[submodule "lib/pagerfanta"]
+	path = lib/pagerfanta
+	url = git://github.com/whiteoctober/Pagerfanta.git

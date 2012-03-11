@@ -2,25 +2,25 @@
 
 namespace Insomnia\Response;
 
-use \DoctrineExtensions\Paginate\PaginationAdapter,
+use \Pagerfanta\Adapter\DoctrineORMAdapter,
     \Doctrine\ORM\Query;
 
-class Paginator extends PaginationAdapter
+class Paginator extends DoctrineORMAdapter
 {
     private $pageSize = 100,
             $currentPage = 1;
 
-    public function __construct( $query, $ns = 'pgid' )
+    public function __construct( $query )
     {
         if( \method_exists( $query, 'getQuery' ) )
             $query = $query->getQuery();
 
-        parent::__construct( $query, $ns );
+        parent::__construct( $query );
     }
     
-    public function getItems($offset = null, $itemCountPerPage = null)
+    public function getItems( $offset = null, $itemCountPerPage = null )
     {
-        return parent::getItems( ( $this->currentPage -1 ) * $this->pageSize, $this->pageSize );
+        return parent::getSlice( ( $this->currentPage -1 ) * $this->pageSize, $this->pageSize );
     }
 
     public function getPageSize()

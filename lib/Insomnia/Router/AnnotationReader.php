@@ -20,11 +20,8 @@ class AnnotationReader
 //            : new \Doctrine\Common\Cache\ArrayCache;
         
 
-//        Annotations\AnnotationRegistry::registerFile( realpath( \ROOT . 'lib/Insomnia/Annotation/Route.php' ) );
         Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Insomnia\Annotation', \ROOT . 'lib' );
-        
-//        $loader = new \Doctrine\Common\ClassLoader();
-//        Annotations\AnnotationRegistry::registerLoader( array( $loader, 'loadClass' ) );
+        Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Doctrine\ORM', \ROOT . 'lib/doctrine-orm/lib' );
         
         $this->setReader( new \Doctrine\Common\Annotations\IndexedReader( new Annotations\AnnotationReader ) );
         $this->setReflector( $reflectionClass );

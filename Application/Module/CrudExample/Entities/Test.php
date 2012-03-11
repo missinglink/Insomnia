@@ -2,22 +2,19 @@
 
 namespace Application\Module\CrudExample\Entities;
 
-/** @Entity */
+use Doctrine\ORM\Mapping as ORM;
+
+/** @ORM\Entity */
 class Test
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $id;
     
     /**
-     * @Column(type="string",length=50)
-     * 
-     * @Insomnia\Annotation\Property({
-     *      @Insomnia\Annotation\Validate( name="id", type="integer" ),
-     *      @Insomnia\Annotation\Validate( name="name", class="\Insomnia\Request\Validator\StringValidator", minlength="4", maxlength="10", optional="true" )
-     * })
+     * @ORM\Column( type="string", length=50 )
      */
     private $name;
 

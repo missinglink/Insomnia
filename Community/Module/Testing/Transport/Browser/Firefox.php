@@ -4,7 +4,10 @@ namespace Community\Module\Testing\Transport\Browser;
 
 use \Community\Module\Testing\Transport\HTTPRequest;
 
-class Firefox_v8_0 extends HTTPRequest
+/**
+ * @version Firefox 8.0
+ */
+class Firefox extends HTTPRequest
 {
     public function getHeaders()
     {

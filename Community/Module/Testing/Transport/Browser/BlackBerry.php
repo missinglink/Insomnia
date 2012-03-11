@@ -4,7 +4,10 @@ namespace Community\Module\Testing\Transport\Browser;
 
 use \Community\Module\Testing\Transport\HTTPRequest;
 
-class BlackBerry_6 extends HTTPRequest
+/**
+ * @version Blackberry 6
+ */
+class BlackBerry extends HTTPRequest
 {
     public function getHeaders()
     {

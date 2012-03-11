@@ -2,6 +2,8 @@
 
 namespace Application\Module\CrudExample\Bootstrap;
 
+use \Doctrine\Common\Annotations;
+
 use \Doctrine\Common\ClassLoader,
     \Doctrine\ORM\Mapping\Driver\DriverChain,
     \Doctrine\ORM\EntityManager,
@@ -70,8 +72,14 @@ class Doctrine extends EntityManager
         // Annotations
 //        $annotationDriver = $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) );
         
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader( $cache, new \Doctrine\Common\Annotations\Parser );
-        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        $reader = new \Doctrine\Common\Annotations\AnnotationReader( $cache, new \Doctrine\Common\Annotations\PhpParser );
+//        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        
+        Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Insomnia\Annotation', \ROOT . 'lib' );
+        Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Doctrine\ORM', \ROOT . 'lib/doctrine-orm/lib' );
+        
+        $reader = new \Doctrine\Common\Annotations\IndexedReader( new Annotations\AnnotationReader );
+        
         $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver( $reader, array( dirname( __DIR__ ) . '/Entities' ) );
         
 //        $annotationDriver = new \Doctrine\Common\Annotations\AnnotationReader(
