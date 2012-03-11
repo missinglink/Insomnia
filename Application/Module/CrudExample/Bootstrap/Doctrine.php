@@ -73,10 +73,7 @@ class Doctrine extends EntityManager
         $config->setResultCacheImpl( $cache );
         
         // Annotations
-//        $annotationDriver = $config->newDefaultAnnotationDriver( array( \ROOT . 'Application/Entities' ) );
-        
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader( $cache, new \Doctrine\Common\Annotations\PhpParser );
-//        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        $reader = new Annotations\IndexedReader( new Annotations\CachedReader( new Annotations\AnnotationReader, $cache ) );
         
         Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Insomnia\Annotation', \ROOT . 'lib' );
         Annotations\AnnotationRegistry::registerAutoloadNamespace( 'Doctrine\ORM', \ROOT . 'lib/doctrine-orm/lib' );
@@ -85,9 +82,6 @@ class Doctrine extends EntityManager
         
         $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver( $reader, array( dirname( __DIR__ ) . '/Entities' ) );
         
-//        $annotationDriver = new \Doctrine\Common\Annotations\AnnotationReader(
-//            $cache, new \Doctrine\Common\Annotations\Parser
-//        );
         $config->setMetadataDriverImpl( $annotationDriver );
         
         return $config;
