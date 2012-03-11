@@ -8,8 +8,8 @@ use \Insomnia\Controller\Action,
     \Insomnia\Response\Code;
 
 use \Application\Module\RedisExample\DataMapper\Test as DataMapper;
-use \Application\Module\RedisExample\Entities\Test as Entity;
-use \Application\Module\RedisExample\Entities\Tests as Entities;
+use \Application\Module\RedisExample\EntityIndex\Test as Entity;
+use \Application\Module\RedisExample\EntityIndex\Tests as EntityIndex;
 
 /**
  * Test Create Action
@@ -41,7 +41,7 @@ class RedisController extends Action
         $test->name = $this->validator->getParam( 'name' );
         
         // Save Entity Index
-        $tests = new Entities;
+        $tests = new EntityIndex;
         $tests->add( $test->getId() );
 
         $dataMapper = new DataMapper( $test );
@@ -73,7 +73,7 @@ class RedisController extends Action
         if( $test->delete() )
         {
             // Update Entity Index
-            $tests = new Entities;
+            $tests = new EntityIndex;
             $tests->remove( $test->getId() );
          
             $this->response->setCode( Code::HTTP_OK );
@@ -84,7 +84,7 @@ class RedisController extends Action
     }
     
     /**
-     * List Entities
+     * List EntityIndex
      * 
      * @Insomnia\Annotation\Route( "/redis", name="redis_test_index" )
      * @Insomnia\Annotation\Method( "GET" )
@@ -99,13 +99,12 @@ class RedisController extends Action
     {
         $redis = new Redis;
         
-        // Update Entity Index
-        $tests = new Entities;
-        $iterator = $tests->getIterator();
+        // Access the Entity primary index
+        $tests = new EntityIndex;
         
-        if( !$iterator->count() ) throw new NotFoundException( 'Entity Not Found', 404 );
+        if( !$tests->getLength() ) throw new NotFoundException( 'Entity Not Found', 404 );
         
-        foreach( $iterator as $indexValue )
+        foreach( $tests->getIterator() as $indexValue )
         {
             $test = new Entity;
             $test->setId( $indexValue );
