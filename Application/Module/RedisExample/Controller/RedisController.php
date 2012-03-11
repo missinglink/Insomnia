@@ -4,18 +4,12 @@ namespace Application\Module\RedisExample\Controller;
 
 use \Insomnia\Controller\Action,
     \Application\Module\RedisExample\Bootstrap\Redis,
-    \Application\Controller\TestController,
-    \Insomnia\Request\Validator\IntegerValidator,
-    \Insomnia\Request\Validator\StringValidator,
     \Insomnia\Controller\NotFoundException,
-    \Insomnia\Response\Paginator,
-    \Insomnia\Response\Code,
-    \Application\Module\RedisExample\Queries\TestQuery;
-
-use \Insomnia\Kernel\Module\RequestValidator\Request\RequestValidator;
+    \Insomnia\Response\Code;
 
 use \Application\Module\RedisExample\DataMapper\Test as DataMapper;
-use \Application\Module\RedisExample\Entities\Test as ExampleEntity;
+use \Application\Module\RedisExample\Entities\Test as Entity;
+use \Application\Module\RedisExample\Entities\Tests as Entities;
 
 /**
  * Test Create Action
@@ -43,11 +37,11 @@ class RedisController extends Action
         $redis = new Redis;
         
         // Save Entity
-        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test = new Entity;
         $test->name = $this->validator->getParam( 'name' );
         
         // Save Entity Index
-        $tests = new \Application\Module\RedisExample\Entities\Tests;
+        $tests = new Entities;
         $tests->add( $test->getId() );
 
         $dataMapper = new DataMapper( $test );
@@ -72,14 +66,14 @@ class RedisController extends Action
         $redis = new Redis;
         
         // Create Entity
-        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test = new Entity;
         $test->setId( (int) $this->validator->getParam( 'id' ) );
 
         // Delete Entity
         if( $test->delete() )
         {
             // Update Entity Index
-            $tests = new \Application\Module\RedisExample\Entities\Tests;
+            $tests = new Entities;
             $tests->remove( $test->getId() );
          
             $this->response->setCode( Code::HTTP_OK );
@@ -106,14 +100,14 @@ class RedisController extends Action
         $redis = new Redis;
         
         // Update Entity Index
-        $tests = new \Application\Module\RedisExample\Entities\Tests;
+        $tests = new Entities;
         $iterator = $tests->getIterator();
         
         if( !$iterator->count() ) throw new NotFoundException( 'Entity Not Found', 404 );
         
         foreach( $iterator as $indexValue )
         {
-            $test = new \Application\Module\RedisExample\Entities\Test;
+            $test = new Entity;
             $test->setId( $indexValue );
 
             $dataMapper = new DataMapper( $test );
@@ -137,7 +131,7 @@ class RedisController extends Action
     {
         $redis = new Redis;
         
-        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test = new Entity;
         $test->setId( (int) $this->validator->getParam( 'id' ) );
         
         if( !isset( $test->name ) ) throw new NotFoundException( 'Entity Not Found' );
@@ -163,7 +157,7 @@ class RedisController extends Action
     {
         $redis = new Redis;
         
-        $test = new \Application\Module\RedisExample\Entities\Test;
+        $test = new Entity;
         $test->setId( (int) $this->validator->getParam( 'id' ) );
         
         if( !isset( $test->name ) ) throw new NotFoundException( 'Entity Not Found' );
