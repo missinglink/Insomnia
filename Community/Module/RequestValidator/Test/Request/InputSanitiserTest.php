@@ -21,6 +21,26 @@ class InputSanitiserTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals( 'alert("test");', $sanitiser->getValue() );
     }
+
+    /**
+     * @covers Community\Module\RequestValidator\Request\InputSanitiser::stripTags
+     */
+    public function testStripTagsWithArray()
+    {
+        $input = array();
+        $input[] = '<script type="text/javascript">alert("test");</script>';
+        $input[] = '<script type="text/javascript">alert("moreTests");</script>';
+
+        $sanitiser = new InputSanitiser( $input );
+        $sanitiser->stripTags();
+
+        $result = array(
+            'alert("test");',
+            'alert("moreTests");'
+        );
+
+        $this->assertEquals( $result, $sanitiser->getValue() );
+    }
     
     /**
      * @covers Community\Module\RequestValidator\Request\InputSanitiser::stripTags

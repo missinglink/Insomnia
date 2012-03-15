@@ -25,7 +25,14 @@ class InputSanitiser
      */
     public function stripTags()
     {
-        $this->value = strip_tags( $this->value );
+        if ( is_array( $this->value ) )
+        {
+            $this->value = array_map( 'strip_tags', $this->value );
+        }
+        else
+        {
+            $this->value = strip_tags( $this->value );
+        }
         
         return $this;
     }
