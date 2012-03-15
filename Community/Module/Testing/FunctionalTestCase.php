@@ -41,8 +41,13 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
      * @var \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection 
      */
     private $conn;
-        
- 
+
+    /**
+     * Cached yaml fixtures
+     * 
+     * @var array
+     */
+    private static $fixtureCache = array();
         
     /**
      * Method to return an array of filepathes to yaml fixture files
@@ -104,6 +109,12 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
     final protected function getDataSet()
     {
         $fixtureData = $this->loadFixtureData();
+        $fixtureHash = md5( serialize( $fixtureData ) );
+        
+        if (! empty( self::$fixtureCache[$fixtureHash] ) )
+        {
+            return self::$fixtureCache[$fixtureHash];
+        }
         
         if ( is_array( $fixtureData ) && 1 < count( $fixtureData ) )
         {
@@ -111,15 +122,13 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
             
             for( $x=1; $x<count($fixtureData); $x++ )
             {
-                if ( !is_readable( $fixtureData[ 1 ] ) )
+                if ( !is_readable( $fixtureData[ $x ] ) )
                 {
-                    throw new \Exception( 'cannot read from: ' . $fixtureData[ 1 ] );
+                    throw new \Exception( 'cannot read from: ' . $fixtureData[ $x ] );
                 }
                 
-                $dataset->addYamlFile( $fixtureData[ 1 ] );
+                $dataset->addYamlFile( $fixtureData[ $x ] );
             }
-            
-            return $dataset;
         }
         
         elseif ( is_array( $fixtureData ) && 1 === count($fixtureData) )
@@ -128,14 +137,15 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
             {
                 throw new \Exception( 'cannot read from: ' . $fixtureData[ 0 ] );
             }
-            
-            return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] ); 
+            $dataset = new \PHPUnit_Extensions_Database_DataSet_YamlDataSet( $fixtureData[ 0 ] ); 
         }
         
         else
         {
             throw new \Exception( 'please return an array with at least 1 path in loadFixtureData()' );
         }
+        
+        return self::$fixtureCache[$fixtureHash] = $dataset;
     }
     
     protected function transfer( HTTPRequest $request, HTTPResponse $response = null, $followRedirects = true )
