@@ -190,13 +190,12 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         
         $response = $this->transfer( $request );
         
-        $this->assertEquals( Code::HTTP_OK, $response->getCode() );
-        $this->assertEquals( 'application/json', $response->getContentType() );
+        $this->assertValidResponse( $response, Code::HTTP_OK, 'application/json' );
         
         $json = json_decode( $response->getBody(), true );
         $this->assertArrayHasKey( 'sessionId', $json );
         
-        return (string) $json[ 'sessionId' ];
+        return (string) $json[ 'sessionId' ]; 
     }
     
     protected function getZendAuthCookieId()
@@ -209,7 +208,8 @@ abstract class FunctionalTestCase extends \PHPUnit_Extensions_Database_TestCase
         
         $response = $this->transfer( $request, new \Community\Module\Testing\Transport\HTTPResponse, false );
         
-        $this->assertValidResponse( $response, Code::HTTP_FOUND, 'text/html', '' );
+        $this->assertEquals( Code::HTTP_FOUND, $response->getCode() );
+        $this->assertEquals( 'text/html', $response->getContentType() );
         
         $this->assertContains( 'PHPSESSID=', $response->getHeader( 'Set-Cookie' ) );
         $this->assertRegExp( '_^(?:.*)PHPSESSID=([a-zA-Z0-9]{26});(?:.*)$_', $response->getHeader( 'Set-Cookie' ) );
