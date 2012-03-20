@@ -2,7 +2,6 @@
 
 namespace Community\Module\ErrorHandler;
 
-use \Insomnia\Kernel;
 use \Insomnia\Kernel\Module\ErrorHandler\Bootstrap as KernelModule;
 
 /**
@@ -16,15 +15,4 @@ class Bootstrap extends KernelModule
 {
     // This class skeleton is provided so that you can override the
     // default behaviour of the Insomnia ErrorHandler module.
-    
-    public function run( Kernel $kernel )
-    {
-        $hiccup = new Hiccup;
-        
-        $this->setExceptionHandler( $hiccup );
-        $this->setErrorHandler( $hiccup );
-        
-        $this->getExceptionHandler()->registerExceptionHandler();
-        $this->getErrorHandler()->registerErrorHandler();
-    }
 }
