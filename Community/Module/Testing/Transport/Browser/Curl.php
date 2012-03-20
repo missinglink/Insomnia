@@ -4,7 +4,10 @@ namespace Community\Module\Testing\Transport\Browser;
 
 use \Community\Module\Testing\Transport\HTTPRequest;
 
-class Curl_v7_21 extends HTTPRequest
+/**
+ * @version Curl 7.21
+ */
+class Curl extends HTTPRequest
 {
     public function getHeaders()
     {

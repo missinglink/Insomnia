@@ -4,7 +4,10 @@ namespace Community\Module\Testing\Transport\Browser;
 
 use \Community\Module\Testing\Transport\HTTPRequest;
 
-class Chromium_v14_0 extends HTTPRequest
+/**
+ * @version Konqueror 4.5.5
+ */
+class Konqueror extends HTTPRequest
 {
     public function getHeaders()
     {

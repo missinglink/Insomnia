@@ -6,12 +6,14 @@ use \Insomnia\Dispatcher\EndPoint;
 
 class Hiccup
 {
+    const DEFAULT_LOG_LEVEL = 2;
+    
     public function catchException( \Exception $e )
     {
         try
         {           
             // Fatal Exception
-            \BNT\Utils\Logger::log( $e->getMessage(), \Zend_Log::CRIT, $e );
+            $this->log( $e->getMessage(), self::DEFAULT_LOG_LEVEL, $e );
 
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
             
@@ -67,19 +69,24 @@ class Hiccup
             // defined error_reporting bitmask.
             if( error_reporting() & $errno )
             {
-                return $this->catchException( new \ErrorException( $errstr, $errno, \Zend_Log::CRIT, $errfile, $errline ) );
+                return $this->catchException( new \ErrorException( $errstr, $errno, self::DEFAULT_LOG_LEVEL, $errfile, $errline ) );
             }
             
-            \BNT\Utils\Logger::log( $errstr, \Zend_Log::WARN );
+            $this->log( $errstr );
         }        
         else
         {
-            \BNT\Utils\Logger::log( 'Error Handler failed to get the required info from last error.', \Zend_Log::CRIT );
+            $this->log( 'Error Handler failed to get the required info from last error.', self::DEFAULT_LOG_LEVEL );
             $this->terminateExecution();
         }
         
         /* Don't execute PHP internal error handler */
         return true;
+    }
+    
+    protected function log( $message, $level = self::DEFAULT_LOG_LEVEL, $exception = null )
+    {
+        // Extend and attach your logger
     }
 
     public function registerExceptionHandler()
