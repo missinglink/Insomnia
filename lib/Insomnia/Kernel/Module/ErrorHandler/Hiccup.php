@@ -17,8 +17,7 @@ class Hiccup
             
             if( \APPLICATION_ENV === 'development' )
             {
-                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-Message', $e->getMessage() );
-                $endPoint->getController()->getResponse()->setHeader( 'X-Debug-File', $e->getFile() . ':' . $e->getLine() );
+                $this->addDebugInfoToResponseHeaders( $endPoint->getController()->getResponse(), $e );
             }
             
             $endPoint->dispatch( $e );
@@ -47,6 +46,17 @@ class Hiccup
         
         /* Don't execute PHP internal error handler */
         return true;
+    }
+    
+    private function addDebugInfoToResponseHeaders( \Insomnia\Response $response, \Exception $e, $level = 1 )
+    {        
+        $response->setHeader( sprintf( 'X-Debug%d-Message', $level ), $e->getMessage() );
+        $response->setHeader( sprintf( 'X-Debug%d-File', $level ), $e->getFile() . ':' . $e->getLine() );
+
+        if( ( $p = $e->getPrevious() ) instanceof \Exception )
+        {
+            $this->addDebugInfoToResponseHeaders( $response, $p, ++$level );
+        }
     }
     
     public function error( $errno, $errstr, $errfile, $errline )
