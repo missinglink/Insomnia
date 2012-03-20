@@ -6,14 +6,12 @@ use \Insomnia\Dispatcher\EndPoint;
 
 class Hiccup
 {
-    const DEFAULT_LOG_LEVEL = 2;
-    
     public function catchException( \Exception $e )
     {
         try
-        {           
-            // Fatal Exception
-            $this->log( $e->getMessage(), self::DEFAULT_LOG_LEVEL, $e );
+        {
+            // Catchable Exception
+            $this->log( $e->getMessage(), $e );
 
             $endPoint = new EndPoint( 'Insomnia\Kernel\Module\ErrorHandler\Controller\ErrorAction', 'action' );
             
@@ -69,14 +67,14 @@ class Hiccup
             // defined error_reporting bitmask.
             if( error_reporting() & $errno )
             {
-                return $this->catchException( new \ErrorException( $errstr, $errno, self::DEFAULT_LOG_LEVEL, $errfile, $errline ) );
+                return $this->catchException( new \ErrorException( $errstr, $errno, null, $errfile, $errline ) );
             }
             
             $this->log( $errstr );
         }        
         else
         {
-            $this->log( 'Error Handler failed to get the required info from last error.', self::DEFAULT_LOG_LEVEL );
+            $this->log( 'Error Handler failed to get the required info from last error.' );
             $this->terminateExecution();
         }
         
@@ -84,7 +82,7 @@ class Hiccup
         return true;
     }
     
-    protected function log( $message, $level = self::DEFAULT_LOG_LEVEL, $exception = null )
+    protected function log( $message, $exception = null )
     {
         // Extend and attach your logger
     }
