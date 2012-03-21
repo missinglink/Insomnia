@@ -63,7 +63,7 @@ class CurlCommand
         // Add Method
         $cmd[] = sprintf( '-X %s', $request->getMethod() );
         
-        // Treat Request Params as a GET
+        // Convert Request Params to Query Params
         if( in_array( $request->getMethod(), array( 'GET', 'HEAD' ) ) )
         {
             $cmd[] = '-G';
@@ -90,8 +90,6 @@ class CurlCommand
        
         // Add URI
         $cmd[] = sprintf( '%s://%s%s', $request->getProtocol(), $request->getDomain(), $request->getUri() );
-        
-        var_dump( implode( ' ', $cmd ) . ' 2>&1' );
         
         // Set Command
         $this->setCommand( implode( ' ', $cmd ) . ' 2>&1' );

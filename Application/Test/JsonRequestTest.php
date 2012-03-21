@@ -21,7 +21,7 @@ class JsonRequestTest extends FunctionalTestCase
     {
         $json = json_encode( array( 'foo' => 'bar', 'moo' => 'cow' ) );
         
-        $request = new HTTPRequest( '/ping', 'POST' );
+        $request = new HTTPRequest( '/ping' , 'POST' );
         $request->setHeaders( $browserTemplate->getHeaders() );
         $request->setHeader( 'Accept', 'application/json' );
         $request->setHeader( 'Content-Type', 'application/json' );
@@ -34,6 +34,10 @@ class JsonRequestTest extends FunctionalTestCase
         $this->assertEquals( 'UTF-8', $response->getCharacterSet() );
         
         $json = json_decode( $response->getBody(), true );
+        
+        $this->assertArrayHasKey( 'body', $json );
+        $this->assertArrayHasKey( 'foo', $json[ 'body' ] );
+        $this->assertArrayHasKey( 'moo', $json[ 'body' ] );
         
         $this->assertEquals( 'bar', $json[ 'body' ][ 'foo' ] );
         $this->assertEquals( 'cow', $json[ 'body' ][ 'moo' ] );
