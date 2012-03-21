@@ -10,6 +10,7 @@ class HTTPRequest
     private $headers = array();
     private $method = 'GET';
     private $params = array();
+    private $body;
     
     public function __construct( $uri = null, $method = null )
     {
@@ -107,5 +108,15 @@ class HTTPRequest
     public function setParams( $headers )
     {
         $this->params = $headers;
+    }
+    
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    public function setBody( $body )
+    {
+        $this->body = $body;
     }
 }

@@ -16,12 +16,25 @@ class HeaderParser extends Observer
         {
             if( preg_match( '/^(?:HTTP_|REQUEST_)(?<key>\w+)$/D', $headerKey, $matches ) )
             {
-                // Format Key
-                $headerKey = strtr( ucwords( strtolower( strtr( $matches[ 'key' ], '_', ' ' ) ) ), ' ', '-' );
-                
                 // Set Header
-                $request->setHeader( $headerKey, $headerValue );
+                $request->setHeader( $this->normalizeHeaderKey( $matches[ 'key' ] ), $headerValue );
+                
+                continue;
+            }
+            
+            else if( 0 === strpos( $headerKey, 'CONTENT_' ) )
+            {
+                // Set Header
+                $request->setHeader( $this->normalizeHeaderKey( $headerKey ), $headerValue );
+                
+                continue;
             }
         }
+    }
+    
+    private function normalizeHeaderKey( $key )
+    {
+        // Format Key
+        return strtr( ucwords( strtolower( strtr( $key, '_', ' ' ) ) ), ' ', '-' );
     }
 }

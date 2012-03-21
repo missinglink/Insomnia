@@ -11,26 +11,25 @@ class BodyParser extends Observer
     {
         if( isset( $_SERVER['REQUEST_METHOD'] ) )
         {
-            switch( strtoupper( $_SERVER['REQUEST_METHOD'] ) )
+            $body = trim( file_get_contents( 'php://input' ) );
+            $request->setBody( $body );
+
+            if( strlen( $body ) )
             {
-                case 'PUT': case 'DELETE':
+                switch( $request->getContentType() )
+                {
+                    case 'application/json' :
+                        $request->mergeParams( json_decode( $body ) );
+                        break;
 
-                    $body = trim( file_get_contents( 'php://input' ) );
-                    $request->setBody( $body );
+                    case 'application/x-www-form-urlencoded' :
+                    default :
+                        parse_str( $body, $params );
 
-                    if( strlen( $body ) )
-                    {
-                        switch( $request->getContentType() )
-                        {
-                            //case 'application/x-www-form-urlencoded' :
-                            default :
-                                parse_str( $body, $params );
-      
-                                $request->mergeParams( array_filter( $params, function($value) {
-                                    return $value !== '';
-                                }));
-                        }
-                    }
+                        $request->mergeParams( array_filter( $params, function($value) {
+                            return $value !== '';
+                        }));
+                }
             }
         }
     }

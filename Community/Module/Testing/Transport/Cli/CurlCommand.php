@@ -58,16 +58,10 @@ class CurlCommand
         $this->setOutputFilePath( tempnam( sys_get_temp_dir(), 'curl_' ) );
         
         // Set Output File
-        $cmd[] = '-o ' . $this->getOutputFilePath();
+        $cmd[] = sprintf( '-o %s', $this->getOutputFilePath() );
         
         // Add Method
-        $cmd[] = '-X ' . $request->getMethod();
-        
-        // Add Request Headers
-        foreach( $request->getHeaders() as $headerKey => $headerValue )
-        {
-            $cmd[] = '-H "' . $headerKey . ': ' . $headerValue . '"';
-        }
+        $cmd[] = sprintf( '-X %s', $request->getMethod() );
         
         // Treat Request Params as a GET
         if( in_array( $request->getMethod(), array( 'GET', 'HEAD' ) ) )
@@ -75,14 +69,29 @@ class CurlCommand
             $cmd[] = '-G';
         }
         
+        // Add Request Headers
+        foreach( $request->getHeaders() as $headerKey => $headerValue )
+        {
+            $cmd[] = sprintf( '-H "%s: %s"', $headerKey, $headerValue );
+        }
+        
         // Add Request Params
         foreach( $request->getParams() as $paramKey => $paramValue )
         {
-            $cmd[] = '-d "' . $paramKey . '=' . $paramValue . '"';
+            $cmd[] = sprintf( '-d "%s=%s"', $paramKey, $paramValue );
+        }
+        
+        $body = $request->getBody();
+
+        if( !empty( $body ) )
+        {
+            $cmd[] = sprintf( '--data-ascii "%s"', addslashes( $body ) );
         }
        
         // Add URI
-        $cmd[] = $request->getProtocol() . '://' . $request->getDomain() . $request->getUri();
+        $cmd[] = sprintf( '%s://%s%s', $request->getProtocol(), $request->getDomain(), $request->getUri() );
+        
+        var_dump( implode( ' ', $cmd ) . ' 2>&1' );
         
         // Set Command
         $this->setCommand( implode( ' ', $cmd ) . ' 2>&1' );
