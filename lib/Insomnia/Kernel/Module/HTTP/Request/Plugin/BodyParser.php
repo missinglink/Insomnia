@@ -12,6 +12,8 @@ class BodyParser extends Observer
         if( isset( $_SERVER['REQUEST_METHOD'] ) )
         {
             $body = trim( file_get_contents( 'php://input' ) );
+            $body = urldecode( $body );
+            
             $request->setBody( $body );
 
             if( strlen( $body ) )
@@ -24,11 +26,16 @@ class BodyParser extends Observer
 
                     case 'application/x-www-form-urlencoded' :
                     default :
-                        parse_str( $body, $params );
+                        
+                        // Hack to avoid parsing json & XML
+                        if( strpos( $body, '=' ) && !in_array( substr( $body, 0, 1 ), array( '<', '{' ) ) )
+                        {
+                            parse_str( $body, $params );
 
-                        $request->mergeParams( array_filter( $params, function($value) {
-                            return $value !== '';
-                        }));
+                            $request->mergeParams( array_filter( $params, function($value) {
+                                return $value !== '';
+                            }));   
+                        }
                 }
             }
         }

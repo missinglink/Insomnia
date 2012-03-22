@@ -61,15 +61,29 @@ class CliDebugger extends Observer
         
         if( self::DEBUG_VERBOSE === $this->getDebugLevel() )
         {
-            echo $this->output( ' Request Parameters:', 'brown' ) . \PHP_EOL;
+            $params = $transport->getRequest()->getParams();
+            $body = $transport->getRequest()->getBody();
             
-            foreach( $transport->getRequest()->getParams() as $paramKey => $paramValue )
-            {
-                $paramString = '  ' . $this->output( $paramKey . ': ', 'light_blue' );
-                echo $this->output( $paramString . $paramValue ) . \PHP_EOL;
+            if( !empty( $params ) )
+            {            
+                echo $this->output( ' Request Parameters:', 'brown' ) . \PHP_EOL;
+
+                foreach( $params as $paramKey => $paramValue )
+                {
+                    $paramString = '  ' . $this->output( $paramKey . ': ', 'light_blue' );
+                    echo $this->output( $paramString . $paramValue ) . \PHP_EOL;
+                }
+
+                echo \PHP_EOL;
             }
             
-            echo \PHP_EOL;
+            if( !empty( $body ) )
+            {
+                echo $this->output( ' Request Body:', 'brown' ) . \PHP_EOL;
+                echo urldecode( $this->output( $body ) ) . \PHP_EOL;
+
+                echo \PHP_EOL;
+            }
         }
     }
     

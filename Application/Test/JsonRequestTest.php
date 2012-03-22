@@ -42,4 +42,44 @@ class JsonRequestTest extends FunctionalTestCase
         $this->assertEquals( 'bar', $json[ 'body' ][ 'foo' ] );
         $this->assertEquals( 'cow', $json[ 'body' ][ 'moo' ] );
     }
+    
+    /**
+     * @dataProvider getBrowserTemplates
+     * 
+     * @param HTTPRequest $browserTemplate
+     */   
+    public function testSetJsonAndUrlFormEncodedAreTreatedIdentically( $browserTemplate )
+    {
+        $data1 = new \stdClass;
+        $data1->message_id = 99999;
+        $data1->isRead = 1;
+        
+        $data2 = new \stdClass;
+        $data2->message_id = '99998';
+        $data2->isRead = 0;
+        
+        $data = array( 'data' => array( $data2, $data2 ) );
+        
+        $bodyUrlEncoded = http_build_query( $data );
+        $bodyJsonEncoded = urlencode( json_encode( $data ) );
+        
+        $requestUrlEncoded = new HTTPRequest( '/ping', 'PUT' );
+        $requestUrlEncoded->setHeaders( $browserTemplate->getHeaders() );
+        $requestUrlEncoded->setHeader( 'Accept', 'application/json' );
+        $requestUrlEncoded->setBody( $bodyUrlEncoded );
+        
+        $response1 = $this->transfer( $requestUrlEncoded );
+        $this->assertValidResponse( $response1, Code::HTTP_OK, 'application/json' );
+        
+        $requestJsonEncoded = new HTTPRequest( '/ping', 'PUT' );
+        $requestJsonEncoded->setHeaders( $browserTemplate->getHeaders() );
+        $requestJsonEncoded->setHeader( 'Content-Type', 'application/json' );
+        $requestJsonEncoded->setHeader( 'Accept', 'application/json' );
+        $requestJsonEncoded->setBody( $bodyJsonEncoded );
+        
+        $response2 = $this->transfer( $requestJsonEncoded );
+        $this->assertValidResponse( $response2, Code::HTTP_OK, 'application/json' );
+        
+        $this->assertEquals( json_decode( $response1->getBody() )->body->data, json_decode( $response2->getBody() )->body->data );
+    }
 }

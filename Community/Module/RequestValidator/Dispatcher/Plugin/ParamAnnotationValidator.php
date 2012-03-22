@@ -29,6 +29,7 @@ class ParamAnnotationValidator extends Observer
                 case 'regex' : $validator = new RegexValidator( $param[ 'regex' ] ); break;
                 case 'array[string]' : $validator = new ArrayValidator( 'string' ); break;
                 case 'array[numeric]' : $validator = new ArrayValidator( 'numeric' ); break;
+                case 'array[object]' : $validator = new ArrayValidator( 'object' ); break;
                 case 'email' : $validator = new EmailValidator; break;
             }
 
