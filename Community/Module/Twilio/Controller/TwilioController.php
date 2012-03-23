@@ -17,7 +17,7 @@ class TwilioController extends Action
      * Twilio module for hack day
      * 
      * @Insomnia\Annotation\Route("/call", name="twilio_call")
-     * @Insomnia\Annotation\Method("GET")
+     * @Insomnia\Annotation\Method("POST")
      * @Insomnia\Annotation\Documentation( category="Twilio" )
      * 
      * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
@@ -34,7 +34,7 @@ class TwilioController extends Action
      * Twilio module for hack day
      * 
      * @Insomnia\Annotation\Route("/sms", name="twilio_sms")
-     * @Insomnia\Annotation\Method("GET")
+     * @Insomnia\Annotation\Method("POST")
      * @Insomnia\Annotation\Documentation( category="Twilio" )
      * 
      * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
@@ -52,7 +52,7 @@ class TwilioController extends Action
      * Twilio module for hack day
      * 
      * @Insomnia\Annotation\Route("/status", name="twilio_status")
-     * @Insomnia\Annotation\Method("GET")
+     * @Insomnia\Annotation\Method("POST")
      * @Insomnia\Annotation\Documentation( category="Twilio" )
      * 
      * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
