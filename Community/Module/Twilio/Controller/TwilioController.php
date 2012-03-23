@@ -75,7 +75,7 @@ class TwilioController extends Action
         
         if( 'inviteall' == substr( $lowerCaseTrimBody, 0, 9 ) )
         {
-            return $this->pubAction( $sms );
+            return $this->inviteAction( $sms );
         }
         
         return $this->echoAction( $sms );
@@ -266,7 +266,7 @@ class TwilioController extends Action
             }
         }
         
-        echo '<Sms>You are not currently part of this conversation.</Sms>';
+        echo '<Sms>You are not currently part of this conversation. Text "join" to join the conversation.</Sms>';
         echo '</Response>';
         die;
     }
