@@ -15,7 +15,7 @@ class User extends RedisHashAbstract
         {
             $userName = parent::__get( 'Name' );
 
-            if( empty( $userName ) || $userName === self::DEFAULT_NAME )
+            if( empty( $userName ) || $userName === Sms::DEFAULT_NAME )
             {
                 $userPhone = parent::__get( 'Phone' );
                 
