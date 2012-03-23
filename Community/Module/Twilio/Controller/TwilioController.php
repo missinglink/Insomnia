@@ -35,7 +35,7 @@ class TwilioController extends Action
     {
         $file = tempnam( '/tmp', 'twilio' );
         
-        file_put_contents( $file, print_r( $_REQUEST, true ) );
-        file_put_contents( $file, print_r( $_SERVER, true ) );
+        file_put_contents( $file, print_r( $_REQUEST, true ), \FILE_APPEND );
+        file_put_contents( $file, print_r( $_SERVER, true ), \FILE_APPEND );
     }
 }
