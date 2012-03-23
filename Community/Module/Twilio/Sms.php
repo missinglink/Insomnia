@@ -1,6 +1,6 @@
 <?php
 
-namespace Community\Module\Twilio\Sms;
+namespace Community\Module\Twilio;
 
 class Sms
 {

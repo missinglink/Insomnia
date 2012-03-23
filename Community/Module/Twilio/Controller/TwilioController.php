@@ -3,6 +3,7 @@
 namespace Community\Module\Twilio\Controller;
 
 use \Insomnia\Controller\Action;
+use \Community\Module\Twilio\Sms;
 
 /**
  * Twilio Controller
