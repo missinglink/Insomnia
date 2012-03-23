@@ -29,6 +29,8 @@ Kernel::getInstance()
     ->addModule( new \Application\Module\RedisExample\Bootstrap )
     ->addModule( new \Application\Module\HtmlEntities\Bootstrap )
     ->addModule( new \Application\Module\Welcome\Bootstrap )
+
+    ->addModule( new \Community\Module\Twilio\Bootstrap )
         
     // Run application
     ->run();
