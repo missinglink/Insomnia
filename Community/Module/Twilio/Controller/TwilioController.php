@@ -101,10 +101,12 @@ class TwilioController extends Action
         $index = new UserIndex;
         $index->add( $user->getId() );
         
+        $commands = urlencode( 'Commands: join, leave, who, name [your name], topic [new topic], help.' );
+        
         header( 'application/xml' );
         echo '<Response>';
         echo '<Sms>You are now chatting with '.count( $users ).' other people.</Sms>';
-        echo '<Sms>Commands: join, leave, who, name [your name], topic [new topic], help.</Sms>';
+        echo '<Sms>'.$commands.'</Sms>';
         echo '</Response>';
         die;
     }
