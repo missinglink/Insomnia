@@ -198,7 +198,15 @@ class TwilioController extends Action
             $people[] = $user->Name;
         }
         
-        printf( '<Sms>You are chatting with: %s.</Sms>', implode( ', ', $people ) );
+        if( count( $people ) )
+        {
+            printf( '<Sms>You are chatting with: %s.</Sms>', implode( ', ', $people ) );
+        }
+        
+        else
+        {
+            echo '<Sms>There is currently no-one in this conversation.</Sms>';
+        }
         
         echo '</Response>';
         die;
