@@ -67,10 +67,11 @@ class Sms extends RedisHashAbstract
     public function guessName()
     {
         $users = UserIndex::loadUsers();
+        $smsFromNumber = $this->From;
         
         foreach( $users as $user )
         {
-            if( $user->Phone == $this->From )
+            if( $user->Phone == $smsFromNumber )
             {
                 return $this->loadNameFromFixturesIfNotSpecified( $user );
             }
@@ -82,12 +83,13 @@ class Sms extends RedisHashAbstract
     public function loadNameFromFixturesIfNotSpecified( User $user )
     {
         $userName = $user->Name;
+        $smsFromNumber = $this->From;
         
         if( empty( $userName ) || $userName === self::DEFAULT_NAME )
         {
-            if( isset( self::$contacts[ $this->From ] ) )
+            if( isset( self::$contacts[ $smsFromNumber ] ) )
             {
-                return self::$contacts[ $this->From ];
+                return self::$contacts[ $smsFromNumber ];
             }
         }
         

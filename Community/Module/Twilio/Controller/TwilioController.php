@@ -227,12 +227,24 @@ class TwilioController extends Action
             {
                 if( count( $users ) > 1 )
                 {
+                    $senderUser = new User;
+                    $senderUser->Name = Sms::DEFAULT_NAME;
+                    
+                    // Find Sender Users
+                    foreach( $users as $user2 )
+                    {
+                        if( $user->Phone == $user2->Phone )
+                        {
+                            $senderUser = $user2;
+                        }
+                    }
+                    
                     // Send to everyone else
                     foreach( $users as $user2 )
                     {
                         if( $user->Phone != $user2->Phone )
                         {
-                            printf( '<Sms to="%s">%s: %s</Sms>', $user2->Phone, $sms->guessName(), $sms->Body );
+                            printf( '<Sms to="%s">%s: %s</Sms>', $user2->Phone, $senderUser->Name, $sms->Body );
                         }
                     }
 
