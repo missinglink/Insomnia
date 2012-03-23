@@ -73,6 +73,11 @@ class TwilioController extends Action
             return $this->topicAction( $sms );
         }
         
+        if( 'inviteall' == $lowerCaseTrimBody )
+        {
+            return $this->pubAction( $sms );
+        }
+        
         return $this->echoAction( $sms );
     }
     
@@ -142,6 +147,18 @@ class TwilioController extends Action
         echo '<Sms>You are not currently part of this conversation.</Sms>';
         echo '</Response>';
         die;
+    }
+    
+    public function inviteAction( Sms $sms )
+    {
+        foreach( array_keys( Sms::$contacts ) as $contactNumber )
+        {
+            header( 'application/xml' );
+            echo '<Response>';
+            printf( '<Sms to="%s">%s</Sms>', $contactNumber, str_replace( 'inviteall ', '', $sms->Body ) );
+            echo '</Response>';
+            die;
+        }
     }
     
     public function nameAction( Sms $sms )
