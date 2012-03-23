@@ -27,5 +27,7 @@ class User extends RedisHashAbstract
             
             return $userName;
         }
+        
+        return parent::__get( $name );
     }
 }
