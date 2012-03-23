@@ -16,9 +16,14 @@ class UserIndex extends RedisSetAbstract
         $user2->Phone = '+447734867218';
         $user2->Name = 'Dan Thorpe';
         
+        $user3 = new User;
+        $user3->Phone = '+447722135516';
+        $user3->Name = 'Ralph Schwaninger';
+        
         return array(
             $user,
-            $user2
+            $user2,
+            $user3
         );
     }
 }
