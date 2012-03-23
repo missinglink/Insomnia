@@ -151,14 +151,16 @@ class TwilioController extends Action
     
     public function inviteAction( Sms $sms )
     {
+        header( 'application/xml' );
+        echo '<Response>';
+        
         foreach( array_keys( Sms::$contacts ) as $contactNumber )
         {
-            header( 'application/xml' );
-            echo '<Response>';
             printf( '<Sms to="%s">%s</Sms>', $contactNumber, str_replace( 'inviteall ', '', $sms->Body ) );
-            echo '</Response>';
-            die;
         }
+        
+        echo '</Response>';
+        die;
     }
     
     public function nameAction( Sms $sms )
