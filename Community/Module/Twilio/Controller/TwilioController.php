@@ -196,14 +196,38 @@ class TwilioController extends Action
         echo '<?xml version="1.0" encoding="UTF-8"?>';
         echo '<Response>';
         
-        foreach( UserIndex::loadUsers() as $user )
+        $users = UserIndex::loadUsers();
+        
+        foreach( $users as $user )
         {
-            if( $user->Phone != $sms->From )
+            // In index
+            if( $user->Phone == $sms->From )
             {
-                printf( '<Sms to="%s">%s: %s</Sms>', $user->Phone, $sms->guessName(), $sms->Body );
+                if( count( $users ) > 1 )
+                {
+                    // Send to everyone else
+                    foreach( $users as $user2 )
+                    {
+                        if( $user2->Phone != $sms->From )
+                        {
+                            printf( '<Sms to="%s">%s: %s</Sms>', $user2->Phone, $sms->guessName(), $sms->Body );
+                        }
+                    }
+
+                    echo '</Response>';
+                    die;   
+                }
+                
+                else
+                {
+                    echo '<Sms>There is no-one else currently in this conversation.</Sms>';
+                    echo '</Response>';
+                    die;
+                }
             }
         }
         
+        echo '<Sms>You are not currently part of this conversation.</Sms>';
         echo '</Response>';
         die;
     }
