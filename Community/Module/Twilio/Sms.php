@@ -72,14 +72,14 @@ class Sms extends RedisHashAbstract
         {
             if( $user->Phone == $this->From )
             {
-                return $this->loadNameFromFixtures( $user );
+                return $this->loadNameFromFixturesIfNotSpecified( $user );
             }
         }
         
         return self::DEFAULT_NAME;
     }
     
-    public function loadNameFromFixtures( User $user )
+    public function loadNameFromFixturesIfNotSpecified( User $user )
     {
         $userName = $user->Name;
         
@@ -90,5 +90,7 @@ class Sms extends RedisHashAbstract
                 return self::$contacts[ $this->From ];
             }
         }
+        
+        return $userName;
     }
 }
