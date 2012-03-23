@@ -43,9 +43,26 @@ class TwilioController extends Action
     public function sms()
     {
         $this->response[ 'Sms' ] = 'Hello World';
-        $this->response[ 'Redirect' ] = 'http://api.twilio.com/sms/welcome';
+        $this->response[ 'Redirect' ] = 'http://164.177.147.208/twilio/sms2.xml';
         
         $this->logToDisk( 'sms' );
+    }
+    
+    /**
+     * Twilio module for hack day
+     * 
+     * @Insomnia\Annotation\Route("/sms2", name="twilio_sms2")
+     * @Insomnia\Annotation\Method("POST")
+     * @Insomnia\Annotation\Documentation( category="Twilio" )
+     * 
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * 
+     */
+    public function smsTwo()
+    {
+        $this->response[ 'Sms' ] = 'Second Message';
+        
+        $this->logToDisk( 'sms2' );
     }
     
     /**
