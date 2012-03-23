@@ -41,32 +41,151 @@ class TwilioController extends Action
         $index = new SmsIndex;
         $index->add( $sms->getId() );
         
-        switch( strtolower( trim( $sms->Body ) ) )
+        $lowerCaseTrimBody = strtolower( trim( $sms->Body ) );
+        
+        if( 'join' == $lowerCaseTrimBody )
         {
-            case 'join' : return $this->joinAction( $sms );
-            case 'who' : return $this->whoAction( $sms );
-            default : return $this->echoAction( $sms );
+            return $this->joinAction( $sms );
         }
+        
+        if( 'leave' == $lowerCaseTrimBody )
+        {
+            return $this->leaveAction( $sms );
+        }
+        
+        if( 'who' == $lowerCaseTrimBody )
+        {
+            return $this->whoAction( $sms );
+        }
+        
+        if( 'name' == substr( $lowerCaseTrimBody, 0, 4 ) )
+        {
+            return $this->nameAction( $sms );
+        }
+        
+        if( 'topic' == substr( $lowerCaseTrimBody, 0, 5 ) )
+        {
+            return $this->topicAction( $sms );
+        }
+        
+        return $this->echoAction( $sms );
     }
     
-    /**
-     * 
-     */
     public function joinAction( Sms $sms )
     {
-//        if( $sms->guessName() === Sms::DEFAULT_NAME )
-//        {
-//            $this->response[ 'Sms' ] = 'What\'s your name?';
-//            
-//            return;
-//        }
+        $users = UserIndex::loadUsers();
         
-        $num = 'x';
-        $to = '';
+        foreach( $users as $user )
+        {
+            if( $user->Phone == $sms->From )
+            {
+                header( 'application/xml' );
+                echo '<Response>';
+                echo '<Sms>You are already part of the conversation.</Sms>';
+                echo '</Response>';
+                die;
+            }
+        }
+        
+        // Save User
+        $user = new User;
+        $user->Name = Sms::DEFAULT_NAME;
+        $user->Phone = $sms->From;
+        
+        // Save User Index
+        $index = new UserIndex;
+        $index->add( $user->getId() );
         
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms to="'.$to.'">You are discussing Hack Day with '.$num.' other people</Sms>';
+        echo '<Sms>You are now chatting with '.count( $users ).' other people.</Sms>';
+        echo '</Response>';
+        die;
+    }
+    
+    public function leaveAction( Sms $sms )
+    {
+        $users = UserIndex::loadUsers();
+        $index = new UserIndex;
+        
+        foreach( $users as $user )
+        {
+            if( $user->Phone == $sms->From )
+            {
+                // Delete User from Index
+                $index->remove( $user->getId() );
+                
+                header( 'application/xml' );
+                echo '<Response>';
+                echo '<Sms>You have left the conversation.</Sms>';
+                echo '</Response>';
+                die;
+            }
+        }
+
+        header( 'application/xml' );
+        echo '<Response>';
+        echo '<Sms>You are not currently part of this conversation.</Sms>';
+        echo '</Response>';
+        die;
+    }
+    
+    public function nameAction( Sms $sms )
+    {
+        $users = UserIndex::loadUsers();
+        
+        foreach( $users as $user )
+        {
+            if( $user->Phone == $sms->From )
+            {
+                $user->Name = trim( substr( $sms->Body, 4 ) );
+                
+                header( 'application/xml' );
+                echo '<Response>';
+                printf( '<Sms>Successfully set your name to: %s.</Sms>', $user->Name );
+                echo '</Response>';
+                die;
+            }
+        }
+        
+        header( 'application/xml' );
+        echo '<Response>';
+        echo '<Sms>You are not currently part of this conversation.</Sms>';
+        echo '</Response>';
+        die;
+    }
+    
+    public function topicAction( Sms $sms )
+    {
+        header( 'application/xml' );
+        echo '<?xml version="1.0" encoding="UTF-8"?>';
+        echo '<Response>';
+        
+        $topic = trim( substr( $sms->Body, 5 ) );
+        
+        foreach( UserIndex::loadUsers() as $user )
+        {
+            printf( '<Sms to="%s">%s set the topic: %s.</Sms>', $user->Phone, $sms->guessName(), $topic );
+        }
+        
+        echo '</Response>';
+        die;
+    }
+    
+    public function whoAction( Sms $sms )
+    {
+        header( 'application/xml' );
+        echo '<?xml version="1.0" encoding="UTF-8"?>';
+        echo '<Response>';
+        
+        $people = array();
+        foreach( UserIndex::loadUsers() as $user )
+        {
+            $people[] = $user->Name;
+        }
+        
+        printf( '<Sms>You are chatting with: %s.</Sms>', implode( ', ', $people ) );
+        
         echo '</Response>';
         die;
     }
@@ -81,7 +200,7 @@ class TwilioController extends Action
         {
             if( $user->Phone != $sms->From )
             {
-                printf( '<Sms to="%s">%s: %s</Sms>', $user->Phone, $user->Name, $sms->Body );
+                printf( '<Sms to="%s">%s: %s</Sms>', $user->Phone, $sms->guessName(), $sms->Body );
             }
         }
         

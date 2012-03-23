@@ -2,28 +2,29 @@
 
 namespace Community\Module\Twilio;
 
+use \Insomnia\Controller\NotFoundException;
+
 class UserIndex extends RedisSetAbstract
 {
     const KEY = 'user';
     
     public static function loadUsers()
     {
-        $user = new User;
-        $user->Phone = '+447946789055';
-        $user->Name = 'Peter Johnson';
+        $return = array();
         
-        $user2 = new User;
-        $user2->Phone = '+447734867218';
-        $user2->Name = 'Dan Thorpe';
+        // Access the index
+        $userIndex = new self;
         
-        $user3 = new User;
-        $user3->Phone = '+447722135516';
-        $user3->Name = 'Ralph Schwaninger';
+        if( !$userIndex->getLength() ) return $return;
         
-        return array(
-            $user,
-            $user2,
-            $user3
-        );
+        foreach( $userIndex->getIterator() as $indexValue )
+        {
+            $user = new User;
+            $user->setId( $indexValue );
+
+            $return[] = $user;
+        }
+        
+        return $return;
     }
 }
