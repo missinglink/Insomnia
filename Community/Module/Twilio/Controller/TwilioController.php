@@ -47,12 +47,12 @@ class TwilioController extends Action
         
         $this->logToDisk( 'sms' );
         
-        if( !isset( $_REQUEST[ 'Caller' ] ) )
+        if( !isset( $_REQUEST[ 'From' ] ) )
         {
             $this->logToDisk( 'error' );
         }
         
-        $this->response[ 'Sms' ] = 'Hello ' . $this->mapPhoneNumberToName( $_REQUEST[ 'Caller' ] );
+        $this->response[ 'Sms' ] = 'Hello ' . $this->mapPhoneNumberToName( $_REQUEST[ 'From' ] );
     }
     
     /**
