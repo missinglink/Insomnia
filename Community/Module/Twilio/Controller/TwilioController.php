@@ -269,6 +269,17 @@ class TwilioController extends Action
         
         foreach( $smsIndex as $sms )
         {
+            $lowerCaseTrimBody = strtolower( trim( $sms->Body ) );
+
+            if( 'join' == $lowerCaseTrimBody ||
+                'leave' == $lowerCaseTrimBody ||
+                'who' == $lowerCaseTrimBody ||
+                'name' == substr( $lowerCaseTrimBody, 0, 4 ) ||
+                'info' == $lowerCaseTrimBody )
+            {
+                continue;
+            }
+            
             printf( '<Say voice="woman">%s</Say>', $sms->guessName() );
             printf( '<Say>%s</Say>', $sms->Body );
         }
