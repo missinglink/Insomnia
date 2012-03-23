@@ -45,9 +45,14 @@ class TwilioController extends Action
 //        $this->response[ 'Sms' ] = 'Hello World';
 //        $this->response[ 'Redirect' ] = 'http://164.177.147.208/twilio/sms2.xml';
         
-        $this->response[ 'Sms' ] = 'Hello ' . $this->mapPhoneNumberToName( $_REQUEST[ 'Caller' ] );
-        
         $this->logToDisk( 'sms' );
+        
+        if( !isset( $_REQUEST[ 'Caller' ] ) )
+        {
+            $this->logToDisk( 'error' );
+        }
+        
+        $this->response[ 'Sms' ] = 'Hello ' . $this->mapPhoneNumberToName( $_REQUEST[ 'Caller' ] );
     }
     
     /**
