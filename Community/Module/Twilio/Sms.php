@@ -91,6 +91,6 @@ class Sms extends RedisHashAbstract
             }
         }
         
-        return $userName;
+        return self::DEFAULT_NAME;
     }
 }
