@@ -103,8 +103,7 @@ class TwilioController extends Action
         
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms>You are now chatting with '.count( $users ).' other people.</Sms>';
-        echo '<Sms><![CDATA[Commands: join, leave, who, name [your name], topic [new topic], help.]]></Sms>';
+        echo '<Sms>You are now chatting with '.count( $users ).' other people. You can get help at any time by sending the word "help".</Sms>';
         echo '</Response>';
         die;
     }
@@ -113,7 +112,7 @@ class TwilioController extends Action
     {
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms>Commands: join, leave, who, name {your name}, topic {new topic}, help.</Sms>';
+        echo '<Sms>Commands: join, leave, who, name xxx, topic xxx, help.</Sms>';
         echo '</Response>';
         die;
     }
