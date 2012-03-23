@@ -73,7 +73,7 @@ class TwilioController extends Action
             return $this->topicAction( $sms );
         }
         
-        if( 'inviteall' == $lowerCaseTrimBody )
+        if( 'inviteall' == substr( $lowerCaseTrimBody, 0, 9 ) )
         {
             return $this->pubAction( $sms );
         }
