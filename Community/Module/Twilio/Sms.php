@@ -71,19 +71,24 @@ class Sms extends RedisHashAbstract
         foreach( $users as $user )
         {
             if( $user->Phone == $this->From )
-            {                
-                if( !isset( $user->Name ) || empty( $user->Name ) || $user->Name === self::DEFAULT_NAME )
-                {
-                    if( isset( self::$contacts[ $this->From ] ) )
-                    {
-                        return self::$contacts[ $this->From ];
-                    }
-                }
-                
-                return $user->Name;
+            {
+                return $this->loadNameFromFixtures( $user );
             }
         }
         
         return self::DEFAULT_NAME;
+    }
+    
+    public function loadNameFromFixtures( User $user )
+    {
+        $userName = $user->Name;
+        
+        if( empty( $userName ) || $userName === self::DEFAULT_NAME )
+        {
+            if( isset( self::$contacts[ $this->From ] ) )
+            {
+                return self::$contacts[ $this->From ];
+            }
+        }
     }
 }
