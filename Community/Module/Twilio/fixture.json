@@ -1,0 +1,12 @@
+{
+    'type' : 'Comment',
+    'author' : {
+        'name' : 'Peter Johnson',
+        'phone' : '+447946789055',
+        'avatar' : 'http://jpg'
+    },
+    'message' : {
+        'body' : 'Hello World',
+        'date' : 1332510919
+    }
+}
