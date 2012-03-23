@@ -63,6 +63,11 @@ class TwilioController extends Action
             return $this->nameAction( $sms );
         }
         
+        if( 'help' == $lowerCaseTrimBody )
+        {
+            return $this->helpAction( $sms );
+        }
+        
         if( 'topic' == substr( $lowerCaseTrimBody, 0, 5 ) )
         {
             return $this->topicAction( $sms );
@@ -99,6 +104,16 @@ class TwilioController extends Action
         header( 'application/xml' );
         echo '<Response>';
         echo '<Sms>You are now chatting with '.( count( $users ) -1 ).' other people.</Sms>';
+        echo '<Sms>Commands: join, leave, who, name {your name}, topic {new topic}, help.</Sms>';
+        echo '</Response>';
+        die;
+    }
+    
+    public function helpAction( Sms $sms )
+    {
+        header( 'application/xml' );
+        echo '<Response>';
+        echo '<Sms>Commands: join, leave, who, name {your name}, topic {new topic}, help.</Sms>';
         echo '</Response>';
         die;
     }
