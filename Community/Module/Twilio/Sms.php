@@ -73,7 +73,6 @@ class Sms extends RedisHashAbstract
         {
             if( $user->Phone == $smsFromNumber )
             {
-                return 'god';
                 return $this->loadNameFromFixturesIfNotSpecified( $user );
             }
         }
@@ -92,8 +91,10 @@ class Sms extends RedisHashAbstract
             {
                 return self::$contacts[ $smsFromNumber ];
             }
+            
+            return self::DEFAULT_NAME;
         }
         
-        return self::DEFAULT_NAME;
+        return $userName;
     }
 }
