@@ -49,6 +49,21 @@ class TwilioController extends Action
     }
     
     /**
+     * Twilio module for hack day
+     * 
+     * @Insomnia\Annotation\Route("/status", name="twilio_status")
+     * @Insomnia\Annotation\Method("GET")
+     * @Insomnia\Annotation\Documentation( category="Twilio" )
+     * 
+     * @Insomnia\Annotation\Layout( "Insomnia\Kernel\Module\Mime\View\Layout" )
+     * 
+     */
+    public function status()
+    {
+        $this->logToDisk( 'status' );
+    }
+    
+    /**
      *
      * @param type $type 
      */
