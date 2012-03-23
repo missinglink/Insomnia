@@ -98,7 +98,7 @@ class TwilioController extends Action
         
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms>You are now chatting with '.count( $users ).' other people.</Sms>';
+        echo '<Sms>You are now chatting with '.( count( $users ) -1 ).' other people.</Sms>';
         echo '</Response>';
         die;
     }
@@ -208,7 +208,7 @@ class TwilioController extends Action
                     // Send to everyone else
                     foreach( $users as $user2 )
                     {
-                        if( $user2->Phone != $sms->From )
+                        if( $user->Phone != $user2->Phone )
                         {
                             printf( '<Sms to="%s">%s: %s</Sms>', $user2->Phone, $sms->guessName(), $sms->Body );
                         }
