@@ -63,7 +63,7 @@ class TwilioController extends Action
             return $this->nameAction( $sms );
         }
         
-        if( 'help' == $lowerCaseTrimBody )
+        if( 'info' == $lowerCaseTrimBody )
         {
             return $this->helpAction( $sms );
         }
