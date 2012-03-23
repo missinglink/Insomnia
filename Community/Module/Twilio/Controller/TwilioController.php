@@ -103,7 +103,7 @@ class TwilioController extends Action
         
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms>You are now chatting with '.count( $users ).' other people. You can get help at any time by sending the word "help".</Sms>';
+        echo '<Sms>You are now chatting with '.count( $users ).' other people. You can get help at any time by sending the word "info".</Sms>';
         echo '</Response>';
         die;
     }
