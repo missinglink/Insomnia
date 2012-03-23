@@ -2,26 +2,28 @@
 
 namespace Community\Module\Twilio;
 
-class Sms
+class Sms extends RedisHashAbstract
 {
-    public $AccountSid;
-    public $Body;
-    public $ToZip;
-    public $FromState;
-    public $ToCity;
-    public $SmsSid;
-    public $ToState;
-    public $To;
-    public $ToCountry;
-    public $FromCountry;
-    public $SmsMessageSid;
-    public $ApiVersion;
-    public $FromCity;
-    public $SmsStatus;
-    public $From;
-    public $FromZip;
+    const KEY = 'sms';
+    const DEFAULT_NAME = 'Anonymous';
     
-    public $FromName = 'Anonymous';
+//    public $AccountSid;
+//    public $Body;
+//    public $ToZip;
+//    public $FromState;
+//    public $ToCity;
+//    public $SmsSid;
+//    public $ToState;
+//    public $To;
+//    public $ToCountry;
+//    public $FromCountry;
+//    public $SmsMessageSid;
+//    public $ApiVersion;
+//    public $FromCity;
+//    public $SmsStatus;
+//    public $From;
+//    public $FromZip;
+    
     public static $contacts = array(
         '+447999025876'  => 'Aaron Kato',
         '+447883759170'  => 'Charlie Duff',
@@ -55,12 +57,22 @@ class Sms
     {
         foreach( $array as $key => $value )
         {
-            $this->{ $key } = $value;
+            if( substr( $key, 0, 1 ) !== '_' )
+            {
+                $this->{ $key } = $value;
+            }
+        }
+    }
+    
+    public function guessName()
+    {
+        $fromNumber = $this->From;
+        
+        if( isset( self::$contacts[ $fromNumber ] ) )
+        {
+            return self::$contacts[ $fromNumber ];
         }
         
-        if( isset( self::$contacts[ $this->From ] ) )
-        {
-            $this->FromName = self::$contacts[ $this->From ];
-        }
+        return self::DEFAULT_NAME;
     }
 }
