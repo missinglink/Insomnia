@@ -73,6 +73,7 @@ class Sms extends RedisHashAbstract
         {
             if( $user->Phone == $smsFromNumber )
             {
+                return 'god';
                 return $this->loadNameFromFixturesIfNotSpecified( $user );
             }
         }
