@@ -112,7 +112,7 @@ class TwilioController extends Action
     {
         header( 'application/xml' );
         echo '<Response>';
-        echo '<Sms>Commands: join, leave, who, name xxx, topic xxx, help.</Sms>';
+        echo '<Sms>Commands: join, leave, who, name xxxxx, topic xxxxx, help.</Sms>';
         echo '</Response>';
         die;
     }
