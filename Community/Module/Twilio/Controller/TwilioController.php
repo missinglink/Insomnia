@@ -25,6 +25,17 @@ class TwilioController extends Action
      */
     public function action()
     {
-        $this->response[ 'controllers' ] = array( '/v1/test', '/ping' );
+        $this->response[ 'Say' ] = 'Hello World';
+        
+        $this->logToDisk();
+    }
+    
+    
+    private function logToDisk()
+    {
+        $file = tempnam( '/tmp', 'twilio' );
+        
+        file_put_contents( $file, print_r( $_REQUEST, true ) );
+        file_put_contents( $file, print_r( $_SERVER, true ) );
     }
 }

@@ -10,7 +10,7 @@ class XmlRenderer extends ResponseAbstract implements ResponseInterface
 {
     const INDENT_STRING = '   ';
     const MAX_RECURSION = 50;
-    const ROOT_ELEMENT_NAME = 'response';
+    const ROOT_ELEMENT_NAME = 'Response';
     const NUMERIC_KEY_REPLACEMENT = 'item'; // Replace numeric keys with this string.
     
     const DEBUG_NONE = 0;

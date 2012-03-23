@@ -5,11 +5,7 @@ namespace Community\Module\Twilio;
 use \Insomnia\Kernel,
     \Insomnia\Pattern\KernelModule;
 
-/**
- * Insomnia RestClient
- * 
- * Provides a basic rest client for testing.
- * 
+/** 
  * @Insomnia\Annotation\Module
  * @beta
  */
