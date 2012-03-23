@@ -8,4 +8,24 @@ class User extends RedisHashAbstract
     
 //    public $Phone;
 //    public $Name;
+    
+    public function __get( $name )
+    {
+        if( $name === 'Name' )
+        {
+            $userName = parent::__get( 'Name' );
+
+            if( empty( $userName ) || $userName === self::DEFAULT_NAME )
+            {
+                $userPhone = parent::__get( 'Phone' );
+                
+                if( isset( Sms::$contacts[ $userPhone ] ) )
+                {
+                    return Sms::$contacts[ $userPhone ];
+                }
+            }
+            
+            return $userName;
+        }
+    }
 }
