@@ -258,9 +258,23 @@ class TwilioController extends Action
      */
     public function call()
     {
-        $this->response[ 'Say' ] = 'Hello World';
-        
         $this->logToDisk( 'call' );
+        
+        new \Application\Module\RedisExample\Bootstrap\Redis;
+        $smsIndex = SmsIndex::loadAll();
+     
+        header( 'application/xml' );
+        echo '<?xml version="1.0" encoding="UTF-8"?>';
+        echo '<Response>';
+        
+        foreach( $smsIndex as $sms )
+        {
+            printf( '<Say voice="woman">%s</Say>', $sms->guessName() );
+            printf( '<Say>%s</Say>', $sms->Body );
+        }
+        
+        echo '</Response>';
+        die;
     }
     
     /**
