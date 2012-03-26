@@ -30,6 +30,7 @@ class ParamAnnotationValidator extends Observer
                 case 'array[string]' : $validator = new ArrayValidator( 'string' ); break;
                 case 'array[numeric]' : $validator = new ArrayValidator( 'numeric' ); break;
                 case 'array[object]' : $validator = new ArrayValidator( 'object' ); break;
+                case 'array[array]' : $validator = new ArrayValidator( 'array' ); break;
                 case 'email' : $validator = new EmailValidator; break;
             }
 

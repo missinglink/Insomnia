@@ -37,6 +37,10 @@ class ArrayValidator
                 case 'object' : 
                     if( !is_object( $element ) ) throw new ValidatorException( 'array[\'' . $this->type . '\']' );
                     break;
+                    
+                case 'array' : 
+                    if( !is_array( $element ) ) throw new ValidatorException( 'array[\'' . $this->type . '\']' );
+                    break;
             }
         }        
     }
