@@ -20,19 +20,22 @@ class StringValidator
         // check it's actually a string
         if ( !is_string( $string ) )
         {
+            var_dump( $string );
+            die;
+            
             throw new ValidatorException( 'string' );
         }
         
         // check it meets the minimum length requirements
         if ( mb_strlen( $string ) < $this->min )
         {
-            throw new ValidatorException( 'string' );
+            throw new ValidatorException( 'string minlength' );
         }
         
         // check it meets the maximum length requirements
         if( is_numeric( $this->max ) && mb_strlen( $string ) > $this->max )
         {
-            throw new ValidatorException( 'string' );
+            throw new ValidatorException( 'string maxlength' );
         }
     }
 }

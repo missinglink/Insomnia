@@ -20,11 +20,14 @@ class IntegerValidator extends RegexValidator
     
     public function validate( $string, $key )
     {
-        try{ parent::validate( $string, $key ); }
+        try
+        {
+            parent::validate( $string, $key );
+        }
         
         catch( ValidatorException $e )
         {
-            throw new ValidatorException( ( null !== $this->max && $this->min > 1 ) ? 'length' : 'string' );
+            throw new ValidatorException( ( null !== $this->max && $this->min > 1 ) ? 'length' : 'integer' );
         }
     }
 }

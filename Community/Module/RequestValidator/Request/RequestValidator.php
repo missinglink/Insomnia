@@ -46,8 +46,8 @@ class RequestValidator
         
         foreach( $this->stack as $key => $validator )
         {
-            $optional = ( \substr( $key, 0, 2 ) === 'o_' );
-            $key      = \substr( $key, 2 );
+            $optional = ( mb_substr( $key, 0, 2 ) === 'o_' );
+            $key      = mb_substr( $key, 2 );
             
             if( $request->hasParam( $key ) )
             {
@@ -67,12 +67,13 @@ class RequestValidator
                 }
             }
             
-            else if( !$optional ) {
+            else if( !$optional )
+            {
                 $this->errors[ $key ] = 'null';
             }
         }
         
-        if ( \count( $this->errors ) > 0 )
+        if( count( $this->errors ) > 0 )
         {
             throw new \Insomnia\Validator\ErrorStack( $this->errors );
         }
