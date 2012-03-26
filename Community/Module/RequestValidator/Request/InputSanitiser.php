@@ -25,16 +25,24 @@ class InputSanitiser
      */
     public function stripTags()
     {
-        if ( is_array( $this->value ) )
-        {
-            $this->value = array_map( 'strip_tags', $this->value );
-        }
-        else
-        {
-            $this->value = strip_tags( $this->value );
-        }
+        $this->value = $this->stripTagsRecursive( $this->value );
         
         return $this;
+    }
+    
+    private function stripTagsRecursive( $value )
+    {
+        if( is_array( $value ) )
+        {
+            $value = array_map( array( $this, __FUNCTION__ ), $value );
+        }
+        
+        else if( is_string( $value ) )
+        {
+            $value = strip_tags( $value );
+        }
+        
+        return $value;
     }
     
     /**
@@ -43,7 +51,10 @@ class InputSanitiser
      */
     public function removeTagBody( $htmlTag )
     {
-        $this->value = preg_replace( '/<'.preg_quote($htmlTag).'\b[^>]*>(.*?)<\/'.preg_quote($htmlTag).'>/i', '', $this->value );
+        if( is_string( $this->value ) )
+        {
+            $this->value = preg_replace( '/<'.preg_quote($htmlTag).'\b[^>]*>(.*?)<\/'.preg_quote($htmlTag).'>/i', '', $this->value );
+        }
         
         return $this;
     }
