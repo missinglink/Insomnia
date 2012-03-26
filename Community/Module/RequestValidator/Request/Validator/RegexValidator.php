@@ -16,7 +16,7 @@ class RegexValidator
     
     public function validate( $string, $key )
     {
-        if( !is_string( $string ) || !preg_match( $this->pattern, $string ) )
+        if( !is_string( $string ) || !mb_ereg_match( $this->pattern, $string ) )
             throw new ValidatorException( 'regex' );
     }
 }
