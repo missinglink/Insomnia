@@ -12,7 +12,6 @@ class BodyParser extends Observer
         if( isset( $_SERVER['REQUEST_METHOD'] ) )
         {
             $body = trim( file_get_contents( 'php://input' ) );
-            $body = urldecode( $body );
             
             $request->setBody( $body );
 
