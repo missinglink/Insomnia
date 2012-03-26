@@ -24,13 +24,13 @@ class StringValidator
         }
         
         // check it meets the minimum length requirements
-        if ( strlen( $string ) < $this->min )
+        if ( mb_strlen( $string ) < $this->min )
         {
             throw new ValidatorException( 'string' );
         }
         
         // check it meets the maximum length requirements
-        if (is_numeric( $this->max ) && strlen( $string ) > $this->max )
+        if( is_numeric( $this->max ) && mb_strlen( $string ) > $this->max )
         {
             throw new ValidatorException( 'string' );
         }
