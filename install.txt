@@ -29,7 +29,7 @@ Don't forget to update the git submodules or it simply won't work.
 6. Browse to http://insomnia
 
 For a basic demo you can browse: http://insomnia/example/entity.html or http://insomnia/example/entity.json
-The MySql and Redia demos require those backends to be setup individually, instructions are provided with each module.
+The MySql and Redis demos require those backends to be setup individually, instructions are provided with each module.
 
 [Problems]
 
