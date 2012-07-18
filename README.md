@@ -59,7 +59,7 @@ latest PHP version whenever possible.
 Installation
 ------------------------
 
-Please see INSTALL.txt
+Please see install.txt
 
 License
 ------------------------

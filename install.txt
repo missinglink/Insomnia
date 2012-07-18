@@ -1,0 +1,42 @@
+Installation varies depending on the web server you are using, but the basic download instructions apply on all servers.
+
+Don't forget to update the git submodules or it simply won't work.
+
+[Download Source]
+
+1. git clone git://github.com/missinglink/Insomnia.git /var/www/insomnia
+2. cd /var/www/insomnia
+3. git submodule update --init
+
+[Basic Web Server Setup (Apache)]
+
+1. Add the following line to your hosts file: 127.0.0.1 insomnia
+2. Enable apache mod_rewrite with this command: (on debian) a2enmod rewrite
+3. Create a new apache virtual host file in: (on debian) /etc/apache2/sites-enabled/insomnia
+4. Create a basic site config. (as per the file below)
+<VirtualHost *:80>
+	ServerName insomnia
+	DocumentRoot /var/www/insomnia/public/
+	<Directory /var/www/insomnia/public/>
+		Options Indexes FollowSymLinks MultiViews
+		AllowOverride All
+		Order allow,deny
+		allow from all
+		DirectoryIndex index.php
+	</Directory>
+</VirtualHost>
+5. Restart apache: (on debian) service apache2 restart
+6. Browse to http://insomnia
+
+For a basic demo you can browse: http://insomnia/example/entity.html or http://insomnia/example/entity.json
+The MySql and Redia demos require those backends to be setup individually, instructions are provided with each module.
+
+[Problems]
+
+try tailing your webserver logs with a command such as:
+tail -f /var/log/apache2/error.log
+
+If you see a message like this: "failed to open stream: No such file or directory in autoloader.php"
+You need to update the submodules with the following command: git submodule update --init
+
+contact: insomnia@rcpt.at
