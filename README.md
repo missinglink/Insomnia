@@ -7,7 +7,7 @@ Release Information
 
 Insomnia Framework beta1
 
-THIS RELEASE IS STILL IN ACTIVE DEVELOPMENT.
+THIS SOFTWARE IS NO LONGER IN ACTIVE DEVELOPMENT, feel free to fork it and do what you will with it.
 
 Features
 --------
