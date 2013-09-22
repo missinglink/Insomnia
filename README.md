@@ -93,3 +93,7 @@ repository on Github https://github.com/missinglink/Insomnia.
 Or you can contact the lead developer directly:
 
 Peter Johnson ( https://github.com/missinglink )
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/missinglink/insomnia/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
